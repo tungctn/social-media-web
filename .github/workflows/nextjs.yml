@@ -36,7 +36,14 @@ jobs:
       - run: |
           touch .env
           echo "${{ secrets.PROD_ENV_FILE }}" > .env
-      - run: npm run build
+      - name: Build the project
+        run: npm run build
+    
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: nextjs-build
+          path: .next/
 
   # Deployment job
   deploy:
@@ -46,4 +53,11 @@ jobs:
       matrix:
         node-version: [18.x]
     steps:
-      - run: pm2 restart nextjs-app
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: nextjs-build
+          path: .next/
+
+      - name: Start the application with PM2
+        run: pm2 restart nextjs-app
