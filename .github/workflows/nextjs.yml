@@ -27,10 +27,14 @@ concurrency:
 jobs:
   # Build job
   build:
+
     runs-on: self-hosted
+
     strategy:
       matrix:
         node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
@@ -39,26 +43,20 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm run build
-    - name: Upload Build Artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: nextjs-app
-        path: .next/
-
+    
   # Deployment job
-  deploy:
-    runs-on: self-hosted
-    needs: build
-    strategy:
-      matrix:
-        node-version: [18.x]
+  # deploy:
+  #   runs-on: self-hosted
+  #   needs: build
+  #   strategy:
+  #     matrix:
+  #       node-version: [18.x]
 
-    steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - name: Use Node.js ${{ matrix.node-version }}
+  #     uses: actions/setup-node@v3
+  #     with:
+  #       node-version: ${{ matrix.node-version }}
+  #       cache: 'npm'
+  #   - run: npm ci
