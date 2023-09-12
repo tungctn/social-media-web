@@ -35,12 +35,13 @@ jobs:
       - run: |
           touch .env
           echo "${{ secrets.PROD_ENV_FILE }}" > .env
-    
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: nextjs-build
-          path: .next/
+
+      # - run: npm run build
+      # - name: Upload build artifacts
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: nextjs-build
+      #     path: .next/
 
   # Deployment job
   deploy:
@@ -50,11 +51,11 @@ jobs:
       matrix:
         node-version: [18.x]
     steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: nextjs-build
-          path: .next/
+      # - name: Download build artifacts
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: nextjs-build
+      #     path: .next/
 
       - name: Add PM2 to PATH
         run: echo "$(which pm2)" >> $GITHUB_PATH
