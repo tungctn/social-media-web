@@ -57,8 +57,10 @@ jobs:
       #     name: nextjs-build
       #     path: .next/
 
-      - name: Add PM2 to PATH
-        run: echo "$(which pm2)" >> $GITHUB_PATH
+      - name: Get PM2 path
+        id: get-pm2-path
+        run: echo "::set-output name=pm2-path::$(which pm2)"
 
       - name: Start the application with PM2
-        run: $(which pm2) restart nextjs-app
+        run: ${{ steps.get-pm2-path.outputs.pm2-path }} restart nextjs-app
+
