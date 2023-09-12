@@ -57,10 +57,8 @@ jobs:
       #     name: nextjs-build
       #     path: .next/
 
-      - name: Get PM2 path
-        id: get-pm2-path
-        run: echo "::set-output name=pm2-path::$(which pm2)"
-
+      - name: Install PM2
+        run: npm install -g pm2
       - name: Start the application with PM2
-        run: ${{ steps.get-pm2-path.outputs.pm2-path }} restart nextjs-app
+        run: pm2 restart nextjs-app
 
