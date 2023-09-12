@@ -36,21 +36,21 @@ jobs:
       #   with:
       #     name: nextjs-build
       #     path: .next/
-      - run: npm start
+      # - run: npm start
 
   # Deployment job
-  # deploy:
-  #   runs-on: self-hosted
-  #   needs: build
-  #   strategy:
-  #     matrix:
-  #       node-version: [18.x]
-  #   steps:
+  deploy:
+    runs-on: self-hosted
+    needs: build
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
   #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #         cache: "npm"
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
   #     - name: Download build artifacts
   #       uses: actions/download-artifact@v2
   #       with:
@@ -58,5 +58,5 @@ jobs:
   #         path: .next/
   #     - name: Install PM2
   #       run: npm install -g pm2
-  #     - name: Start the application with PM2
-  #       run: pm2 restart nextjs-app
+      - name: Start the application with PM2
+        run: pm2 restart nextjs-app
