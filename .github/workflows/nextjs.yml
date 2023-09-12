@@ -36,7 +36,7 @@ jobs:
       #   with:
       #     name: nextjs-build
       #     path: .next/
-      - run: npm start
+      # - run: npm start
 
   # Deployment job
   # deploy:
