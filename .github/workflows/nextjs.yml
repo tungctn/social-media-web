@@ -51,6 +51,7 @@ jobs:
       matrix:
         node-version: [18.x]
     steps:
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
@@ -60,7 +61,7 @@ jobs:
       #   with:
       #     name: nextjs-build
       #     path: .next/
-
+      - run: npm run build
       - name: Install PM2
         run: npm install -g pm2
       - name: Start the application with PM2

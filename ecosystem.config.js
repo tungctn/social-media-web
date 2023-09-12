@@ -3,7 +3,7 @@ module.exports = {
     {
       name: "nextjs-app",
       script: "npm",
-      args: "run build",
+      args: "start",
     },
   ],
 };
