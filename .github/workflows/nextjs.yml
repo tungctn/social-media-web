@@ -51,6 +51,10 @@ jobs:
       matrix:
         node-version: [18.x]
     steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
       # - name: Download build artifacts
       #   uses: actions/download-artifact@v2
       #   with:
