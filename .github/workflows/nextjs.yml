@@ -23,7 +23,6 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       - uses: actions/checkout@v3
@@ -36,8 +35,6 @@ jobs:
       - run: |
           touch .env
           echo "${{ secrets.PROD_ENV_FILE }}" > .env
-      - name: Build the project
-        run: npm run build
     
       - name: Upload build artifacts
         uses: actions/upload-artifact@v2
@@ -59,5 +56,8 @@ jobs:
           name: nextjs-build
           path: .next/
 
+      - name: Add PM2 to PATH
+        run: echo "$(which pm2)" >> $GITHUB_PATH
+
       - name: Start the application with PM2
-        run: pm2 restart nextjs-app
+        run: $(which pm2) restart nextjs-app
