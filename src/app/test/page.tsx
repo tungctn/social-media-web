@@ -1,7 +1,7 @@
-export default function Home() {
+export default function Test() {
   return (
     <main className="min-h-screen">
-      <h1>Home</h1>
+      <h1>Test</h1>
     </main>
   );
 }
