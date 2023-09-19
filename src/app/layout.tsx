@@ -4,7 +4,7 @@ import { Roboto } from "next/font/google";
 
 const inter = Roboto({
   subsets: ["vietnamese"],
-  weight: "400",
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {

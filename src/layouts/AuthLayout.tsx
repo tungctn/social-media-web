@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import backgroundImg from "@/assets/imgs/background.png";
 import Image, { StaticImageData } from "next/image";
+import Logo from "@/components/Logo";
 
 type AuthLayoutProps = {
   children: ReactNode;
@@ -18,7 +19,8 @@ export default function AuthLayout({ children, img }: AuthLayoutProps) {
       <div className="py-[30px]">
         <div className="rounded-[30px] py-[71px] px-[76px] z-10 relative bg-white/50 w-[1124px]">
           <div className="flex flex-row gap-[106px]">
-            <div className="w-fit flex items-end">
+            <div className="w-fit flex flex-col justify-between items-center">
+              <Logo inPage={false} inAuth={true} />
               <Image
                 src={img}
                 alt="female-cat"
