@@ -6,10 +6,10 @@ import Input from "@/components/Input";
 import Button from "@/components/Button";
 import Divider from "@/components/Divider";
 import Link from "next/link";
-import Icon from "@/components/Icon";
 import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
 import IFormValues from "@/constants/IFormValues";
 import { FORM } from "@/constants/Messages";
+import SocialMediaButtons from "@/partials/app/Auth/SocialMediaButtons";
 
 export default function SignIn() {
   const {
@@ -88,18 +88,7 @@ export default function SignIn() {
       <Divider>Or sign in with</Divider>
       <div className="mb-[30px]"></div>
       <div className="flex flex-col gap-[30px]">
-        <Button customClassName="!bg-white !text-black">
-          <div className="flex gap-5 items-center ml-[166px]">
-            <Icon name="google" />
-            <span>Sign in with Google</span>
-          </div>
-        </Button>
-        <Button customClassName="!bg-white !text-black">
-          <div className="flex gap-5 items-center ml-[166px]">
-            <Icon name="facebook" />
-            <span>Sign in with Facebook</span>
-          </div>
-        </Button>
+        <SocialMediaButtons />
       </div>
     </AuthLayout>
   );

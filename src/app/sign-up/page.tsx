@@ -6,11 +6,11 @@ import Link from "next/link";
 import Input from "@/components/Input";
 import Divider from "@/components/Divider";
 import Button from "@/components/Button";
-import Icon from "@/components/Icon";
 import Checkbox from "@/components/Checkbox";
 import IFormValues from "@/constants/IFormValues";
 import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
 import { FORM } from "@/constants/Messages";
+import SocialMediaButtons from "@/partials/app/Auth/SocialMediaButtons";
 
 export default function SignUp() {
   const {
@@ -113,17 +113,7 @@ export default function SignUp() {
       <Divider>Or</Divider>
       <div className="mb-[30px]"></div>
       <div className="flex flex-row gap-3">
-        <Button customClassName="!bg-white !text-black">
-          <div className="flex gap-5 items-center justify-center">
-            <Icon name="google" />
-            <span>Sign in with Google</span>
-          </div>
-        </Button>
-        <Button customClassName="!bg-white !w-[57px]">
-          <div className="flex gap-5 items-center justify-center">
-            <Icon name="facebook" />
-          </div>
-        </Button>
+        <SocialMediaButtons hasFacebookLabel={false} />
       </div>
     </AuthLayout>
   );
