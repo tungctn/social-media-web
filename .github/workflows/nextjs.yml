@@ -12,45 +12,61 @@ permissions:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js
-        uses: actions/setup-node@v2
+
+  # Build frontend
+  build-frontend:
+    runs-on: self-hosted
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
         with:
-          node-version: "18"
-  # Build job
-  # build:
-  #   runs-on: self-hosted
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: npm ci
+        working-directory: web
+      - run: |
+          touch .env
+          echo "${{ secrets.PROD_ENV_FILE }}" > .env
+        working-directory: web
+      - run: npm run build
+        working-directory: web
 
-  #   strategy:
-  #     matrix:
-  #       node-version: [18.x]
+  # Deployment frontend
+  deploy-frontend:
+    runs-on: self-hosted
+    needs: build-frontend
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      # - name: Start the application with PM2
+      #   run: pm2 restart nextjs-app
 
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Use Node.js ${{ matrix.node-version }}
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #         cache: "npm"
-  #     - run: npm ci
-  #     - run: |
-  #         touch .env
-  #         echo "${{ secrets.PROD_ENV_FILE }}" > .env
-  #     - run: npm run build
+  # Build backend
+  build-backend:
+    runs-on: self-hosted
 
-  # # Deployment job
-  # deploy:
-  #   runs-on: self-hosted
-  #   needs: build
-  #   strategy:
-  #     matrix:
-  #       node-version: [18.x]
-  #   steps:
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #         cache: "npm"
-  #     - name: Start the application with PM2
-  #       run: pm2 restart nextjs-app
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Ruby 3.0.2
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.2
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+        working-directory: api
