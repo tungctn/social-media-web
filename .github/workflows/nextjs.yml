@@ -26,14 +26,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Change to web directory
-        run: echo "NODE_PATH=$(pwd)/web" >> $GITHUB_ENV
-
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+
+      # Cache node_modules
+      - uses: actions/cache@v3
+        with:
+          path: web/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('web/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - run: npm ci
         working-directory: web
       - run: |
