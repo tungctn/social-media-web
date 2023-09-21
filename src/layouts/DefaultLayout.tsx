@@ -12,7 +12,7 @@ type DefaultLayoutProps = {
 export default function DefaultLayout({ children }: DefaultLayoutProps) {
   return (
     <div className="flex flex-row">
-      <header className="min-w-[257px] bg-white min-h-screen">
+      <header className="min-w-[257px] bg-white min-h-screen fixed top-0">
         <div className="mt-8 ml-[33px]">
           <Logo />
         </div>
@@ -24,7 +24,7 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
           <span className="text-xl">{currentUser.username}</span>
         </div>
       </header>
-      <main className="w-[calc(100%-257px)]">{children}</main>
+      <main className="w-[calc(100%-257px)] ml-[257px]">{children}</main>
     </div>
   );
 }
