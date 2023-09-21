@@ -1,7 +1,7 @@
 import Image from "next/image";
 import WelcomBoxImg from "@/assets/imgs/welcom-box.png";
 import SmallCatImg from "@/assets/imgs/small-cat-1.png";
-import { tildaScript } from "@/constants/Fonts";
+import { courgette } from "@/constants/Fonts";
 
 export default function WelcomBox() {
   return (
@@ -13,7 +13,7 @@ export default function WelcomBox() {
       />
       <div className="z-10 absolute top-0 text-white flex flex-col gap-3 my-auto mt-12">
         <span className="text-[56px] font-black">Hello user&apos;s name</span>
-        <span className={`text-[32px] ${tildaScript.className}`}>
+        <span className={`text-[32px] ${courgette.className}`}>
           Welcom back! Have a good time!
         </span>
       </div>

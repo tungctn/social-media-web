@@ -10,7 +10,7 @@ import PostsList from "@/partials/app/HomePage/PostsList";
 export default function Home() {
   return (
     <DefaultLayout>
-      <div className="flex">
+      <div className="flex relative">
         <div className="px-[50px] w-full mt-[85px]">
           <div className="mb-[27px]">
             <WelcomBox />
@@ -20,10 +20,12 @@ export default function Home() {
             <PostsList />
           </div>
         </div>
-        <div className="max-w-[322px] mr-[33px] my-[70px] flex flex-col gap-[34px]">
-          <FriendsList />
-          <NeareastPost />
-          <Image src={SmallCatImg} alt="small-cat" />
+        <div className="max-w-[322px] mr-[33px] my-[70px] relative">
+          <div className="flex flex-col gap-[34px]">
+            <FriendsList />
+            <NeareastPost />
+            <Image src={SmallCatImg} alt="small-cat" />
+          </div>
         </div>
       </div>
     </DefaultLayout>
