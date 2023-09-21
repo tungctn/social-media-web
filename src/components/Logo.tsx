@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 type LogoProps = {
   inPage?: boolean;
   inAuth?: boolean;
@@ -5,7 +7,8 @@ type LogoProps = {
 
 export default function Logo({ inPage = true, inAuth }: LogoProps) {
   return (
-    <span
+    <Link
+      href={"/"}
       className={`font-bold${
         inPage
           ? " text-7xl text-deep-lilac"
@@ -15,6 +18,6 @@ export default function Logo({ inPage = true, inAuth }: LogoProps) {
       }`}
     >
       Logo
-    </span>
+    </Link>
   );
 }
