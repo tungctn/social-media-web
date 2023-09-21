@@ -26,6 +26,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: Change to web directory
+        run: echo "NODE_PATH=$(pwd)/web" >> $GITHUB_ENV
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
@@ -61,6 +64,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: Change to web directory
+        run: echo "NODE_PATH=$(pwd)/api" >> $GITHUB_ENV
       - name: Set up Ruby 3.0.2
         uses: ruby/setup-ruby@v1
         with:
