@@ -16,8 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-  # Build frontend
-  build-frontend:
+  # Build package
+  build:
     runs-on: self-hosted
     needs: test
     strategy:
@@ -46,11 +46,22 @@ jobs:
         working-directory: web
       - run: npm run build
         working-directory: web
+      - name: Change to web directory
+        run: echo "NODE_PATH=$(pwd)/api" >> $GITHUB_ENV
+      - name: Set up Ruby 3.0.2
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.2
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+        working-directory: api  
 
   # Deployment frontend
-  deploy-frontend:
+  deploy:
     runs-on: self-hosted
-    needs: build-frontend
+    needs: build
     strategy:
       matrix:
         node-version: [18.x]
@@ -66,21 +77,3 @@ jobs:
             ${{ runner.os }}-node-
       - name: Start the application with PM2
         run: pm2 restart nextjs-app
-
-  # Build backend
-  build-backend:
-    runs-on: self-hosted
-    needs: deploy-frontend
-    steps:
-      - uses: actions/checkout@v3
-      - name: Change to web directory
-        run: echo "NODE_PATH=$(pwd)/api" >> $GITHUB_ENV
-      - name: Set up Ruby 3.0.2
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.0.2
-      - name: Install dependencies
-        run: |
-          gem install bundler
-          bundle install
-        working-directory: api
