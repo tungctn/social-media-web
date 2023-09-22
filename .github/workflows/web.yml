@@ -19,7 +19,7 @@ jobs:
   # Build frontend
   build-frontend:
     runs-on: self-hosted
-
+    needs: test
     strategy:
       matrix:
         node-version: [18.x]
@@ -58,14 +58,19 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
-      # - name: Start the application with PM2
-      #   run: pm2 restart nextjs-app
+      - uses: actions/cache@v3
+        with:
+          path: web/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('web/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Start the application with PM2
+        run: pm2 restart nextjs-app
 
   # Build backend
   build-backend:
     runs-on: self-hosted
-
+    needs: deploy-frontend
     steps:
       - uses: actions/checkout@v3
       - name: Change to web directory
