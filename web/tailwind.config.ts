@@ -43,6 +43,8 @@ const config: Config = {
       azure: "#0A87FB",
       "spanish-gray": "#9E9E9E",
       lenurple: "#B888D2",
+      lavender: "#E8DAF0",
+      "vivid-red": "#FF1010",
     },
   },
   plugins: [require("@tailwindcss/forms")],

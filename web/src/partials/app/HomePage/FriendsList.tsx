@@ -6,7 +6,7 @@ import Avatar from "@/components/Avatar";
 
 export default function FriendsList() {
   return (
-    <div className="w-full py-[41px] px-[23px] bg-white rounded-[30px]">
+    <div className="w-full py-[30px] px-[30px] bg-white rounded-[30px]">
       <BoxHeader title="Friend List" />
       <div className="flex flex-col gap-6 mt-9">
         {users.map((user) => {

@@ -44,7 +44,7 @@ export default function PostCard({ post }: PostCardProps) {
             />
           </div>
           <div className="text-[14px] px-6">
-            <div className="flex flex-row items-center justify-between border-b-light-silver pt-[31px] pb-[26px] text-spanish-gray border-b-[1px]">
+            <div className="flex flex-row items-center justify-between border-b-light-silver pt-[7px] pb-[19px] text-spanish-gray border-b-[1px]">
               <div className="flex flex-row gap-[5px] items-center cursor-pointer">
                 <div className="text-lenurple transition-all ease-linear hover:animate-shaking-like hover:scale-105">
                   <FaThumbsUp size={30} />

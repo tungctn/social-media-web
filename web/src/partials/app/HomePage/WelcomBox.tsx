@@ -2,6 +2,7 @@ import Image from "next/image";
 import WelcomBoxImg from "@/assets/imgs/welcom-box.png";
 import SmallCatImg from "@/assets/imgs/small-cat-1.png";
 import { courgette } from "@/constants/Fonts";
+import { currentUser } from "@/utils/fakeData/User";
 
 export default function WelcomBox() {
   return (
@@ -12,8 +13,10 @@ export default function WelcomBox() {
         className="h-full w-full rounded-[30px] absolute top-0 left-0 object-cover shadow-custom"
       />
       <div className="z-10 absolute top-0 text-white flex flex-col gap-3 my-auto mt-12">
-        <span className="text-[56px] font-black">Hello user&apos;s name</span>
-        <span className={`text-[32px] ${courgette.className}`}>
+        <span className="font-black text-[52px]">
+          Hello <span>{currentUser.username}</span>
+        </span>
+        <span className={`${courgette.className} text-3xl`}>
           Welcom back! Have a good time!
         </span>
       </div>

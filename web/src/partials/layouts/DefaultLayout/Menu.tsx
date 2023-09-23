@@ -13,7 +13,7 @@ export default function Menu() {
   };
 
   return (
-    <nav className="ml-[33px] mt-[47px] flex flex-col gap-6">
+    <nav className="mt-[47px] flex flex-col gap-5">
       {DefaultMenu.map((menuItem: any) => {
         return (
           <Tab

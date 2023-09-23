@@ -12,11 +12,7 @@ export default function SocialMediaButtons({
   return (
     <>
       <Button customClassName="!bg-white !text-black">
-        <div
-          className={`flex gap-5 items-center ${
-            hasFacebookLabel ? "ml-[166px]" : "justify-center"
-          }`}
-        >
+        <div className={`flex gap-5 items-center justify-center`}>
           <FcGoogle size={33} />
           <span>Sign in with Google</span>
         </div>
@@ -24,11 +20,7 @@ export default function SocialMediaButtons({
       <Button
         customClassName={`!bg-white ${!hasFacebookLabel ? "!w-[57px]" : ""}`}
       >
-        <div
-          className={`flex gap-5 items-center ${
-            hasFacebookLabel ? "ml-[166px]" : "justify-center"
-          }`}
-        >
+        <div className={`flex gap-5 items-center justify-center`}>
           <FaFacebook size={33} color="#1877F2" />
           {hasFacebookLabel && (
             <span className="text-black">Sign in with Facebook</span>
