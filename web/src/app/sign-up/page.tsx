@@ -36,24 +36,24 @@ export default function SignUp() {
   return (
     <AuthLayout img={maleImage}>
       <form
-        className="flex flex-col gap-[30px]"
+        className="flex flex-col 3xl:gap-[30px] 2xl:gap-[25px]"
         onSubmit={handleSubmit(handleSubmitForm, handleErrorForm)}
         noValidate
       >
         <div className="flex flex-row justify-between items-center">
-          <h1 className="font-bold text-4xl">Sign up</h1>
+          <h1 className="font-bold 3xl:text-4xl 2xl:text-3xl">Sign up</h1>
           <span className="flex items-baseline gap-1">
             <span>Already have account?</span>
             <Link
               href={"/sign-in"}
-              className="font-bold text-xl text-deep-lilac"
+              className="font-bold 3xl:text-xl 2xl:text-lg text-deep-lilac"
             >
               Sign in
             </Link>
           </span>
         </div>
         <div className="flex flex-col gap-3">
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col 3xl:gap-[38px] 2xl:gap-4">
             <Input
               register={register}
               rules={{
@@ -109,9 +109,9 @@ export default function SignUp() {
           </div>
         </div>
       </form>
-      <div className="mt-[22px]"></div>
+      <div className="3xl:mt-[22px] 2xl:mt-5"></div>
       <Divider>Or</Divider>
-      <div className="mb-[23px]"></div>
+      <div className="3xl:mb-[23px] 2xl:mt-5"></div>
       <div className="flex flex-row gap-3">
         <SocialMediaButtons hasFacebookLabel={false} />
       </div>

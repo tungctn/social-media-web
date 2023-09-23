@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 import colors from "tailwindcss/colors";
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 const config: Config = {
   content: [
@@ -45,6 +46,10 @@ const config: Config = {
       lenurple: "#B888D2",
       lavender: "#E8DAF0",
       "vivid-red": "#FF1010",
+    },
+    screens: {
+      ...defaultTheme.screens,
+      "3xl": "1600px",
     },
   },
   plugins: [require("@tailwindcss/forms")],

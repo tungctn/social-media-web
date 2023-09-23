@@ -13,7 +13,7 @@ export default function Logo({ inPage = true, inAuth }: LogoProps) {
         inPage
           ? " text-7xl text-deep-lilac"
           : inAuth
-          ? " text-[80px] text-black uppercase"
+          ? " 3xl:text-[80px] 2xl:text-[calc(80px/6*5)] text-black uppercase"
           : ""
       }`}
     >

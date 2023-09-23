@@ -18,7 +18,9 @@ export default function SocialMediaButtons({
         </div>
       </Button>
       <Button
-        customClassName={`!bg-white ${!hasFacebookLabel ? "!w-[57px]" : ""}`}
+        customClassName={`!bg-white ${
+          !hasFacebookLabel ? "3xl:!w-[57px] 2xl:!w-[calc(57px/6*5)]" : ""
+        }`}
       >
         <div className={`flex gap-5 items-center justify-center`}>
           <FaFacebook size={33} color="#1877F2" />

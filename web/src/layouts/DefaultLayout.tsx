@@ -12,7 +12,7 @@ type DefaultLayoutProps = {
 export default function DefaultLayout({ children }: DefaultLayoutProps) {
   return (
     <div className="flex flex-row">
-      <header className="min-w-[300px] pl-[40px] bg-white min-h-screen fixed top-0">
+      <header className="3xl:min-w-[367px] 2xl:min-w-[300px] 3xl:pl-[60px] 2xl:pl-[40px] bg-white min-h-screen fixed top-0">
         <div className="mt-8">
           <Logo />
         </div>
@@ -32,7 +32,9 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
         </div>
         <Menu />
       </header>
-      <main className="w-[calc(100%-300px)] ml-[300px]">{children}</main>
+      <main className="3xl:w-[calc(100%-367px)] 2xl:w-[calc(100%-300px)] 3xl:ml-[367px] 2xl:ml-[300px]">
+        {children}
+      </main>
     </div>
   );
 }
