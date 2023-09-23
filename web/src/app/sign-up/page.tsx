@@ -109,9 +109,9 @@ export default function SignUp() {
           </div>
         </div>
       </form>
-      <div className="mt-[48px]"></div>
+      <div className="mt-[22px]"></div>
       <Divider>Or</Divider>
-      <div className="mb-[30px]"></div>
+      <div className="mb-[23px]"></div>
       <div className="flex flex-row gap-3">
         <SocialMediaButtons hasFacebookLabel={false} />
       </div>

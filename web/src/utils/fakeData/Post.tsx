@@ -1,4 +1,4 @@
-import User, { users } from "./User";
+import User, { currentUser, users } from "./User";
 
 type Post = {
   id: number;
@@ -14,10 +14,9 @@ type Post = {
 
 export const nearestPost: Post = {
   id: 1,
-  userId: 1,
-  user: users[0],
-  caption:
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+  userId: currentUser.id,
+  user: currentUser,
+  caption: "",
   createdAt: new Date("2023-09-21 17:33"),
   images: [
     "https://bizweb.dktcdn.net/100/378/891/files/tac-dung-cua-nhung-huou-4.jpg",

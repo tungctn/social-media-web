@@ -31,7 +31,7 @@ export default function Input({
   return (
     <div>
       <label title={title} className="flex flex-col gap-3">
-        <div className="text-xl font-bold">{title}</div>
+        <div className="text-xl font-bold ml-[7px]">{title}</div>
         <input
           type={type}
           {...register(name, rules)}

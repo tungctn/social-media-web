@@ -11,7 +11,7 @@ export default function PostBox() {
   const handleSelectEmoji: MouseEventHandler<HTMLDivElement> = () => {};
 
   return (
-    <div className="bg-white rounded-[30px] shadow-custom pt-[37px] pb-[13px]">
+    <div className="bg-white rounded-[30px] shadow-custom pt-9 pb-[13px]">
       <div className="flex flex-row gap-[19px] px-6 pb-[22px]">
         <Avatar size={50} />
         <input

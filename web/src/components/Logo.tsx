@@ -9,11 +9,11 @@ export default function Logo({ inPage = true, inAuth }: LogoProps) {
   return (
     <Link
       href={"/"}
-      className={`font-bold${
+      className={`font-black ${
         inPage
           ? " text-7xl text-deep-lilac"
           : inAuth
-          ? " text-8xl text-black uppercase"
+          ? " text-[80px] text-black uppercase"
           : ""
       }`}
     >

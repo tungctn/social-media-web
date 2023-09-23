@@ -20,8 +20,8 @@ export default function Home() {
             <PostsList />
           </div>
         </div>
-        <div className="max-w-[322px] mr-[33px] my-[70px] relative">
-          <div className="flex flex-col gap-[34px]">
+        <div className="max-w-[360px] mr-[33px] my-[70px] relative">
+          <div className="flex flex-col gap-[30px] w-full">
             <FriendsList />
             <NeareastPost />
             <Image src={SmallCatImg} alt="small-cat" />

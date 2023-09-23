@@ -17,17 +17,19 @@ export default function AuthLayout({ children, img }: AuthLayoutProps) {
         className="w-screen h-screen object-cover top-0 fixed"
       />
       <div className="py-[30px]">
-        <div className="rounded-[30px] py-[71px] px-[76px] z-10 relative bg-white/50 w-[1124px]">
-          <div className="flex flex-row gap-[106px]">
+        <div className="rounded-[30px] px-[40px] z-10 relative bg-white/50 w-[880px]">
+          <div className="flex flex-row">
             <div className="w-fit flex flex-col justify-between items-center">
-              <Logo inPage={false} inAuth={true} />
+              <div className="mt-[49px]">
+                <Logo inPage={false} inAuth={true} />
+              </div>
               <Image
                 src={img}
                 alt="female-cat"
-                className="min-w-[329px] h-auto float-bottom object-contain"
+                className="min-w-[307px] h-auto float-bottom object-contain translate-x-[calc(-40px-76px)]"
               />
             </div>
-            <div className="w-full">{children}</div>
+            <div className="w-full py-[71px]">{children}</div>
           </div>
         </div>
       </div>
