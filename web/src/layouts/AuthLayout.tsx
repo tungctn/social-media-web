@@ -16,20 +16,20 @@ export default function AuthLayout({ children, img }: AuthLayoutProps) {
         alt="background"
         className="w-screen h-screen object-cover top-0 fixed"
       />
-      <div className="py-[30px]">
-        <div className="rounded-[30px] px-[40px] z-10 relative bg-white/50 w-[880px]">
-          <div className="flex flex-row">
+      <div className="3xl:py-[30px] 2xl:py-[25px]">
+        <div className="rounded-[30px] 3xl:px-[40px] 2xl:px-[calc(40px/6*5)] z-10 relative bg-white/50 3xl:w-[880px] 2xl:w-[calc(880px/6*5)]">
+          <div className="flex flex-row 3xl:gap-10 2xl:gap-8">
             <div className="w-fit flex flex-col justify-between items-center">
-              <div className="mt-[49px]">
+              <div className="3xl:mt-[49px] 2xl:mt-[30px]">
                 <Logo inPage={false} inAuth={true} />
               </div>
               <Image
                 src={img}
                 alt="female-cat"
-                className="min-w-[307px] h-auto float-bottom object-contain translate-x-[calc(-40px-76px)]"
+                className="3xl:min-w-[307px] 2xl:min-w-[calc(307px/6*5)] h-auto float-bottom object-contain 3xl:translate-x-[calc(-40px-76px)] 2xl:translate-x-[calc(-40px/6*5-76px/6*5)]"
               />
             </div>
-            <div className="w-full py-[71px]">{children}</div>
+            <div className="w-full 3xl:py-[71px] 2xl:py-14">{children}</div>
           </div>
         </div>
       </div>

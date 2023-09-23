@@ -9,7 +9,7 @@ export default function PostActions() {
     ref: actionsRef,
     isComponentVisible,
     setIsComponentVisible,
-  } = useComponentVisible(true);
+  } = useComponentVisible(false);
 
   const handleClickButton: MouseEventHandler<HTMLDivElement> = (event) => {
     setIsComponentVisible(!isComponentVisible);

@@ -30,13 +30,13 @@ export default function Input({
 }: InputProps) {
   return (
     <div>
-      <label title={title} className="flex flex-col gap-3">
-        <div className="text-xl font-bold ml-[7px]">{title}</div>
+      <label title={title} className="flex flex-col 3xl:gap-3 2xl:gap-1">
+        <div className="3xl:text-xl 2xl:text-lg font-bold ml-[7px]">{title}</div>
         <input
           type={type}
           {...register(name, rules)}
           placeholder={placeholder}
-          className={`rounded-[20px] h-[57px] bg-light-silver border-0 px-4 autofill:bg-light-silver focus:ring-deep-lilac focus:outline-none focus:border-0${
+          className={`3xl:rounded-[20px] 2xl:rounded-[calc(20px/6*5)] 3xl:h-[57px] 2xl:h-[calc(57px/6*5)] bg-light-silver border-0 px-4 autofill:bg-light-silver focus:ring-deep-lilac focus:outline-none focus:border-0${
             error && " !ring !ring-red-600/50"
           }`}
         />
