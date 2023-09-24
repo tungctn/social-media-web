@@ -1,0 +1,39 @@
+require_relative "../constants/regex.rb"
+
+class UserInfo < ApplicationRecord
+  before_save :before_save
+
+  validates :first_name, :last_name, :full_name,
+            presence: true,
+            length: {maximum: Settings.digit.length_255}
+      
+  validates :email,
+            allow_nil: true,
+            length: {maximum: Settings.digit.length_255},
+            format: {with: EMAIL_REGEX}
+
+  validates :phone_number, :avatar_url, :background_url, 
+            :address, :bio,
+            length: {maximum: Settings.digit.length_255}
+
+  validates :gender, :relationship_status,
+            length: {maximum: Settings.digit.length_1}
+
+  validate :date_must_be_valid
+
+  #thêm các phụ thuộc
+  belongs_to :user
+
+  private
+  def before_save
+    if email
+      email.downcase!
+    end
+  end
+
+  def date_must_be_valid
+    if date_of_birth.present? && date_of_birth > Date.today
+      errors.add(:date_of_birth, "không được lớn hơn hiện tại.")
+    end
+  end
+end
