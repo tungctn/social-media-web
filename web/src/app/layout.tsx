@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={roboto.className + " min-h-screen bg-cultured"}>
+      <body className={roboto.className + " min-h-screen bg-white"}>
         {children}
       </body>
     </html>

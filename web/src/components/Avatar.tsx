@@ -15,7 +15,6 @@ export default function Avatar({ size = 16, src }: AvatarProps) {
           alt="avatar"
           width={size}
           height={size}
-          objectFit="cover"
           className="rounded-full w-10 h-10 object-cover"
         />
       ) : (

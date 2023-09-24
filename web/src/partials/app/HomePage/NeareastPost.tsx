@@ -16,7 +16,6 @@ export default function NeareastPost() {
             className="h-[113px] object-cover rounded-[10px] z-10 relative"
             width={140}
             height={113}
-            objectFit="cover"
           />
           {nearestPost.images.length > 1 && (
             <div className="h-[113px] w-full absolute bg-light-silver rounded-[10px] -top-[5px] left-5">

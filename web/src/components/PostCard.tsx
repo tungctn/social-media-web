@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa6";
 import PostActions from "./PostActions";
 import Image from "next/image";
+import Link from "next/link";
 
 type PostCardProps = {
   post: Post;
@@ -21,11 +22,15 @@ export default function PostCard({ post }: PostCardProps) {
         <div className="bg-white rounded-[30px] shadow-custom">
           <div className="pt-6 px-6 flex flex-row items-start justify-between">
             <div className="flex flex-row gap-[14px] items-center">
-              <Avatar size={50} src={post.user.avatar} />
+              <Link href={`/profile/${post.userId}`}>
+                <Avatar size={50} src={post.user.avatar} />
+              </Link>
               <div className="flex flex-col">
-                <span className="text-xl text-deep-lilac font-bold">
-                  {post.user.username}
-                </span>
+                <Link href={`/profile/${post.userId}`}>
+                  <span className="text-xl text-deep-lilac font-bold">
+                    {post.user.username}
+                  </span>
+                </Link>
                 <time className="first-letter:uppercase text-xs text-spanish-gray">
                   {dayjs(post.createdAt).format("dddd, HH:mm DD/MM/YYYY")}
                 </time>

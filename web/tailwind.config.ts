@@ -23,9 +23,20 @@ const config: Config = {
           "60%": { transform: "rotate(0.0deg)" },
           "100%": { transform: "rotate(0.0deg)" },
         },
+        slipToTop: {
+          "0%": {
+            transform: "translateY(20%)",
+            opacity: "0.4",
+          },
+          "100%": {
+            transform: "translateY(0)",
+            opacity: "1",
+          },
+        },
       },
       animation: {
         "shaking-like": "shake 2s linear infinite",
+        "slip-to-top": "slipToTop 400ms linear 1",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -49,9 +60,9 @@ const config: Config = {
     },
     screens: {
       ...defaultTheme.screens,
-      "3xl": "1600px",
+      "3xl": "1800px",
     },
   },
-  plugins: [require("@tailwindcss/forms")],
+  plugins: [require("@tailwindcss/forms"), require("tailwind-scrollbar")],
 };
 export default config;
