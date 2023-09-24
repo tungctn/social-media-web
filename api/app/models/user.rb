@@ -19,6 +19,9 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  #thêm các phụ thuộc
+  has_one :user_info
+
   private
 
   def downcase_email
