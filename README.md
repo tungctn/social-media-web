@@ -151,6 +151,70 @@ GET /api/users/:id
     },
 }
 ```
+### User Info module
+#### Get user info
+
+```http
+Authorization: Bearer YOUR_TOKEN
+GET /api/user_infos/
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+```javascript
+{
+    "success": true,
+    "message": "User info",
+    "data": {
+        "user_info": {
+            ...
+        },
+    },
+}
+```
+
+#### Create user info
+
+```http
+Authorization: Bearer YOUR_TOKEN
+POST /api/user_infos/
+PUT /api/user_infos/
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Parameter  | Type     | Description  |
+| :--------- | :------- | :----------- |
+| `first_name*`    | `string` | Họ |
+| `last_name*` | `string` | Tên |
+| `full_name*`     | `string` | Họ và tên |
+| `email`     | `string` | Email |
+| `phone_number`     | `string` | SĐT |
+| `date_of_birth`     | `date` | Ngày sinh |
+| `gender`     | `integer` | 0 - Nam, 1 - Nữ, 2 - Không rõ |
+| `avatar_url`     | `string` | Ảnh đại diện |
+| `background_url`     | `string` | Ảnh bìa |
+| `join_date`     | `datetime` | Ngày tham gia |
+| `last_login`     | `datetime` | Lần đăng nhập cuối |
+| `address`     | `string` | Địa chỉ |
+| `bio`     | `string` | Mô tả ngắn gọn |
+| `relationship_status`     | `integer` | Tình trạng: 1 - Độc thân, 2 - Kết hôn, 3 - Hẹn hò |
+
+```javascript
+{
+    "success": true,
+    "message": "User info",
+    "data": {
+        "user_info": {
+            ...
+        },
+    },
+}
+```
 
 ## Architecture Design
 
