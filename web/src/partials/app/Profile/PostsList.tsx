@@ -1,0 +1,37 @@
+"use client";
+
+import ShortPostCard from "@/components/ShortPostCard";
+import useWindowDimensions from "@/hooks/useWindowDimensions";
+import Post from "@/utils/fakeData/Post";
+import { useEffect, useLayoutEffect, useRef } from "react";
+
+type PostsListProps = {
+  posts: Post[];
+};
+
+export default function PostsList({ posts }: PostsListProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { width } = useWindowDimensions();
+
+  useLayoutEffect(() => {
+    if (ref.current) {
+      if (width >= 1600) {
+        ref.current.style.gap = `${
+          (ref.current.offsetWidth - 267 * 3) / 2 - 0.5
+        }px`;
+      } else if (width >= 1536) {
+        ref.current.style.gap = `${
+          (ref.current.offsetWidth - (267 / 6) * 5 * 3) / 2 - 0.5
+        }px`;
+      }
+    }
+  }, [width, ref.current]);
+
+  return (
+    <div ref={ref} className={`w-full flex flex-row flex-wrap`}>
+      {posts.map((post) => {
+        return <ShortPostCard key={post.id} images={post.images} />;
+      })}
+    </div>
+  );
+}
