@@ -4,7 +4,6 @@ class UserInfo < ApplicationRecord
   before_save :before_save
 
   validates :first_name, :last_name, :full_name,
-            presence: true,
             length: {maximum: Settings.digit.length_255}
       
   validates :email,
@@ -12,8 +11,7 @@ class UserInfo < ApplicationRecord
             length: {maximum: Settings.digit.length_255},
             format: {with: EMAIL_REGEX}
 
-  validates :phone_number, :avatar_url, :background_url, 
-            :address, :bio,
+  validates :phone_number, :address, :bio,
             length: {maximum: Settings.digit.length_255}
 
   validates :gender, :relationship_status,
@@ -23,6 +21,8 @@ class UserInfo < ApplicationRecord
 
   #thêm các phụ thuộc
   belongs_to :user
+  has_one_attached :avatar
+  has_one_attached :background
 
   private
   def before_save
