@@ -16,6 +16,7 @@ gem "figaro"
 gem "config"
 gem "bcrypt"
 gem "jwt"
+gem 'aws-sdk-s3', require: false
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
