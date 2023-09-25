@@ -47,7 +47,9 @@ jobs:
       - run: npm run build
         working-directory: web
       - name: Change to web directory
-        run: echo "NODE_PATH=$(pwd)/api" >> $GITHUB_ENV
+        run: |
+          echo "NODE_PATH=$(pwd)/api" >> $GITHUB_ENV
+          cd api
       - name: Set up Ruby 3.0.2
         uses: ruby/setup-ruby@v1
         with:
