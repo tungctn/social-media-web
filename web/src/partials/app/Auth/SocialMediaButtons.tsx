@@ -19,7 +19,7 @@ export default function SocialMediaButtons({
       </Button>
       <Button
         customClassName={`!bg-white ${
-          !hasFacebookLabel ? "3xl:!w-[57px] 2xl:!w-[calc(57px/6*5)]" : ""
+          !hasFacebookLabel ? "3xl:!w-[57px] !w-[calc(57px/6*5)]" : ""
         }`}
       >
         <div className={`flex gap-5 items-center justify-center`}>

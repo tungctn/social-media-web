@@ -27,7 +27,7 @@ export default function Tabs({ tabItems, onChange }: TabsProps) {
         {tabItems.map((tabItem, index) => {
           return (
             <button
-              className={`3xl:text-2xl 2xl:text-xl flex flex-col transition-all duration-300 after:content-[''] after:w-0 after:h-[3px] after:translate-y-[1.5px] after:transition-all after:duration-300${
+              className={`3xl:text-2xl text-xl flex flex-col transition-all duration-300 after:content-[''] after:w-0 after:h-[3px] after:translate-y-[1.5px] after:transition-all after:duration-300${
                 activeTab === tabItem.id || (!activeTab && !index)
                   ? " text-deep-lilac after:!w-full after:bg-deep-lilac"
                   : " text-black hover:after:w-full hover:text-lenurple hover:after:bg-lenurple"

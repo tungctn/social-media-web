@@ -21,7 +21,7 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
 
   return (
     <div className="flex flex-row">
-      <header className="3xl:min-w-[367px] 2xl:min-w-[300px] 3xl:pl-[60px] 2xl:pl-[40px] bg-white fixed top-0">
+      <header className="3xl:min-w-[367px] min-w-[300px] 3xl:pl-[60px] pl-[40px] bg-white fixed top-0">
         <div className="relative min-h-screen">
           <div className="pt-8">
             <Logo />
@@ -46,7 +46,7 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
           <Menu />
         </div>
       </header>
-      <main className="3xl:w-[calc(100%-367px)] 2xl:w-[calc(100%-300px)] 3xl:ml-[367px] 2xl:ml-[300px] rounded-l-[30px] bg-cultured">
+      <main className="3xl:w-[calc(100%-367px)] w-[calc(100%-300px)] 3xl:ml-[367px] ml-[300px] rounded-l-[30px] bg-cultured">
         {children}
       </main>
     </div>
