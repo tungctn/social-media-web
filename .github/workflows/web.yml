@@ -40,10 +40,10 @@ jobs:
             ${{ runner.os }}-node-
       - run: npm ci
         working-directory: web
-      - run: |
-          touch .env
-          echo "${{ secrets.PROD_ENV_FILE }}" > .env
-        working-directory: web
+      # - run: |
+      #     touch .env
+      #     echo "${{ secrets.PROD_ENV_FILE }}" > .env
+      #   working-directory: web
       - run: npm run build
         working-directory: web
       - name: Change to web directory
@@ -59,6 +59,12 @@ jobs:
           gem install bundler
           bundle install
         working-directory: api
+      - name: Set env
+        run: |
+          touch application.yml
+          echo "${{ secrets.PROD_BACKEND }}" > application.yml
+        working-directory: api/config
+
 
   # Deployment frontend
   deploy:
