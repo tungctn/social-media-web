@@ -83,4 +83,4 @@ jobs:
         with:
           ruby-version: 3.0.2
       - name: Start puma server
-        run: sudo systemctl start puma.service
+        run: echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S systemctl start puma.service
