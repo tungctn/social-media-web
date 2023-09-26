@@ -284,6 +284,28 @@ PUT /api/user_infos/
 }
 ```
 
+#### Delete avatar, background
+
+```http
+Authorization: Bearer YOUR_TOKEN
+DELETE /api/user_infos/avatar
+DELETE /api/user_infos/background
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+```javascript
+{
+    "success": true,
+    "message": "User info",
+    "data": {
+        "message": "Thành công"
+    },
+}
+```
+
 ## Architecture Design
 
 ### Database Design
