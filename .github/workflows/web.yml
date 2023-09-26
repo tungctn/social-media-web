@@ -58,7 +58,7 @@ jobs:
         run: |
           gem install bundler
           bundle install
-        working-directory: api  
+        working-directory: api
 
   # Deployment frontend
   deploy:
@@ -79,3 +79,8 @@ jobs:
             ${{ runner.os }}-node-
       - name: Start the application with PM2
         run: pm2 restart nextjs-app
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.2
+      - name: Start puma server
+        run: systemctl start puma.service

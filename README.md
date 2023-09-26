@@ -54,10 +54,76 @@ $ npm run start
 $ cd api
 
 # development
-$ bundle exec rails s
+$ rails server
 
 # production
-$ bundle exec rails s
+$ rails server
+```
+
+## Set up cloud server Next.js
+
+### Install pm2
+
+```bash
+$ npm install pm2 -g
+```
+
+### Set up pm2 process
+
+```bash
+cd /path/to/your/project (ex: cd /home/runner/actions-runner/_work/social-media-web/social-media-web/web)
+pm2 start ecosystem.config.js
+```
+
+### Check pm2 status
+
+```bash
+pm2 status
+```
+
+## Set up cloud server ruby on rails
+
+### Install systemd
+
+```bash
+$ sudo apt install -y systemd
+```
+
+### Set up Puma
+
+```bash
+$ sudo nano /etc/systemd/system/puma.service
+```
+
+Copy and paste the following configuration:
+
+```bash
+[Unit]
+Description=Puma HTTP Server
+After=network.target
+
+[Service]
+Type=simple
+User=runner
+WorkingDirectory=/home/runner/actions-runner/_work/social-media-web/social-media-web/api
+ExecStart=/home/runner/.rbenv/shims/rails server -b 0.0.0.0 -p 4000
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target[Unit]
+```
+
+### Start Puma
+
+```bash
+$ sudo systemctl start puma.service
+```
+
+### Check Puma status
+
+```bash
+$ sudo systemctl status puma.service
 ```
 
 ## Todo list
@@ -68,7 +134,7 @@ $ bundle exec rails s
 
 ### User module
 
-- [x] [Create user](#create)
+- [x] [Create user](#create-user)
 - [x] [Get user detail](#get-user-detail)
 
 ## API Reference
@@ -151,7 +217,9 @@ GET /api/users/:id
     },
 }
 ```
+
 ### User Info module
+
 #### Get user info
 
 ```http
@@ -187,22 +255,22 @@ PUT /api/user_infos/
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Parameter  | Type     | Description  |
-| :--------- | :------- | :----------- |
-| `first_name*`    | `string` | Họ |
-| `last_name*` | `string` | Tên |
-| `full_name*`     | `string` | Họ và tên |
-| `email`     | `string` | Email |
-| `phone_number`     | `string` | SĐT |
-| `date_of_birth`     | `date` | Ngày sinh |
-| `gender`     | `integer` | 0 - Nam, 1 - Nữ, 2 - Không rõ |
-| `avatar_url`     | `string` | Ảnh đại diện |
-| `background_url`     | `string` | Ảnh bìa |
-| `join_date`     | `datetime` | Ngày tham gia |
-| `last_login`     | `datetime` | Lần đăng nhập cuối |
-| `address`     | `string` | Địa chỉ |
-| `bio`     | `string` | Mô tả ngắn gọn |
-| `relationship_status`     | `integer` | Tình trạng: 1 - Độc thân, 2 - Kết hôn, 3 - Hẹn hò |
+| Parameter             | Type       | Description                                       |
+| :-------------------- | :--------- | :------------------------------------------------ |
+| `first_name*`         | `string`   | Họ                                                |
+| `last_name*`          | `string`   | Tên                                               |
+| `full_name*`          | `string`   | Họ và tên                                         |
+| `email`               | `string`   | Email                                             |
+| `phone_number`        | `string`   | SĐT                                               |
+| `date_of_birth`       | `date`     | Ngày sinh                                         |
+| `gender`              | `integer`  | 0 - Nam, 1 - Nữ, 2 - Không rõ                     |
+| `avatar_url`          | `string`   | Ảnh đại diện                                      |
+| `background_url`      | `string`   | Ảnh bìa                                           |
+| `join_date`           | `datetime` | Ngày tham gia                                     |
+| `last_login`          | `datetime` | Lần đăng nhập cuối                                |
+| `address`             | `string`   | Địa chỉ                                           |
+| `bio`                 | `string`   | Mô tả ngắn gọn                                    |
+| `relationship_status` | `integer`  | Tình trạng: 1 - Độc thân, 2 - Kết hôn, 3 - Hẹn hò |
 
 ```javascript
 {
