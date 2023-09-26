@@ -16,7 +16,7 @@ export default function Menu() {
   return (
     <>
       <nav>
-        <div className="flex flex-col 3xl:gap-5 2xl:gap-2">
+        <div className="flex flex-col 3xl:gap-5 gap-2">
           {DefaultMenu.map((menuItem: any) => {
             return (
               <MenuItem
@@ -30,7 +30,7 @@ export default function Menu() {
           })}
         </div>
       </nav>
-      <div className="absolute 3xl:bottom-[40px] 2xl:bottom-[calc(40px/6*5)]">
+      <div className="absolute 3xl:bottom-[40px] bottom-[calc(40px/6*5)]">
         <MenuItem prefixIcon={<FaHamburger />} label="More" />
       </div>
     </>

@@ -36,24 +36,24 @@ export default function SignIn() {
   return (
     <AuthLayout img={femaleCatImg}>
       <form
-        className="flex flex-col 3xl:gap-[30px] 2xl:gap-[25px]"
+        className="flex flex-col 3xl:gap-[30px] gap-[25px]"
         onSubmit={handleSubmit(handleSubmitForm, handleErrorForm)}
         noValidate
       >
         <div className="flex flex-row justify-between items-center">
-          <h1 className="font-bold 3xl:text-4xl 2xl:text-3xl">Sign in</h1>
+          <h1 className="font-bold 3xl:text-4xl text-3xl">Sign in</h1>
           <span className="flex items-baseline gap-1">
             <span>Not have account yet?</span>
             <Link
               href={"/sign-up"}
-              className="font-bold 3xl:text-xl 2xl:text-lg text-deep-lilac"
+              className="font-bold 3xl:text-xl text-lg text-deep-lilac"
             >
               Sign up
             </Link>
           </span>
         </div>
-        <div className="flex flex-col 3xl:gap-[38px] 2xl:gap-5">
-          <div className="flex flex-col 3xl:gap-5 2xl:gap-4">
+        <div className="flex flex-col 3xl:gap-[38px] gap-5">
+          <div className="flex flex-col 3xl:gap-5 gap-4">
             <Input
               register={register}
               name="username"
@@ -74,7 +74,7 @@ export default function SignIn() {
               error={errors.password?.message}
             />
           </div>
-          <div className="flex flex-col 3xl:gap-3 2xl:gap-2">
+          <div className="flex flex-col 3xl:gap-3 gap-2">
             <div className="ml-2">
               <Link href="/forgot-password" className="text-azure">
                 Forgot password?
@@ -84,10 +84,10 @@ export default function SignIn() {
           </div>
         </div>
       </form>
-      <div className="3xl:mt-[48px] 2xl:mt-7"></div>
+      <div className="3xl:mt-[48px] mt-7"></div>
       <Divider>Or sign in with</Divider>
-      <div className="3xl:mb-[30px] 2xl:mb-7"></div>
-      <div className="flex flex-col 3xl:gap-[30px] 2xl:gap-4">
+      <div className="3xl:mb-[30px] mb-7"></div>
+      <div className="flex flex-col 3xl:gap-[30px] gap-4">
         <SocialMediaButtons />
       </div>
     </AuthLayout>

@@ -25,8 +25,8 @@ export default function Profile({
   return (
     <DefaultLayout>
       <div className="flex flex-row">
-        <div className="3xl:min-w-[462px] 3xl:w-[462px] 2xl:min-w-[calc(462px/6*5)] 2xl:w-[calc(462px/6*5)] h-screen flex flex-col overflow-auto scrollbar-thin scroll-smooth">
-          <div className="text-deep-lilac flex justify-end 3xl:mt-8 2xl:mt-6 3xl:mr-[44px] 2xl:mr-[calc(44px/6*5)] mb-[10px]">
+        <div className="3xl:min-w-[462px] 3xl:w-[462px] min-w-[calc(462px/6*5)] w-[calc(462px/6*5)] h-screen flex flex-col overflow-auto scrollbar-thin scroll-smooth">
+          <div className="text-deep-lilac flex justify-end 3xl:mt-8 mt-6 3xl:mr-[44px] mr-[calc(44px/6*5)] mb-[10px]">
             <FaEllipsis size={25} />
           </div>
           <div className="mx-auto">
@@ -35,22 +35,22 @@ export default function Profile({
               <Avatar size={202} src={currentUser.avatar} />
             </div>
           </div>
-          <div className="flex flex-row mx-auto 2xl:w-[277px] justify-between 3xl:mt-[73px] 2xl:mt-9">
+          <div className="flex flex-row mx-auto w-[277px] justify-between 3xl:mt-[73px] mt-9">
             <span>0 Posts</span>
             <span>0 following</span>
             <span>0 Followers</span>
           </div>
-          <div className="2xl:px-10 3xl:mt-6 2xl:mt-3">
+          <div className="px-10 3xl:mt-6 mt-3">
             <FollowingButton />
             {currentUser.intro && (
-              <div className="3xl:mt-[55px] 2xl:mt-[calc(55px/6*5)]">
+              <div className="3xl:mt-[55px] mt-[calc(55px/6*5)]">
                 <p>{currentUser.intro}</p>
               </div>
             )}
           </div>
         </div>
         <div className="rounded-l-[30px] bg-white w-full">
-          <div className="3xl:w-[882px] 2xl:w-[735px] overflow-hidden py-[30px] h-screen mx-auto">
+          <div className="3xl:w-[882px] w-[735px] overflow-hidden py-[30px] h-screen mx-auto">
             <Tabs
               onChange={handleChangeTab}
               tabItems={[
