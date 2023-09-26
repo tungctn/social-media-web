@@ -43,6 +43,7 @@ class UserInfosController < ApplicationController
   # cập nhật thông tin người dùng hiện tại
   # created by: ttanh (24/09/2023)
   def update
+    begin
       if !@current_user.user_info
         render json: { errors: "Thông tin người dùng chưa tồn tại!" }, status: :bad_request
         return
@@ -55,6 +56,54 @@ class UserInfosController < ApplicationController
         render json: { errors: user_info.errors.full_messages },
               status: :bad_request
       end
+    rescue
+    end
+  end
+
+  # xóa avatar
+  # created by: ttanh (26/09/2023)
+  def delete_avatar
+    begin
+      user_info = @current_user.user_info
+
+      if !user_info
+        render json: { errors: "Thông tin người dùng chưa tồn tại!" }, status: :bad_request
+        return
+      end
+
+      if !user_info.avatar.attached?
+        render json: { errors: "Người dùng chưa cài avatar" }, status: :bad_request
+        return
+      end
+
+      user_info.avatar.purge
+      render json: { message: "Thành công!" }, status: :ok
+      return
+    rescue
+    end
+  end
+
+  # xóa background
+  # created by: ttanh (26/09/2023)
+  def delete_background
+    begin
+      user_info = @current_user.user_info
+
+      if !user_info
+        render json: { errors: "Thông tin người dùng chưa tồn tại!" }, status: :bad_request
+        return
+      end
+
+      if !user_info.background.attached?
+        render json: { errors: "Người dùng chưa cài background" }, status: :bad_request
+        return
+      end
+
+      user_info.background.purge
+      render json: { message: "Thành công!" }, status: :ok
+      return
+    rescue
+    end
   end
   
   private
