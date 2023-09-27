@@ -6,12 +6,9 @@ export default function FollowingButton() {
       <button
         type="button"
         title="following"
-        className="text-deep-lilac rounded-[5px] bg-white h-10 w-full flex flex-row items-center"
+        className="text-deep-lilac rounded-[5px] bg-white h-10 3xl:w-[157px] w-[calc(157px/6*5)] flex flex-row items-center text-[14px] border border-deep-lilac"
       >
-        <span className="w-full">Đang theo dõi</span>
-        <span className="mr-[14px]">
-          <FaChevronDown size={13} />
-        </span>
+        <span className="w-full">Following</span>
       </button>
     </div>
   );

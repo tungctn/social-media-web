@@ -14,8 +14,6 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
   const router = useRouter();
 
   const handleClickUser: MouseEventHandler<HTMLDivElement> = () => {
-    console.log("profile");
-
     router.push(`/profile/${currentUser.id}`);
   };
 
@@ -46,7 +44,7 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
           <Menu />
         </div>
       </header>
-      <main className="3xl:w-[calc(100%-367px)] w-[calc(100%-300px)] 3xl:ml-[367px] ml-[300px] rounded-l-[30px] bg-cultured">
+      <main className="3xl:w-[calc(100%-367px)] w-[calc(100%-300px)] 3xl:ml-[367px] ml-[300px]">
         {children}
       </main>
     </div>
