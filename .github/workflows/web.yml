@@ -37,8 +37,7 @@ jobs:
       #     echo "NODE_PATH=$(pwd)/api" >> $GITHUB_ENV
       #     cd api
       - name: Change to api directory
-        run: |
-          working-directory: ./api
+        run: cd ../api
 
       - name: Set up Ruby 3.0.2
         uses: ruby/setup-ruby@v1
@@ -48,7 +47,7 @@ jobs:
         run: |
           gem install bundler
           bundle install
-        # working-directory: api
+        working-directory: api
       - name: Set env
         run: |
           touch application.yml
