@@ -13,17 +13,21 @@ export default function SocialMediaButtons({
     <>
       <Button customClassName="!bg-white !text-black">
         <div className={`flex gap-5 items-center justify-center`}>
-          <FcGoogle size={33} />
+          <span className="3xl:text-[33px] text-[calc(33px/6*5)]">
+            <FcGoogle />
+          </span>
           <span>Sign in with Google</span>
         </div>
       </Button>
       <Button
         customClassName={`!bg-white ${
-          !hasFacebookLabel ? "3xl:!w-[57px] !w-[calc(57px/6*5)]" : ""
+          !hasFacebookLabel ? "3xl:!w-[57px] 2xl:!w-[calc(57px/6*5)]" : ""
         }`}
       >
         <div className={`flex gap-5 items-center justify-center`}>
-          <FaFacebook size={33} color="#1877F2" />
+          <span className="3xl:text-[33px] text-[calc(33px/6*5)]">
+            <FaFacebook color="#1877F2" />
+          </span>
           {hasFacebookLabel && (
             <span className="text-black">Sign in with Facebook</span>
           )}

@@ -10,7 +10,7 @@ import PostsList from "@/partials/app/HomePage/PostsList";
 export default function Home() {
   return (
     <DefaultLayout>
-      <div className="flex relative">
+      <div className="flex relative rounded-l-[30px] bg-cultured">
         <div className="px-[50px] w-full mt-[85px]">
           <div className="mb-[27px]">
             <WelcomBox />

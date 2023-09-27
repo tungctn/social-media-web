@@ -56,12 +56,13 @@ export default function SignIn() {
           <div className="flex flex-col 3xl:gap-5 gap-4">
             <Input
               register={register}
-              name="username"
-              title="Username"
+              name="email"
+              type="email"
+              title="Email"
               rules={{
                 required: true,
               }}
-              error={errors.username?.message}
+              error={errors.email?.message}
             />
             <Input
               register={register}
