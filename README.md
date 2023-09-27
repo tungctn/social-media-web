@@ -224,7 +224,7 @@ GET /api/users/:id
 
 ```http
 Authorization: Bearer YOUR_TOKEN
-GET /api/users/info
+GET /api/user_infos
 ```
 
 | Header          | Type     | Description                                   |
@@ -247,8 +247,8 @@ GET /api/users/info
 
 ```http
 Authorization: Bearer YOUR_TOKEN
-POST /api/users/info
-PUT /api/users/info
+POST /api/user_infos
+PUT /api/user_infos
 ```
 
 | Header          | Type     | Description                                   |
@@ -288,8 +288,8 @@ PUT /api/users/info
 
 ```http
 Authorization: Bearer YOUR_TOKEN
-DELETE /api/users/info/avatar
-DELETE /api/users/info/background
+DELETE /api/user_infos/avatar
+DELETE /api/user_infos/background
 ```
 
 | Header          | Type     | Description                                   |
