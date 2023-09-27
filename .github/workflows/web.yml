@@ -1,4 +1,4 @@
-name: Deploy Next.js site to Pages
+name: Deploy Web App to Cloud Server
 
 on:
   # Runs on pushes targeting the default branch
@@ -19,37 +19,27 @@ jobs:
   # Build package
   build:
     runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: ./web
     needs: test
-    strategy:
-      matrix:
-        node-version: [18.x]
 
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js18
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
-
-      # Cache node_modules
-      - uses: actions/cache@v3
-        with:
-          path: web/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('web/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version: 18.x
       - run: npm ci
-        working-directory: web
-      # - run: |
-      #     touch .env
-      #     echo "${{ secrets.PROD_ENV_FILE }}" > .env
-      #   working-directory: web
       - run: npm run build
-        working-directory: web
-      - name: Change to web directory
+      # - name: Change to web directory
+      #   run: |
+      #     echo "NODE_PATH=$(pwd)/api" >> $GITHUB_ENV
+      #     cd api
+      - name: Change to api directory
         run: |
-          echo "NODE_PATH=$(pwd)/api" >> $GITHUB_ENV
-          cd api
+          working-directory: ./api
+
       - name: Set up Ruby 3.0.2
         uses: ruby/setup-ruby@v1
         with:
@@ -58,13 +48,12 @@ jobs:
         run: |
           gem install bundler
           bundle install
-        working-directory: api
+        # working-directory: api
       - name: Set env
         run: |
           touch application.yml
           echo "${{ secrets.PROD_BACKEND }}" > application.yml
         working-directory: api/config
-
 
   # Deployment frontend
   deploy:
