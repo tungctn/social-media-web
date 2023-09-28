@@ -2,7 +2,11 @@ name: Deploy Web App to Cloud Server
 
 on:
   # Runs on pushes targeting the default branch
+  # path web and api
   push:
+    paths:
+      - "web/**"
+      - "api/**"
     branches: ["main"]
 
 permissions:

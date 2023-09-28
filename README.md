@@ -136,6 +136,15 @@ $ sudo systemctl status puma.service
 
 - [x] [Create user](#create-user)
 - [x] [Get user detail](#get-user-detail)
+- [ ] [Update user](#update-user)
+- [ ] [Delete user](#delete-user)
+
+### Post module
+
+- [ ] [Create post](#create-post)
+- [ ] [Get post detail](#get-post-detail)
+- [ ] [Update post](#update-post)
+- [ ] [Delete post](#delete-post)
 
 ## API Reference
 
@@ -173,11 +182,20 @@ POST /api/auth/login
 POST /api/users
 ```
 
-| Parameter  | Type     | Description  |
-| :--------- | :------- | :----------- |
-| `email`    | `string` | **Required** |
-| `password` | `string` | **Required** |
-| `name`     | `string` | **Required** |
+| Parameter             | Type       | Description                                       |
+| :-------------------- | :--------- | :------------------------------------------------ |
+| `first_name*`         | `string`   | Họ                                                |
+| `last_name*`          | `string`   | Tên                                               |
+| `full_name*`          | `string`   | Họ và tên                                         |
+| `email`               | `string`   | Email                                             |
+| `phone_number`        | `string`   | SĐT                                               |
+| `date_of_birth`       | `date`     | Ngày sinh                                         |
+| `gender`              | `integer`  | 0 - Nam, 1 - Nữ, 2 - Không rõ                     |
+| `avatar_url`          | `string`   | Ảnh đại diện                                      |
+| `background_url`      | `string`   | Ảnh bìa                                           |
+| `address`             | `string`   | Địa chỉ                                           |
+| `bio`                 | `string`   | Mô tả ngắn gọn                                    |
+| `relationship_status` | `integer`  | Tình trạng: 1 - Độc thân, 2 - Kết hôn, 3 - Hẹn hò |
 
 ```javascript
 {
@@ -185,6 +203,9 @@ POST /api/users
     "message": "User created successfully",
     "data": {
         "user": {
+            "first_name": "Nguyen",
+            "last_name": "Van A",
+            "full_name": "Nguyen Van A",
             ...
         },
     },
@@ -217,6 +238,137 @@ GET /api/users/:id
     },
 }
 ```
+
+#### Update user
+
+```http
+Authorization: Bearer YOUR_TOKEN
+PATCH /api/users/:id
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `id`           | `string` | **Required** |
+
+| Parameter  | Type     | Description  |
+| :--------- | :------- | :----------- |
+| `email`    | `string` | **Optional** |
+| `password` | `string` | **Optional** |
+| `name`     | `string` | **Optional** |
+| `avatar`   | `string` | **Optional** |
+
+```javascript
+{
+    "success": true,
+    "message": "User updated successfully",
+    "data": {
+        "user": {
+            ...
+        },
+    },
+}
+```
+
+#### Delete user
+
+```http
+Authorization: Bearer YOUR_TOKEN
+DELETE /api/users/:id
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `id`           | `string` | **Required** |
+
+```javascript
+{
+    "success": true,
+    "message": "User deleted successfully",
+}
+```
+
+### Post module
+
+#### Create post
+
+```http
+Authorization: Bearer YOUR_TOKEN
+POST /api/posts
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Parameter  | Type     | Description  |
+| :--------- | :------- | :----------- |
+| `content`  | `string` | **Required** |
+| `image`    | `string` | **Optional** |
+
+```javascript
+{
+    "success": true,
+    "message": "Post created successfully",
+    "data": {
+        "post": {
+            ...
+        },
+    },
+}
+```
+
+#### Get post detail
+
+```http
+Authorization: Bearer YOUR_TOKEN
+POST /api/posts/:id
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `id`           | `string` | **Required** |
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+#### Update post
+
+```http
+Authorization: Bearer YOUR_TOKEN
+PATCH /api/posts/:id
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `id`           | `string` | **Required** |
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+#### Delete post
+
+```http
+Authorization: Bearer YOUR_TOKEN
+DELETE /api/posts/:id
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `id`           | `string` | **Required** |
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
 ### User Info module
 
