@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  skip_before_action :authenticate_request, only: [:create]
+  skip_before_action :authenticate_request, only: [:register, :info_index]
 
-  def create
+  def register
     @user = User.new(user_params)
     if @user.save
       token = jwt_encode({user_id: @user.id})
@@ -12,13 +12,26 @@ class UsersController < ApplicationController
     end
   end
 
-  #region Hồ sơ của người dùng
+  #region Thông tin người dùng
 
-  # lấy thông tin hồ sơ người dùng hiện tại
+  # lấy thông tin người dùng bất kì
   # created by: ttanh (24/09/2023)
   def info_index
     begin
-      user_info = @current_user.user_info
+      user = User.find_by_id(params[:id])
+
+      if !user
+        render json: { errors: "Không tìm thấy người dùng" }, status: :bad_request
+        return
+      end
+
+      user_info = user.user_info
+
+      if !user_info
+        render json: { errors: "Thông tin người dùng chưa tồn tại" }, status: :bad_request
+        return
+      end
+
       avatar_url = user_info.avatar.url if user_info.avatar.attached?
       background_url = user_info.background.url if user_info.background.attached?
 
@@ -31,7 +44,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # thêm thông tin hồ sơ người dùng hiện tại
+  # thêm thông tin người dùng hiện tại
   # created by: ttanh (24/09/2023)
   def info_create
     begin
@@ -55,15 +68,22 @@ class UsersController < ApplicationController
     end
   end
 
-  # cập nhật thông tin hồ sơ người dùng hiện tại
+  # cập nhật thông tin người dùng hiện tại
   # created by: ttanh (24/09/2023)
   def info_update
-    begin
-      if !@current_user.user_info
-        render json: { errors: "Thông tin người dùng chưa tồn tại!" }, status: :bad_request
+    # begin
+      if @current_user.update(password_update)
+      else
+        render json: { errors: @current_user.errors.full_messages },
+              status: :bad_request
         return
       end
-      
+
+      if !@current_user.user_info
+        render json: { message: "Cập nhật mật khẩu thành công, nhưng người dùng chưa có thông tin!" }, status: :ok
+        return
+      end
+
       user_info = @current_user.user_info
       if user_info.update(user_info_params)
         render json: { message: "Thành công!" }, status: :ok
@@ -71,8 +91,8 @@ class UsersController < ApplicationController
         render json: { errors: user_info.errors.full_messages },
               status: :bad_request
       end
-    rescue
-    end
+    # rescue
+    # end
   end
 
   # xóa avatar
@@ -126,7 +146,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.permit(:name, :email, :password, :password_confirmation)
+    params.permit(:email, :password, :password_confirmation)
   end
 
   def user_info_params
@@ -135,5 +155,9 @@ class UsersController < ApplicationController
       :date_of_birth, :gender, :avatar,
       :background, :join_date, :last_login,
       :address, :bio, :relationship_status)
+  end
+
+  def password_update
+    params.permit(:password, :password_confirmation)
   end
 end

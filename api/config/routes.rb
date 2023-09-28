@@ -1,15 +1,15 @@
 Rails.application.routes.draw do
-  post "/auth/login", to: "authentication#login"
-
+  
   # thêm prefix
   scope 'api' do
-    resources :users
-  
+    post "/auth/login", to: "authentication#login"
+    post "/auth/register", to: "users#register"
+    
     #thông tin người dùng
-    get "/user_infos", to: "users#info_index"
-    post "/user_infos", to: "users#info_create"
-    put "/user_infos", to: "users#info_update"
-    delete "/user_infos/avatar", to: "users#info_delete_avatar"
-    delete "/user_infos/background", to: "users#info_delete_background"
+    get "/users/:id", to: "users#info_index"
+    post "/users", to: "users#info_create"
+    put "/users", to: "users#info_update"
+    delete "/users/avatar", to: "users#info_delete_avatar"
+    delete "/users/background", to: "users#info_delete_background"
   end
 end
