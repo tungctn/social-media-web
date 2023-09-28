@@ -174,6 +174,31 @@ POST /api/auth/login
 }
 ```
 
+#### Register
+
+```http
+POST /api/auth/register
+```
+
+| Parameter  | Type     | Description  |
+| :--------- | :------- | :----------- |
+| `email`    | `string` | **Required** |
+| `password` | `string` | **Required** |
+| `password_confirmation` | `string` | **Required** |
+
+```javascript
+{
+    "success": true,
+    "message": "Login successfully",
+    "data": {
+        "user": {
+            ...
+        },
+        "token": "..."
+    },
+}
+```
+
 ### User module
 
 #### Create user
@@ -181,18 +206,19 @@ POST /api/auth/login
 ```http
 POST /api/users
 ```
+Dùng form-data để truyền avatar, background
 
 | Parameter             | Type       | Description                                       |
 | :-------------------- | :--------- | :------------------------------------------------ |
-| `first_name*`         | `string`   | Họ                                                |
-| `last_name*`          | `string`   | Tên                                               |
-| `full_name*`          | `string`   | Họ và tên                                         |
+| `first_name`         | `string`   | Họ                                                |
+| `last_name`          | `string`   | Tên                                               |
+| `full_name`          | `string`   | Họ và tên                                         |
 | `email`               | `string`   | Email                                             |
 | `phone_number`        | `string`   | SĐT                                               |
 | `date_of_birth`       | `date`     | Ngày sinh                                         |
 | `gender`              | `integer`  | 0 - Nam, 1 - Nữ, 2 - Không rõ                     |
-| `avatar_url`          | `string`   | Ảnh đại diện                                      |
-| `background_url`      | `string`   | Ảnh bìa                                           |
+| `avatar`          | `file_ảnh`   | Ảnh đại diện                                      |
+| `background`      | `file_ảnh`   | Ảnh bìa                                           |
 | `address`             | `string`   | Địa chỉ                                           |
 | `bio`                 | `string`   | Mô tả ngắn gọn                                    |
 | `relationship_status` | `integer`  | Tình trạng: 1 - Độc thân, 2 - Kết hôn, 3 - Hẹn hò |
@@ -243,7 +269,7 @@ GET /api/users/:id
 
 ```http
 Authorization: Bearer YOUR_TOKEN
-PATCH /api/users/:id
+PUT /api/users
 ```
 
 | Header          | Type     | Description                                   |
@@ -256,10 +282,20 @@ PATCH /api/users/:id
 
 | Parameter  | Type     | Description  |
 | :--------- | :------- | :----------- |
-| `email`    | `string` | **Optional** |
 | `password` | `string` | **Optional** |
-| `name`     | `string` | **Optional** |
-| `avatar`   | `string` | **Optional** |
+| `password_confirmation` | `string` | **Optional** |
+| `first_name`         | `string`   | Họ                                                |
+| `last_name`          | `string`   | Tên                                               |
+| `full_name`          | `string`   | Họ và tên                                         |
+| `email`               | `string`   | Email - email này là email hiển thị, ko phải email tài khoản |
+| `phone_number`        | `string`   | SĐT                                               |
+| `date_of_birth`       | `date`     | Ngày sinh                                         |
+| `gender`              | `integer`  | 0 - Nam, 1 - Nữ, 2 - Không rõ                     |
+| `avatar`          | `file_ảnh`   | Ảnh đại diện                                      |
+| `background`      | `file_ảnh`   | Ảnh bìa                                           |
+| `address`             | `string`   | Địa chỉ                                           |
+| `bio`                 | `string`   | Mô tả ngắn gọn                                    |
+| `relationship_status` | `integer`  | Tình trạng: 1 - Độc thân, 2 - Kết hôn, 3 - Hẹn hò |
 
 ```javascript
 {
@@ -273,25 +309,25 @@ PATCH /api/users/:id
 }
 ```
 
-#### Delete user
+#### Delete avatar, background
 
 ```http
 Authorization: Bearer YOUR_TOKEN
-DELETE /api/users/:id
+DELETE /api/user_infos/avatar
+DELETE /api/user_infos/background
 ```
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Path Variables | Type     | Description  |
-| :------------- | :------- | :----------- |
-| `id`           | `string` | **Required** |
-
 ```javascript
 {
     "success": true,
-    "message": "User deleted successfully",
+    "message": "User info",
+    "data": {
+        "message": "Thành công"
+    },
 }
 ```
 
@@ -369,94 +405,6 @@ DELETE /api/posts/:id
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
-
-### User Info module
-
-#### Get user info
-
-```http
-Authorization: Bearer YOUR_TOKEN
-GET /api/user_infos
-```
-
-| Header          | Type     | Description                                   |
-| :-------------- | :------- | :-------------------------------------------- |
-| `Authorization` | `string` | **Required.** Bearer Token for authentication |
-
-```javascript
-{
-    "success": true,
-    "message": "User info",
-    "data": {
-        "user_info": {
-            ...
-        },
-    },
-}
-```
-
-#### Create user info
-
-```http
-Authorization: Bearer YOUR_TOKEN
-POST /api/user_infos
-PUT /api/user_infos
-```
-
-| Header          | Type     | Description                                   |
-| :-------------- | :------- | :-------------------------------------------- |
-| `Authorization` | `string` | **Required.** Bearer Token for authentication |
-
-| Parameter             | Type       | Description                                       |
-| :-------------------- | :--------- | :------------------------------------------------ |
-| `first_name*`         | `string`   | Họ                                                |
-| `last_name*`          | `string`   | Tên                                               |
-| `full_name*`          | `string`   | Họ và tên                                         |
-| `email`               | `string`   | Email                                             |
-| `phone_number`        | `string`   | SĐT                                               |
-| `date_of_birth`       | `date`     | Ngày sinh                                         |
-| `gender`              | `integer`  | 0 - Nam, 1 - Nữ, 2 - Không rõ                     |
-| `avatar_url`          | `string`   | Ảnh đại diện                                      |
-| `background_url`      | `string`   | Ảnh bìa                                           |
-| `join_date`           | `datetime` | Ngày tham gia                                     |
-| `last_login`          | `datetime` | Lần đăng nhập cuối                                |
-| `address`             | `string`   | Địa chỉ                                           |
-| `bio`                 | `string`   | Mô tả ngắn gọn                                    |
-| `relationship_status` | `integer`  | Tình trạng: 1 - Độc thân, 2 - Kết hôn, 3 - Hẹn hò |
-
-```javascript
-{
-    "success": true,
-    "message": "User info",
-    "data": {
-        "user_info": {
-            ...
-        },
-    },
-}
-```
-
-#### Delete avatar, background
-
-```http
-Authorization: Bearer YOUR_TOKEN
-DELETE /api/user_infos/avatar
-DELETE /api/user_infos/background
-```
-
-| Header          | Type     | Description                                   |
-| :-------------- | :------- | :-------------------------------------------- |
-| `Authorization` | `string` | **Required.** Bearer Token for authentication |
-
-```javascript
-{
-    "success": true,
-    "message": "User info",
-    "data": {
-        "message": "Thành công"
-    },
-}
-```
 
 ## Architecture Design
 
