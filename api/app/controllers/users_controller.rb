@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   # lấy thông tin người dùng bất kì
   # created by: ttanh (24/09/2023)
   def info_index
-    begin
+    # begin
       user = User.find_by_id(params[:id])
 
       if !user
@@ -40,14 +40,14 @@ class UsersController < ApplicationController
       user_info_merge["background_url"] = background_url
       
       render json: { user_info: user_info_merge }, status: :ok
-    rescue
-    end
+    # rescue
+    # end
   end
 
   # thêm thông tin người dùng hiện tại
   # created by: ttanh (24/09/2023)
   def info_create
-    begin
+    # begin
       if @current_user.user_info 
         render json: { errors: "Thông tin người dùng đã tồn tại!" }, status: :bad_request
         return
@@ -64,8 +64,8 @@ class UsersController < ApplicationController
         render json: { errors: user_info.errors.full_messages },
               status: :bad_request
       end
-    rescue
-    end
+    # rescue
+    # end
   end
 
   # cập nhật thông tin người dùng hiện tại
@@ -98,7 +98,7 @@ class UsersController < ApplicationController
   # xóa avatar
   # created by: ttanh (26/09/2023)
   def info_delete_avatar
-    begin
+    # begin
       user_info = @current_user.user_info
 
       if !user_info
@@ -114,8 +114,8 @@ class UsersController < ApplicationController
       user_info.avatar.purge
       render json: { message: "Thành công!" }, status: :ok
       return
-    rescue
-    end
+    # rescue
+    # end
   end
 
   # xóa background
