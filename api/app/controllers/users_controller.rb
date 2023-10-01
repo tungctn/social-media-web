@@ -146,7 +146,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.permit(:email, :password, :password_confirmation)
+    params.permit(:email, :password)
   end
 
   def user_info_params
@@ -158,6 +158,6 @@ class UsersController < ApplicationController
   end
 
   def password_update
-    params.permit(:password, :password_confirmation)
+    params.permit(:password)
   end
 end
