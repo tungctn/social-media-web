@@ -30,16 +30,9 @@ class UsersController < ApplicationController
       if !user_info
         render json: { errors: "Thông tin người dùng chưa tồn tại" }, status: :bad_request
         return
+      else 
+        render json: { user_info: user_info }, status: :ok
       end
-
-      avatar_url = user_info.avatar.url if user_info.avatar.attached?
-      background_url = user_info.background.url if user_info.background.attached?
-
-      user_info_merge = user_info.as_json
-      user_info_merge["avatar_url"] = avatar_url
-      user_info_merge["background_url"] = background_url
-      
-      render json: { user_info: user_info_merge }, status: :ok
     # rescue
     # end
   end
@@ -58,6 +51,8 @@ class UsersController < ApplicationController
       })
       
       user_info = UserInfo.new(combined_params)
+      user_info.avatar_url = user_info.avatar.url if user_info.avatar.attached?
+      user_info.background_url = user_info.background.url if user_info.background.attached?
       if user_info.save
         render json: { message: "Thành công!" }, status: :ok
       else
@@ -87,6 +82,9 @@ class UsersController < ApplicationController
       user_info = @current_user.user_info
       if user_info.update(user_info_params)
         render json: { message: "Thành công!" }, status: :ok
+        user_info.avatar_url = user_info.avatar.url if user_info.avatar.attached?
+        user_info.background_url = user_info.background.url if user_info.background.attached?
+        user_info.save 
       else
         render json: { errors: user_info.errors.full_messages },
               status: :bad_request
@@ -112,6 +110,8 @@ class UsersController < ApplicationController
       end
 
       user_info.avatar.purge
+      user_info.avatar_url = nil
+      user_info.save
       render json: { message: "Thành công!" }, status: :ok
       return
     # rescue
@@ -135,6 +135,8 @@ class UsersController < ApplicationController
       end
 
       user_info.background.purge
+      user_info.background_url = nil
+      user_info.save
       render json: { message: "Thành công!" }, status: :ok
       return
     rescue
