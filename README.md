@@ -184,7 +184,6 @@ POST /api/auth/register
 | :--------- | :------- | :----------- |
 | `email`    | `string` | **Required** |
 | `password` | `string` | **Required** |
-| `password_confirmation` | `string` | **Required** |
 
 ```javascript
 {
@@ -283,7 +282,6 @@ PUT /api/users
 | Parameter  | Type     | Description  |
 | :--------- | :------- | :----------- |
 | `password` | `string` | **Optional** |
-| `password_confirmation` | `string` | **Optional** |
 | `first_name`         | `string`   | Họ                                                |
 | `last_name`          | `string`   | Tên                                               |
 | `full_name`          | `string`   | Họ và tên                                         |
