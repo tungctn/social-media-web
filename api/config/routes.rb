@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     
     #thông tin người dùng
     get "/users/:id", to: "users#info_index"
-    post "/users", to: "users#info_create"
+    get "/users", to: "users#info_current_user"
     put "/users", to: "users#info_update"
     delete "/users/avatar", to: "users#info_delete_avatar"
     delete "/users/background", to: "users#info_delete_background"
