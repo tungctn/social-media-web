@@ -1,5 +1,6 @@
+"use client";
+
 import { useDispatch, useSelector } from "react-redux";
-import { redirect } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 import { checkLogedInAction } from "@/store/actions/authActions";
 

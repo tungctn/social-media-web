@@ -17,7 +17,8 @@ function DefaultLayout({ children }: DefaultLayoutProps) {
   const auth = useSelector((state: any) => state.auth);
 
   useEffect(() => {
-    !auth.isLogedIn &&
+    auth.isLogedIn !== undefined &&
+      !auth.isLogedIn &&
       setTimeout(() => {
         router.push("/sign-in");
       }, 1000);
@@ -60,8 +61,10 @@ function DefaultLayout({ children }: DefaultLayoutProps) {
             {children}
           </main>
         </>
-      ) : (
+      ) : auth.isLogedIn !== undefined ? (
         <UnAuthenticatedError />
+      ) : (
+        <></>
       )}
     </div>
   );
