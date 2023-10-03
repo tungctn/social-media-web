@@ -1,7 +1,6 @@
 import { getCurrentUserInfos, signIn } from "@/services/userServices";
 import { CHECK_LOGED_IN, LOG_IN } from "../constants/authTypes";
 import { toast } from "react-toastify";
-import { redirect } from "next/navigation";
 
 const logInAction =
   (userAccount: { email: string; password: string }) =>
