@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     #bài viết
     get "/posts/:id", to: "posts#show"
     post "/posts", to: "posts#create"
-
+    put "/posts/:id", to: "posts#update"
+    delete "/posts/:id", to: "posts#delete"
   end
 end
