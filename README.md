@@ -384,7 +384,7 @@ POST /api/posts
 | :--------- | :------- | :----------- |
 | `content`  | `string` | **Required** |
 | `user_id`    | `int` | **Required** Đăng bài lên trang cá nhân của ông này|
-| `image_ids`    | `array` | **Optional** |
+| `image_ids`    | `Array` | **Optional** |
 
 ```javascript
 {
@@ -412,7 +412,7 @@ GET /api/posts/:id
 
 ```http
 Authorization: Bearer YOUR_TOKEN
-PATCH /api/posts/:id
+PUT /api/posts/:id
 ```
 
 | Path Variables | Type     | Description  |
@@ -422,6 +422,11 @@ PATCH /api/posts/:id
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Parameter  | Type     | Description  |
+| :--------- | :------- | :----------- |
+| `content`  | `string` | **Optional** |
+| `image_ids`    | `Array` | **Optional** có ảnh thì nhớ truyền hết id lên|
 
 #### Delete post
 
