@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_28_140201) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_02_234630) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -39,12 +39,62 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_28_140201) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "url", size: :long, comment: "đường dẫn tới ảnh"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "post_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "post_id"
+    t.bigint "user_id"
+    t.text "content", size: :long, comment: "Nội dung comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_post_comments_on_post_id"
+    t.index ["user_id"], name: "index_post_comments_on_user_id"
+  end
+
+  create_table "post_images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "post_id"
+    t.bigint "image_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["image_id"], name: "index_post_images_on_image_id"
+    t.index ["post_id"], name: "index_post_images_on_post_id"
+  end
+
+  create_table "post_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "post_id"
+    t.bigint "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_post_tags_on_post_id"
+    t.index ["tag_id"], name: "index_post_tags_on_tag_id"
+  end
+
+  create_table "posts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", comment: "Bài viết được đặt trên Profile User này"
+    t.bigint "sender_id", comment: "Bài viết được gửi từ ai, có thể là chính user_id"
+    t.text "content", size: :long, comment: "Nội dung bài viết"
+    t.integer "status", comment: "Trạng thái bài viết: Hoạt động, tạm khóa, ..."
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sender_id"], name: "index_posts_on_sender_id"
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "text", comment: "Tên tag"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "user_infos", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.string "first_name", comment: "Họ"
     t.string "last_name", comment: "Tên"
     t.string "full_name", comment: "Tên ghép từ Họ và Tên"
-    t.string "email", comment: "Email hiển thị lên trang cá nhân"
     t.string "phone_number", comment: "Số điện thoại"
     t.date "date_of_birth", comment: "Ngày sinh"
     t.integer "gender", limit: 1, comment: "Giới tính"
@@ -55,6 +105,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_28_140201) do
     t.integer "relationship_status", limit: 1, comment: "Tình trạng mối quan hệ: Độc thân, hẹn hò, ..."
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "background_url", size: :long
+    t.text "avatar_url", size: :long
     t.index ["user_id"], name: "index_user_infos_on_user_id"
   end
 
@@ -69,5 +121,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_28_140201) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "post_comments", "posts"
+  add_foreign_key "post_comments", "users"
+  add_foreign_key "post_images", "images"
+  add_foreign_key "post_images", "posts"
+  add_foreign_key "post_tags", "posts"
+  add_foreign_key "post_tags", "tags"
+  add_foreign_key "posts", "users"
+  add_foreign_key "posts", "users", column: "sender_id"
   add_foreign_key "user_infos", "users"
 end

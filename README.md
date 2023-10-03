@@ -184,7 +184,6 @@ POST /api/auth/register
 | :--------- | :------- | :----------- |
 | `email`    | `string` | **Required** |
 | `password` | `string` | **Required** |
-| `password_confirmation` | `string` | **Required** |
 
 ```javascript
 {
@@ -200,51 +199,14 @@ POST /api/auth/register
 ```
 
 ### User module
-
-#### Create user
-
-```http
-POST /api/users
-```
-Dùng form-data để truyền avatar, background
-
-| Parameter             | Type       | Description                                       |
-| :-------------------- | :--------- | :------------------------------------------------ |
-| `first_name`         | `string`   | Họ                                                |
-| `last_name`          | `string`   | Tên                                               |
-| `full_name`          | `string`   | Họ và tên                                         |
-| `email`               | `string`   | Email                                             |
-| `phone_number`        | `string`   | SĐT                                               |
-| `date_of_birth`       | `date`     | Ngày sinh                                         |
-| `gender`              | `integer`  | 0 - Nam, 1 - Nữ, 2 - Không rõ                     |
-| `avatar`          | `file_ảnh`   | Ảnh đại diện                                      |
-| `background`      | `file_ảnh`   | Ảnh bìa                                           |
-| `address`             | `string`   | Địa chỉ                                           |
-| `bio`                 | `string`   | Mô tả ngắn gọn                                    |
-| `relationship_status` | `integer`  | Tình trạng: 1 - Độc thân, 2 - Kết hôn, 3 - Hẹn hò |
-
-```javascript
-{
-    "success": true,
-    "message": "User created successfully",
-    "data": {
-        "user": {
-            "first_name": "Nguyen",
-            "last_name": "Van A",
-            "full_name": "Nguyen Van A",
-            ...
-        },
-    },
-}
-```
-
 #### Get user detail
 
 ```http
 Authorization: Bearer YOUR_TOKEN
 GET /api/users/:id
 ```
-
+Không truyền ID thì lấy thông tin qua token
+Còn truyền ID thì không cần token
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
@@ -271,23 +233,18 @@ GET /api/users/:id
 Authorization: Bearer YOUR_TOKEN
 PUT /api/users
 ```
+Dùng form-data để truyền avatar, background
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Path Variables | Type     | Description  |
-| :------------- | :------- | :----------- |
-| `id`           | `string` | **Required** |
-
 | Parameter  | Type     | Description  |
 | :--------- | :------- | :----------- |
 | `password` | `string` | **Optional** |
-| `password_confirmation` | `string` | **Optional** |
 | `first_name`         | `string`   | Họ                                                |
 | `last_name`          | `string`   | Tên                                               |
 | `full_name`          | `string`   | Họ và tên                                         |
-| `email`               | `string`   | Email - email này là email hiển thị, ko phải email tài khoản |
 | `phone_number`        | `string`   | SĐT                                               |
 | `date_of_birth`       | `date`     | Ngày sinh                                         |
 | `gender`              | `integer`  | 0 - Nam, 1 - Nữ, 2 - Không rõ                     |
