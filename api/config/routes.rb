@@ -10,7 +10,6 @@ Rails.application.routes.draw do
     get "/users", to: "users#info_current_user"
     put "/users", to: "users#info_update"
     delete "/users/avatar", to: "users#info_delete_avatar"
-    delete "/users/background", to: "users#info_delete_background"
 
     #upload ảnh
     get "/images/:id", to: "images#show"

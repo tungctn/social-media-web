@@ -13,7 +13,6 @@ class UserInfo < ApplicationRecord
   #thêm các phụ thuộc
   belongs_to :user
   has_one_attached :avatar
-  has_one_attached :background
 
   private
   def date_must_be_valid
