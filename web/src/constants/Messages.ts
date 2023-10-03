@@ -17,4 +17,5 @@ export const FORM: any = {
     required: "Please enter password again!",
     incorrect: "Confirmed password is incorrect!",
   },
+  csrfToken: {}
 };

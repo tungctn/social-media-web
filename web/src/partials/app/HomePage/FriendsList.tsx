@@ -9,8 +9,6 @@ export default function FriendsList() {
   const router = useRouter();
 
   const handleClickUser = (userId: number | string) => {
-    console.log(userId);
-
     router.push(`/profile/${userId}`);
   };
 

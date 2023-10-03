@@ -10,6 +10,10 @@ import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
 import IFormValues from "@/constants/IFormValues";
 import { FORM } from "@/constants/Messages";
 import SocialMediaButtons from "@/partials/app/Auth/SocialMediaButtons";
+import { useDispatch } from "react-redux";
+import { logInAction } from "@/store/actions/authActions";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 export default function SignIn() {
   const {
@@ -18,8 +22,19 @@ export default function SignIn() {
     formState: { errors },
     setError,
   } = useForm<IFormValues>();
+  const dispatch = useDispatch();
+  const router = useRouter();
 
-  const handleSubmitForm: SubmitHandler<IFormValues> = async (data) => {};
+  const handleSubmitForm: SubmitHandler<IFormValues> = (data: any) => {
+    try {
+      dispatch(logInAction(data) as any);
+      // router.push("/");
+    } catch (error) {
+      console.log(error);
+
+      toast.error("Sign in error!");
+    }
+  };
 
   const handleErrorForm: SubmitErrorHandler<IFormValues> = (errors: any) => {
     for (const name in errors) {
