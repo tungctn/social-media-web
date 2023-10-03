@@ -14,5 +14,6 @@ Rails.application.routes.draw do
     #upload ảnh
     get "/images/:id", to: "images#show"
     post "/images", to: "images#create"
+    delete "/images", to: "images#deletes"
   end
 end

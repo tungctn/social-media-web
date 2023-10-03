@@ -289,6 +289,84 @@ DELETE /api/users/avatar
 }
 ```
 
+### Image module
+
+Luồng riêng để tải ảnh
+
+#### Get image
+
+```http
+GET /api/images/:id
+```
+
+```javascript
+{
+    "success": true,
+    "message": "Post created successfully",
+    "data": {
+        "image": {
+            ...
+        },
+    },
+}
+```
+
+#### Create image
+
+```http
+Authorization: Bearer YOUR_TOKEN
+POST /api/images
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Parameter  | Type     | Description  |
+| :--------- | :------- | :----------- |
+| `image`    | `file ảnh` | **Required** |
+
+```javascript
+{
+    "success": true,
+    "message": "Post created successfully",
+    "data": {
+        "image": {
+            ...
+        },
+    },
+}
+```
+
+#### Delete images
+
+```http
+Authorization: Bearer YOUR_TOKEN
+DELETE /api/images
+```
+
+Chỉ xóa được những ảnh mà user đang đăng nhập tạo
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Parameter  | Type     | Description  |
+| :--------- | :------- | :----------- |
+| `ids`    | `Array` | **Required** |
+
+```javascript
+{
+    "success": true,
+    "message": "Post created successfully",
+    "data": {
+        "image": {
+            ...
+        },
+    },
+}
+```
+
 ### Post module
 
 #### Create post

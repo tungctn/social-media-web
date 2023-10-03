@@ -1,4 +1,6 @@
 class ImagesController < ApplicationController
+  skip_before_action :authenticate_request, only: [:show]
+
   #tạo ảnh
   #created by: ttanh (02/10/2023)
   def create
@@ -6,6 +8,7 @@ class ImagesController < ApplicationController
 
     if image.save
       image.url = image.image.url if image.image.attached?
+      image.user_id = @current_user.id
       image.save
       render json: { image: image }, status: :ok
     else
@@ -28,10 +31,17 @@ class ImagesController < ApplicationController
   def deletes
     ids = params[:ids]
 
-    if !ids
-      render json: { message: "Thành công!" }, status: :ok
-      return
+    for id in ids do
+      image = Image.find_by_id(id)
+      if image
+        if image.user_id == @current_user.id
+          image.image.purge
+          image.destroy
+        end
+      end
     end
+
+    render json: { message: "Thành công" }, status: :ok
   end
   private
 
