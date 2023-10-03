@@ -6,11 +6,13 @@ class UsersController < ApplicationController
     if @user.save
       token = jwt_encode({user_id: @user.id})
 
-      # tạo thông tin người dùng mặc định
-      info_param = {
+      # tạo thông tin người dùng
+      combined_params = user_info_params.merge({
         user_id: @user.id
-      }
-      user_info = UserInfo.new(info_param)
+      })
+      
+      user_info = UserInfo.new(combined_params)
+      user_info.avatar_url = user_info.avatar.url if user_info.avatar.attached?
       user_info.save
 
       render json: { user: user_info, token: token }, status: :created
@@ -34,7 +36,8 @@ class UsersController < ApplicationController
       end
 
       user_info = user.user_info
-      render json: { user_info: user_info }, status: :ok
+
+      render json: { user_info: user_info, email: user.email, user_id: user.id }, status: :ok
     # rescue
     # end
   end
@@ -50,7 +53,8 @@ class UsersController < ApplicationController
     end
 
     user_info = user.user_info
-    render json: { user_info: user_info }, status: :ok
+
+    render json: { user_info: user_info, email: user.email, user_id: user.id }, status: :ok
   end
 
   # cập nhật thông tin người dùng hiện tại
@@ -68,7 +72,6 @@ class UsersController < ApplicationController
       if user_info.update(user_info_params)
         render json: { message: "Thành công!" }, status: :ok
         user_info.avatar_url = user_info.avatar.url if user_info.avatar.attached?
-        user_info.background_url = user_info.background.url if user_info.background.attached?
         user_info.save 
       else
         render json: { errors: user_info.errors.full_messages },
@@ -98,26 +101,6 @@ class UsersController < ApplicationController
     # end
   end
 
-  # xóa background
-  # created by: ttanh (26/09/2023)
-  def info_delete_background
-    begin
-      user_info = @current_user.user_info
-
-      if !user_info.background.attached?
-        render json: { errors: "Người dùng chưa cài background" }, status: :bad_request
-        return
-      end
-
-      user_info.background.purge
-      user_info.background_url = nil
-      user_info.save
-      render json: { message: "Thành công!" }, status: :ok
-      return
-    rescue
-    end
-  end
-
   #endregion
 
   private
@@ -130,8 +113,8 @@ class UsersController < ApplicationController
     params.permit(:first_name, :last_name, 
       :full_name, :phone_number,
       :date_of_birth, :gender, :avatar,
-      :background, :join_date, :last_login,
-      :address, :bio, :relationship_status)
+      :join_date, :last_login, :bio,
+      :address, :relationship_status)
   end
 
   def password_update

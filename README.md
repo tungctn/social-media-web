@@ -184,6 +184,8 @@ POST /api/auth/register
 | :--------- | :------- | :----------- |
 | `email`    | `string` | **Required** |
 | `password` | `string` | **Required** |
+| `first_name` | `string` | **Required** |
+| `last_name` | `string` | **Required** |
 
 ```javascript
 {
@@ -207,6 +209,7 @@ GET /api/users/:id
 ```
 Không truyền ID thì lấy thông tin qua token
 Còn truyền ID thì không cần token
+
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
@@ -249,7 +252,6 @@ Dùng form-data để truyền avatar, background
 | `date_of_birth`       | `date`     | Ngày sinh                                         |
 | `gender`              | `integer`  | 0 - Nam, 1 - Nữ, 2 - Không rõ                     |
 | `avatar`          | `file_ảnh`   | Ảnh đại diện                                      |
-| `background`      | `file_ảnh`   | Ảnh bìa                                           |
 | `address`             | `string`   | Địa chỉ                                           |
 | `bio`                 | `string`   | Mô tả ngắn gọn                                    |
 | `relationship_status` | `integer`  | Tình trạng: 1 - Độc thân, 2 - Kết hôn, 3 - Hẹn hò |
@@ -266,12 +268,11 @@ Dùng form-data để truyền avatar, background
 }
 ```
 
-#### Delete avatar, background
+#### Delete avatar
 
 ```http
 Authorization: Bearer YOUR_TOKEN
-DELETE /api/user_infos/avatar
-DELETE /api/user_infos/background
+DELETE /api/users/avatar
 ```
 
 | Header          | Type     | Description                                   |
@@ -284,6 +285,84 @@ DELETE /api/user_infos/background
     "message": "User info",
     "data": {
         "message": "Thành công"
+    },
+}
+```
+
+### Image module
+
+Luồng riêng để tải ảnh
+
+#### Get image
+
+```http
+GET /api/images/:id
+```
+
+```javascript
+{
+    "success": true,
+    "message": "Post created successfully",
+    "data": {
+        "image": {
+            ...
+        },
+    },
+}
+```
+
+#### Create image
+
+```http
+Authorization: Bearer YOUR_TOKEN
+POST /api/images
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Parameter  | Type     | Description  |
+| :--------- | :------- | :----------- |
+| `image`    | `file ảnh` | **Required** |
+
+```javascript
+{
+    "success": true,
+    "message": "Post created successfully",
+    "data": {
+        "image": {
+            ...
+        },
+    },
+}
+```
+
+#### Delete images
+
+```http
+Authorization: Bearer YOUR_TOKEN
+DELETE /api/images
+```
+
+Chỉ xóa được những ảnh mà user đang đăng nhập tạo
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Parameter  | Type     | Description  |
+| :--------- | :------- | :----------- |
+| `ids`    | `Array` | **Required** |
+
+```javascript
+{
+    "success": true,
+    "message": "Post created successfully",
+    "data": {
+        "image": {
+            ...
+        },
     },
 }
 ```
@@ -304,7 +383,8 @@ POST /api/posts
 | Parameter  | Type     | Description  |
 | :--------- | :------- | :----------- |
 | `content`  | `string` | **Required** |
-| `image`    | `string` | **Optional** |
+| `user_id`    | `int` | **Required** Đăng bài lên trang cá nhân của ông này|
+| `image_ids`    | `array` | **Optional** |
 
 ```javascript
 {
@@ -321,17 +401,12 @@ POST /api/posts
 #### Get post detail
 
 ```http
-Authorization: Bearer YOUR_TOKEN
-POST /api/posts/:id
+GET /api/posts/:id
 ```
 
 | Path Variables | Type     | Description  |
 | :------------- | :------- | :----------- |
 | `id`           | `string` | **Required** |
-
-| Header          | Type     | Description                                   |
-| :-------------- | :------- | :-------------------------------------------- |
-| `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
 #### Update post
 
