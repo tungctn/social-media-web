@@ -11,6 +11,9 @@ import IFormValues from "@/constants/IFormValues";
 import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
 import { FORM } from "@/constants/Messages";
 import SocialMediaButtons from "@/partials/app/Auth/SocialMediaButtons";
+import { signUp } from "@/services/userServices";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function SignUp() {
   const {
@@ -19,8 +22,22 @@ export default function SignUp() {
     setError,
     formState: { errors },
   } = useForm<IFormValues>();
+  const router = useRouter();
 
-  const handleSubmitForm: SubmitHandler<IFormValues> = async (data) => {};
+  const handleSubmitForm: SubmitHandler<IFormValues> = async (data) => {
+    const newUser = {
+      name: data.username,
+      email: data.email,
+      password: data.password,
+    };
+
+    try {
+      const res = await signUp(newUser);
+      router.push("/sign-in");
+    } catch (error) {
+      toast.error("Sign up error!");
+    }
+  };
 
   const handleErrorForm: SubmitErrorHandler<IFormValues> = (errors: any) => {
     for (const name in errors) {

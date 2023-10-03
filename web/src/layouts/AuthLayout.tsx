@@ -1,14 +1,29 @@
-import { ReactNode } from "react";
+"use client";
+
+import { ReactNode, memo, useEffect } from "react";
 import backgroundImg from "@/assets/imgs/background.png";
 import Image, { StaticImageData } from "next/image";
 import Logo from "@/components/Logo";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 type AuthLayoutProps = {
   children: ReactNode;
   img: StaticImageData;
 };
 
-export default function AuthLayout({ children, img }: AuthLayoutProps) {
+function AuthLayout({ children, img }: AuthLayoutProps) {
+  const auth = useSelector((state: any) => state.auth);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (auth.isLogedIn) {
+      toast.info("You loged in!");
+      router.push("/");
+    }
+  }, [auth.isLogedIn]);
+
   return (
     <div className="flex items-center justify-center min-h-screen">
       <Image
@@ -36,3 +51,5 @@ export default function AuthLayout({ children, img }: AuthLayoutProps) {
     </div>
   );
 }
+
+export default memo(AuthLayout);
