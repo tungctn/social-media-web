@@ -383,7 +383,8 @@ POST /api/posts
 | Parameter  | Type     | Description  |
 | :--------- | :------- | :----------- |
 | `content`  | `string` | **Required** |
-| `image`    | `string` | **Optional** |
+| `user_id`    | `int` | **Required** Đăng bài lên trang cá nhân của ông này|
+| `image_ids`    | `array` | **Optional** |
 
 ```javascript
 {
@@ -400,17 +401,12 @@ POST /api/posts
 #### Get post detail
 
 ```http
-Authorization: Bearer YOUR_TOKEN
-POST /api/posts/:id
+GET /api/posts/:id
 ```
 
 | Path Variables | Type     | Description  |
 | :------------- | :------- | :----------- |
 | `id`           | `string` | **Required** |
-
-| Header          | Type     | Description                                   |
-| :-------------- | :------- | :-------------------------------------------- |
-| `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
 #### Update post
 

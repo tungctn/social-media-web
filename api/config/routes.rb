@@ -15,5 +15,10 @@ Rails.application.routes.draw do
     get "/images/:id", to: "images#show"
     post "/images", to: "images#create"
     delete "/images", to: "images#deletes"
+
+    #bài viết
+    get "/posts/:id", to: "posts#show"
+    post "/posts", to: "posts#create"
+
   end
 end
