@@ -1,15 +1,13 @@
+"use client";
+
 import Post from "@/utils/fakeData/Post";
 import Avatar from "./Avatar";
 import dayjs from "dayjs";
-import {
-  FaRegMessage,
-  FaRegShareFromSquare,
-  FaRegThumbsUp,
-  FaThumbsUp,
-} from "react-icons/fa6";
 import PostActions from "./PostActions";
 import Image from "next/image";
 import Link from "next/link";
+import PostReacts from "./PostReacts";
+import PostReactCounts from "./PostReactCounts";
 
 type PostCardProps = {
   post: Post;
@@ -49,37 +47,21 @@ export default function PostCard({ post }: PostCardProps) {
             />
           </div>
           <div className="text-[14px] px-6">
-            <div className="flex flex-row items-center justify-between border-b-light-silver pt-[7px] pb-[19px] text-spanish-gray border-b-[1px]">
-              <div className="flex flex-row gap-[5px] items-center cursor-pointer">
-                <div className="text-lenurple transition-all ease-linear hover:animate-shaking-like hover:scale-105">
-                  <FaThumbsUp size={30} />
-                </div>
-                <span>{post.likes} Likes</span>
-              </div>
-              <div className="flex flex-row gap-[11px]">
-                <span className="cursor-pointer">{post.comments} Comments</span>
-                <span className="cursor-pointer">{post.shares} Shares</span>
-              </div>
+            <div className="pt-[7px] pb-[19px] border-b-[1px] border-b-light-silver">
+              <PostReactCounts
+                likes={post.likes}
+                comments={post.comments}
+                shares={post.shares}
+                iconCustomClassName="3xl:text-[30px] text-[calc(30px/6*5)]"
+                customClassName="leading-0"
+              />
             </div>
-            <div className="flex flex-row items-center justify-around text-spanish-gray pt-3 pb-[21px]">
-              <div className="flex flex-row gap-[5px] items-center cursor-pointer">
-                <div className="transition-all ease-linear hover:text-deep-lilac hover:scale-105 hover:animate-shaking-like">
-                  <FaRegThumbsUp size={30} />
-                </div>
-                Like
-              </div>
-              <div className="flex flex-row gap-[5px] items-center cursor-pointer">
-                <div className="transition-all ease-linear hover:text-deep-lilac hover:scale-105 hover:animate-shaking-like">
-                  <FaRegMessage size={30} />
-                </div>
-                Comment
-              </div>
-              <div className="flex flex-row gap-[5px] items-center cursor-pointer">
-                <div className="transition-all ease-linear hover:text-deep-lilac hover:scale-105 hover:animate-shaking-like">
-                  <FaRegShareFromSquare size={30} />
-                </div>
-                Share
-              </div>
+            <div className="pt-3 pb-[21px]">
+              <PostReacts
+                iconCustomClassName="3xl:text-[30px] text-[calc(30px/6*5)]"
+                customClassName="leading-0"
+                postId={post.id}
+              />
             </div>
           </div>
         </div>

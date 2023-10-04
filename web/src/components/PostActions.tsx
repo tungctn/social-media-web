@@ -22,10 +22,10 @@ export default function PostActions() {
   return (
     <div className="relative">
       <div
-        className="text-deep-lilac cursor-pointer"
+        className="text-deep-lilac cursor-pointer 3xl:text-[25px] text-[calc(25px/6*5)] my-auto"
         onClick={handleClickButton}
       >
-        <FaEllipsis size={25} />
+        <FaEllipsis />
       </div>
       <div
         ref={actionsRef}

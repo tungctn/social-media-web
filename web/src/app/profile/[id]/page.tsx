@@ -18,7 +18,7 @@ export default function Profile({ params }: { params: { id: number } }) {
 
   useEffect(() => {
     auth.isLogedIn && getUserInfo();
-  }, [params.id]);
+  }, [params.id, auth.isLogedIn]);
 
   const getUserInfo = async () => {
     if (Number(params.id) === auth.user.user_id) {
