@@ -1,17 +1,11 @@
 class PostsController < ApplicationController
   skip_before_action :authenticate_request, only: [:show, :viewToday]
 
-  def show
-  end
-
   def create
     post = Post.new(create_post_params)
     post.sender_id = @current_user.id
     
-    # check user_id có tồn tại không
-    user = User.find_by_id(params[:user_id])
-    if !user
-      render json: { errors: "Không tìm thấy trang cá nhân của người dùng được đăng lên." }, status: :bad_request
+    if !get_user_by_id(params[:user_id])
       return
     end
 
@@ -36,26 +30,25 @@ class PostsController < ApplicationController
     #link ảnh vào bài viết
     id = params[:id]
 
-    post = Post.find_by_id(id)
-
-    if post
-      render json: { post: post, images: post.images }, status: :ok
-    else
-      render json: { errors: "Không tìm thấy bài viết" }, status: :bad_request
+    post = get_post_by_id(id)
+    
+    if !post
+      return
     end
+
+    render json: { post: post, images: post.images }, status: :ok
   end
 
   def update
     id = params[:id]
-    post = Post.find_by_id(id)
     
+    post = get_post_by_id(id)
+
     if !post
-      render json: { errors: "Không tìm thấy bài viết." }, status: :bad_request
       return
     end
-    
-    if @current_user.id != post.sender_id
-      render json: { errors: "Không có quyền." }, status: :forbidden
+
+    if !check_permisson_update_delete(post.sender_id)
       return
     end
 
@@ -81,15 +74,14 @@ class PostsController < ApplicationController
 
   def delete  
     id = params[:id]
-    post = Post.find_by_id(id)
     
+    post = get_post_by_id(id)
+
     if !post
-      render json: { errors: "Không tìm thấy bài viết." }, status: :bad_request
       return
     end
-    
-    if @current_user.id != post.sender_id
-      render json: { errors: "Không có quyền." }, status: :forbidden
+
+    if !check_permisson_update_delete(post.sender_id)
       return
     end
 
@@ -114,5 +106,16 @@ class PostsController < ApplicationController
 
   def update_post_params
     params.permit(:image_ids, :content)
+  end
+
+  # check bài viết tồn tại
+  # ttanh - 04/10/2023
+  def get_post_by_id(id)
+    post = Post.find_by_id(id)
+    if !post
+      render json: { errors: "Không tìm thấy bài viết với id: #{id}" }, status: :bad_request
+      return false
+    end
+    return post
   end
 end
