@@ -26,7 +26,7 @@ class PostsController < ApplicationController
       return
     end
 
-    render json: { post: post, images: post.images }, status: :ok
+    render json: { post: post, images: post.images, comment: post.post_comments }, status: :ok
   end
 
   def get_all
