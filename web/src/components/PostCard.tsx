@@ -23,12 +23,12 @@ export default function PostCard({ post }: PostCardProps) {
           <div className="pt-6 px-6 flex flex-row items-start justify-between">
             <div className="flex flex-row gap-[14px] items-center">
               <Link href={`/profile/${post.userId}`}>
-                <Avatar size={50} src={post.user.avatar} />
+                <Avatar size={50} src={post.user.avatar_url} />
               </Link>
               <div className="flex flex-col">
                 <Link href={`/profile/${post.userId}`}>
                   <span className="text-xl text-deep-lilac font-bold">
-                    {post.user.username}
+                    {post.user.full_name}
                   </span>
                 </Link>
                 <time className="first-letter:uppercase text-xs text-spanish-gray">
