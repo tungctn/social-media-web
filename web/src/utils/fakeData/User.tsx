@@ -59,4 +59,85 @@ export const users: User[] = [
   },
 ];
 
+export const friends: User[] = [
+  {
+    user_id: 1,
+    full_name: "User 1",
+    avatar_url:
+      "https://wallstreetinsanity.com/wp-content/uploads/This-Survey-Shows-Us-How-Different-Men-And-Women-View-The-Perfect-Female-Face-.jpg",
+    email: "user1@gmail.com",
+    first_name: "User",
+    last_name: "1",
+  },
+  {
+    user_id: 2,
+    full_name: "User 2",
+    avatar_url:
+      "https://t3.ftcdn.net/jpg/06/26/55/28/360_F_626552858_bi09Gji5frGpM1EsJMKk7aIYH5mHdNAu.jpg",
+    email: "user2@gmail.com",
+    first_name: "User",
+    last_name: "2",
+  },
+  {
+    user_id: 3,
+    full_name: "User 3",
+    email: "user3@gmail.com",
+    first_name: "User",
+    last_name: "3",
+  },
+  {
+    user_id: 4,
+    full_name: "User 4",
+    email: "user4@gmail.com",
+    first_name: "User",
+    last_name: "4",
+  },
+  {
+    user_id: 5,
+    full_name: "User 5",
+    email: "user5@gmail.com",
+    first_name: "User",
+    last_name: "5",
+  },
+  {
+    user_id: 6,
+    full_name: "User 1",
+    avatar_url:
+      "https://wallstreetinsanity.com/wp-content/uploads/This-Survey-Shows-Us-How-Different-Men-And-Women-View-The-Perfect-Female-Face-.jpg",
+    email: "user1@gmail.com",
+    first_name: "User",
+    last_name: "1",
+  },
+  {
+    user_id: 7,
+    full_name: "User 2",
+    avatar_url:
+      "https://t3.ftcdn.net/jpg/06/26/55/28/360_F_626552858_bi09Gji5frGpM1EsJMKk7aIYH5mHdNAu.jpg",
+    email: "user2@gmail.com",
+    first_name: "User",
+    last_name: "2",
+  },
+  {
+    user_id: 8,
+    full_name: "User 3",
+    email: "user3@gmail.com",
+    first_name: "User",
+    last_name: "3",
+  },
+  {
+    user_id: 9,
+    full_name: "User 4",
+    email: "user4@gmail.com",
+    first_name: "User",
+    last_name: "4",
+  },
+  {
+    user_id: 10,
+    full_name: "User 5",
+    email: "user5@gmail.com",
+    first_name: "User",
+    last_name: "5",
+  },
+];
+
 export default User;

@@ -12,9 +12,13 @@ export default function FriendsList() {
     router.push(`/profile/${userId}`);
   };
 
+  const handleSeeFriendsList = () => {
+    router.push("/profile/friends");
+  };
+
   return (
     <div className="w-full py-[30px] px-[30px] bg-white rounded-[30px]">
-      <BoxHeader title="Friend List" />
+      <BoxHeader title="Friend List" onMore={handleSeeFriendsList} />
       <div className="flex flex-col gap-6 mt-9">
         {users.map((user) => {
           return (

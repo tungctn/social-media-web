@@ -61,10 +61,10 @@ function DefaultLayout({ children }: DefaultLayoutProps) {
             {children}
           </main>
         </>
-      ) : auth.isLogedIn === undefined || !auth.user ? (
-        <></>
-      ) : (
+      ) : auth.isLogedIn !== undefined && !auth.isLogedIn ? (
         <UnAuthenticatedError />
+      ) : (
+        <></>
       )}
     </div>
   );

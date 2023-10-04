@@ -1,22 +1,18 @@
 "use client";
 
-import { BREAKPOINTS } from "@/constants/WindowSizes";
-import useWindowDimensions from "@/hooks/useWindowDimensions";
 import Image from "next/image";
+import { TiUser } from "react-icons/ti";
 import { useEffect, useState } from "react";
-import { FaUserCircle } from "react-icons/fa";
+import useWindowDimensions from "@/hooks/useWindowDimensions";
+import { BREAKPOINTS } from "@/constants/WindowSizes";
 
-type AvatarProps = {
+type SquareAvatarProps = {
   size: number;
   src?: string;
   hasBorder?: boolean;
 };
 
-export default function Avatar({
-  size = 16,
-  src,
-  hasBorder = false,
-}: AvatarProps) {
+export default function SquareAvatar({ src, size = 120 }: SquareAvatarProps) {
   const { width } = useWindowDimensions();
   const [currenSize, setCurrentSize] = useState(size);
 
@@ -26,24 +22,23 @@ export default function Avatar({
       setCurrentSize((size / 6) * 5);
     }
   }, [width, size]);
+
   return (
     <div className="text-deep-lilac">
       {src ? (
         <Image
           src={src}
-          alt="avatar"
-          width={size}
-          height={size}
-          className={`rounded-full object-cover ${
-            hasBorder && "border border-deep-lilac"
-          }`}
+          alt="avt"
+          width={120}
+          height={120}
+          className={`3xl:rounded-[30px] rounded-[calc(30px/6*5)] object-cover`}
           style={{
             width: currenSize,
             height: currenSize,
           }}
         />
       ) : (
-        <FaUserCircle size={currenSize} />
+        <TiUser size={currenSize} />
       )}
     </div>
   );
