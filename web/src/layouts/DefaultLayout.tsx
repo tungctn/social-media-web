@@ -30,7 +30,7 @@ function DefaultLayout({ children }: DefaultLayoutProps) {
 
   return (
     <div className="flex flex-row">
-      {auth.isLogedIn ? (
+      {auth.isLogedIn && auth.user ? (
         <>
           <header className="3xl:min-w-[367px] min-w-[300px] 3xl:pl-[60px] pl-[40px] bg-white fixed top-0">
             <div className="relative min-h-screen">
@@ -61,10 +61,10 @@ function DefaultLayout({ children }: DefaultLayoutProps) {
             {children}
           </main>
         </>
-      ) : auth.isLogedIn !== undefined ? (
-        <UnAuthenticatedError />
-      ) : (
+      ) : auth.isLogedIn === undefined || !auth.user ? (
         <></>
+      ) : (
+        <UnAuthenticatedError />
       )}
     </div>
   );

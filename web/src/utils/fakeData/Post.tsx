@@ -14,7 +14,7 @@ type Post = {
 
 export const nearestPost: Post = {
   id: 1,
-  userId: currentUser.id,
+  userId: currentUser.user_id,
   user: currentUser,
   caption: "",
   createdAt: new Date("2023-09-21 17:33"),
@@ -30,7 +30,7 @@ export const nearestPost: Post = {
 export const postsByUser: Post[] = [
   {
     id: 1,
-    userId: currentUser.id,
+    userId: currentUser.user_id,
     user: currentUser,
     caption: "",
     createdAt: new Date("2023-09-21 17:33"),
@@ -44,7 +44,7 @@ export const postsByUser: Post[] = [
   },
   {
     id: 2,
-    userId: currentUser.id,
+    userId: currentUser.user_id,
     user: currentUser,
     caption: "",
     createdAt: new Date("2023-09-21 17:33"),
@@ -58,7 +58,7 @@ export const postsByUser: Post[] = [
   },
   {
     id: 3,
-    userId: currentUser.id,
+    userId: currentUser.user_id,
     user: currentUser,
     caption: "",
     createdAt: new Date("2023-09-21 17:33"),
@@ -72,7 +72,7 @@ export const postsByUser: Post[] = [
   },
   {
     id: 4,
-    userId: currentUser.id,
+    userId: currentUser.user_id,
     user: currentUser,
     caption: "",
     createdAt: new Date("2023-09-21 17:33"),
@@ -86,7 +86,7 @@ export const postsByUser: Post[] = [
   },
   {
     id: 5,
-    userId: currentUser.id,
+    userId: currentUser.user_id,
     user: currentUser,
     caption: "",
     createdAt: new Date("2023-09-21 17:33"),
@@ -100,7 +100,7 @@ export const postsByUser: Post[] = [
   },
   {
     id: 6,
-    userId: currentUser.id,
+    userId: currentUser.user_id,
     user: currentUser,
     caption: "",
     createdAt: new Date("2023-09-21 17:33"),
@@ -114,7 +114,7 @@ export const postsByUser: Post[] = [
   },
   {
     id: 7,
-    userId: currentUser.id,
+    userId: currentUser.user_id,
     user: currentUser,
     caption: "",
     createdAt: new Date("2023-09-21 17:33"),
@@ -128,7 +128,7 @@ export const postsByUser: Post[] = [
   },
   {
     id: 8,
-    userId: currentUser.id,
+    userId: currentUser.user_id,
     user: currentUser,
     caption: "",
     createdAt: new Date("2023-09-21 17:33"),
@@ -142,7 +142,7 @@ export const postsByUser: Post[] = [
   },
   {
     id: 9,
-    userId: currentUser.id,
+    userId: currentUser.user_id,
     user: currentUser,
     caption: "",
     createdAt: new Date("2023-09-21 17:33"),
@@ -156,7 +156,7 @@ export const postsByUser: Post[] = [
   },
   {
     id: 10,
-    userId: currentUser.id,
+    userId: currentUser.user_id,
     user: currentUser,
     caption: "",
     createdAt: new Date("2023-09-21 17:33"),
@@ -170,7 +170,7 @@ export const postsByUser: Post[] = [
   },
   {
     id: 11,
-    userId: currentUser.id,
+    userId: currentUser.user_id,
     user: currentUser,
     caption: "",
     createdAt: new Date("2023-09-21 17:33"),
@@ -184,7 +184,7 @@ export const postsByUser: Post[] = [
   },
   {
     id: 12,
-    userId: currentUser.id,
+    userId: currentUser.user_id,
     user: currentUser,
     caption: "",
     createdAt: new Date("2023-09-21 17:33"),
@@ -198,7 +198,7 @@ export const postsByUser: Post[] = [
   },
   {
     id: 13,
-    userId: currentUser.id,
+    userId: currentUser.user_id,
     user: currentUser,
     caption: "",
     createdAt: new Date("2023-09-21 17:33"),
@@ -212,7 +212,7 @@ export const postsByUser: Post[] = [
   },
   {
     id: 14,
-    userId: currentUser.id,
+    userId: currentUser.user_id,
     user: currentUser,
     caption: "",
     createdAt: new Date("2023-09-21 17:33"),
@@ -226,7 +226,7 @@ export const postsByUser: Post[] = [
   },
   {
     id: 15,
-    userId: currentUser.id,
+    userId: currentUser.user_id,
     user: currentUser,
     caption: "",
     createdAt: new Date("2023-09-21 17:33"),
