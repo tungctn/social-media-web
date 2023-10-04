@@ -18,8 +18,14 @@ Rails.application.routes.draw do
 
     #bài viết
     get "/posts/:id", to: "posts#show"
+    get "/posts", to: "posts#get_all"
     post "/posts", to: "posts#create"
     put "/posts/:id", to: "posts#update"
     delete "/posts/:id", to: "posts#delete"
+
+    #comment
+    post "/comments", to: "posts#create_comment"
+    put "/comments/:id", to: "posts#update_comment"
+    delete "/comments/:id", to: "posts#delete_comment"
   end
 end

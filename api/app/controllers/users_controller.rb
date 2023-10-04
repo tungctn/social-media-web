@@ -28,10 +28,9 @@ class UsersController < ApplicationController
   # created by: ttanh (24/09/2023)
   def info_index
     # begin
-      user = User.find_by_id(params[:id])
+      user = get_user_by_id(params[:id])
 
       if !user
-        render json: { errors: "Không tìm thấy người dùng" }, status: :bad_request
         return
       end
 
