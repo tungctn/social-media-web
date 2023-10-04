@@ -27,6 +27,29 @@ class ApplicationController < ActionController::Base
     return true
   end
 
+  # gán ảnh bằng id của ảnh cho các model có quan hệ với bảng images là n-n
+  # param: <model> - model muốn gán
+  #        <image_ids> - id của các ảnh
+  # ttanh - 04/10/2023
+  def image_add(model, image_ids)
+    for image_id in image_ids do
+      image = Image.find_by_id(image_id)
+      if image
+        model.images << image
+      end
+    end
+  end
+
+  # xóa model và xóa ảnh
+  # param: <model> - model muốn xóa
+  # ttanh - 04/10/2023
+  def image_delete(model)
+    for image in model.images do
+      image.image.purge
+      image.destroy
+    end
+  end
+
   private
   
   # updated by - ttanh (23/09/23) Thêm xử lý cho việc người dùng không gửi token
