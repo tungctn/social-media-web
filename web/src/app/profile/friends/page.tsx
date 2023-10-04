@@ -30,7 +30,12 @@ export default function Friends() {
 
   const renderList = useCallback(() => {
     const Component = FriendMenu[currentTabId].Component;
-    return <Component friendsList={friendsLists[currentTabId]} />;
+    return (
+      <Component
+        friendsList={friendsLists[currentTabId]}
+        title={FriendMenu[currentTabId]?.title}
+      />
+    );
   }, [currentTabId, friendsLists]);
 
   return (

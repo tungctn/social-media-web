@@ -33,16 +33,19 @@ export const FriendMenu: any = [
     id: 1,
     label: "Friend list",
     Component: FriendsList,
+    title: "All friends",
   },
   {
     id: 2,
     label: "Follower list",
     Component: FriendsList,
+    title: "All followers",
   },
   {
     id: 3,
     label: "Following list",
     Component: FriendsList,
+    title: "Following",
   },
 ];
 
