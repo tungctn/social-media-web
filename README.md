@@ -409,7 +409,8 @@ POST /api/posts
 #### Get post detail
 
 ```http
-GET /api/posts/:id
+GET /api/posts/:id - có đi kèm với comment
+GET /api/posts - Lấy tất cả bài viết
 ```
 
 | Path Variables | Type     | Description  |
@@ -450,6 +451,73 @@ DELETE /api/posts/:id
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+### Comment module
+
+#### Create comment
+
+```http
+Authorization: Bearer YOUR_TOKEN
+POST /api/comments
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Parameter  | Type     | Description  |
+| :--------- | :------- | :----------- |
+| `content`  | `string` | **Required** |
+| `post_id`    | `int` | **Required**|
+| `image_ids`    | `Array` | **Optional** |
+
+```javascript
+{
+    "success": true,
+    "message": "comment created successfully",
+    "data": {
+        "comment": {
+            ...
+        },
+    },
+}
+```
+
+#### Update comment
+
+```http
+Authorization: Bearer YOUR_TOKEN
+PUT /api/comments/:id
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `id`           | `string` | **Required** |
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Parameter  | Type     | Description  |
+| :--------- | :------- | :----------- |
+| `content`  | `string` | **Optional** |
+| `image_ids`    | `Array` | **Optional** có ảnh thì nhớ truyền hết id lên|
+
+#### Delete comment
+
+```http
+Authorization: Bearer YOUR_TOKEN
+DELETE /api/comments/:id
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `id`           | `string` | **Required** |
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
 
 ## Architecture Design
 
