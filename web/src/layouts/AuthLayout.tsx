@@ -19,7 +19,9 @@ function AuthLayout({ children, img }: AuthLayoutProps) {
 
   useEffect(() => {
     if (auth.isLogedIn) {
-      toast.info("You loged in!");
+      if (auth.user) {
+        toast.info("You loged in!");
+      }
       router.push("/");
     }
   }, [auth.isLogedIn]);

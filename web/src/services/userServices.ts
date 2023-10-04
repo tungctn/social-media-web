@@ -5,11 +5,13 @@ export function signIn(userAccount: { email: string; password: string }) {
 }
 
 export function signUp(newUser: {
-  name: string;
+  first_name: string;
+  last_name: string;
+  full_name: string;
   email: string;
   password: string;
 }) {
-  return instance.post("/api/users", newUser);
+  return instance.post("/api/auth/register", newUser);
 }
 
 export function getCurrentUserInfos() {

@@ -19,12 +19,12 @@ export default function FriendsList() {
         {users.map((user) => {
           return (
             <div
-              key={user.id}
+              key={user.user_id}
               className="flex flex-row gap-5 items-center cursor-pointer"
-              onClick={() => handleClickUser(user.id)}
+              onClick={() => handleClickUser(user.user_id)}
             >
-              <Avatar size={40} src={user.avatar} />
-              <span className="text-xl">{user.username}</span>
+              <Avatar size={40} src={user.avatar_url} />
+              <span className="text-xl">{user.full_name}</span>
             </div>
           );
         })}

@@ -25,7 +25,7 @@ function DefaultLayout({ children }: DefaultLayoutProps) {
   }, [auth.isLogedIn]);
 
   const handleClickUser: MouseEventHandler<HTMLDivElement> = () => {
-    router.push(`/profile/${currentUser.id}`);
+    router.push(`/profile/${auth.user.user_id}`);
   };
 
   return (
@@ -41,11 +41,11 @@ function DefaultLayout({ children }: DefaultLayoutProps) {
                 className="flex flex-col items-center mr-[39px] mt-[62px] mb-[40px] gap-[19px] cursor-pointer"
                 onClick={handleClickUser}
               >
-                <Avatar size={120} src={currentUser.avatar} />
+                <Avatar size={120} src={auth.user.avatar_url} />
                 <div className="flex flex-col items-center">
-                  <span className="text-xl">{currentUser.username}</span>
+                  <span className="text-xl">{auth.user.full_name}</span>
                   <span className="text-[14px] text-spanish-gray">
-                    {currentUser.email}
+                    {auth.user.email}
                   </span>
                 </div>
                 <div className="flex flex-row justify-between text-[14px] w-full">

@@ -15,7 +15,11 @@ export default function Avatar({ size = 16, src }: AvatarProps) {
           alt="avatar"
           width={size}
           height={size}
-          className="rounded-full w-10 h-10 object-cover"
+          className="rounded-full object-cover"
+          style={{
+            width: size,
+            height: size,
+          }}
         />
       ) : (
         <FaUserCircle size={size} />

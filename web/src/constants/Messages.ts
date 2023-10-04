@@ -1,8 +1,9 @@
 export const FORM: any = {
-  username: {
-    required: "Please enter username!",
-    pattern:
-      'Username contains at least 8 characters, maximum 27 characters, alphanumeric characters and "_" character.',
+  first_name: {
+    required: "Please enter first name!",
+  },
+  last_name: {
+    required: "Please enter first name!",
   },
   password: {
     required: "Please enter password!",
@@ -17,5 +18,4 @@ export const FORM: any = {
     required: "Please enter password again!",
     incorrect: "Confirmed password is incorrect!",
   },
-  csrfToken: {}
 };

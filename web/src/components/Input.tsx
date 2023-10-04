@@ -4,7 +4,7 @@ import { UseFormRegister, Validate } from "react-hook-form";
 type InputProps = {
   title: string;
   placeholder?: string;
-  name: "username" | "password" | "email" | "repassword";
+  name: "first_name" | "last_name" | "password" | "email" | "repassword";
   type?: string;
   error?: string | undefined;
   register: UseFormRegister<IFormValues>;
@@ -36,7 +36,7 @@ export default function Input({
           type={type}
           {...register(name, rules)}
           placeholder={placeholder}
-          className={`3xl:rounded-[20px] rounded-[calc(20px/6*5)] 3xl:h-[57px] h-[calc(57px/6*5)] bg-light-silver border-0 px-4 autofill:bg-light-silver focus:ring-deep-lilac focus:outline-none focus:border-0${
+          className={`3xl:rounded-[20px] rounded-[calc(20px/6*5)] 3xl:h-[57px] h-[calc(57px/6*5)] w-full bg-light-silver border-0 px-4 autofill:bg-light-silver focus:ring-deep-lilac focus:outline-none focus:border-0${
             error && " !ring !ring-red-600/50"
           }`}
         />
