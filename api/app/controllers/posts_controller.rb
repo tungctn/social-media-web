@@ -26,22 +26,15 @@ class PostsController < ApplicationController
       return
     end
 
-    render json: { post: post, images: post.images, comment: post.post_comments }, status: :ok
+    comments = image_get(post.post_comments)
+
+    render json: { post: post, images: post.images, comments: comments }, status: :ok
   end
 
   def get_all
     posts = Post.all
 
-    posts_with_images = []
-
-    for post in posts do
-      post_with_images = {
-        post: post,
-        images: post.images
-      }
-
-      posts_with_images.push(post_with_images)
-    end
+    posts_with_images = image_get(posts)
 
     render json: { posts: posts_with_images }, status: :ok
   end

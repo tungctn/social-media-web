@@ -50,6 +50,24 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # lấy model và ảnh
+  # param: <models> - mảng model muốn lấy ảnh
+  # ttanh - 04/10/2023
+  def image_get(models)
+    models_with_images = []
+
+    for model in models do
+      model_with_images = {
+        model: model,
+        images: model.images
+      }
+
+      models_with_images.push(model_with_images)
+    end
+
+    return models_with_images
+  end
+
   private
   
   # updated by - ttanh (23/09/23) Thêm xử lý cho việc người dùng không gửi token
