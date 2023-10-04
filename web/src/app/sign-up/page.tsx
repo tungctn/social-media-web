@@ -26,9 +26,8 @@ export default function SignUp() {
 
   const handleSubmitForm: SubmitHandler<IFormValues> = async (data) => {
     const newUser = {
-      name: data.username,
-      email: data.email,
-      password: data.password,
+      ...data,
+      full_name: `${data.first_name} ${data.last_name}`,
     };
 
     try {
@@ -71,16 +70,26 @@ export default function SignUp() {
         </div>
         <div className="flex flex-col gap-3">
           <div className="flex flex-col 3xl:gap-[38px] gap-4">
-            <Input
-              register={register}
-              rules={{
-                required: true,
-                pattern: /^[A-Za-z][A-Za-z0-9_]{7,29}$/,
-              }}
-              name="username"
-              title="Username"
-              error={errors.username?.message}
-            />
+            <div className="flex flex-row 3xl:gap-5 gap-3">
+              <Input
+                register={register}
+                rules={{
+                  required: true,
+                }}
+                name="first_name"
+                title="First name"
+                error={errors.first_name?.message}
+              />
+              <Input
+                register={register}
+                rules={{
+                  required: true,
+                }}
+                name="last_name"
+                title="Last name"
+                error={errors.last_name?.message}
+              />
+            </div>
             <Input
               register={register}
               rules={{

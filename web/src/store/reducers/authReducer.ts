@@ -15,12 +15,6 @@ export default function authReducer(state = initialAuthState, action: any) {
         isLogedIn: false,
       };
     case CHECK_LOGED_IN:
-      console.log({
-        ...state,
-        isLogedIn: Boolean(action.userInfo),
-        user: action.userInfo,
-      });
-
       return {
         ...state,
         isLogedIn: Boolean(action.userInfo),

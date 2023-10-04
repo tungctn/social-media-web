@@ -28,7 +28,7 @@ export default function SignIn() {
   const handleSubmitForm: SubmitHandler<IFormValues> = (data: any) => {
     try {
       dispatch(logInAction(data) as any);
-      // router.push("/");
+      router.push("/");
     } catch (error) {
       console.log(error);
 

@@ -10,7 +10,9 @@ export default function Menu() {
   const router = useRouter();
 
   const handleClickMenuItem = (href: string) => {
-    router.push(href);
+    if (href) {
+      router.push(href);
+    }
   };
 
   return (

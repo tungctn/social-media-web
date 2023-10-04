@@ -1,5 +1,6 @@
+import NewPostForm from "@/partials/app/Post/NewPostForm";
 import { FaHome } from "react-icons/fa";
-import { GoFileMedia } from "react-icons/go";
+import { FaMagnifyingGlass, FaRegSquarePlus } from "react-icons/fa6";
 
 const DefaultMenu: any = [
   {
@@ -8,14 +9,15 @@ const DefaultMenu: any = [
     href: "/",
   },
   {
-    label: "Menu 1",
-    PrefixIcon: GoFileMedia,
-    href: "/menu-1",
+    label: "New post",
+    PrefixIcon: FaRegSquarePlus,
+    href: null,
+    Component: NewPostForm,
   },
   {
-    label: "Menu 2",
-    PrefixIcon: GoFileMedia,
-    href: "/menu-2",
+    label: "Search",
+    PrefixIcon: FaMagnifyingGlass,
+    href: "/search",
   },
 ];
 
