@@ -32,7 +32,7 @@ export const postsByUser: Post[] = [
     id: 1,
     userId: currentUser.user_id,
     user: currentUser,
-    caption: "",
+    caption: "Caption",
     createdAt: new Date("2023-09-21 17:33"),
     images: [
       "https://bizweb.dktcdn.net/100/378/891/files/tac-dung-cua-nhung-huou-4.jpg",
