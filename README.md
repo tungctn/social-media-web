@@ -136,8 +136,8 @@ $ sudo systemctl status puma.service
 
 - [x] [Create user](#create-user)
 - [x] [Get user detail](#get-user-detail)
-- [ ] [Update user](#update-user)
-- [ ] [Delete user](#delete-user)
+- [x] [Update user](#update-user)
+- [x] [Delete user](#delete-user)
 
 ### Post module
 
@@ -145,6 +145,11 @@ $ sudo systemctl status puma.service
 - [ ] [Get post detail](#get-post-detail)
 - [ ] [Update post](#update-post)
 - [ ] [Delete post](#delete-post)
+
+### Image module
+
+- [x] [Upload image](#upload-image)
+- [x] [Get image](#get-image)
 
 ## API Reference
 
@@ -180,12 +185,12 @@ POST /api/auth/login
 POST /api/auth/register
 ```
 
-| Parameter  | Type     | Description  |
-| :--------- | :------- | :----------- |
-| `email`    | `string` | **Required** |
-| `password` | `string` | **Required** |
+| Parameter    | Type     | Description  |
+| :----------- | :------- | :----------- |
+| `email`      | `string` | **Required** |
+| `password`   | `string` | **Required** |
 | `first_name` | `string` | **Required** |
-| `last_name` | `string` | **Required** |
+| `last_name`  | `string` | **Required** |
 
 ```javascript
 {
@@ -201,12 +206,14 @@ POST /api/auth/register
 ```
 
 ### User module
+
 #### Get user detail
 
 ```http
 Authorization: Bearer YOUR_TOKEN
 GET /api/users/:id
 ```
+
 Không truyền ID thì lấy thông tin qua token
 Còn truyền ID thì không cần token
 
@@ -236,22 +243,23 @@ Còn truyền ID thì không cần token
 Authorization: Bearer YOUR_TOKEN
 PUT /api/users
 ```
+
 Dùng form-data để truyền avatar, background
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Parameter  | Type     | Description  |
-| :--------- | :------- | :----------- |
-| `password` | `string` | **Optional** |
-| `first_name`         | `string`   | Họ                                                |
-| `last_name`          | `string`   | Tên                                               |
-| `full_name`          | `string`   | Họ và tên                                         |
+| Parameter             | Type       | Description                                       |
+| :-------------------- | :--------- | :------------------------------------------------ |
+| `password`            | `string`   | **Optional**                                      |
+| `first_name`          | `string`   | Họ                                                |
+| `last_name`           | `string`   | Tên                                               |
+| `full_name`           | `string`   | Họ và tên                                         |
 | `phone_number`        | `string`   | SĐT                                               |
 | `date_of_birth`       | `date`     | Ngày sinh                                         |
 | `gender`              | `integer`  | 0 - Nam, 1 - Nữ, 2 - Không rõ                     |
-| `avatar`          | `file_ảnh`   | Ảnh đại diện                                      |
+| `avatar`              | `file_ảnh` | Ảnh đại diện                                      |
 | `address`             | `string`   | Địa chỉ                                           |
 | `bio`                 | `string`   | Mô tả ngắn gọn                                    |
 | `relationship_status` | `integer`  | Tình trạng: 1 - Độc thân, 2 - Kết hôn, 3 - Hẹn hò |
@@ -311,7 +319,7 @@ GET /api/images/:id
 }
 ```
 
-#### Create image
+#### Upload image
 
 ```http
 Authorization: Bearer YOUR_TOKEN
@@ -322,9 +330,9 @@ POST /api/images
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Parameter  | Type     | Description  |
-| :--------- | :------- | :----------- |
-| `image`    | `file ảnh` | **Required** |
+| Parameter | Type       | Description  |
+| :-------- | :--------- | :----------- |
+| `image`   | `file ảnh` | **Required** |
 
 ```javascript
 {
@@ -351,9 +359,9 @@ Chỉ xóa được những ảnh mà user đang đăng nhập tạo
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Parameter  | Type     | Description  |
-| :--------- | :------- | :----------- |
-| `ids`    | `Array` | **Required** |
+| Parameter | Type    | Description  |
+| :-------- | :------ | :----------- |
+| `ids`     | `Array` | **Required** |
 
 ```javascript
 {
@@ -380,11 +388,11 @@ POST /api/posts
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Parameter  | Type     | Description  |
-| :--------- | :------- | :----------- |
-| `content`  | `string` | **Required** |
-| `user_id`    | `int` | **Required** Đăng bài lên trang cá nhân của ông này|
-| `image_ids`    | `Array` | **Optional** |
+| Parameter   | Type     | Description                                         |
+| :---------- | :------- | :-------------------------------------------------- |
+| `content`   | `string` | **Required**                                        |
+| `user_id`   | `int`    | **Required** Đăng bài lên trang cá nhân của ông này |
+| `image_ids` | `Array`  | **Optional**                                        |
 
 ```javascript
 {
@@ -424,10 +432,10 @@ PUT /api/posts/:id
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Parameter  | Type     | Description  |
-| :--------- | :------- | :----------- |
-| `content`  | `string` | **Optional** |
-| `image_ids`    | `Array` | **Optional** có ảnh thì nhớ truyền hết id lên|
+| Parameter   | Type     | Description                                   |
+| :---------- | :------- | :-------------------------------------------- |
+| `content`   | `string` | **Optional**                                  |
+| `image_ids` | `Array`  | **Optional** có ảnh thì nhớ truyền hết id lên |
 
 #### Delete post
 

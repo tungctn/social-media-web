@@ -14,7 +14,7 @@ instance.interceptors.request.use(
   },
   (error) => {
     return error;
-  },
+  }
 );
 
 instance.interceptors.response.use((response) => {

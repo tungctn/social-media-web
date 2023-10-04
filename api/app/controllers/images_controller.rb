@@ -7,7 +7,8 @@ class ImagesController < ApplicationController
     image = Image.new(image_params)
 
     if image.save
-      image.url = image.image.url if image.image.attached?
+      key = image.image.key
+      image.url = "https://s3-ap-southeast-1.amazonaws.com/social-media-image/#{key}" if image.image.attached?
       image.user_id = @current_user.id
       image.save
       render json: { image: image }, status: :ok
