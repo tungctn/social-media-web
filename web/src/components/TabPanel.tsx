@@ -11,7 +11,7 @@ export default function TabPanel({ children, id, value }: TabPanelProps) {
     <>
       {id === value && (
         <div
-          className={`3xl:py-[50px] py-10 overflow-auto scrollbar-none 3xl:h-[calc(100vh-30px-50px/6*5-40px*2)] h-[calc(100vh-30px-50px/6*5-32px*2)] animate-slip-to-top`}
+          className={`3xl:py-[50px] py-10 overflow-auto scrollbar-none 3xl:h-[calc(100vh-30px-50px-40px*2)] h-[calc(100vh-30px-50px/6*5-32px*2)] animate-slip-to-top`}
         >
           {children}
         </div>

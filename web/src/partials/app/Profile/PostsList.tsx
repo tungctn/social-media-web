@@ -1,6 +1,7 @@
 "use client";
 
 import ShortPostCard from "@/components/ShortPostCard";
+import { BREAKPOINTS } from "@/constants/WindowSizes";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import Post from "@/utils/fakeData/Post";
 import { useEffect, useLayoutEffect, useRef } from "react";
@@ -15,11 +16,11 @@ export default function PostsList({ posts }: PostsListProps) {
 
   useEffect(() => {
     if (ref.current) {
-      if (width >= 1600) {
+      if (width >= BREAKPOINTS.extraLarge) {
         ref.current.style.gap = `${
           (ref.current.offsetWidth - 267 * 3) / 2 - 0.5
         }px`;
-      } else if (width >= 1536) {
+      } else {
         ref.current.style.gap = `${
           (ref.current.offsetWidth - (267 / 6) * 5 * 3) / 2 - 0.5
         }px`;
