@@ -53,14 +53,22 @@ export default function PostDetail({ open = false, onClose, id }: PostDetail) {
               slide={false}
               indicators={false}
               leftControl={
-                <div className="3xl:text-[50px] text-[calc(50px/4*3)] text-lavender transition-all duration-300 hover:opacity-80">
-                  <FaCircleChevronLeft />
-                </div>
+                post.images.length > 1 ? (
+                  <div className="3xl:text-[50px] text-[calc(50px/4*3)] text-lavender transition-all duration-300 hover:opacity-80">
+                    <FaCircleChevronLeft />
+                  </div>
+                ) : (
+                  <></>
+                )
               }
               rightControl={
-                <div className="3xl:text-[50px] text-[calc(50px/4*3)] text-lavender transition-all duration-300 hover:opacity-80">
-                  <FaCircleChevronRight />
-                </div>
+                post.images.length > 1 ? (
+                  <div className="3xl:text-[50px] text-[calc(50px/4*3)] text-lavender transition-all duration-300 hover:opacity-80">
+                    <FaCircleChevronRight />
+                  </div>
+                ) : (
+                  <></>
+                )
               }
               theme={{
                 item: {

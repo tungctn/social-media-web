@@ -35,7 +35,6 @@ export const postsByUser: Post[] = [
     caption: "Caption",
     createdAt: new Date("2023-09-21 17:33"),
     images: [
-      "https://bizweb.dktcdn.net/100/378/891/files/tac-dung-cua-nhung-huou-4.jpg",
       "https://www.tapchiyhoccotruyen.com/wp-content/uploads/2020/06/nhung-huou.jpg",
     ],
     likes: 1200,
@@ -249,7 +248,6 @@ export const posts: Post[] = [
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     createdAt: new Date("2023-09-21 17:33"),
     images: [
-      "https://bizweb.dktcdn.net/100/378/891/files/tac-dung-cua-nhung-huou-4.jpg",
       "https://www.tapchiyhoccotruyen.com/wp-content/uploads/2020/06/nhung-huou.jpg",
     ],
     likes: 1200,
