@@ -1,10 +1,8 @@
 "use client";
 
 import DefaultLayout from "@/layouts/DefaultLayout";
-import Image from "next/image";
-import PhgImg from "@/assets/imgs/phg-1.png";
 import Avatar from "@/components/Avatar";
-import { currentUser, users } from "@/utils/fakeData/User";
+import { users } from "@/utils/fakeData/User";
 import UserActionsButton from "@/partials/app/Profile/UserActionsButton";
 import UserActions from "@/partials/app/Profile/UserActions";
 import PostTabs from "@/partials/app/Profile/PostTabs";
