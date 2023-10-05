@@ -70,7 +70,9 @@ jobs:
         with:
           node-version: 18.x
       - name: Start the application with PM2
-        run: pm2 restart nextjs-app
+        run: |
+          npm install pm2 -g
+          pm2 restart nextjs-app
       - name: Change to api directory
         run: cd ../api
       - uses: ruby/setup-ruby@v1
