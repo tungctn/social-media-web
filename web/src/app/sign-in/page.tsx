@@ -13,6 +13,8 @@ import SocialMediaButtons from "@/partials/app/Auth/SocialMediaButtons";
 import { useDispatch } from "react-redux";
 import { logInAction } from "@/store/actions/authActions";
 import { toast } from "react-toastify";
+import { useContext } from "react";
+import { LoadingContext } from "@/providers/LoadingProvider";
 
 export default function SignIn() {
   const {
@@ -22,13 +24,16 @@ export default function SignIn() {
     setError,
   } = useForm<IFormValues>();
   const dispatch = useDispatch();
+  const { setIsLoading } = useContext(LoadingContext);
 
   const handleSubmitForm: SubmitHandler<IFormValues> = (data: any) => {
+    setIsLoading(true);
     try {
       dispatch(logInAction(data) as any);
     } catch (error) {
       toast.error("Sign in error!");
     }
+    setIsLoading(false);
   };
 
   const handleErrorForm: SubmitErrorHandler<IFormValues> = (errors: any) => {

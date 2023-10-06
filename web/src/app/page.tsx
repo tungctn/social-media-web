@@ -6,6 +6,7 @@ import WelcomBox from "@/partials/app/HomePage/WelcomBox";
 import SmallCatImg from "@/assets/imgs/small-cat-2.png";
 import Image from "next/image";
 import PostsList from "@/partials/app/HomePage/PostsList";
+import Loading from "@/components/Loading";
 
 export default function Home() {
   return (

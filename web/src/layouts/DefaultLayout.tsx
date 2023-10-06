@@ -7,6 +7,7 @@ import Avatar from "@/components/Avatar";
 import { redirect, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import UnAuthenticatedError from "@/partials/app/Auth/400Error";
+import Loading from "@/components/Loading";
 
 type DefaultLayoutProps = {
   children: ReactElement;
@@ -64,7 +65,7 @@ function DefaultLayout({ children }: DefaultLayoutProps) {
       ) : auth.isLogedIn !== undefined && !auth.isLogedIn ? (
         <UnAuthenticatedError />
       ) : (
-        <></>
+        <Loading />
       )}
     </div>
   );
