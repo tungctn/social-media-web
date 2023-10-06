@@ -34,10 +34,19 @@ const config: Config = {
             opacity: "1",
           },
         },
+        loader: {
+          "0%": {
+            boxShadow: "-72px 0 #FFF inset",
+          },
+          "100%": {
+            boxShadow: "48px 0 #FFF inset",
+          },
+        },
       },
       animation: {
         "shaking-like": "shake 2s linear infinite",
         "slip-to-top": "slipToTop 400ms linear 1",
+        "loader": "loader 1s linear infinite"
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
