@@ -4,15 +4,24 @@ type ContainerProps = {
   sidebarChildren?: ReactNode;
   contentChildren?: ReactNode;
   children?: ReactNode;
+  fixedHeight?: boolean;
 };
 
 export default function Container({
   sidebarChildren,
   contentChildren,
   children,
+  fixedHeight = true,
 }: ContainerProps) {
   return (
-    <div className="flex flex-row 3xl:my-10 my-8 bg-cultured rounded-[30px] 3xl:h-[calc(100vh-40px*2)] h-[calc(100vh-32px*2)] 3xl:mr-10 mr-8">
+    <div
+      className={
+        "flex flex-row 3xl:my-10 my-8 bg-cultured rounded-[30px] 3xl:mr-10 mr-8" +
+        (fixedHeight
+          ? " 3xl:h-[calc(100vh-40px*2)] h-[calc(100vh-32px*2)]"
+          : "")
+      }
+    >
       {sidebarChildren && (
         <div className="3xl:min-w-[462px] 3xl:w-[462px] min-w-[calc(462px/6*5)] w-[calc(462px/6*5)] flex flex-col overflow-auto scrollbar-thin scroll-smooth pb-8">
           {sidebarChildren}

@@ -27,7 +27,7 @@ export const nearestPost: Post = {
   shares: 111,
 };
 
-export const postsByUser: Post[] = [
+export const posts: Post[] = [
   {
     id: 1,
     userId: currentUser.user_id,
@@ -45,11 +45,14 @@ export const postsByUser: Post[] = [
     id: 2,
     userId: currentUser.user_id,
     user: currentUser,
-    caption: "",
+    caption:
+      "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
     createdAt: new Date("2023-09-21 17:33"),
     images: [
       "https://cafebiz.cafebizcdn.vn/thumb_w/600/162123310254002176/2022/7/9/photo1657324993775-1657324993859181735127.jpg",
       "https://cdn.tuoitre.vn/zoom/480_300/471584752817336320/2023/2/28/my-dieu-la-ai-02-16775761622441848129833-15-0-503-780-crop-1677576294466366146671.jpg",
+      "https://image.lag.vn/upload/news/18/09/21/20180921-100151-t5yovp9_TSFQ.png",
+      "https://inkythuatso.com/uploads/images/2022/05/nhung-hinh-anh-chu-meo-buon-de-thuong-dang-yeu-nhat-033414876-13-11-13-51.jpg",
     ],
     likes: 1200,
     comments: 205,
@@ -91,7 +94,6 @@ export const postsByUser: Post[] = [
     createdAt: new Date("2023-09-21 17:33"),
     images: [
       "https://petmeshop.com/wp-content/uploads/2022/04/Ky-thuat-nuoi-vet-xanh-danh-cho-nguoi-moi.jpg",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHdl_g0OnURKazYwTpvueIgsnKQkZuPKX9dcFP9PW3dssqrVf5QD2Fab5MhYq4YpwPpw8&usqp=CAU",
     ],
     likes: 1200,
     comments: 205,
@@ -239,37 +241,6 @@ export const postsByUser: Post[] = [
   },
 ];
 
-export const posts: Post[] = [
-  {
-    id: 1,
-    userId: 1,
-    user: users[0],
-    caption:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    createdAt: new Date("2023-09-21 17:33"),
-    images: [
-      "https://www.tapchiyhoccotruyen.com/wp-content/uploads/2020/06/nhung-huou.jpg",
-    ],
-    likes: 1200,
-    comments: 205,
-    shares: 111,
-  },
-  {
-    id: 2,
-    userId: 2,
-    user: users[1],
-    caption:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    createdAt: new Date("2023-09-21 17:47"),
-    images: [
-      "https://www.tapchiyhoccotruyen.com/wp-content/uploads/2020/06/nhung-huou.jpg",
-      "https://bizweb.dktcdn.net/100/378/891/files/tac-dung-cua-nhung-huou-4.jpg",
-      "https://www.tapchiyhoccotruyen.com/wp-content/uploads/2020/06/nhung-huou.jpg",
-    ],
-    likes: 1200,
-    comments: 205,
-    shares: 111,
-  },
-];
+export const postsByUser: Post[] = posts;
 
 export default Post;
