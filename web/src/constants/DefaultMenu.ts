@@ -19,7 +19,7 @@ const DefaultMenu: any = [
   {
     label: "Search",
     PrefixIcon: FaMagnifyingGlass,
-    href: "/search",
+    href: "/search/",
   },
 ];
 
