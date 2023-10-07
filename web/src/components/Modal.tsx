@@ -148,7 +148,9 @@ const Modal: React.FC<ModalProps> = ({
                       w-full
                   "
                 >
-                  <Button customClassName="" children={<p>{actionLabel}</p>} />
+                  <Button customClassName="">
+                    <p>{actionLabel}</p>
+                  </Button>
                 </div>
                 {footer}
               </div>
