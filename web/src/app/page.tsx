@@ -6,6 +6,7 @@ import WelcomBox from "@/partials/app/HomePage/WelcomBox";
 import SmallCatImg from "@/assets/imgs/small-cat-2.png";
 import Image from "next/image";
 import PostsList from "@/partials/app/HomePage/PostsList";
+import PostModal from "@/components/PostModal";
 
 export default function Home() {
   return (
@@ -27,6 +28,7 @@ export default function Home() {
             <Image src={SmallCatImg} alt="small-cat" />
           </div>
         </div>
+        <PostModal />
       </div>
     </DefaultLayout>
   );

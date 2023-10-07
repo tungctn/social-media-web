@@ -2,12 +2,13 @@
 
 import Avatar from "@/components/Avatar";
 import { MouseEventHandler } from "react";
-import { FaUserCircle, FaRegSmile } from "react-icons/fa";
+import { FaRegSmile } from "react-icons/fa";
 import { FaRegImage } from "react-icons/fa6";
+import usePostModal from "@/hooks/usePostModal";
 
 export default function PostBox() {
   const handleUpImage: MouseEventHandler<HTMLDivElement> = () => {};
-
+  const postModal = usePostModal();
   const handleSelectEmoji: MouseEventHandler<HTMLDivElement> = () => {};
 
   return (
@@ -18,6 +19,9 @@ export default function PostBox() {
           title="post"
           placeholder="How you feel now ?"
           className="h-[50px] border-0 rounded-[20px] bg-cultured px-8 w-full placeholder:text-spanish-gray focus:ring-deep-lilac"
+          onClick={() => {
+            postModal.onOpen();
+          }}
         />
       </div>
       <div className="ml-[125px] flex flex-row gap-[150px]">
