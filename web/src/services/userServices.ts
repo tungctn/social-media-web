@@ -25,3 +25,11 @@ export function getUserById(id: number) {
 export function getUserInfosById(id: number) {
   return instance.get(`/api/users/${id}`);
 }
+
+export function updateUser(data: any) {
+  return instance.put("/api/users", data);
+}
+
+export function deleteAvatar() {
+  return instance.delete("/api/users/avatar");
+}

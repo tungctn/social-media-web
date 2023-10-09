@@ -4,4 +4,9 @@ export default interface IFormValues {
   password: string;
   email: string;
   repassword: string;
+  gender: number;
+  date_of_birth: Date;
+  address: string;
+  bio: string;
+  oldpassword: string;
 }
