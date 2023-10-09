@@ -10,9 +10,10 @@ class UsersController < ApplicationController
       combined_params = user_info_params.merge({
         user_id: @user.id
       })
-      
       user_info = UserInfo.new(combined_params)
-      user_info.avatar_url = user_info.avatar.url if user_info.avatar.attached?
+
+      key = user_info.avatar.key if user_info.avatar.attached?
+      user_info.avatar_url = "https://s3-ap-southeast-1.amazonaws.com/social-media-image/#{key}" if user_info.avatar.attached?
       user_info.save
 
       render json: { user: user_info, token: token }, status: :created
@@ -70,8 +71,9 @@ class UsersController < ApplicationController
       user_info = @current_user.user_info
       if user_info.update(user_info_params)
         render json: { message: "Thành công!" }, status: :ok
-        user_info.avatar_url = user_info.avatar.url if user_info.avatar.attached?
-        user_info.save 
+        key = user_info.avatar.key if user_info.avatar.attached?
+        user_info.avatar_url = "https://s3-ap-southeast-1.amazonaws.com/social-media-image/#{key}" if user_info.avatar.attached?
+        user_info.save
       else
         render json: { errors: user_info.errors.full_messages },
               status: :bad_request
