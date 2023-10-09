@@ -9,7 +9,7 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/layouts/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/partials/**/*.{js,ts,jsx,tsx,mdx}",
-    "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
@@ -46,7 +46,7 @@ const config: Config = {
       animation: {
         "shaking-like": "shake 2s linear infinite",
         "slip-to-top": "slipToTop 400ms linear 1",
-        "loader": "loader 1s linear infinite"
+        loader: "loader 1s linear infinite",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

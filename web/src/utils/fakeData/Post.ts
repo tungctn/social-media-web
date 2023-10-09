@@ -1,4 +1,4 @@
-import User, { currentUser, users } from "./User";
+import User, { currentUser } from "./User";
 
 type Post = {
   id: number;
