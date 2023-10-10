@@ -237,6 +237,34 @@ Còn truyền ID thì không cần token
 }
 ```
 
+#### Update password
+
+```http
+Authorization: Bearer YOUR_TOKEN
+PUT /api/users/password
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Parameter             | Type       | Description                                       |
+| :-------------------- | :--------- | :------------------------------------------------ |
+| `old_password`            | `string`   | **Optional**  Mật khẩu cũ                                    |
+| `password`            | `string`   | **Optional**                                      |
+
+```javascript
+{
+    "success": true,
+    "message": "User updated successfully",
+    "data": {
+        "user": {
+            ...
+        },
+    },
+}
+```
+
 #### Update user
 
 ```http
@@ -252,8 +280,6 @@ Dùng form-data để truyền avatar
 
 | Parameter             | Type       | Description                                       |
 | :-------------------- | :--------- | :------------------------------------------------ |
-| `old_password`            | `string`   | **Optional**  Mật khẩu cũ                                    |
-| `password`            | `string`   | **Optional**                                      |
 | `first_name`          | `string`   | Họ                                                |
 | `last_name`           | `string`   | Tên                                               |
 | `full_name`           | `string`   | Họ và tên                                         |
