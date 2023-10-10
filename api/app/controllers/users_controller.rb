@@ -61,6 +61,12 @@ class UsersController < ApplicationController
   # created by: ttanh (24/09/2023)
   def info_update
     # begin
+      if !@current_user&.authenticate(params[:old_password])
+        render json: { errors: "Mật khẩu cũ chưa đúng." },
+              status: :bad_request
+        return
+      end
+
       if @current_user.update(password_update)
       else
         render json: { errors: @current_user.errors.full_messages },
@@ -119,6 +125,6 @@ class UsersController < ApplicationController
   end
 
   def password_update
-    params.permit(:password)
+    params.permit(:old_password, :password)
   end
 end

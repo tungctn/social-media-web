@@ -141,10 +141,10 @@ $ sudo systemctl status puma.service
 
 ### Post module
 
-- [ ] [Create post](#create-post)
-- [ ] [Get post detail](#get-post-detail)
-- [ ] [Update post](#update-post)
-- [ ] [Delete post](#delete-post)
+- [x] [Create post](#create-post)
+- [x] [Get post detail](#get-post-detail)
+- [x] [Update post](#update-post)
+- [x] [Delete post](#delete-post)
 
 ### Image module
 
@@ -244,7 +244,7 @@ Authorization: Bearer YOUR_TOKEN
 PUT /api/users
 ```
 
-Dùng form-data để truyền avatar, background
+Dùng form-data để truyền avatar
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
@@ -252,6 +252,7 @@ Dùng form-data để truyền avatar, background
 
 | Parameter             | Type       | Description                                       |
 | :-------------------- | :--------- | :------------------------------------------------ |
+| `old_password`            | `string`   | **Optional**  Mật khẩu cũ                                    |
 | `password`            | `string`   | **Optional**                                      |
 | `first_name`          | `string`   | Họ                                                |
 | `last_name`           | `string`   | Tên                                               |
