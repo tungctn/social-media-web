@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     get "/users/:id", to: "users#info_index"
     get "/users", to: "users#info_current_user"
     put "/users", to: "users#info_update"
+    put "/users/password", to: "users#update_password"
     delete "/users/avatar", to: "users#info_delete_avatar"
 
     #upload ảnh
@@ -27,5 +28,8 @@ Rails.application.routes.draw do
     post "/comments", to: "posts#create_comment"
     put "/comments/:id", to: "posts#update_comment"
     delete "/comments/:id", to: "posts#delete_comment"
+
+    #react
+    post "/posts/reacts", to: "posts#react_post"
   end
 end
