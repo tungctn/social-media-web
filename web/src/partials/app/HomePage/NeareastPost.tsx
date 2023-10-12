@@ -25,9 +25,9 @@ export default function NeareastPost() {
             </div>
           )}
         </div>
-        {nearestPost.caption ? (
+        {nearestPost.content ? (
           <p className="text-xs line-clamp-3 text-ellipsis h-fit">
-            {nearestPost.caption}
+            {nearestPost.content}
           </p>
         ) : (
           <div className="min-w-fit">
