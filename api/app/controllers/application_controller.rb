@@ -57,12 +57,15 @@ class ApplicationController < ActionController::Base
     models_with_images = []
 
     for model in models do
-      model_with_images = {
-        model: model,
-        images: model.images
-      }
+      model_data = {}
+      model_data_merge = model_data.merge(model.attributes)
+      model_data_merge["images"] = []
 
-      models_with_images.push(model_with_images)
+      model.images.each do |image|
+        model_data_merge["images"].push(image.attributes) # Kết hợp thuộc tính của mỗi đối tượng hình ảnh vào model_data
+      end
+
+      models_with_images.push(model_data_merge)
     end
 
     return models_with_images
