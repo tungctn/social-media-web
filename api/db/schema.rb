@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_04_140404) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_12_221520) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -75,6 +75,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_140404) do
     t.index ["user_id"], name: "index_post_comments_on_user_id"
   end
 
+  create_table "post_comments_reacts", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "react_id", null: false
+    t.bigint "post_comment_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["post_comment_id"], name: "index_post_comments_reacts_on_post_comment_id"
+    t.index ["react_id"], name: "index_post_comments_reacts_on_react_id"
+    t.index ["user_id"], name: "index_post_comments_reacts_on_user_id"
+  end
+
   create_table "post_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "post_id"
     t.bigint "tag_id"
@@ -93,6 +102,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_140404) do
     t.datetime "updated_at", null: false
     t.index ["sender_id"], name: "index_posts_on_sender_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "posts_reacts", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "react_id", null: false
+    t.bigint "post_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["post_id"], name: "index_posts_reacts_on_post_id"
+    t.index ["react_id"], name: "index_posts_reacts_on_react_id"
+    t.index ["user_id"], name: "index_posts_reacts_on_user_id"
+  end
+
+  create_table "reacts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "type_react", comment: "Loại của react"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -137,9 +161,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_140404) do
   add_foreign_key "images_posts", "posts", on_delete: :cascade
   add_foreign_key "post_comments", "posts"
   add_foreign_key "post_comments", "users"
+  add_foreign_key "post_comments_reacts", "users"
   add_foreign_key "post_tags", "posts"
   add_foreign_key "post_tags", "tags"
   add_foreign_key "posts", "users", column: "sender_id", on_delete: :cascade
   add_foreign_key "posts", "users", on_delete: :cascade
+  add_foreign_key "posts_reacts", "users"
   add_foreign_key "user_infos", "users"
 end

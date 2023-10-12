@@ -145,8 +145,55 @@ class PostsController < ApplicationController
       render json: { errors: "lỗi" }, status: :bad_request
     end
   end
-  private
 
+  # biểu cảm với bài viết
+  def react_post
+    react = React.where(["type_react = :t", { t: params[:type_react] }]).first
+    
+    if react == nil
+      render json: { errors: "Truyền sai react type" }, status: :bad_request
+      return
+    end
+    
+    post = get_post_by_id(params[:post_id])
+
+    if !post
+      return
+    end
+
+    # tìm kiếm xem người dùng đã tương tác gì với bài viết này chưa
+    react_post = post.reacts.where({ user_id: @current_user.id }).first
+    render json: { message: react_post }, status: :ok
+    return
+
+    # if react_post
+    #   react_post.react_id = react.id
+    #   if react_post.save
+    #     render json: { message: "Thành công" }, status: :ok
+    #     return
+    #   else
+    #     render json: { errors: react_post.errors.full_messages }, status: :bad_request
+    #     return
+    #   end
+    # end
+    
+     
+
+    # if react_post.save
+    #   render json: { message: "Thành công" }, status: :ok
+    #   return
+    # else
+    #   render json: { errors: react_post.errors.full_messages }, status: :bad_request
+    #   return
+    # end
+  end
+
+  # bỏ biểu cảm với bài viết
+  def unreact_post
+  end
+
+  private
+  
   # check bài viết tồn tại
   # ttanh - 04/10/2023
   def get_post_by_id(id)
