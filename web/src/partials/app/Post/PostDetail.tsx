@@ -111,7 +111,7 @@ export default function PostDetail({ open = false, onClose, id }: PostDetail) {
               </div>
               <div>
                 <div className="flex flex-col gap-[15px]">
-                  <p className="text-[14px] 3xl:mx-12 mx-10">{post?.caption}</p>
+                  <p className="text-[14px] 3xl:mx-12 mx-10">{post?.content}</p>
                   <div className="pb-[9px] 3xl:mx-12 mx-10">
                     <PostReactCounts
                       comments={post?.comments ?? 0}
