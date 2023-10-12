@@ -4,7 +4,7 @@ type Post = {
   id: number;
   userId: number;
   user: User;
-  caption: string;
+  content: string;
   createdAt: Date;
   images: string[];
   likes: number;
@@ -16,7 +16,7 @@ export const nearestPost: Post = {
   id: 1,
   userId: currentUser.user_id,
   user: currentUser,
-  caption: "",
+  content: "",
   createdAt: new Date("2023-09-21 17:33"),
   images: [
     "https://bizweb.dktcdn.net/100/378/891/files/tac-dung-cua-nhung-huou-4.jpg",
@@ -32,7 +32,7 @@ export const posts: Post[] = [
     id: 1,
     userId: currentUser.user_id,
     user: currentUser,
-    caption: "Caption",
+    content: "content",
     createdAt: new Date("2023-09-21 17:33"),
     images: [
       "https://www.tapchiyhoccotruyen.com/wp-content/uploads/2020/06/nhung-huou.jpg",
@@ -45,7 +45,7 @@ export const posts: Post[] = [
     id: 2,
     userId: currentUser.user_id,
     user: currentUser,
-    caption:
+    content:
       "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
     createdAt: new Date("2023-09-21 17:33"),
     images: [
@@ -62,7 +62,7 @@ export const posts: Post[] = [
     id: 3,
     userId: currentUser.user_id,
     user: currentUser,
-    caption: "",
+    content: "",
     createdAt: new Date("2023-09-21 17:33"),
     images: [
       "https://aquasetup.com/wp-content/uploads/2023/04/Fantail-Goldfish_Waraphorn-Apha_Shutterstock.jpg",
@@ -76,7 +76,7 @@ export const posts: Post[] = [
     id: 4,
     userId: currentUser.user_id,
     user: currentUser,
-    caption: "",
+    content: "",
     createdAt: new Date("2023-09-21 17:33"),
     images: [
       "https://zoipet.com/wp-content/uploads/2022/07/Giong-cho-Bichon-Frise.jpg",
@@ -90,7 +90,7 @@ export const posts: Post[] = [
     id: 5,
     userId: currentUser.user_id,
     user: currentUser,
-    caption: "",
+    content: "",
     createdAt: new Date("2023-09-21 17:33"),
     images: [
       "https://petmeshop.com/wp-content/uploads/2022/04/Ky-thuat-nuoi-vet-xanh-danh-cho-nguoi-moi.jpg",
@@ -103,7 +103,7 @@ export const posts: Post[] = [
     id: 6,
     userId: currentUser.user_id,
     user: currentUser,
-    caption: "",
+    content: "",
     createdAt: new Date("2023-09-21 17:33"),
     images: [
       "https://bizweb.dktcdn.net/100/378/891/files/tac-dung-cua-nhung-huou-4.jpg",
@@ -117,7 +117,7 @@ export const posts: Post[] = [
     id: 7,
     userId: currentUser.user_id,
     user: currentUser,
-    caption: "",
+    content: "",
     createdAt: new Date("2023-09-21 17:33"),
     images: [
       "https://bizweb.dktcdn.net/100/378/891/files/tac-dung-cua-nhung-huou-4.jpg",
@@ -131,7 +131,7 @@ export const posts: Post[] = [
     id: 8,
     userId: currentUser.user_id,
     user: currentUser,
-    caption: "",
+    content: "",
     createdAt: new Date("2023-09-21 17:33"),
     images: [
       "https://bizweb.dktcdn.net/100/378/891/files/tac-dung-cua-nhung-huou-4.jpg",
@@ -145,7 +145,7 @@ export const posts: Post[] = [
     id: 9,
     userId: currentUser.user_id,
     user: currentUser,
-    caption: "",
+    content: "",
     createdAt: new Date("2023-09-21 17:33"),
     images: [
       "https://bizweb.dktcdn.net/100/378/891/files/tac-dung-cua-nhung-huou-4.jpg",
@@ -159,7 +159,7 @@ export const posts: Post[] = [
     id: 10,
     userId: currentUser.user_id,
     user: currentUser,
-    caption: "",
+    content: "",
     createdAt: new Date("2023-09-21 17:33"),
     images: [
       "https://bizweb.dktcdn.net/100/378/891/files/tac-dung-cua-nhung-huou-4.jpg",
@@ -173,7 +173,7 @@ export const posts: Post[] = [
     id: 11,
     userId: currentUser.user_id,
     user: currentUser,
-    caption: "",
+    content: "",
     createdAt: new Date("2023-09-21 17:33"),
     images: [
       "https://bizweb.dktcdn.net/100/378/891/files/tac-dung-cua-nhung-huou-4.jpg",
@@ -187,7 +187,7 @@ export const posts: Post[] = [
     id: 12,
     userId: currentUser.user_id,
     user: currentUser,
-    caption: "",
+    content: "",
     createdAt: new Date("2023-09-21 17:33"),
     images: [
       "https://bizweb.dktcdn.net/100/378/891/files/tac-dung-cua-nhung-huou-4.jpg",
@@ -201,7 +201,7 @@ export const posts: Post[] = [
     id: 13,
     userId: currentUser.user_id,
     user: currentUser,
-    caption: "",
+    content: "",
     createdAt: new Date("2023-09-21 17:33"),
     images: [
       "https://bizweb.dktcdn.net/100/378/891/files/tac-dung-cua-nhung-huou-4.jpg",
@@ -215,7 +215,7 @@ export const posts: Post[] = [
     id: 14,
     userId: currentUser.user_id,
     user: currentUser,
-    caption: "",
+    content: "",
     createdAt: new Date("2023-09-21 17:33"),
     images: [
       "https://bizweb.dktcdn.net/100/378/891/files/tac-dung-cua-nhung-huou-4.jpg",
@@ -229,7 +229,7 @@ export const posts: Post[] = [
     id: 15,
     userId: currentUser.user_id,
     user: currentUser,
-    caption: "",
+    content: "",
     createdAt: new Date("2023-09-21 17:33"),
     images: [
       "https://bizweb.dktcdn.net/100/378/891/files/tac-dung-cua-nhung-huou-4.jpg",

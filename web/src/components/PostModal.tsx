@@ -64,9 +64,11 @@ const PostModal = () => {
       if (response.data) {
         toast.success("Create post successfully!");
         onClose();
+        setUploadedImages([]);
+        setContent("");
       }
     } catch (error: any) {
-      toast.error(error.response.data.data.errors[0]);
+      toast.error("Error creating post!");
     }
   };
 

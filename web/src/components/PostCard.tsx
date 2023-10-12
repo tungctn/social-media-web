@@ -42,8 +42,11 @@ export default function PostCard({ post }: PostCardProps) {
             </div>
             <PostActions />
           </div>
-          <p className="px-6 py-[18px]">{post.caption}</p>
-          <div className="flex flex-row w-full cursor-pointer" onClick={handleShowDetail}>
+          <p className="px-6 py-[18px]">{post.content}</p>
+          <div
+            className="flex flex-row w-full cursor-pointer"
+            onClick={handleShowDetail}
+          >
             <Image
               src={post.images[0]}
               alt=""
