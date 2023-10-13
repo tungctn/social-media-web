@@ -3,7 +3,6 @@ name: Deploy AI to Cloud Server
 on:
   push:
     paths:
-      - ".github/workflows/**"
       - "AI/**"
     branches: ["main"]
 

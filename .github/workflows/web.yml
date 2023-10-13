@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - "web/**"
-      - ".github/workflows/**"
+      - "api/**"
     branches: ["main"]
 
 permissions:
@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v3
 
   # Build package
-  build:
+  build-frontend:
     runs-on: self-hosted
     defaults:
       run:
@@ -35,10 +35,32 @@ jobs:
       - run: npm ci
       - run: npm run build
 
-  # Deployment
-  deploy:
+  build-backend:
     runs-on: self-hosted
-    needs: build
+    defaults:
+      run:
+        working-directory: ./api
+    needs: build-frontend
+
+    steps:
+      - name: Set up Ruby 3.0.2
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.2
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+      - name: Set env
+        run: |
+          touch application.yml
+          echo "${{ secrets.PROD_BACKEND }}" > application.yml
+        working-directory: api/config
+
+  # Deployment
+  deploy-frontend:
+    runs-on: self-hosted
+    needs: build-backend
     steps:
       - uses: actions/setup-node@v3
         with:
@@ -47,4 +69,10 @@ jobs:
         run: |
           npm install pm2 -g
           pm2 restart nextjs-app
-    
+
+  deploy-backend:
+    runs-on: self-hosted
+    needs: deploy-frontend
+    steps:
+      - name: Start puma server
+        run: echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S systemctl start puma.service
