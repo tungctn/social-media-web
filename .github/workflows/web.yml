@@ -33,10 +33,19 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.11
-      - name: Install Pillow dependencies
+      - name: Temporarily disable command-not-found
+        run: |
+          echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S rm /usr/lib/cnf-update-db
+        
+      - name: Update and install dependencies
         run: |
           echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S apt-get update
           echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S apt-get install -y libjpeg8-dev zlib1g-dev
+        
+      - name: Restore command-not-found
+        run: |
+          echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S ln -s /usr/lib/command-not-found /usr/lib/cnf-update-db
+        
         
       - name: Install dependencies
         run: |
