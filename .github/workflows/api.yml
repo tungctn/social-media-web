@@ -1,0 +1,50 @@
+name: Deploy Web App to Cloud Server
+
+on:
+  push:
+    paths:
+      - "api/**"
+      - ".github/workflows/**"
+    branches: ["main"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  test:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+
+  # Build package
+  build:
+    runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: ./api
+    needs: test
+
+    steps:
+      - name: Set up Ruby 3.0.2
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.2
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+      - name: Set env
+        run: |
+          touch application.yml
+          echo "${{ secrets.PROD_BACKEND }}" > application.yml
+        working-directory: api/config
+
+  # Deployment
+  deploy:
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: Start puma server
+        run: echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S systemctl start puma.service
