@@ -1,0 +1,10 @@
+matplotlib==3.7.0
+numpy==1.24.2
+torch==2.0.1
+torchvision==0.15.2
+Flask==2.0.1
+CORS==1.0.1
+pillow==8.2.0
+
+
+

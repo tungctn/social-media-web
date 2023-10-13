@@ -7,6 +7,8 @@ on:
     paths:
       - "web/**"
       - "api/**"
+      - ".github/workflows/**"
+      - "AI/**"
     branches: ["main"]
 
 permissions:
@@ -19,6 +21,22 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
+  build-AI:
+    runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: ./AI
+    needs: test
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Python 3.10
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install -r requirements.txt
 
   # Build package
   build:
@@ -26,7 +44,7 @@ jobs:
     defaults:
       run:
         working-directory: ./web
-    needs: test
+    needs: build-AI
 
     steps:
       - uses: actions/checkout@v3
@@ -57,14 +75,22 @@ jobs:
           touch application.yml
           echo "${{ secrets.PROD_BACKEND }}" > application.yml
         working-directory: api/config
+  
+  deploy-AI:
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: Use Python 3.10
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10
+      - name: Start flask server
+        run: echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S systemctl start myflaskapp.service
 
   # Deployment
   deploy:
     runs-on: self-hosted
-    defaults:
-      run:
-        working-directory: ./web
-    needs: build
+    needs: deploy-AI
     steps:
       - uses: actions/setup-node@v3
         with:
@@ -73,10 +99,6 @@ jobs:
         run: |
           npm install pm2 -g
           pm2 restart nextjs-app
-      - name: Change to api directory
-        run: cd ../api
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.0.2
       - name: Start puma server
         run: echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S systemctl start puma.service
+    

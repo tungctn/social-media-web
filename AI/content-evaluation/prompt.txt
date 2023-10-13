@@ -1,0 +1,12 @@
+{content}
+"Determine whether the following content is related to animals and does not have a negative connotation: [CONTENT TO BE CHECKED]"
+
+Your answer should be in the following format:
+{
+message: (If related and not negative, the answer will be "yes", if not related or has a negative connotation, it will be "no")
+}
+
+For example:
+{
+    message: "yes"
+}

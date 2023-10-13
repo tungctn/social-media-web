@@ -63,7 +63,7 @@ export const posts: Post[] = [
     userId: currentUser.user_id,
     user: currentUser,
     content: "",
-    createdAt: new Date("2023-09-21 17:33"),
+    createdAt: new Date("2023-10-03T15:40:00.278Z"),
     images: [
       "https://aquasetup.com/wp-content/uploads/2023/04/Fantail-Goldfish_Waraphorn-Apha_Shutterstock.jpg",
       "https://aspidoras.com/wp-content/uploads/2021/07/ca-ba-duoi.jpg",
