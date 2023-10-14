@@ -6,7 +6,7 @@ import Modal from "./Modal";
 import usePostModal from "@/hooks/usePostModal";
 import { FaRegSmile } from "react-icons/fa";
 import { BsFillTagsFill } from "react-icons/bs";
-import { uploadImage } from "@/services/imageServices";
+import { moderateImage, uploadImage } from "@/services/imageServices";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import Button from "./Button";
@@ -28,8 +28,15 @@ const PostModal = () => {
       if (file) {
         try {
           const response = await uploadImage(file as File);
-          toast.success("Upload image successfully!");
-          uploadeds.push(response.data.image);
+          const moderate = await moderateImage(response.data.image.url);
+          console.log(moderate.message);
+          if (!moderate.success) {
+            toast.error(moderate.message);
+            continue;
+          } else {
+            toast.success(moderate.message);
+            uploadeds.push(response.data.image);
+          }
         } catch (error) {
           toast.error("Error uploading the image!");
         }
