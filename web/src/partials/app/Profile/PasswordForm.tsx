@@ -6,6 +6,9 @@ import Input from "@/components/Input";
 import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
+import { FORM } from "@/constants/Messages";
+import { updatePassword } from "@/services/userServices";
+import { toast } from "react-toastify";
 
 export default function PasswordForm() {
   const {
@@ -13,14 +16,39 @@ export default function PasswordForm() {
     handleSubmit,
     formState: { errors },
     setValue,
+    setError,
     watch,
+    reset,
   } = useForm<IFormValues>();
   const router = useRouter();
   const auth = useSelector((state: any) => state.auth);
 
-  const handleSubmitForm = async (data: any) => {};
+  const handleSubmitForm = async (data: any) => {
+    const newPassword = {
+      old_password: data.old_password,
+      password: data.password,
+    };
 
-  const handleErrorForm = (errors: any) => {};
+    try {
+      updatePassword(newPassword);
+      toast.success("Updated password!");
+      reset();
+    } catch (error) {
+      toast.error("Error!");
+    }
+  };
+
+  const handleErrorForm = (errors: any) => {
+    for (const name in errors) {
+      if (Object.hasOwnProperty.call(errors, name)) {
+        const type = errors[name].type;
+        setError(name as any, {
+          type,
+          message: FORM[name][type],
+        });
+      }
+    }
+  };
 
   const handleCancel = () => {
     router.push(`/profile/${auth.user.user_id}`);
@@ -41,16 +69,38 @@ export default function PasswordForm() {
         <div className="flex flex-col 3xl:gap-[30px] gap-[calc(30px/6*5)]">
           <Input
             title="Password"
-            name="oldpassword"
+            name="old_password"
             register={register}
             type="password"
+            error={errors.old_password?.message}
+            rules={{
+              required: true,
+            }}
           />
-          <Input name="password" register={register} title="New password" />
+          <Input
+            name="password"
+            register={register}
+            title="New password"
+            type="password"
+            error={errors.password?.message}
+            rules={{
+              required: true,
+            }}
+          />
           <Input
             name="repassword"
             register={register}
             title="Confirm new password"
             type="password"
+            rules={{
+              required: true,
+              validate: {
+                incorrect: (value: string, formValues: any) => {
+                  return value === formValues.password;
+                },
+              },
+            }}
+            error={errors.repassword?.message}
           />
         </div>
         <div className="flex flex-row 3xl:gap-10 gap-6 justify-end 3xl:mt-[49px] mt-[calc(49px/6*5)]">

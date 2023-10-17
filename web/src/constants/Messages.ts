@@ -5,6 +5,9 @@ export const FORM: any = {
   last_name: {
     required: "Please enter first name!",
   },
+  old_password: {
+    required: "Please enter your current password!",
+  },
   password: {
     required: "Please enter password!",
     pattern:
