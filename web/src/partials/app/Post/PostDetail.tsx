@@ -46,7 +46,7 @@ export default function PostDetail({ open = false, onClose, id }: PostDetail) {
         className="w-screen h-screen bg-black/50 absolute top-0 left-0 z-20"
         onClick={onClose}
       ></div>
-      <div className="bg-white 3xl:h-[850px] h-[calc(850px/4*3)] 3xl:w-[1186px] w-[calc(1186px/4*3)] absolute z-30 top-[calc((100vh-850px/4*3)/2)] left-[calc((100vw-1186px/4*3)/2)] rounded-[30px]">
+      <div className="bg-white 3xl:h-[850px] h-[calc(850px/4*3)] 3xl:w-[1186px] w-[calc(1186px/4*3)] absolute z-30 top-[50vh] -translate-y-1/2 left-[50vw] -translate-x-1/2 rounded-[30px]">
         <div className="flex flex-row h-full w-full">
           {post ? (
             <Carousel
