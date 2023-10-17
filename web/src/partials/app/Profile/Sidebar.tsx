@@ -3,17 +3,22 @@ import UserActionsButton from "./UserActionsButton";
 import UserActions from "./UserActions";
 import User from "@/utils/fakeData/User";
 import ProfileAvatar from "./ProfileAvatar";
+import { useSelector } from "react-redux";
 
 type SidebarProps = {
   user: User;
 };
 
 export default function Sidebar({ user }: SidebarProps) {
+  const auth = useSelector((state: any) => state.auth);
   return (
     <>
       <UserActionsButton userId={user.user_id} />
       <div className="mx-auto">
-        <ProfileAvatar src={user.avatar_url} />
+        <ProfileAvatar
+          src={user.avatar_url}
+          isAuth={auth.user.user_id == user.user_id}
+        />
       </div>
       <span className="text-deep-lilac 3xl:text-2xl text-xl mt-3 text-center">
         {user.full_name}
