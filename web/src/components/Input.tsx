@@ -14,7 +14,7 @@ export type InputProps = {
     | "date_of_birth"
     | "address"
     | "bio"
-    | "oldpassword";
+    | "old_password";
   type?: string;
   error?: string | undefined;
   register: UseFormRegister<IFormValues>;

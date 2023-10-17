@@ -33,3 +33,10 @@ export function updateUser(data: any) {
 export function deleteAvatar() {
   return instance.delete("/api/users/avatar");
 }
+
+export function updatePassword(data: {
+  old_password: string;
+  password: string;
+}) {
+  return instance.put("/api/users/password", data);
+}

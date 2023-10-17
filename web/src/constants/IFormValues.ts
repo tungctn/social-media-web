@@ -8,5 +8,5 @@ export default interface IFormValues {
   date_of_birth: Date;
   address: string;
   bio: string;
-  oldpassword: string;
+  old_password: string;
 }
