@@ -6,7 +6,7 @@ type Comment = {
   post_id: number;
   user: User;
   createdAt: Date;
-  comments?: Comment[];
+  reply_comments?: Comment[];
   content: string;
 };
 
@@ -28,7 +28,7 @@ export const commentsByPostId: Comment[] = [
     createdAt: new Date("2023-10-04 20:53"),
     content:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. ",
-    comments: [
+    reply_comments: [
       {
         id: 3,
         user_id: 3,
@@ -57,7 +57,7 @@ export const commentsByPostId: Comment[] = [
     createdAt: new Date("2023-10-04 20:53"),
     content:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. ",
-    comments: [
+    reply_comments: [
       {
         id: 3,
         user_id: 3,
