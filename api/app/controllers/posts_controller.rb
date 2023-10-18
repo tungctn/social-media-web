@@ -20,19 +20,34 @@ class PostsController < ApplicationController
   end
 
   def show
+    get_current_user() # gán current_user nếu có token truyền lên
+
     post = get_post_by_id(params[:id])
     
     if !post
       return
     end
 
-    comments = image_get(post.post_comments)
+    post_data = image_get([post])[0]
+    
+    post_data["type_react"] = nil
+    post_data["comments"] = image_get(post.post_comments)
 
-    render json: { post: post, images: post.images, comments: comments }, status: :ok
+    if @current_user
+      react_post = post.reacts_post.find_by(user_id: @current_user.id)
+
+      if !react_post
+      else
+        react = React.find_by_id(react_post.react_id)
+        post_data["type_react"] = react.type_react
+      end
+    end
+
+    render json: { post: post_data }, status: :ok
   end
 
   def get_all
-    get_current_user()
+    get_current_user() # gán current_user nếu có token truyền lên
 
     skip = params[:page_size].to_i * (params[:page_index].to_i - 1)
     posts = Post.limit(params[:page_size].to_i).offset(skip).order("created_at desc")
@@ -76,7 +91,7 @@ class PostsController < ApplicationController
     image_add(post, params[:image_ids])
 
     if post.update(update_post_params)
-      render json: { post: post, images: post.images }, status: :ok
+      render json: { message: "Thành công" }, status: :ok
     else
       render json: { errors: post.errors.full_messages }, status: :bad_request
     end

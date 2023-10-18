@@ -32,7 +32,11 @@ class ApplicationController < ActionController::Base
   #        <image_ids> - id của các ảnh
   # ttanh - 04/10/2023
   def image_add(model, image_ids)
-    for image_id in image_ids do
+    if !image_ids
+      return
+    end
+
+    image_ids.each do |image_id|
       image = Image.find_by_id(image_id)
       if image
         model.images << image
