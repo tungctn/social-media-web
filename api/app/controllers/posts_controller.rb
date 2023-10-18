@@ -33,6 +33,20 @@ class PostsController < ApplicationController
     post_data["type_react"] = nil
     post_data["comments"] = image_get(post.post_comments)
 
+    post_data["comments"].each do |comment|
+      user_info = UserInfo.find_by(user_id: comment["user_id"])
+      comment["user"] = user_info
+    end
+
+    post_data["user"] = post.user.user_info
+
+    if post.comments_count <= 0
+      count_comment = post.post_comments.size
+      post.comments_count = count_comment
+      post.save
+      post_data["comments_count"] = count_comment
+    end
+
     if @current_user
       react_post = post.reacts_post.find_by(user_id: @current_user.id)
 
@@ -55,7 +69,15 @@ class PostsController < ApplicationController
     posts_data = image_get(posts)
 
     posts_data.each_with_index do |post_data, index|
+      if posts[index].comments_count <= 0
+        count_comment = posts[index].post_comments.size
+        posts[index].comments_count = count_comment
+        posts[index].save
+        post_data["comments_count"] = count_comment
+      end
+
       post_data["type_react"] = nil
+      post_data["user"] = posts[index].user.user_info
       
       #react
       if !@current_user
