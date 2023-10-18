@@ -1,3 +1,4 @@
+import { Image } from "./Image";
 import User, { users } from "./User";
 
 type Comment = {
@@ -5,9 +6,14 @@ type Comment = {
   user_id: number;
   post_id: number;
   user: User;
+<<<<<<< HEAD
+  created_at: Date;
+=======
   createdAt: Date;
+>>>>>>> ce04aef7e673d69d177a15c46ff3527a64a49ce4
   reply_comments?: Comment[];
   content: string;
+  images?: Image[]
 };
 
 export const commentsByPostId: Comment[] = [
@@ -16,7 +22,7 @@ export const commentsByPostId: Comment[] = [
     user_id: 1,
     post_id: 1,
     user: users[0],
-    createdAt: new Date("2023-10-04 20:50"),
+    created_at: new Date("2023-10-04 20:50"),
     content:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. ",
   },
@@ -25,7 +31,7 @@ export const commentsByPostId: Comment[] = [
     user_id: 2,
     post_id: 1,
     user: users[1],
-    createdAt: new Date("2023-10-04 20:53"),
+    created_at: new Date("2023-10-04 20:53"),
     content:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. ",
     reply_comments: [
@@ -34,7 +40,7 @@ export const commentsByPostId: Comment[] = [
         user_id: 3,
         post_id: 1,
         user: users[2],
-        createdAt: new Date("2023-10-04 20:54"),
+        created_at: new Date("2023-10-04 20:54"),
         content:
           "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. ",
       },
@@ -43,7 +49,7 @@ export const commentsByPostId: Comment[] = [
         user_id: 3,
         post_id: 1,
         user: users[2],
-        createdAt: new Date("2023-10-04 20:55"),
+        created_at: new Date("2023-10-04 20:55"),
         content:
           "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. ",
       },
@@ -54,7 +60,7 @@ export const commentsByPostId: Comment[] = [
     user_id: 2,
     post_id: 1,
     user: users[1],
-    createdAt: new Date("2023-10-04 20:53"),
+    created_at: new Date("2023-10-04 20:53"),
     content:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. ",
     reply_comments: [
@@ -63,7 +69,7 @@ export const commentsByPostId: Comment[] = [
         user_id: 3,
         post_id: 1,
         user: users[2],
-        createdAt: new Date("2023-10-04 20:54"),
+        created_at: new Date("2023-10-04 20:54"),
         content:
           "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. ",
       },
@@ -72,7 +78,7 @@ export const commentsByPostId: Comment[] = [
         user_id: 3,
         post_id: 1,
         user: users[2],
-        createdAt: new Date("2023-10-04 20:55"),
+        created_at: new Date("2023-10-04 20:55"),
         content:
           "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. ",
       },

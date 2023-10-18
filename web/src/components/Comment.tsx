@@ -10,14 +10,14 @@ type CommentProps = {
   comment: Comment;
   avatarSize?: number;
   userNameClassName?: string;
-  createdAtClassName?: string;
+  created_atClassName?: string;
 };
 
 export default function Comment({
   comment,
   avatarSize = 50,
   userNameClassName = "",
-  createdAtClassName = "",
+  created_atClassName = "",
 }: CommentProps) {
   const [showReplies, setShowReplies] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
@@ -42,10 +42,10 @@ export default function Comment({
             <span
               className={
                 "first-letter:uppercase text-spanish-gray text-xs " +
-                createdAtClassName
+                created_atClassName
               }
             >
-              {dayjs(comment.createdAt).format("dddd, HH:mm DD/MM/YYYY")}
+              {dayjs(comment.created_at).format("dddd, HH:mm DD/MM/YYYY")}
             </span>
           </div>
         </div>
@@ -68,25 +68,25 @@ export default function Comment({
             <FaEllipsis />
           </div>
         </div>
-        {comment.comments ? (
+        {comment.reply_comments ? (
           !showReplies ? (
             <div
               className="flex flex-row cursor-pointer gap-[11px] items-center before:content-[''] before:block before:3xl:w-[117px] before:w-[calc(117px/6*5)] before:h-[1px] before:bg-spanish-gray"
               onClick={handleShowReplies}
             >
               <span className="text-[14px] text-spanish-gray">
-                Watch the reply ({comment.comments?.length})
+                Watch the reply ({comment.reply_comments?.length})
               </span>
             </div>
           ) : (
             <div className="flex flex-col gap-2">
-              {comment.comments.map((comment) => {
+              {comment.reply_comments.map((comment) => {
                 return (
                   <Comment
                     key={comment.id}
                     comment={comment}
                     userNameClassName="!text-[14px] !leading-[16px]"
-                    createdAtClassName="!text-[10px] !leading-[12px]"
+                    created_atClassName="!text-[10px] !leading-[12px]"
                     avatarSize={40}
                   />
                 );

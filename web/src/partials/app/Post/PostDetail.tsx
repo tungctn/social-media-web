@@ -5,7 +5,7 @@ import PostActions from "@/components/PostActions";
 import PostCommentField from "@/components/PostCommentField";
 import PostReactCounts from "@/components/PostReactCounts";
 import PostReacts from "@/components/PostReacts";
-import Post, { postsByUser } from "@/utils/fakeData/Post";
+import Post, { posts, postsByUser } from "@/utils/fakeData/Post";
 import dayjs from "dayjs";
 import Image from "next/image";
 import { MouseEventHandler, useEffect, useRef, useState } from "react";
@@ -14,21 +14,28 @@ import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { BREAKPOINTS } from "@/constants/WindowSizes";
 import { Carousel } from "flowbite-react";
 import { FaCircleChevronLeft, FaCircleChevronRight } from "react-icons/fa6";
+import { getPostById } from "@/services/postService";
+import { useSelector } from "react-redux";
 
-type PostDetail = {
+type PostDetailProps = {
   open?: boolean;
   onClose?: MouseEventHandler<HTMLDivElement>;
   id: number;
 };
 
-export default function PostDetail({ open = false, onClose, id }: PostDetail) {
+export default function PostDetail({
+  open = false,
+  onClose,
+  id,
+}: PostDetailProps) {
   const [post, setPost] = useState<Post | undefined>();
   const headerRef = useRef<HTMLDivElement>(null);
   const commentsListRef = useRef<HTMLDivElement>(null);
   const { width } = useWindowDimensions();
+  const auth = useSelector((state: any) => state.auth);
 
   useEffect(() => {
-    id && setPost(postsByUser[id - 1]);
+    id && getPostData();
   }, [id]);
 
   useEffect(() => {
@@ -40,6 +47,29 @@ export default function PostDetail({ open = false, onClose, id }: PostDetail) {
       }
     }
   }, [width, post]);
+
+  const getPostData = async () => {
+    // const res: any = await getPostById(id);
+    // if (res.success) {
+    //   setPost(res.data);
+    // }
+    setPost(posts[id - 1]);
+  };
+
+  const handleSendNewComment = (newComment: string) => {
+    console.log(newComment);
+
+    setPost((prev: any) => {
+      prev.comments = prev.comments.unshift({
+        id: (Math.random() + 1).toString(36).substring(7),
+        content: newComment,
+        user_id: auth.user.user_id,
+        user: auth.user,
+      });
+
+      return prev;
+    });
+  };
   return (
     <div className="fixed top-0 left-0 z-20">
       <div
@@ -82,7 +112,7 @@ export default function PostDetail({ open = false, onClose, id }: PostDetail) {
               {post.images.map((image, index) => (
                 <Image
                   key={index}
-                  src={image}
+                  src={image.url}
                   alt=""
                   width={573}
                   height={850}
@@ -103,7 +133,7 @@ export default function PostDetail({ open = false, onClose, id }: PostDetail) {
                       {post?.user?.full_name}
                     </span>
                     <span className="first-letter:uppercase text-xs text-spanish-gray">
-                      {dayjs(post?.createdAt).format("dddd, HH:mm DD/MM/YYYY")}
+                      {dayjs(post?.created_at).format("dddd, HH:mm DD/MM/YYYY")}
                     </span>
                   </div>
                 </div>
@@ -114,9 +144,9 @@ export default function PostDetail({ open = false, onClose, id }: PostDetail) {
                   <p className="text-[14px] 3xl:mx-12 mx-10">{post?.content}</p>
                   <div className="pb-[9px] 3xl:mx-12 mx-10">
                     <PostReactCounts
-                      comments={post?.comments ?? 0}
-                      likes={post?.likes ?? 0}
-                      shares={post?.shares ?? 0}
+                      comments={post?.comments_count ?? 0}
+                      likes={post?.likes_count ?? 0}
+                      shares={post?.shares_count ?? 0}
                       iconCustomClassName="3xl:text-xl text-lg"
                       customClassName="text-xs leading-[12px]"
                     />
@@ -139,7 +169,7 @@ export default function PostDetail({ open = false, onClose, id }: PostDetail) {
                 <PostCommentsList />
               </div>
               <div className="bottom-0 w-full">
-                <PostCommentField />
+                <PostCommentField postId={id} onSend={handleSendNewComment} />
               </div>
             </div>
           </div>
