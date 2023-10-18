@@ -6,11 +6,7 @@ type Comment = {
   user_id: number;
   post_id: number;
   user: User;
-<<<<<<< HEAD
   created_at: Date;
-=======
-  createdAt: Date;
->>>>>>> ce04aef7e673d69d177a15c46ff3527a64a49ce4
   reply_comments?: Comment[];
   content: string;
   images?: Image[]
