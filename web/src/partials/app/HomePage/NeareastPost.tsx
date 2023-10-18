@@ -11,7 +11,7 @@ export default function NeareastPost() {
       <div className="flex flex-row mt-3 gap-9 min-w-max">
         <div className="min-w-[140px] relative cursor-pointer">
           <Image
-            src={nearestPost.images[0]}
+            src={nearestPost.images[0].url}
             alt={"post-" + nearestPost.id}
             className="h-[113px] object-cover rounded-[10px] z-10 relative"
             width={140}

@@ -36,7 +36,7 @@ export default function PostCard({ post }: PostCardProps) {
                   </span>
                 </Link>
                 <time className="first-letter:uppercase text-xs text-spanish-gray">
-                  {dayjs(post.createdAt).format("dddd, HH:mm DD/MM/YYYY")}
+                  {dayjs(post.created_at).format("dddd, HH:mm DD/MM/YYYY")}
                 </time>
               </div>
             </div>
@@ -48,7 +48,7 @@ export default function PostCard({ post }: PostCardProps) {
             onClick={handleShowDetail}
           >
             <Image
-              src={post.images[0]}
+              src={post.images[0].url}
               alt=""
               className={
                 "h-[500px] object-cover " +
@@ -70,7 +70,7 @@ export default function PostCard({ post }: PostCardProps) {
                   + {post.images.length > 2 ? post.images.length - 2 : ""}
                 </span>
                 <Image
-                  src={post.images[1]}
+                  src={post.images[1].url}
                   alt=""
                   className="w-full h-[500px] object-cover"
                   width={800}
@@ -82,9 +82,9 @@ export default function PostCard({ post }: PostCardProps) {
           <div className="text-[14px] px-6">
             <div className="pt-[7px] pb-[19px] border-b-[1px] border-b-light-silver">
               <PostReactCounts
-                likes={post.likes}
-                comments={post.comments}
-                shares={post.shares}
+                likes={post.likes_count}
+                comments={post.comments_count}
+                shares={post.shares_count}
                 iconCustomClassName="3xl:text-[30px] text-[calc(30px/6*5)]"
                 customClassName="leading-0"
               />

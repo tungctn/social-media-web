@@ -7,3 +7,7 @@ export function createPost(post: any) {
 export function getAllPosts() {
   return instance.get("/api/posts");
 }
+
+export function getPostById(id: number) {
+  return instance.get(`/api/posts/${id}`);
+}

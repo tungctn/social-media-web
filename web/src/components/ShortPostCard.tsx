@@ -19,7 +19,7 @@ export default function ShortPostCard({ post }: ShortPostCardProps) {
     <>
       <div className="relative cursor-pointer" onClick={handleClick}>
         <Image
-          src={post.images[0]}
+          src={post.images[0].url}
           alt=""
           width={267}
           height={267}
@@ -31,13 +31,13 @@ export default function ShortPostCard({ post }: ShortPostCardProps) {
               <span className="3xl:text-[30px] text-[calc(30px/6*5)]">
                 <FaRegThumbsUp />
               </span>
-              <span>{post.likes}</span>
+              <span>{post.likes_count}</span>
             </div>
             <div className="flex flex-row gap-2 items-center">
               <span className="3xl:text-[30px] text-[calc(30px/6*5)]">
                 <FaRegMessage />
               </span>
-              <span>{post.comments}</span>
+              <span>{post.comments_count}</span>
             </div>
           </div>
         </div>
