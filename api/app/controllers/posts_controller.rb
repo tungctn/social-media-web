@@ -118,7 +118,7 @@ class PostsController < ApplicationController
     image_add(comment, params[:image_ids])
 
     if comment.save
-      post.comments = post.comments + 1
+      post.comments_count = post.comments_count + 1
       post.save
       render json: { comment: comment, images: comment.images }, status: :ok
     else
@@ -170,7 +170,7 @@ class PostsController < ApplicationController
     image_delete(comment)
 
     if comment.destroy
-      post.comments = post.comments - 1
+      post.comments_count = post.comments_count - 1
       post.save
       render json: { message: "thành công" }, status: :ok
     else

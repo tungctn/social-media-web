@@ -44,7 +44,9 @@ class ApplicationController < ActionController::Base
   # param: <model> - model muốn xóa
   # ttanh - 04/10/2023
   def image_delete(model)
-    for image in model.images do
+    images = model.images
+    
+    images.each do |image|
       image.image.purge
       image.destroy
     end
