@@ -437,12 +437,22 @@ POST /api/posts
 
 ```http
 GET /api/posts/:id - có đi kèm với comment
-GET /api/posts - Lấy tất cả bài viết
 ```
 
 | Path Variables | Type     | Description  |
 | :------------- | :------- | :----------- |
 | `id`           | `string` | **Required** |
+
+#### Get post detail
+
+```http
+GET /api/posts - Lấy tất cả bài viết
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `page_index`           | `int` | **Required** |
+| `page_size`           | `int` | **Required** |
 
 #### Update post
 
@@ -544,6 +554,50 @@ DELETE /api/comments/:id
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+### React module (biểu cảm)
+
+#### Create react post
+
+```http
+Authorization: Bearer YOUR_TOKEN
+POST /api/posts/reacts
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Parameter  | Type     | Description  |
+| :--------- | :------- | :----------- |
+| `type_react`  | `enum - type_react` | **Required** |
+| `post_id`    | `int` | **Required**|
+
+```javascript
+{
+    "success": true,
+    "message": "comment created successfully",
+    "data": {
+        "message": ""
+    },
+}
+```
+
+#### Delete react post
+
+```http
+Authorization: Bearer YOUR_TOKEN
+DELETE /api/posts/unreact/:post_id
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `post_id`           | `int` | **Required** |
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
 
 
 ## Architecture Design

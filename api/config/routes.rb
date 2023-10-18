@@ -31,5 +31,6 @@ Rails.application.routes.draw do
 
     #react
     post "/posts/reacts", to: "posts#react_post"
+    post "/posts/unreact/:post_id", to: "posts#unreact_post"
   end
 end
