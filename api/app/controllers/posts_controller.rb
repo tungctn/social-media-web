@@ -20,23 +20,58 @@ class PostsController < ApplicationController
   end
 
   def show
+    get_current_user() # gán current_user nếu có token truyền lên
+
     post = get_post_by_id(params[:id])
     
     if !post
       return
     end
 
-    comments = image_get(post.post_comments)
+    post_data = image_get([post])[0]
+    
+    post_data["type_react"] = nil
+    post_data["comments"] = image_get(post.post_comments)
 
-    render json: { post: post, images: post.images, comments: comments }, status: :ok
+    if @current_user
+      react_post = post.reacts_post.find_by(user_id: @current_user.id)
+
+      if !react_post
+      else
+        react = React.find_by_id(react_post.react_id)
+        post_data["type_react"] = react.type_react
+      end
+    end
+
+    render json: { post: post_data }, status: :ok
   end
 
   def get_all
-    posts = Post.all
+    get_current_user() # gán current_user nếu có token truyền lên
 
-    posts_with_images = image_get(posts)
+    skip = params[:page_size].to_i * (params[:page_index].to_i - 1)
+    posts = Post.limit(params[:page_size].to_i).offset(skip).order("created_at desc")
 
-    render json: { posts: posts_with_images }, status: :ok
+    posts_data = image_get(posts)
+
+    posts_data.each_with_index do |post_data, index|
+      post_data["type_react"] = nil
+      
+      #react
+      if !@current_user
+        next
+      end
+      
+      react_post = posts[index].reacts_post.find_by(user_id: @current_user.id)
+
+      if !react_post
+      else
+        react = React.find_by_id(react_post.react_id)
+        post_data["type_react"] = react.type_react
+      end
+    end
+
+    render json: { posts: posts_data }, status: :ok
   end
 
   def update
@@ -56,7 +91,7 @@ class PostsController < ApplicationController
     image_add(post, params[:image_ids])
 
     if post.update(update_post_params)
-      render json: { post: post, images: post.images }, status: :ok
+      render json: { message: "Thành công" }, status: :ok
     else
       render json: { errors: post.errors.full_messages }, status: :bad_request
     end
@@ -85,7 +120,9 @@ class PostsController < ApplicationController
 
   #comment
   def create_comment
-    if !get_post_by_id(params[:post_id])
+    post = get_post_by_id(params[:post_id])
+
+    if !post
       return
     end
 
@@ -96,6 +133,8 @@ class PostsController < ApplicationController
     image_add(comment, params[:image_ids])
 
     if comment.save
+      post.comments_count = post.comments_count + 1
+      post.save
       render json: { comment: comment, images: comment.images }, status: :ok
     else
       render json: { errors: comment.errors.full_messages }, status: :bad_request
@@ -125,10 +164,16 @@ class PostsController < ApplicationController
     end
   end
 
-  def delete_comment 
+  def delete_comment
     comment = get_comment_by_id(params[:id])
 
     if !comment
+      return
+    end
+
+    post = get_post_by_id(comment.post_id)
+
+    if !post
       return
     end
 
@@ -140,6 +185,8 @@ class PostsController < ApplicationController
     image_delete(comment)
 
     if comment.destroy
+      post.comments_count = post.comments_count - 1
+      post.save
       render json: { message: "thành công" }, status: :ok
     else
       render json: { errors: "lỗi" }, status: :bad_request
@@ -148,10 +195,9 @@ class PostsController < ApplicationController
 
   # biểu cảm với bài viết
   def react_post
-    react = React.where(["type_react = :t", { t: params[:type_react] }]).first
+    react = get_react_by_type(params[:type_react])
     
-    if react == nil
-      render json: { errors: "Truyền sai react type" }, status: :bad_request
+    if !react
       return
     end
     
@@ -162,37 +208,51 @@ class PostsController < ApplicationController
     end
 
     # tìm kiếm xem người dùng đã tương tác gì với bài viết này chưa
-    react_post = post.reacts.where({ user_id: @current_user.id }).first
-    render json: { message: react_post }, status: :ok
-    return
+    react_post = post.reacts_post.find_by(user_id: @current_user.id)
 
-    # if react_post
-    #   react_post.react_id = react.id
-    #   if react_post.save
-    #     render json: { message: "Thành công" }, status: :ok
-    #     return
-    #   else
-    #     render json: { errors: react_post.errors.full_messages }, status: :bad_request
-    #     return
-    #   end
-    # end
+    if !react_post
+      post_react = ReactsPost.new(post: post, react: react, user: @current_user)
+      post_react.save
+    else
+      react_post.update(react: react)
+    end
     
-     
-
-    # if react_post.save
-    #   render json: { message: "Thành công" }, status: :ok
-    #   return
-    # else
-    #   render json: { errors: react_post.errors.full_messages }, status: :bad_request
-    #   return
-    # end
+    render json: { message: "Biểu cảm thành công" }, status: :ok
+    return
   end
 
   # bỏ biểu cảm với bài viết
   def unreact_post
+    post = get_post_by_id(params[:post_id])
+
+    if !post
+      return
+    end
+
+    # tìm kiếm xem người dùng đã tương tác gì với bài viết này chưa
+    react_post = post.reacts_post.find_by(user_id: @current_user.id)
+
+    if react_post
+      react_post.destroy
+      render json: { message: "Thành công" }, status: :ok
+    else
+      render json: { errors: "Người dùng chưa tương tác với bài viết." }, status: :ok
+    end
   end
 
   private
+  # check react tồn tại
+  # ttanh - 17/10/2023
+  def get_react_by_type(type)
+    react = React.where(["type_react = :t", { t: type }]).first
+    
+    if react == nil
+      render json: { errors: "Truyền sai react type" }, status: :bad_request
+      return false
+    end
+
+    return react
+  end
   
   # check bài viết tồn tại
   # ttanh - 04/10/2023

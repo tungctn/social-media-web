@@ -32,7 +32,11 @@ class ApplicationController < ActionController::Base
   #        <image_ids> - id của các ảnh
   # ttanh - 04/10/2023
   def image_add(model, image_ids)
-    for image_id in image_ids do
+    if !image_ids
+      return
+    end
+
+    image_ids.each do |image_id|
       image = Image.find_by_id(image_id)
       if image
         model.images << image
@@ -44,7 +48,9 @@ class ApplicationController < ActionController::Base
   # param: <model> - model muốn xóa
   # ttanh - 04/10/2023
   def image_delete(model)
-    for image in model.images do
+    images = model.images
+    
+    images.each do |image|
       image.image.purge
       image.destroy
     end
@@ -61,7 +67,7 @@ class ApplicationController < ActionController::Base
       model_data_merge = model_data.merge(model.attributes)
       model_data_merge["images"] = []
 
-      model.images.each do |image|
+      model.images.select(:id, :url).each do |image|
         model_data_merge["images"].push(image.attributes) # Kết hợp thuộc tính của mỗi đối tượng hình ảnh vào model_data
       end
 
@@ -83,6 +89,16 @@ class ApplicationController < ActionController::Base
     else
       render json: { errors: "Bạn cần gửi token" },
              status: :unauthorized
+    end
+  end
+
+  # lấy người dùng với những request không bắt buộc phải gửi
+  def get_current_user
+    token = request.headers["Authorization"]
+    if token
+      token = token.split(" ").last
+      decoded = jwt_decode token
+      @current_user = User.find_by_id(decoded[:user_id])
     end
   end
 end
