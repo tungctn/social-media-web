@@ -7,6 +7,8 @@ class Post < ApplicationRecord
   has_many :post_comments
   has_many :tags
 
+  belongs_to :user
+
   validates :content,
             presence: true
 
