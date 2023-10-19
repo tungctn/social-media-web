@@ -8,7 +8,13 @@ import PostReacts from "@/components/PostReacts";
 import Post, { posts, postsByUser } from "@/utils/fakeData/Post";
 import dayjs from "dayjs";
 import Image from "next/image";
-import { MouseEventHandler, useEffect, useRef, useState } from "react";
+import {
+  MouseEventHandler,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import PostCommentsList from "./PostCommentsList";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { BREAKPOINTS } from "@/constants/WindowSizes";
@@ -16,6 +22,7 @@ import { Carousel } from "flowbite-react";
 import { FaCircleChevronLeft, FaCircleChevronRight } from "react-icons/fa6";
 import { getPostById } from "@/services/postService";
 import { useSelector } from "react-redux";
+import useForceUpdate from "@/hooks/useForceUpdate";
 
 type PostDetailProps = {
   open?: boolean;
@@ -30,45 +37,64 @@ export default function PostDetail({
 }: PostDetailProps) {
   const [post, setPost] = useState<Post | undefined>();
   const headerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLDivElement>(null);
   const commentsListRef = useRef<HTMLDivElement>(null);
   const { width } = useWindowDimensions();
   const auth = useSelector((state: any) => state.auth);
+  const forceUpdate = useForceUpdate();
 
   useEffect(() => {
     id && getPostData();
   }, [id]);
 
   useEffect(() => {
-    if (headerRef.current && commentsListRef.current) {
+    if (headerRef.current && commentsListRef.current && inputRef.current) {
+      console.log(inputRef.current.offsetHeight);
+
       if (width >= BREAKPOINTS.extraLarge) {
-        commentsListRef.current.style.height = `calc(100% - ${headerRef.current.offsetHeight}px - 60px)`;
+        commentsListRef.current.style.height = `calc(850px - ${headerRef.current.offsetHeight}px - ${inputRef.current.offsetHeight}px)`;
       } else {
-        commentsListRef.current.style.height = `calc(100% - ${headerRef.current.offsetHeight}px - 48px)`;
+        commentsListRef.current.style.height = `calc(850px / 4 * 3 - ${headerRef.current.offsetHeight}px - ${inputRef.current.offsetHeight}px)`;
       }
     }
-  }, [width, post]);
+  }, [width, post, inputRef.current?.offsetHeight]);
 
   const getPostData = async () => {
-    // const res: any = await getPostById(id);
-    // if (res.success) {
-    //   setPost(res.data);
-    // }
-    setPost(posts[id - 1]);
+    const res: any = await getPostById(id);
+    if (res.success) {
+      setPost(res.data.post);
+    }
   };
 
-  const handleSendNewComment = (newComment: string) => {
-    console.log(newComment);
-
-    setPost((prev: any) => {
-      prev.comments = prev.comments.unshift({
-        id: (Math.random() + 1).toString(36).substring(7),
-        content: newComment,
+  const handleSendNewComment = (newComment: any) => {
+    const newComments: any = [
+      {
+        ...newComment,
         user_id: auth.user.user_id,
         user: auth.user,
-      });
+      },
+      ...(post?.comments ?? []),
+    ];
 
-      return prev;
-    });
+    const newPost: any = {
+      ...post,
+      comments: newComments,
+      comments_count: (post?.comments_count ?? 0) + 1,
+    };
+
+    setPost(newPost);
+  };
+
+  const renderPostCommentsLists = useCallback(() => {
+    if (post) {
+      console.log(post, post.comments);
+
+      return post.comments && <PostCommentsList comments={post.comments} />;
+    }
+  }, [post]);
+
+  const handleChangeInput = (newValue: string) => {
+    forceUpdate();
   };
   return (
     <div className="fixed top-0 left-0 z-20">
@@ -83,7 +109,7 @@ export default function PostDetail({
               slide={false}
               indicators={false}
               leftControl={
-                post.images.length > 1 ? (
+                post.images?.length > 1 ? (
                   <div className="3xl:text-[50px] text-[calc(50px/4*3)] text-lavender transition-all duration-300 hover:opacity-80">
                     <FaCircleChevronLeft />
                   </div>
@@ -92,7 +118,7 @@ export default function PostDetail({
                 )
               }
               rightControl={
-                post.images.length > 1 ? (
+                post.images?.length > 1 ? (
                   <div className="3xl:text-[50px] text-[calc(50px/4*3)] text-lavender transition-all duration-300 hover:opacity-80">
                     <FaCircleChevronRight />
                   </div>
@@ -109,16 +135,17 @@ export default function PostDetail({
                 },
               }}
             >
-              {post.images.map((image, index) => (
-                <Image
-                  key={index}
-                  src={image.url}
-                  alt=""
-                  width={573}
-                  height={850}
-                  className="h-full w-[calc(100%-0.45px)] object-cover rounded-s-[30px]"
-                />
-              ))}
+              {post.images &&
+                post.images.map((image, index) => (
+                  <Image
+                    key={index}
+                    src={image.url}
+                    alt=""
+                    width={573}
+                    height={850}
+                    className="h-full w-[calc(100%-0.45px)] object-cover rounded-s-[30px]"
+                  />
+                ))}
             </Carousel>
           ) : (
             <></>
@@ -166,10 +193,22 @@ export default function PostDetail({
                 className="3xl:pl-10 pl-8 3xl:pr-[94px] pr-[calc(94px/4*3)] max-h-content overflow-auto scrollbar-none"
                 ref={commentsListRef}
               >
-                <PostCommentsList />
+                {renderPostCommentsLists()}
               </div>
-              <div className="bottom-0 w-full">
-                <PostCommentField postId={id} onSend={handleSendNewComment} />
+              <div
+                className={
+                  "w-full min-h-fit " +
+                  (!post?.comments || post?.comments?.length === 0
+                    ? "absolute bottom-0"
+                    : "")
+                }
+              >
+                <PostCommentField
+                  onChange={handleChangeInput}
+                  ref={inputRef}
+                  postId={id}
+                  onSend={handleSendNewComment}
+                />
               </div>
             </div>
           </div>
