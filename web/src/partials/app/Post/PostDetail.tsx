@@ -5,7 +5,7 @@ import PostActions from "@/components/PostActions";
 import PostCommentField from "@/components/PostCommentField";
 import PostReactCounts from "@/components/PostReactCounts";
 import PostReacts from "@/components/PostReacts";
-import Post, { posts, postsByUser } from "@/utils/fakeData/Post";
+import Post from "@/utils/fakeData/Post";
 import dayjs from "dayjs";
 import Image from "next/image";
 import {
@@ -50,15 +50,13 @@ export default function PostDetail({
 
   useEffect(() => {
     if (headerRef.current && commentsListRef.current && inputRef.current) {
-      console.log(inputRef.current.offsetHeight);
-
       if (width >= BREAKPOINTS.extraLarge) {
         commentsListRef.current.style.height = `calc(850px - ${headerRef.current.offsetHeight}px - ${inputRef.current.offsetHeight}px)`;
       } else {
         commentsListRef.current.style.height = `calc(850px / 4 * 3 - ${headerRef.current.offsetHeight}px - ${inputRef.current.offsetHeight}px)`;
       }
     }
-  }, [width, post, inputRef.current?.offsetHeight]);
+  }, [width, post, forceUpdate]);
 
   const getPostData = async () => {
     const res: any = await getPostById(id);
@@ -92,8 +90,6 @@ export default function PostDetail({
     }
   }, [post]);
 
-  console.log(post);
-
   const handleChangeInput = (newValue: string) => {
     forceUpdate();
   };
@@ -107,8 +103,6 @@ export default function PostDetail({
     setPost(newPost);
   };
 
-  console.log(post);
-  
   return (
     <div className="fixed top-0 left-0 z-20">
       <div
