@@ -37,7 +37,7 @@ export default function Comment({
             <span
               className={"3xl:text-xl text-base font-bold " + userNameClassName}
             >
-              {comment.user.full_name}
+              {comment.user?.full_name}
             </span>
             <span
               className={
