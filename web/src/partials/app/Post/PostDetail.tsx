@@ -23,6 +23,7 @@ import { FaCircleChevronLeft, FaCircleChevronRight } from "react-icons/fa6";
 import { getPostById } from "@/services/postService";
 import { useSelector } from "react-redux";
 import useForceUpdate from "@/hooks/useForceUpdate";
+import { REACT_TYPE } from "@/constants/Others";
 
 type PostDetailProps = {
   open?: boolean;
@@ -87,15 +88,27 @@ export default function PostDetail({
 
   const renderPostCommentsLists = useCallback(() => {
     if (post) {
-      console.log(post, post.comments);
-
       return post.comments && <PostCommentsList comments={post.comments} />;
     }
   }, [post]);
 
+  console.log(post);
+
   const handleChangeInput = (newValue: string) => {
     forceUpdate();
   };
+
+  const handleChangeReact = (reactType: REACT_TYPE) => {
+    const newPost: any = {
+      ...post,
+      type_react: reactType,
+    };
+
+    setPost(newPost);
+  };
+
+  console.log(post);
+  
   return (
     <div className="fixed top-0 left-0 z-20">
       <div
@@ -183,7 +196,9 @@ export default function PostDetail({
                   <PostReacts
                     customClassName="text-xs leading-[12px]"
                     iconCustomClassName="3xl:text-2xl text-xl"
-                    postId={0}
+                    postId={post?.id ?? 0}
+                    reactType={post?.type_react}
+                    onChange={handleChangeReact}
                   />
                 </div>
               </div>
