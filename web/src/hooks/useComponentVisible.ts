@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 
-export default function useComponentVisible(initialIsVisible: any) {
+export default function useComponentVisible(
+  initialIsVisible: any,
+  eventType: string = "click",
+) {
   const [isComponentVisible, setIsComponentVisible] =
     useState(initialIsVisible);
   const ref = useRef<HTMLDivElement>(null);
@@ -12,9 +15,9 @@ export default function useComponentVisible(initialIsVisible: any) {
   };
 
   useEffect(() => {
-    document.addEventListener("click", handleClickOutside, true);
+    document.addEventListener(eventType, handleClickOutside, true);
     return () => {
-      document.removeEventListener("click", handleClickOutside, true);
+      document.removeEventListener(eventType, handleClickOutside, true);
     };
   });
 
