@@ -5,6 +5,7 @@ import Avatar from "./Avatar";
 import dayjs from "dayjs";
 import { FaEllipsis } from "react-icons/fa6";
 import { useState } from "react";
+import Image from "next/image";
 
 type CommentProps = {
   comment: Comment;
@@ -54,6 +55,17 @@ export default function Comment({
         <div className="flex flex-row gap-[9px]">
           <div className="bg-lavender px-4 pt-4 pb-[14px] rounded-[10px] w-full flex flex-col gap-2">
             <p className="pb-0">{comment.content}</p>
+            <div>
+              {comment.images && comment.images?.length > 0 && (
+                <Image
+                  src={comment.images[0].url}
+                  alt=""
+                  width={72}
+                  height={48}
+                  className="w-[72px] h-[48px] object-contain"
+                />
+              )}
+            </div>
             <div className="text-spanish-gray text-xs font-bold flex flex-row 3xl:gap-[53px] gap-[calc(53px/4*3)] justify-end">
               <button
                 className={isLiked ? "text-deep-lilac" : "text-inherit"}
