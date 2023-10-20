@@ -5,6 +5,8 @@ torchvision==0.15.2
 Flask==2.0.1
 CORS==1.0.1
 pillow==8.2.0
+googletrans==4.0.0rc1
+
 
 
 

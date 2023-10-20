@@ -10,7 +10,7 @@ def load_image_from_url(url):
 vqa_pipeline = pipeline("visual-question-answering")
 
 def predict(url):
-    question = "Is this image related to animals?"
+    question = "Is there any animals in the photo?"
     image = load_image_from_url(url)
     result = vqa_pipeline(image, question, top_k=2)
     return result

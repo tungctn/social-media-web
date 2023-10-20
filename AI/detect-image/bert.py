@@ -1,4 +1,3 @@
-from transformers import BertTokenizer, BertForSequenceClassification
 from transformers import pipeline
 from googletrans import Translator
 
@@ -9,10 +8,6 @@ def translate_to_english(text, src_lang="vi"):
     return translated_text
 
 post_text = "Các nghiên cứu chỉ ra rằng các con cáo đã được thuần phục thường sẽ có hành vi cười há há há, đuôi vẫy như chó và nhảy tưng tưng như con khùng. Hành động này được cho rằng là bọn chúng dùng để thu hút sự chú ý của con người cũng như là một cách khiến chủ của chúng vui vẻ."
-
-model_name = "textattack/bert-base-uncased-imdb"
-model = BertForSequenceClassification.from_pretrained(model_name)
-tokenizer = BertTokenizer.from_pretrained(model_name)
 classifier = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
 
 def is_animal_related(post_text):
