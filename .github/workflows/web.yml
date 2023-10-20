@@ -58,6 +58,10 @@ jobs:
       matrix:
         component: ["frontend", "backend"]
     steps:
+      - name: Use Node.js18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
       - name: Deploy frontend
         if: matrix.component == 'frontend'
         run: |
