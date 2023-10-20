@@ -12,7 +12,7 @@ import { useState } from "react";
 import Button from "./Button";
 import { IoClose } from "react-icons/io5";
 import { useSelector } from "react-redux";
-import { createPost } from "@/services/postService";
+import { createPost, moderateContent } from "@/services/postService";
 
 const PostModal = () => {
   const auth = useSelector((state: any) => state.auth);
@@ -67,6 +67,11 @@ const PostModal = () => {
         image_ids: imageIds,
         user_id: auth.user.user_id,
       };
+      const moderate = await moderateContent(content.replace(/\n/g, " "));
+      if (!moderate.success) {
+        toast.error(moderate.message);
+        return;
+      }
       const response = await createPost(postInfo);
       if (response.data) {
         toast.success("Create post successfully!");
