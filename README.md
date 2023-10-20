@@ -248,10 +248,10 @@ PUT /api/users/password
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Parameter             | Type       | Description                                       |
-| :-------------------- | :--------- | :------------------------------------------------ |
-| `old_password`            | `string`   | **Optional**  Mật khẩu cũ                                    |
-| `password`            | `string`   | **Optional**                                      |
+| Parameter      | Type     | Description              |
+| :------------- | :------- | :----------------------- |
+| `old_password` | `string` | **Optional** Mật khẩu cũ |
+| `password`     | `string` | **Optional**             |
 
 ```javascript
 {
@@ -502,11 +502,11 @@ POST /api/comments
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Parameter  | Type     | Description  |
-| :--------- | :------- | :----------- |
-| `content`  | `string` | **Required** |
-| `post_id`    | `int` | **Required**|
-| `image_ids`    | `Array` | **Optional** |
+| Parameter   | Type     | Description  |
+| :---------- | :------- | :----------- |
+| `content`   | `string` | **Required** |
+| `post_id`   | `int`    | **Required** |
+| `image_ids` | `Array`  | **Optional** |
 
 ```javascript
 {
@@ -535,10 +535,10 @@ PUT /api/comments/:id
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Parameter  | Type     | Description  |
-| :--------- | :------- | :----------- |
-| `content`  | `string` | **Optional** |
-| `image_ids`    | `Array` | **Optional** có ảnh thì nhớ truyền hết id lên|
+| Parameter   | Type     | Description                                   |
+| :---------- | :------- | :-------------------------------------------- |
+| `content`   | `string` | **Optional**                                  |
+| `image_ids` | `Array`  | **Optional** có ảnh thì nhớ truyền hết id lên |
 
 #### Delete comment
 

@@ -26,7 +26,7 @@ export default function RootLayout({
             <CheckAuth>{children}</CheckAuth>
           </Provider>
         </LoadingProvider>
-        <ToastContainer autoClose={2000} closeOnClick />
+        <ToastContainer autoClose={1000} closeOnClick />
       </body>
     </html>
   );

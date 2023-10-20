@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from moderation import detect_moderation_labels_from_url
 from vqa import predict
+from bert import is_animal_related, analyze_post
 
 app = Flask(__name__)
 CORS(app)
@@ -35,6 +36,37 @@ def predict_route():
         return jsonify({
             'success': False,
             'message': 'Không tìm thấy url',
+        })
+        
+@app.route("/predict/text", methods=['POST'])
+def predict_text_route():
+    data = request.get_json()
+    print(data['caption'])
+    if 'caption' in data:
+        caption = data['caption']
+        print(caption)
+        analyze_post_eval = analyze_post(caption)
+        if analyze_post_eval['label'] == 'toxic':
+            return jsonify({
+                'success': False,
+                'message': 'Caption không phù hợp tiêu chuẩn',
+                'caption': caption,
+            })
+        if is_animal_related(caption) == False:
+            return jsonify({
+                'success': False,
+                'message': 'Caption không liên quan đến động vật',
+                'caption': caption,
+            })
+        return jsonify({
+            'success': True,
+            'message': 'Caption phù hợp tiêu chuẩn',
+            'caption': caption
+        })
+    else:
+        return jsonify({
+            'success': False,
+            'message': 'Không tìm thấy text',
         })
 
 if __name__ == '__main__':

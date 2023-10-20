@@ -18,61 +18,43 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-  # Build package
-  build-frontend:
+  build:
     runs-on: self-hosted
-    defaults:
-      run:
-        working-directory: ./web
     needs: test
-
+    strategy:
+      matrix:
+        component: ["frontend", "backend"]
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js18
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-      - run: npm ci
-      - run: npm run build
-
-  build-backend:
-    runs-on: self-hosted
-    defaults:
-      run:
-        working-directory: ./api
-    needs: build-frontend
-
-    steps:
-      - name: Set up Ruby 3.0.2
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.0.2
-      - name: Install dependencies
+      - name: Setup for frontend
+        if: matrix.component == 'frontend'
         run: |
+          cd ./web
+          npm ci
+          npm run build
+      - name: Setup for backend
+        if: matrix.component == 'backend'
+        run: |
+          cd ./api
           gem install bundler
           bundle install
-      - name: Set env
-        run: |
-          touch application.yml
-          echo "${{ secrets.PROD_BACKEND }}" > application.yml
-        working-directory: api/config
+          touch config/application.yml
+          echo "${{ secrets.PROD_BACKEND }}" > config/application.yml
 
   # Deployment
-  deploy-frontend:
+  deploy:
     runs-on: self-hosted
-    needs: build-backend
+    needs: build
+    strategy:
+      matrix:
+        component: ["frontend", "backend"]
     steps:
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-      - name: Start the application with PM2
+      - name: Deploy frontend
+        if: matrix.component == 'frontend'
         run: |
           npm install pm2 -g
           pm2 restart nextjs-app
-
-  deploy-backend:
-    runs-on: self-hosted
-    needs: deploy-frontend
-    steps:
-      - name: Start puma server
-        run: echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S systemctl start puma.service
+      - name: Deploy backend
+        if: matrix.component == 'backend'
+        run: |
+          echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S systemctl start puma.service
