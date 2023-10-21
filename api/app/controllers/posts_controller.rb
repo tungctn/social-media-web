@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   def create
     post = Post.new(create_post_params)
     post.sender_id = @current_user.id
-    
+
     if !get_user_by_id(params[:user_id])
       return
     end
@@ -23,13 +23,13 @@ class PostsController < ApplicationController
     get_current_user() # gán current_user nếu có token truyền lên
 
     post = get_post_by_id(params[:id])
-    
+
     if !post
       return
     end
 
     post_data = image_get([post])[0]
-    
+
     post_data["type_react"] = nil
     post_data["comments"] = image_get(post.post_comments)
 
@@ -65,13 +65,13 @@ class PostsController < ApplicationController
 
     posts = nil
 
-    if !params[:page_index] || !params[:page_size] || params[:page_index].empty? || params[:page_size].empty?
+    if !params[:page_index] || !params[:page_size]
       posts = Post.all.order("created_at desc")
     else
       skip = params[:page_size].to_i * (params[:page_index].to_i - 1)
       posts = Post.limit(params[:page_size].to_i).offset(skip).order("created_at desc")
     end
-    
+
     posts_data = image_get(posts)
 
     posts_data.each_with_index do |post_data, index|
@@ -84,12 +84,12 @@ class PostsController < ApplicationController
 
       post_data["type_react"] = nil
       post_data["user"] = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: posts[index].user_id)
-      
+
       #react
       if !@current_user
         next
       end
-      
+
       react_post = posts[index].reacts_post.find_by(user_id: @current_user.id)
 
       if !react_post
@@ -125,7 +125,7 @@ class PostsController < ApplicationController
     end
   end
 
-  def delete  
+  def delete
     post = get_post_by_id(params[:id])
 
     if !post
@@ -224,11 +224,11 @@ class PostsController < ApplicationController
   # biểu cảm với bài viết
   def react_post
     react = get_react_by_type(params[:type_react])
-    
+
     if !react
       return
     end
-    
+
     post = get_post_by_id(params[:post_id])
 
     if !post
@@ -244,7 +244,7 @@ class PostsController < ApplicationController
     else
       react_post.update(react: react)
     end
-    
+
     render json: { message: "Biểu cảm thành công" }, status: :ok
     return
   end
@@ -273,7 +273,7 @@ class PostsController < ApplicationController
   # ttanh - 17/10/2023
   def get_react_by_type(type)
     react = React.where(["type_react = :t", { t: type }]).first
-    
+
     if react == nil
       render json: { errors: "Truyền sai react type" }, status: :bad_request
       return false
@@ -281,7 +281,7 @@ class PostsController < ApplicationController
 
     return react
   end
-  
+
   # check bài viết tồn tại
   # ttanh - 04/10/2023
   def get_post_by_id(id)
@@ -303,7 +303,7 @@ class PostsController < ApplicationController
     end
     return comment
   end
-  
+
   def create_post_params
     params.permit(:image_ids, :content, :user_id)
   end

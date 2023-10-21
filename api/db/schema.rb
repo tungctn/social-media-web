@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_18_141218) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_21_050839) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -37,6 +37,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_18_141218) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "friends", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "receiver_id", comment: "Người NHẬN lời mời kết bạn"
+    t.bigint "sender_id", comment: "Người GỬI lời mời kết bạn"
+    t.integer "friend_status", comment: "Trạng thái kết bạn: enum friend_status"
+    t.integer "friend_type", comment: "Loại bạn bè: enum friend_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["receiver_id"], name: "index_friends_on_receiver_id"
+    t.index ["sender_id"], name: "index_friends_on_sender_id"
   end
 
   create_table "images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -162,6 +173,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_18_141218) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "friends", "users", column: "receiver_id"
+  add_foreign_key "friends", "users", column: "sender_id"
   add_foreign_key "images_post_comments", "images"
   add_foreign_key "images_post_comments", "post_comments"
   add_foreign_key "images_posts", "images", on_delete: :cascade

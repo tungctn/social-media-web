@@ -1,26 +1,39 @@
-enum status: {
-    active: 0, #hoạt động
-    block: 1 #tạm khóa
-  }
+module Enums
+  STATUS = {
+    active: 0, # hoạt động
+    block: 1 # tạm khóa
+  }.freeze
 
+  TYPE_REACT = {
+    like: 1,
+    love: 2,
+    wow: 3,
+    haha: 4,
+    sad: 5,
+    angry: 6
+  }.freeze
 
-enum type_react: {
-  like: 1,
-  love: 2,
-  wow: 3,
-  haha: 4,
-  sad: 5,
-  angry: 6
-}
+  GENDER = {
+    male: 0,
+    female: 1,
+    other: 2 # khác
+  }.freeze
 
-  enum gender: {
-  male: 0,
-  female: 1,
-  other: 2 #khác
-}
+  RELATIONSHIP_STATUS = {
+    single: 1,
+    marry: 2,
+    dating: 3
+  }.freeze
 
-enum relationship_status: {
-  single: 1,
-  marry: 2,
-  dating: 3
-}
+  FRIEND_STATUS = {
+    pending: 1, # đang chờ chấp nhận
+    accept: 2, # đã là bạn bè
+    block: 3 # đã block
+  }.freeze
+
+  FRIEND_TYPE = {
+    none: 1, # chưa kết bạn
+    normal: 2, # bạn bè bình thường
+    dating: 3 # hẹn hò
+  }.freeze
+end
