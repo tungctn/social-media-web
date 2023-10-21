@@ -34,11 +34,11 @@ class PostsController < ApplicationController
     post_data["comments"] = image_get(post.post_comments)
 
     post_data["comments"].each do |comment|
-      user_info = UserInfo.find_by(user_id: comment["user_id"])
+      user_info = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: comment["user_id"])
       comment["user"] = user_info
     end
 
-    post_data["user"] = post.user.user_info
+    post_data["user"] = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: post.user_id)
 
     if post.comments_count <= 0
       count_comment = post.post_comments.size
@@ -63,9 +63,15 @@ class PostsController < ApplicationController
   def get_all
     get_current_user() # gán current_user nếu có token truyền lên
 
-    skip = params[:page_size].to_i * (params[:page_index].to_i - 1)
-    posts = Post.limit(params[:page_size].to_i).offset(skip).order("created_at desc")
+    posts = nil
 
+    if !params[:page_index] || !params[:page_size] || params[:page_index].empty? || params[:page_size].empty?
+      posts = Post.all.order("created_at desc")
+    else
+      skip = params[:page_size].to_i * (params[:page_index].to_i - 1)
+      posts = Post.limit(params[:page_size].to_i).offset(skip).order("created_at desc")
+    end
+    
     posts_data = image_get(posts)
 
     posts_data.each_with_index do |post_data, index|
@@ -77,7 +83,7 @@ class PostsController < ApplicationController
       end
 
       post_data["type_react"] = nil
-      post_data["user"] = posts[index].user.user_info
+      post_data["user"] = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: posts[index].user_id)
       
       #react
       if !@current_user
