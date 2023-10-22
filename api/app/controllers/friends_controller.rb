@@ -1,18 +1,35 @@
 require_relative "../enum/enum.rb"
 
 class FriendsController < ApplicationController
+  skip_before_action :authenticate_request, only: [:get_all]
+
   # lấy ra tất cả bạn bè
   def get_all
-    friends = nil
+    get_current_user() # gán current_user nếu có token truyền lên
 
-    if !params[:page_index] || !params[:page_size]
-      friends = Friend.all.order("created_at desc")
+    user_id = nil
+
+    if params[:id]
+      user_id = params[:id]
     else
-      skip = params[:page_size].to_i * (params[:page_index].to_i - 1)
-      friends = Friend.limit(params[:page_size].to_i).offset(skip).order("created_at desc")
+      user_id = @current_user.id
     end
 
-    render json: { friends: friends }, status: :ok
+    if !user_id
+      render json: { errors: "Chưa có thông tin người dùng." }, status: :ok
+      return
+    end
+
+    friend_datas = get_friends(user_id, Enums::FRIEND_STATUS[:accept])
+
+    render json: { friends: friend_datas }, status: :ok
+  end
+
+  # lấy ra tất cả lời mời kết bạn
+  def get_request
+    friend_datas = get_friends_request(@current_user.id)
+
+    render json: { friends: friend_datas }, status: :ok
   end
 
   # gửi kết bạn
@@ -159,5 +176,59 @@ class FriendsController < ApplicationController
     else
       return false
     end
+  end
+
+  # lấy thông bạn bè thông tin bản ghi trong bảng friends
+  # param: <sender_id> - người gửi lời mời
+  #        <receiver_id> - người nhận lời mời
+  #        <friend_status> - trạng thái lời mời
+  def get_friends(user_id, friend_status)
+    friends = nil
+
+    if !params[:page_index] || !params[:page_size]
+      friends = Friend.where("(receiver_id = ? OR sender_id = ?) AND friend_status = ?", user_id, user_id, friend_status)
+    else
+      skip = params[:page_size].to_i * (params[:page_index].to_i - 1)
+      friends = Friend.limit(params[:page_size].to_i).offset(skip).where("(receiver_id = ? OR sender_id = ?) AND friend_status = ?", user_id, user_id, friend_status)
+    end
+
+    friend_datas = []
+
+    friends.each do |friend|
+      friend_info = nil
+
+      if friend.sender_id == user_id
+        friend_info = UserInfo.select(:full_name, :avatar_url, :user_id).find_by(user_id: friend.receiver_id)
+      else
+        friend_info = UserInfo.select(:full_name, :avatar_url, :user_id).find_by(user_id: friend.sender_id)
+      end
+
+      friend_datas.push(friend_info)
+    end
+
+    return friend_datas
+  end
+
+  # lấy thông tin người gửi lời mời kết bạn
+  # param: <receiver_id> - người nhận lời mời
+  def get_friends_request(receiver_id)
+    friends = nil
+
+    if !params[:page_index] || !params[:page_size]
+      friends = Friend.where("receiver_id = ? AND friend_status = ?", receiver_id, Enums::FRIEND_STATUS[:pending])
+    else
+      skip = params[:page_size].to_i * (params[:page_index].to_i - 1)
+      friends = Friend.limit(params[:page_size].to_i).offset(skip).where("receiver_id = ? AND friend_status = ?", receiver_id, Enums::FRIEND_STATUS[:pending])
+    end
+
+    friend_datas = []
+
+    friends.each do |friend|
+      friend_info = UserInfo.select(:full_name, :avatar_url, :user_id).find_by(user_id: friend.sender_id)
+
+      friend_datas.push(friend_info)
+    end
+
+    return friend_datas
   end
 end
