@@ -34,6 +34,8 @@ Rails.application.routes.draw do
     post "/posts/unreact/:post_id", to: "posts#unreact_post"
 
     #Bạn bè
+    get "/friends/request", to: "friends#get_request" # lấy ra tất cả danh sách bạn bè phân trang
+    get "/friends/:id", to: "friends#get_all" # lấy ra tất cả danh sách bạn bè phân trang
     get "/friends", to: "friends#get_all" # lấy ra tất cả danh sách bạn bè phân trang
     post "/friends", to: "friends#create" # gửi lời mời kết bạn
     put "/friends", to: "friends#update"  # chấp nhận lời mời, block, chuyển loại bạn bè
