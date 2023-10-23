@@ -22,9 +22,9 @@ jobs:
   build:
     runs-on: self-hosted
     needs: test
-    strategy:
-      matrix:
-        component: ["frontend", "backend"]
+    # strategy:
+    #   matrix:
+    #     component: ["frontend", "backend"]
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js18
@@ -36,13 +36,13 @@ jobs:
         with:
           ruby-version: 3.0.2
       - name: Setup for frontend
-        if: matrix.component == 'frontend'
+        # if: matrix.component == 'frontend'
         run: |
           cd ./web
           npm ci
           npm run build
       - name: Setup for backend
-        if: matrix.component == 'backend'
+        # if: matrix.component == 'backend'
         run: |
           cd ./api
           gem install bundler
