@@ -32,6 +32,13 @@ class FriendsController < ApplicationController
     render json: { friends: friend_datas }, status: :ok
   end
 
+  # lấy ra tất cả người dùng bị chặn
+  def get_block
+    friend_datas = get_friends(@current_user.id, Enums::FRIEND_STATUS[:block])
+
+    render json: { friends: friend_datas }, status: :ok
+  end
+
   # gửi kết bạn
   def create
     current_user_id = @current_user.id
