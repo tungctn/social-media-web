@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  skip_before_action :authenticate_request, only: [:get_all, :show, :view_today]
+  skip_before_action :authenticate_request, only: [:get_all, :show, :view_today, :get_comment]
 
   def create
     post = Post.new(create_post_params)
@@ -31,12 +31,6 @@ class PostsController < ApplicationController
     post_data = image_get([post])[0]
 
     post_data["type_react"] = nil
-    post_data["comments"] = image_get(post.post_comments)
-
-    post_data["comments"].each do |comment|
-      user_info = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: comment["user_id"])
-      comment["user"] = user_info
-    end
 
     post_data["user"] = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: post.user_id)
 
@@ -58,6 +52,47 @@ class PostsController < ApplicationController
     end
 
     render json: { post: post_data }, status: :ok
+  end
+
+  def get_comment
+    get_current_user() # gán current_user nếu có token truyền lên
+    
+    post = get_post_by_id(params[:post_id])
+
+    if !post
+      return
+    end
+
+    comments = nil
+
+    if !params[:page_index] || !params[:page_size]
+      comments = post.post_comments.order("created_at desc")
+    else
+      skip = params[:page_size].to_i * (params[:page_index].to_i - 1)
+      comments = post.post_comments.limit(params[:page_size].to_i).offset(skip).order("created_at desc")
+    end
+
+    comments_data = image_get(comments)
+
+    comments_data.each do |comment|
+      user_info = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: comment["user_id"])
+      comment["user"] = user_info
+    end
+
+    comments.each_with_index do |comment, index|
+      if @current_user
+        react_comment = comment.reacts_post_comment.find_by(user_id: @current_user.id)
+
+        if !react_comment
+          comments_data[index]["type_react"] = nil
+        else
+          react = React.find_by_id(react_comment.react_id)
+          comments_data[index]["type_react"] = react.type_react
+        end
+      end
+    end
+
+    render json: { comments: comments_data }, status: :ok
   end
 
   def get_all

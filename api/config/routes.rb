@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     delete "/posts/:id", to: "posts#delete"
 
     #comment
+    get "/comments/:post_id", to: "posts#get_comment" #lấy comment cho 1 bài viết
     post "/comments/reacts", to: "posts#react_comment"
     delete "/comments/unreact/:comment_id", to: "posts#unreact_comment"
     post "/comments", to: "posts#create_comment"

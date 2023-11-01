@@ -443,7 +443,7 @@ GET /api/posts/:id - có đi kèm với comment
 | :------------- | :------- | :----------- |
 | `id`           | `string` | **Required** |
 
-#### Get post detail
+#### Get post
 
 ```http
 GET /api/posts - Lấy tất cả bài viết
@@ -490,6 +490,17 @@ DELETE /api/posts/:id
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
 ### Comment module
+
+#### Get comment
+
+```http
+GET /api/comments/:post_id - Lấy bình luận bài viết
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `page_index`           | `int` | **Optional** |
+| `page_size`           | `int` | **Optional** |
 
 #### Create comment
 
