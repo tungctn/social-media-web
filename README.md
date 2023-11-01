@@ -598,6 +598,47 @@ DELETE /api/posts/unreact/:post_id
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
+#### Create react comment
+
+```http
+Authorization: Bearer YOUR_TOKEN
+POST /api/comments/reacts
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Parameter  | Type     | Description  |
+| :--------- | :------- | :----------- |
+| `type_react`  | `enum - type_react` | **Required** |
+| `comment_id`    | `int` | **Required**|
+
+```javascript
+{
+    "success": true,
+    "message": "comment created successfully",
+    "data": {
+        "message": ""
+    },
+}
+```
+
+#### Delete react comment
+
+```http
+Authorization: Bearer YOUR_TOKEN
+DELETE /api/comments/unreact/:comment_id
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `comment_id`           | `int` | **Required** |
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
 ### Friend module (bạn bè)
 
 #### Lấy tất cả lời mời kết bạn

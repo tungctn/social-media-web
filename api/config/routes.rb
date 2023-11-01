@@ -25,13 +25,15 @@ Rails.application.routes.draw do
     delete "/posts/:id", to: "posts#delete"
 
     #comment
+    post "/comments/reacts", to: "posts#react_comment"
+    delete "/comments/unreact/:comment_id", to: "posts#unreact_comment"
     post "/comments", to: "posts#create_comment"
     put "/comments/:id", to: "posts#update_comment"
     delete "/comments/:id", to: "posts#delete_comment"
 
     #react
     post "/posts/reacts", to: "posts#react_post"
-    post "/posts/unreact/:post_id", to: "posts#unreact_post"
+    delete "/posts/unreact/:post_id", to: "posts#unreact_post"
 
     #Bạn bè
     get "/friends/request", to: "friends#get_request" # lấy ra tất cả danh sách lời mời kết bạn
