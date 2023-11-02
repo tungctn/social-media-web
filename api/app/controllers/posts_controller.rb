@@ -63,14 +63,7 @@ class PostsController < ApplicationController
       return
     end
 
-    comments = nil
-
-    if !params[:page_index] || !params[:page_size]
-      comments = post.post_comments.order("created_at desc")
-    else
-      skip = params[:page_size].to_i * (params[:page_index].to_i - 1)
-      comments = post.post_comments.limit(params[:page_size].to_i).offset(skip).order("created_at desc")
-    end
+    comments = post.post_comments.order("created_at asc")
 
     comments_data = image_get(comments)
 
@@ -92,7 +85,30 @@ class PostsController < ApplicationController
       end
     end
 
-    render json: { comments: comments_data }, status: :ok
+    comments_parent = []
+    comments_data.each do |comment|
+      if !comment["comment_reply"]
+        comment["replies_comment"] = []
+        comments_parent.push(comment)
+      else
+        comments_parent.each do |comment_parent|
+          if comment_parent["id"].to_i == comment["comment_reply"].to_i
+            comment_parent["replies_comment"].push(comment)
+            break
+          end
+        end
+      end
+    end
+
+    #sắp xếp theo thời gian comment mới nhất
+    comments_parent_sort_by_desc_and_limit = comments_parent.reverse()
+
+    if params[:page_index] || params[:page_size]
+      skip = params[:page_size].to_i * (params[:page_index].to_i - 1)
+      comments_parent_sort_by_desc_and_limit = comments_parent_sort_by_desc_and_limit[skip..(params[:page_size].to_i + skip - 1)]
+    end
+
+    render json: { comments: comments_parent_sort_by_desc_and_limit }, status: :ok
   end
 
   def get_all
@@ -191,6 +207,22 @@ class PostsController < ApplicationController
 
     comment = PostComment.new(create_comment_params)
     comment.user_id = @current_user.id
+
+    # phản hồi bình luận
+    comment_reply = nil
+    if params[:comment_reply]
+      comment_reply = get_comment_by_id(params[:comment_reply])
+    end
+
+    if comment_reply
+      #check xem bình luận đang focus vào đã phản hồi thằng nào chưa
+      #chỉ lấy 1 cha
+      if comment_reply.comment_reply
+        comment.comment_reply = comment_reply.comment_reply
+      else
+        comment.comment_reply = params[:comment_reply]
+      end
+    end
 
     #link ảnh vào comment
     image_add(comment, params[:image_ids])

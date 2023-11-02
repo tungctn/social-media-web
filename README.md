@@ -518,6 +518,7 @@ POST /api/comments
 | `content`   | `string` | **Required** |
 | `post_id`   | `int`    | **Required** |
 | `image_ids` | `Array`  | **Optional** |
+| `reply_comment` | `Array`  | **Optional** |
 
 ```javascript
 {
