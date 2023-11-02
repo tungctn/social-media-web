@@ -443,7 +443,7 @@ GET /api/posts/:id - có đi kèm với comment
 | :------------- | :------- | :----------- |
 | `id`           | `string` | **Required** |
 
-#### Get post detail
+#### Get post
 
 ```http
 GET /api/posts - Lấy tất cả bài viết
@@ -491,6 +491,17 @@ DELETE /api/posts/:id
 
 ### Comment module
 
+#### Get comment
+
+```http
+GET /api/comments/:post_id - Lấy bình luận bài viết
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `page_index`           | `int` | **Optional** |
+| `page_size`           | `int` | **Optional** |
+
 #### Create comment
 
 ```http
@@ -507,6 +518,7 @@ POST /api/comments
 | `content`   | `string` | **Required** |
 | `post_id`   | `int`    | **Required** |
 | `image_ids` | `Array`  | **Optional** |
+| `reply_comment` | `Array`  | **Optional** |
 
 ```javascript
 {
@@ -593,6 +605,47 @@ DELETE /api/posts/unreact/:post_id
 | Path Variables | Type     | Description  |
 | :------------- | :------- | :----------- |
 | `post_id`           | `int` | **Required** |
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+#### Create react comment
+
+```http
+Authorization: Bearer YOUR_TOKEN
+POST /api/comments/reacts
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Parameter  | Type     | Description  |
+| :--------- | :------- | :----------- |
+| `type_react`  | `enum - type_react` | **Required** |
+| `comment_id`    | `int` | **Required**|
+
+```javascript
+{
+    "success": true,
+    "message": "comment created successfully",
+    "data": {
+        "message": ""
+    },
+}
+```
+
+#### Delete react comment
+
+```http
+Authorization: Bearer YOUR_TOKEN
+DELETE /api/comments/unreact/:comment_id
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `comment_id`           | `int` | **Required** |
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
