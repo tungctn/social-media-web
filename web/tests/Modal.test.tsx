@@ -8,14 +8,14 @@ describe("Modal Component", () => {
   });
 
   test("should not display modal when isOpen is false", () => {
-    render(<Modal isOpen={false} />);
+    render(<Modal isOpen={false} title="Test Modal" />);
     expect(screen.queryByText("Test Modal")).not.toBeInTheDocument();
   });
 
   test("should call onClose when close button is clicked", async () => {
     const onCloseMock = jest.fn();
     render(<Modal isOpen={true} onClose={onCloseMock} />);
-    fireEvent.click(screen.getByTestId("close-butto"));
+    fireEvent.click(screen.getByTestId("close-button"));
     await waitFor(() => {
       expect(onCloseMock).toHaveBeenCalled();
     });
