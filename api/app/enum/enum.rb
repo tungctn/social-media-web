@@ -1,7 +1,7 @@
 module Enums
-  STATUS = {
-    active: 0, # hoạt động
-    block: 1 # tạm khóa
+  USER_ROLE = {
+    admin: 1, # admin
+    user: 2 # người dùng
   }.freeze
 
   TYPE_REACT = {
