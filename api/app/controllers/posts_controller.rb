@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  skip_before_action :authenticate_request, only: [:get_all, :show, :view_today]
+  skip_before_action :authenticate_request, only: [:get_all, :show, :view_today, :get_comment]
 
   def create
     post = Post.new(create_post_params)
@@ -31,12 +31,6 @@ class PostsController < ApplicationController
     post_data = image_get([post])[0]
 
     post_data["type_react"] = nil
-    post_data["comments"] = image_get(post.post_comments)
-
-    post_data["comments"].each do |comment|
-      user_info = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: comment["user_id"])
-      comment["user"] = user_info
-    end
 
     post_data["user"] = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: post.user_id)
 
@@ -58,6 +52,63 @@ class PostsController < ApplicationController
     end
 
     render json: { post: post_data }, status: :ok
+  end
+
+  def get_comment
+    get_current_user() # gán current_user nếu có token truyền lên
+    
+    post = get_post_by_id(params[:post_id])
+
+    if !post
+      return
+    end
+
+    comments = post.post_comments.order("created_at asc")
+
+    comments_data = image_get(comments)
+
+    comments_data.each do |comment|
+      user_info = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: comment["user_id"])
+      comment["user"] = user_info
+    end
+
+    comments.each_with_index do |comment, index|
+      if @current_user
+        react_comment = comment.reacts_post_comment.find_by(user_id: @current_user.id)
+
+        if !react_comment
+          comments_data[index]["type_react"] = nil
+        else
+          react = React.find_by_id(react_comment.react_id)
+          comments_data[index]["type_react"] = react.type_react
+        end
+      end
+    end
+
+    comments_parent = []
+    comments_data.each do |comment|
+      if !comment["comment_reply"]
+        comment["replies_comment"] = []
+        comments_parent.push(comment)
+      else
+        comments_parent.each do |comment_parent|
+          if comment_parent["id"].to_i == comment["comment_reply"].to_i
+            comment_parent["replies_comment"].push(comment)
+            break
+          end
+        end
+      end
+    end
+
+    #sắp xếp theo thời gian comment mới nhất
+    comments_parent_sort_by_desc_and_limit = comments_parent.reverse()
+
+    if params[:page_index] || params[:page_size]
+      skip = params[:page_size].to_i * (params[:page_index].to_i - 1)
+      comments_parent_sort_by_desc_and_limit = comments_parent_sort_by_desc_and_limit[skip..(params[:page_size].to_i + skip - 1)]
+    end
+
+    render json: { comments: comments_parent_sort_by_desc_and_limit }, status: :ok
   end
 
   def get_all
@@ -156,6 +207,22 @@ class PostsController < ApplicationController
 
     comment = PostComment.new(create_comment_params)
     comment.user_id = @current_user.id
+
+    # phản hồi bình luận
+    comment_reply = nil
+    if params[:comment_reply]
+      comment_reply = get_comment_by_id(params[:comment_reply])
+    end
+
+    if comment_reply
+      #check xem bình luận đang focus vào đã phản hồi thằng nào chưa
+      #chỉ lấy 1 cha
+      if comment_reply.comment_reply
+        comment.comment_reply = comment_reply.comment_reply
+      else
+        comment.comment_reply = params[:comment_reply]
+      end
+    end
 
     #link ảnh vào comment
     image_add(comment, params[:image_ids])
@@ -262,6 +329,53 @@ class PostsController < ApplicationController
 
     if react_post
       react_post.destroy
+      render json: { message: "Thành công" }, status: :ok
+    else
+      render json: { errors: "Người dùng chưa tương tác với bài viết." }, status: :ok
+    end
+  end
+
+  # biểu cảm với bình luận
+  def react_comment
+    react = get_react_by_type(params[:type_react])
+
+    if !react
+      return
+    end
+
+    comment = get_comment_by_id(params[:comment_id])
+
+    if !comment
+      return
+    end
+
+    # tìm kiếm xem người dùng đã tương tác gì với comment này chưa
+    react_comment = comment.reacts_post_comment.find_by(user_id: @current_user.id)
+
+    if !react_comment
+      comment_react = ReactsPostComment.new(post_comment: comment, react: react, user: @current_user)
+      comment_react.save
+    else
+      react_comment.update(react: react)
+    end
+
+    render json: { message: "Biểu cảm thành công" }, status: :ok
+    return
+  end
+
+  # bỏ biểu cảm với bình luận
+  def unreact_comment
+    comment = get_comment_by_id(params[:comment_id])
+
+    if !comment
+      return
+    end
+
+    # tìm kiếm xem người dùng đã tương tác gì với comment này chưa
+    react_comment = comment.reacts_post_comment.find_by(user_id: @current_user.id)
+
+    if react_comment
+      react_comment.destroy
       render json: { message: "Thành công" }, status: :ok
     else
       render json: { errors: "Người dùng chưa tương tác với bài viết." }, status: :ok

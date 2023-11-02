@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_21_050839) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_01_135725) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -82,6 +82,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_21_050839) do
     t.text "content", size: :long, comment: "Nội dung comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "comment_reply", comment: "Id của bình luận cha"
     t.index ["post_id"], name: "index_post_comments_on_post_id"
     t.index ["user_id"], name: "index_post_comments_on_user_id"
   end
@@ -173,8 +174,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_21_050839) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "friends", "users", column: "receiver_id"
-  add_foreign_key "friends", "users", column: "sender_id"
+  add_foreign_key "friends", "users", column: "receiver_id", on_delete: :cascade
+  add_foreign_key "friends", "users", column: "sender_id", on_delete: :cascade
   add_foreign_key "images_post_comments", "images"
   add_foreign_key "images_post_comments", "post_comments"
   add_foreign_key "images_posts", "images", on_delete: :cascade

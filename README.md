@@ -443,7 +443,7 @@ GET /api/posts/:id - có đi kèm với comment
 | :------------- | :------- | :----------- |
 | `id`           | `string` | **Required** |
 
-#### Get post detail
+#### Get post
 
 ```http
 GET /api/posts - Lấy tất cả bài viết
@@ -451,8 +451,8 @@ GET /api/posts - Lấy tất cả bài viết
 
 | Path Variables | Type     | Description  |
 | :------------- | :------- | :----------- |
-| `page_index`           | `int` | **Required** |
-| `page_size`           | `int` | **Required** |
+| `page_index`           | `int` | **Optional** |
+| `page_size`           | `int` | **Optional** |
 
 #### Update post
 
@@ -491,6 +491,17 @@ DELETE /api/posts/:id
 
 ### Comment module
 
+#### Get comment
+
+```http
+GET /api/comments/:post_id - Lấy bình luận bài viết
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `page_index`           | `int` | **Optional** |
+| `page_size`           | `int` | **Optional** |
+
 #### Create comment
 
 ```http
@@ -507,6 +518,7 @@ POST /api/comments
 | `content`   | `string` | **Required** |
 | `post_id`   | `int`    | **Required** |
 | `image_ids` | `Array`  | **Optional** |
+| `reply_comment` | `Array`  | **Optional** |
 
 ```javascript
 {
@@ -598,6 +610,225 @@ DELETE /api/posts/unreact/:post_id
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
+#### Create react comment
+
+```http
+Authorization: Bearer YOUR_TOKEN
+POST /api/comments/reacts
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Parameter  | Type     | Description  |
+| :--------- | :------- | :----------- |
+| `type_react`  | `enum - type_react` | **Required** |
+| `comment_id`    | `int` | **Required**|
+
+```javascript
+{
+    "success": true,
+    "message": "comment created successfully",
+    "data": {
+        "message": ""
+    },
+}
+```
+
+#### Delete react comment
+
+```http
+Authorization: Bearer YOUR_TOKEN
+DELETE /api/comments/unreact/:comment_id
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `comment_id`           | `int` | **Required** |
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+### Friend module (bạn bè)
+
+#### Lấy tất cả lời mời kết bạn
+
+```http
+Authorization: Bearer YOUR_TOKEN
+GET /api/friends/request
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `page_index`           | `int` | **Optional** |
+| `page_size`           | `int` | **Optional** |
+
+```javascript
+{
+    "success": true,
+    "message": "ok",
+    "data": {
+        "friends": ""
+    },
+}
+```
+
+#### Lấy tất cả danh sách bạn đã chặn
+
+```http
+Authorization: Bearer YOUR_TOKEN
+GET /api/friends/block
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `page_index`           | `int` | **Optional** |
+| `page_size`           | `int` | **Optional** |
+
+```javascript
+{
+    "success": true,
+    "message": "ok",
+    "data": {
+        "friends": ""
+    },
+}
+```
+
+#### Lấy danh sách bạn bè của 1 người dùng
+
+```http
+GET /api/friends/:id
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `page_index`           | `int` | **Optional** |
+| `page_size`           | `int` | **Optional** |
+
+```javascript
+{
+    "success": true,
+    "message": "ok",
+    "data": {
+        "friends": ""
+    },
+}
+```
+
+#### Lấy danh sách bạn bè của bản thân
+
+```http
+Authorization: Bearer YOUR_TOKEN
+GET /api/friends
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `page_index`           | `int` | **Optional** |
+| `page_size`           | `int` | **Optional** |
+
+```javascript
+{
+    "success": true,
+    "message": "ok",
+    "data": {
+        "friends": ""
+    },
+}
+```
+
+#### Tạo lời mời kết bạn
+
+```http
+Authorization: Bearer YOUR_TOKEN
+POST /api/friends
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `receiver_id`           | `int` | **Required** id của người muốn gửi lời mời|
+
+```javascript
+{
+    "success": true,
+    "message": "ok",
+    "data": {
+        "message": "Thành công"
+    },
+}
+```
+
+#### Cập nhật trạng thái kết bạn
+Chấp nhận lời mời, block, chuyển loại bạn bè (hẹn hò ?)
+
+```http
+Authorization: Bearer YOUR_TOKEN
+PUT /api/friends
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `receiver_id`           | `int` | **Required** id của người muốn gửi lời mời|
+| `friend_status`           | `enum friend_status` | **Optional** trạng thái bạn bè|
+| `friend_type`           | `enum friend_type` | **Optional** loại bạn bè|
+
+```javascript
+{
+    "success": true,
+    "message": "ok",
+    "data": {
+        "message": "Thành công"
+    },
+}
+```
+
+#### Xóa lời mời kết bạn, hủy kết bạn
+
+```http
+Authorization: Bearer YOUR_TOKEN
+DELETE /api/friends
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `receiver_id`           | `int` | **Required** id của người muốn gửi lời mời|
+
+```javascript
+{
+    "success": true,
+    "message": "ok",
+    "data": {
+        "message": "Thành công"
+    },
+}
+```
 
 
 ## Architecture Design

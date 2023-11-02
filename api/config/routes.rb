@@ -25,18 +25,22 @@ Rails.application.routes.draw do
     delete "/posts/:id", to: "posts#delete"
 
     #comment
+    get "/comments/:post_id", to: "posts#get_comment" #lấy comment cho 1 bài viết
+    post "/comments/reacts", to: "posts#react_comment"
+    delete "/comments/unreact/:comment_id", to: "posts#unreact_comment"
     post "/comments", to: "posts#create_comment"
     put "/comments/:id", to: "posts#update_comment"
     delete "/comments/:id", to: "posts#delete_comment"
 
     #react
     post "/posts/reacts", to: "posts#react_post"
-    post "/posts/unreact/:post_id", to: "posts#unreact_post"
+    delete "/posts/unreact/:post_id", to: "posts#unreact_post"
 
     #Bạn bè
-    get "/friends/request", to: "friends#get_request" # lấy ra tất cả danh sách bạn bè phân trang
-    get "/friends/:id", to: "friends#get_all" # lấy ra tất cả danh sách bạn bè phân trang
-    get "/friends", to: "friends#get_all" # lấy ra tất cả danh sách bạn bè phân trang
+    get "/friends/request", to: "friends#get_request" # lấy ra tất cả danh sách lời mời kết bạn
+    get "/friends/block", to: "friends#get_block" # lấy ra tất cả danh sách đã chặn
+    get "/friends/:id", to: "friends#get_all" # lấy ra tất cả danh sách bạn bè của user_id = id
+    get "/friends", to: "friends#get_all" # lấy ra tất cả danh sách bạn bè của bản thân
     post "/friends", to: "friends#create" # gửi lời mời kết bạn
     put "/friends", to: "friends#update"  # chấp nhận lời mời, block, chuyển loại bạn bè
     delete "/friends", to: "friends#delete" # xóa lời mời kết bạn, xóa bạn bè
