@@ -15,7 +15,7 @@ describe("Modal Component", () => {
   test("should call onClose when close button is clicked", async () => {
     const onCloseMock = jest.fn();
     render(<Modal isOpen={true} onClose={onCloseMock} />);
-    fireEvent.click(screen.getByTestId("close-button"));
+    fireEvent.click(screen.getByTestId("close-butto"));
     await waitFor(() => {
       expect(onCloseMock).toHaveBeenCalled();
     });
