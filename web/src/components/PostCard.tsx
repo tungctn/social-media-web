@@ -18,7 +18,7 @@ type PostCardProps = {
 
 export default function PostCard({ post }: PostCardProps) {
   const [showDetail, setShowDetail] = useState(false);
-  const [postDetail, setPostDetail] = useState<Post | undefined>();
+  const [postDetail, setPostDetail] = useState<Post | null>(post);
 
   useEffect(() => {
     setPostDetail(post);

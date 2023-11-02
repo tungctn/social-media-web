@@ -144,6 +144,7 @@ const Modal: React.FC<ModalProps> = ({
                       right-9
                   "
                     onClick={handleClose}
+                    data-testid="close-button"
                   >
                     <IoMdClose size={28} color="#9551BA" className="stroke-2" />
                   </button>

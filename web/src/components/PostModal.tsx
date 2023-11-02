@@ -108,13 +108,13 @@ const PostModal = () => {
             <div className="flex flex-row items-center gap-2">
               <Avatar size={50} />
               <div className="flex flex-col">
-                <span className="font-semibold text-base">Nguyen Van A</span>
-                <span className="text-spanish-gray text-xs">
-                  Thời gian đăng
+                <span className="font-semibold text-base">
+                  {auth.user.full_name}
                 </span>
+                <span className="text-spanish-gray text-xs"></span>
               </div>
             </div>
-            <div className="flex flex-row items-center gap-2">
+            <div className="flex flex-row items-center gap-2">  
               <FaRegClock size={15} color="#9551BA" />
               <span className="text-spanish-gray text-xs">2</span>
             </div>

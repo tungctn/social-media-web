@@ -15,9 +15,18 @@ permissions:
 
 jobs:
   test:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Use Node.js18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: Test unit for frontend
+        run: |
+          cd ./web
+          npm ci
+          npm run test
 
   build:
     runs-on: self-hosted
@@ -36,13 +45,11 @@ jobs:
         with:
           ruby-version: 3.0.2
       - name: Setup for frontend
-        # if: matrix.component == 'frontend'
         run: |
           cd ./web
           npm ci
           npm run build
       - name: Setup for backend
-        # if: matrix.component == 'backend'
         run: |
           cd ./api
           gem install bundler

@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 import { useContext } from "react";
 import { LoadingContext } from "@/providers/LoadingProvider";
 
-export default function SignIn() {
+export const SignInForm = () => {
   const {
     register,
     handleSubmit,
@@ -47,9 +47,8 @@ export default function SignIn() {
       }
     }
   };
-
   return (
-    <AuthLayout img={femaleCatImg}>
+    <div className="w-full 3xl:py-[71px] py-14">
       <form
         className="flex flex-col 3xl:gap-[30px] gap-[25px]"
         onSubmit={handleSubmit(handleSubmitForm, handleErrorForm)}
@@ -106,6 +105,10 @@ export default function SignIn() {
       <div className="flex flex-col 3xl:gap-[30px] gap-4">
         <SocialMediaButtons />
       </div>
-    </AuthLayout>
+    </div>
   );
+};
+
+export default function SignIn() {
+  return <AuthLayout img={femaleCatImg} children={<SignInForm />} />;
 }

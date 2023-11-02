@@ -46,7 +46,7 @@ function AuthLayout({ children, img }: AuthLayoutProps) {
                 className="3xl:min-w-[307px] min-w-[calc(307px/6*5)] h-auto float-bottom object-contain 3xl:translate-x-[calc(-40px-76px)] translate-x-[calc(-40px/6*5-76px/6*5)]"
               />
             </div>
-            <div className="w-full 3xl:py-[71px] py-14">{children}</div>
+            {children}
           </div>
         </div>
       </div>
