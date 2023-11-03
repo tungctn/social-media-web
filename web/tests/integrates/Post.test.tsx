@@ -20,11 +20,11 @@ describe("Integration test between PostList and PostDetail", () => {
     const randomTestId =
       imageTestIds[Math.floor(Math.random() * imageTestIds.length)];
     fireEvent.click(screen.getByTestId(randomTestId));
-    render(
-      <Provider store={store}>
-        <PostDetail id={post.id} open={true} />
-      </Provider>
-    );
+    // render(
+    //   <Provider store={store}>
+    //     <PostDetail id={post.id} open={true} />
+    //   </Provider>
+    // );
     expect(screen.getByText(post.content)).toBeInTheDocument();
     expect(screen.getByText(post.user.full_name)).toBeInTheDocument();
   });
