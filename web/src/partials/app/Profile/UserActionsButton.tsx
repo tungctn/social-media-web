@@ -26,7 +26,7 @@ export default function UserActionsButton({ userId }: UserActionsButtonProps) {
     setIsComponentVisible(false);
   };
 
-  const handleClickButton: MouseEventHandler<HTMLDivElement> = (event) => {
+  const handleClickButton: React.MouseEventHandler<SVGElement> = (event) => {
     setIsComponentVisible(!isComponentVisible);
   };
 
@@ -35,8 +35,8 @@ export default function UserActionsButton({ userId }: UserActionsButtonProps) {
   };
 
   const handleOpenDetail = () => {
-    setShowDetail(true)
-  }
+    setShowDetail(true);
+  };
 
   const handleCloseDetail = () => {
     setShowDetail(false);
@@ -73,7 +73,7 @@ export default function UserActionsButton({ userId }: UserActionsButtonProps) {
           options={[
             {
               label: "Introduce user",
-              onClick: handleOpenDetail
+              onClick: handleOpenDetail,
             },
             {
               label: "Report",
