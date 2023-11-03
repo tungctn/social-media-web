@@ -1,8 +1,11 @@
+require_relative "../enum/enum.rb"
+
 class UsersController < ApplicationController
   skip_before_action :authenticate_request, only: [:register, :info_index]
 
   def register
     @user = User.new(user_params)
+    @user.role = Enums::USER_ROLE[:user]
     if @user.save
       token = jwt_encode({user_id: @user.id})
 
@@ -54,7 +57,7 @@ class UsersController < ApplicationController
 
     user_info = user.user_info
 
-    render json: { user_info: user_info, email: user.email, user_id: user.id }, status: :ok
+    render json: { user_info: user_info, email: user.email, user_id: user.id, role: user.role }, status: :ok
   end
 
   # cập nhật password
