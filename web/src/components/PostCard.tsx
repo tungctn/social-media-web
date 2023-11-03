@@ -51,7 +51,7 @@ export default function PostCard({ post }: PostCardProps) {
         <div className="bg-white rounded-[30px] shadow-custom">
           <div className="pt-6 px-6 flex flex-row items-start justify-between">
             <div className="flex flex-row gap-[14px] items-center">
-              <Link href={`/profile/${postDetail.userId}`}>
+              <Link href={`/profile/${postDetail.user_id}`}>
                 <Avatar size={50} src={postDetail.user.avatar_url} />
               </Link>
               <div className="flex flex-col">
@@ -62,7 +62,7 @@ export default function PostCard({ post }: PostCardProps) {
                 </Link>
                 <time className="first-letter:uppercase text-xs text-spanish-gray">
                   {dayjs(postDetail.created_at).format(
-                    "dddd, HH:mm DD/MM/YYYY",
+                    "dddd, HH:mm DD/MM/YYYY"
                   )}
                 </time>
               </div>
@@ -84,6 +84,8 @@ export default function PostCard({ post }: PostCardProps) {
                 }
                 width={800}
                 height={500}
+                data-src={postDetail.images[0].url}
+                data-testid="post-image-1"
               />
             )}
 
@@ -108,6 +110,8 @@ export default function PostCard({ post }: PostCardProps) {
                   className="w-full h-[500px] object-cover"
                   width={800}
                   height={500}
+                  data-src={postDetail.images[1].url}
+                  data-testid="post-image-2"
                 />
               </div>
             )}
@@ -126,7 +130,7 @@ export default function PostCard({ post }: PostCardProps) {
               <PostReacts
                 iconCustomClassName="3xl:text-[30px] text-[calc(30px/6*5)]"
                 customClassName="leading-0"
-                postId={postDetail.id}
+                postId={postDetail?.id}
                 reactType={postDetail.type_react}
                 onChange={handleChangeReact}
               />
@@ -139,7 +143,6 @@ export default function PostCard({ post }: PostCardProps) {
           open={showDetail}
           onClose={() => setShowDetail(false)}
           id={postDetail.id}
-          onChange={handleChangeDetail}
         />
       )}
     </>

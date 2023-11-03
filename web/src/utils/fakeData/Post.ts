@@ -5,7 +5,8 @@ import User, { currentUser } from "./User";
 
 type Post = {
   id: number;
-  userId: number;
+  userId?: number;
+  user_id?: number;
   user: User;
   content: string;
   created_at: Date;
@@ -63,12 +64,7 @@ export const posts: Post[] = [
     user: currentUser,
     content: "",
     created_at: new Date("2023-10-03T15:40:00.278Z"),
-    images: [
-      images[2],
-      images[3],
-      images[4],
-      images[5]
-    ],
+    images: [images[2], images[3], images[4], images[5]],
     likes_count: 1200,
     comments: commentsByPostId,
     comments_count: 100,
@@ -80,10 +76,7 @@ export const posts: Post[] = [
     user: currentUser,
     content: "",
     created_at: new Date("2023-09-21 17:33"),
-    images: [
-      images[6],
-      images[7]
-    ],
+    images: [images[6], images[7]],
     likes_count: 1200,
     comments: commentsByPostId,
     comments_count: 100,
@@ -107,10 +100,7 @@ export const posts: Post[] = [
     user: currentUser,
     content: "",
     created_at: new Date("2023-09-21 17:33"),
-    images: [
-      images[8],
-      images[9]
-    ],
+    images: [images[8], images[9]],
     likes_count: 1200,
     comments: commentsByPostId,
     comments_count: 100,
@@ -122,9 +112,7 @@ export const posts: Post[] = [
     user: currentUser,
     content: "",
     created_at: new Date("2023-09-21 17:33"),
-    images: [
-      images[10]
-    ],
+    images: [images[10]],
     likes_count: 1200,
     comments: commentsByPostId,
     comments_count: 100,
@@ -136,9 +124,7 @@ export const posts: Post[] = [
     user: currentUser,
     content: "",
     created_at: new Date("2023-09-21 17:33"),
-    images: [
-      images[11]
-    ],
+    images: [images[11]],
     likes_count: 1200,
     comments: commentsByPostId,
     comments_count: 100,

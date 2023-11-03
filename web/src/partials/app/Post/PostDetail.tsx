@@ -64,7 +64,7 @@ export default function PostDetail({
 
   const getPostData = async () => {
     const res: any = await getPostById(id);
-    if (res.success) {
+    if (res?.success) {
       setPost(res.data.post);
     }
   };
@@ -122,6 +122,7 @@ export default function PostDetail({
       <div
         className="w-screen h-screen bg-black/50 absolute top-0 left-0 z-20"
         onClick={onClose}
+        data-testid="close-button"
       ></div>
       <div className="bg-white 3xl:h-[850px] h-[calc(850px/4*3)] 3xl:w-[1186px] w-[calc(1186px/4*3)] absolute z-30 top-[50vh] -translate-y-1/2 left-[50vw] -translate-x-1/2 rounded-[30px]">
         <div className="flex flex-row h-full w-full">

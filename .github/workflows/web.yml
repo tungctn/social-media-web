@@ -26,7 +26,17 @@ jobs:
         run: |
           cd ./web
           npm ci
-          npm run test
+          npm run test:unit
+      - name: Test integration for frontend
+        run: |
+          cd ./web
+          npm ci
+          npm run test:integrate
+      - name: Test e2e for frontend
+        run: |
+          cd ./web
+          npm ci
+          npm run test:e2e:ci
 
   build:
     runs-on: self-hosted

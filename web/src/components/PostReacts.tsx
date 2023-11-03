@@ -16,7 +16,7 @@ type PostReactsProps = {
   postId: number;
   onComment?: Function;
   reactType: REACT_TYPE | undefined;
-  onChange: Function
+  onChange: Function;
 };
 
 export default function PostReacts({
@@ -25,7 +25,7 @@ export default function PostReacts({
   postId,
   onComment = () => {},
   reactType,
-  onChange
+  onChange,
 }: PostReactsProps) {
   const [showDetail, setShowDetail] = useState(false);
   const {
@@ -64,7 +64,11 @@ export default function PostReacts({
             }
             ref={ref}
           >
-            <ReactsBox onClose={handleCloseReactsBox} postId={postId} onChange={onChange} />
+            <ReactsBox
+              onClose={handleCloseReactsBox}
+              postId={postId}
+              onChange={onChange}
+            />
           </div>
           <ReactIcon reactType={reactType} />
         </div>
@@ -98,7 +102,7 @@ export default function PostReacts({
         <PostDetail
           open={showDetail}
           onClose={() => setShowDetail(false)}
-          id={postId}
+          id={0}
         />
       )}
     </>

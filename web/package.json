@@ -8,7 +8,11 @@
     "start": "next start",
     "lint": "next lint",
     "build-and-start": "next build && next start",
-    "test": "jest"
+    "test:unit": "jest tests/units",
+    "test:integrate": "jest tests/integrates",
+    "cypress:open": "cypress open",
+    "test:e2e": "cypress run",
+    "test:e2e:ci": "start-server-and-test dev http://localhost:3000 test:e2e"
   },
   "dependencies": {
     "@babel/preset-flow": "^7.22.15",
@@ -53,7 +57,9 @@
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.4",
+    "cypress": "^13.4.0",
     "next-router-mock": "^0.9.10",
+    "start-server-and-test": "^2.0.1",
     "tailwind-scrollbar": "^3.0.5"
   }
 }
