@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  skip_before_action :authenticate_request, only: [:get_all, :show, :view_today, :get_comment]
+  skip_before_action :authenticate_request, only: [:index, :show]
 
   def create
     post = Post.new(create_post_params)
@@ -54,64 +54,7 @@ class PostsController < ApplicationController
     render json: { post: post_data }, status: :ok
   end
 
-  def get_comment
-    get_current_user() # gán current_user nếu có token truyền lên
-    
-    post = get_post_by_id(params[:post_id])
-
-    if !post
-      return
-    end
-
-    comments = post.post_comments.order("created_at asc")
-
-    comments_data = image_get(comments)
-
-    comments_data.each do |comment|
-      user_info = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: comment["user_id"])
-      comment["user"] = user_info
-    end
-
-    comments.each_with_index do |comment, index|
-      if @current_user
-        react_comment = comment.reacts_post_comment.find_by(user_id: @current_user.id)
-
-        if !react_comment
-          comments_data[index]["type_react"] = nil
-        else
-          react = React.find_by_id(react_comment.react_id)
-          comments_data[index]["type_react"] = react.type_react
-        end
-      end
-    end
-
-    comments_parent = []
-    comments_data.each do |comment|
-      if !comment["comment_reply"]
-        comment["replies_comment"] = []
-        comments_parent.push(comment)
-      else
-        comments_parent.each do |comment_parent|
-          if comment_parent["id"].to_i == comment["comment_reply"].to_i
-            comment_parent["replies_comment"].push(comment)
-            break
-          end
-        end
-      end
-    end
-
-    #sắp xếp theo thời gian comment mới nhất
-    comments_parent_sort_by_desc_and_limit = comments_parent.reverse()
-
-    if params[:page_index] || params[:page_size]
-      skip = params[:page_size].to_i * (params[:page_index].to_i - 1)
-      comments_parent_sort_by_desc_and_limit = comments_parent_sort_by_desc_and_limit[skip..(params[:page_size].to_i + skip - 1)]
-    end
-
-    render json: { comments: comments_parent_sort_by_desc_and_limit }, status: :ok
-  end
-
-  def get_all
+  def index
     get_current_user() # gán current_user nếu có token truyền lên
 
     posts = nil
@@ -176,7 +119,7 @@ class PostsController < ApplicationController
     end
   end
 
-  def delete
+  def destroy
     post = get_post_by_id(params[:id])
 
     if !post
@@ -196,241 +139,13 @@ class PostsController < ApplicationController
       render json: { errors: "lỗi" }, status: :bad_request
     end
   end
-
-  #comment
-  def create_comment
-    post = get_post_by_id(params[:post_id])
-
-    if !post
-      return
-    end
-
-    comment = PostComment.new(create_comment_params)
-    comment.user_id = @current_user.id
-
-    # phản hồi bình luận
-    comment_reply = nil
-    if params[:comment_reply]
-      comment_reply = get_comment_by_id(params[:comment_reply])
-    end
-
-    if comment_reply
-      #check xem bình luận đang focus vào đã phản hồi thằng nào chưa
-      #chỉ lấy 1 cha
-      if comment_reply.comment_reply
-        comment.comment_reply = comment_reply.comment_reply
-      else
-        comment.comment_reply = params[:comment_reply]
-      end
-    end
-
-    #link ảnh vào comment
-    image_add(comment, params[:image_ids])
-
-    if comment.save
-      post.comments_count = post.comments_count + 1
-      post.save
-      render json: { comment: comment, images: comment.images }, status: :ok
-    else
-      render json: { errors: comment.errors.full_messages }, status: :bad_request
-    end
-  end
-
-  def update_comment
-    comment = get_comment_by_id(params[:id])
-
-    if !comment
-      return
-    end
-
-    if !check_permisson_update_delete(comment.user_id)
-      return
-    end
-
-    #link ảnh vào bài viết
-    #xóa liên kết với ảnh cũ để tạo lại hết
-    comment.images.destroy_all
-    image_add(comment, params[:image_ids])
-
-    if comment.update(update_comment_params)
-      render json: { comment: comment, images: comment.images }, status: :ok
-    else
-      render json: { errors: comment.errors.full_messages }, status: :bad_request
-    end
-  end
-
-  def delete_comment
-    comment = get_comment_by_id(params[:id])
-
-    if !comment
-      return
-    end
-
-    post = get_post_by_id(comment.post_id)
-
-    if !post
-      return
-    end
-
-    if !check_permisson_update_delete(comment.user_id)
-      return
-    end
-
-    # xóa ảnh
-    image_delete(comment)
-
-    if comment.destroy
-      post.comments_count = post.comments_count - 1
-      post.save
-      render json: { message: "thành công" }, status: :ok
-    else
-      render json: { errors: "lỗi" }, status: :bad_request
-    end
-  end
-
-  # biểu cảm với bài viết
-  def react_post
-    react = get_react_by_type(params[:type_react])
-
-    if !react
-      return
-    end
-
-    post = get_post_by_id(params[:post_id])
-
-    if !post
-      return
-    end
-
-    # tìm kiếm xem người dùng đã tương tác gì với bài viết này chưa
-    react_post = post.reacts_post.find_by(user_id: @current_user.id)
-
-    if !react_post
-      post_react = ReactsPost.new(post: post, react: react, user: @current_user)
-      post_react.save
-    else
-      react_post.update(react: react)
-    end
-
-    render json: { message: "Biểu cảm thành công" }, status: :ok
-    return
-  end
-
-  # bỏ biểu cảm với bài viết
-  def unreact_post
-    post = get_post_by_id(params[:post_id])
-
-    if !post
-      return
-    end
-
-    # tìm kiếm xem người dùng đã tương tác gì với bài viết này chưa
-    react_post = post.reacts_post.find_by(user_id: @current_user.id)
-
-    if react_post
-      react_post.destroy
-      render json: { message: "Thành công" }, status: :ok
-    else
-      render json: { errors: "Người dùng chưa tương tác với bài viết." }, status: :ok
-    end
-  end
-
-  # biểu cảm với bình luận
-  def react_comment
-    react = get_react_by_type(params[:type_react])
-
-    if !react
-      return
-    end
-
-    comment = get_comment_by_id(params[:comment_id])
-
-    if !comment
-      return
-    end
-
-    # tìm kiếm xem người dùng đã tương tác gì với comment này chưa
-    react_comment = comment.reacts_post_comment.find_by(user_id: @current_user.id)
-
-    if !react_comment
-      comment_react = ReactsPostComment.new(post_comment: comment, react: react, user: @current_user)
-      comment_react.save
-    else
-      react_comment.update(react: react)
-    end
-
-    render json: { message: "Biểu cảm thành công" }, status: :ok
-    return
-  end
-
-  # bỏ biểu cảm với bình luận
-  def unreact_comment
-    comment = get_comment_by_id(params[:comment_id])
-
-    if !comment
-      return
-    end
-
-    # tìm kiếm xem người dùng đã tương tác gì với comment này chưa
-    react_comment = comment.reacts_post_comment.find_by(user_id: @current_user.id)
-
-    if react_comment
-      react_comment.destroy
-      render json: { message: "Thành công" }, status: :ok
-    else
-      render json: { errors: "Người dùng chưa tương tác với bài viết." }, status: :ok
-    end
-  end
-
+  
   private
-  # check react tồn tại
-  # ttanh - 17/10/2023
-  def get_react_by_type(type)
-    react = React.where(["type_react = :t", { t: type }]).first
-
-    if react == nil
-      render json: { errors: "Truyền sai react type" }, status: :bad_request
-      return false
-    end
-
-    return react
-  end
-
-  # check bài viết tồn tại
-  # ttanh - 04/10/2023
-  def get_post_by_id(id)
-    post = Post.find_by_id(id)
-    if !post
-      render json: { errors: "Không tìm thấy bài viết với id: #{id}" }, status: :bad_request
-      return false
-    end
-    return post
-  end
-
-  # check comment tồn tại
-  # ttanh - 04/10/2023
-  def get_comment_by_id(id)
-    comment = PostComment.find_by_id(id)
-    if !comment
-      render json: { errors: "Không tìm thấy comment với id: #{id}" }, status: :bad_request
-      return false
-    end
-    return comment
-  end
-
   def create_post_params
     params.permit(:image_ids, :content, :user_id)
   end
 
   def update_post_params
-    params.permit(:image_ids, :content)
-  end
-
-  def create_comment_params
-    params.permit(:image_ids, :content, :post_id)
-  end
-
-  def update_comment_params
     params.permit(:image_ids, :content)
   end
 end
