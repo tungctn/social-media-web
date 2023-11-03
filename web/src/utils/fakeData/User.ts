@@ -1,3 +1,8 @@
+export enum Role {
+  User = 1,
+  Admin = 2,
+}
+
 type User = {
   user_id: number;
   first_name: string;
@@ -10,6 +15,10 @@ type User = {
   gender?: 0 | 1 | 2;
   date_of_birth: Date;
   address?: string;
+  role?: Role;
+  posts_count?: number;
+  following_count?: number;
+  followers_count?: number;
 };
 
 export const currentUser: User = {

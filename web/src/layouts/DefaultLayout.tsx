@@ -2,11 +2,10 @@
 import Logo from "@/components/Logo";
 import Menu from "@/partials/layouts/DefaultLayout/Menu";
 import { MouseEventHandler, ReactElement, memo, useEffect } from "react";
-import { currentUser } from "@/utils/fakeData/User";
 import Avatar from "@/components/Avatar";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
-import UnAuthenticatedError from "@/partials/app/Auth/400Error";
+import UnAuthenticatedError from "@/partials/app/Auth/404Error";
 import Loading from "@/components/Loading";
 
 type DefaultLayoutProps = {
@@ -39,7 +38,7 @@ function DefaultLayout({ children }: DefaultLayoutProps) {
                 <Logo />
               </div>
               <div
-                className="flex flex-col items-center mr-[39px] mt-[62px] mb-[40px] gap-[19px] cursor-pointer"
+                className="flex flex-col items-center mr-[39px] mt-[62px] 3xl:mb-[40px] mb-[calc(40px/4*3)] gap-[19px] cursor-pointer"
                 onClick={handleClickUser}
               >
                 <Avatar size={120} src={auth.user.avatar_url} />

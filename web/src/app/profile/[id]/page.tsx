@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Container from "@/components/Container";
 import Sidebar from "@/partials/app/Profile/Sidebar";
+import { getUserById } from "@/services/userServices";
 
 export default function Profile({ params }: { params: { id: number } }) {
   const auth = useSelector((state: any) => state.auth);
@@ -23,9 +24,15 @@ export default function Profile({ params }: { params: { id: number } }) {
     if (Number(params.id) === auth.user.user_id) {
       setUser(auth.user);
     } else {
-      setUser(users[params.id - 1]);
+      const res: any = await getUserById(params.id);      
+      const userData = {
+        email: res.data.email,
+        ...res.data.user_info,
+      };
+
+      setUser(userData);
     }
-  };
+  };  
 
   return (
     <DefaultLayout>

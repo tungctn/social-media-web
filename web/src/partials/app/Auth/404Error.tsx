@@ -7,7 +7,7 @@ export default function UnAuthenticatedError() {
       <div className="flex flex-col items-center">
         <Image
           src={UnAuthErrorImg}
-          alt="400 error"
+          alt="404 error"
           className="h-[60vh] w-auto"
         />
         <div className="-mt-[60px] flex flex-col items-center gap-5">

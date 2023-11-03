@@ -18,7 +18,7 @@ type PostCardProps = {
 
 export default function PostCard({ post }: PostCardProps) {
   const [showDetail, setShowDetail] = useState(false);
-  const [postDetail, setPostDetail] = useState<Post | null>(post);
+  const [postDetail, setPostDetail] = useState<Post | undefined>();
 
   useEffect(() => {
     setPostDetail(post);
@@ -32,6 +32,15 @@ export default function PostCard({ post }: PostCardProps) {
     const newPost: any = {
       ...post,
       type_react: reactType,
+    };
+
+    setPostDetail(newPost);
+  };
+
+  const handleChangeDetail = (changeField: any) => {
+    const newPost: any = {
+      ...post,
+      ...changeField,
     };
 
     setPostDetail(newPost);
@@ -53,7 +62,7 @@ export default function PostCard({ post }: PostCardProps) {
                 </Link>
                 <time className="first-letter:uppercase text-xs text-spanish-gray">
                   {dayjs(postDetail.created_at).format(
-                    "dddd, HH:mm DD/MM/YYYY"
+                    "dddd, HH:mm DD/MM/YYYY",
                   )}
                 </time>
               </div>
@@ -130,6 +139,7 @@ export default function PostCard({ post }: PostCardProps) {
           open={showDetail}
           onClose={() => setShowDetail(false)}
           id={postDetail.id}
+          onChange={handleChangeDetail}
         />
       )}
     </>
