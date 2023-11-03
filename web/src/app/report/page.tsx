@@ -1,13 +1,27 @@
 "use client";
 
 import Container from "@/components/Container";
-import { ReportMenu } from "@/constants/DefaultMenu";
+import { ReportMenu, ReportMenuEnum } from "@/constants/DefaultMenu";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import CheckAdmin from "@/middlewares/CheckAdmin";
-import { useCallback, useState } from "react";
+import { postsByUser } from "@/utils/fakeData/Post";
+import { useCallback, useEffect, useState } from "react";
 
 export default function Report() {
-  const [currentTabId, setCurrentTabId] = useState(0);
+  const [currentTabId, setCurrentTabId] = useState<number>(
+    ReportMenuEnum.CommentImage,
+  );
+  const [lists, setLists] = useState(new Array(2));
+
+  useEffect(() => {
+    !lists[Math.floor(currentTabId / 2)] && getListsData();
+  }, [currentTabId]);
+
+  const getListsData = async () => {
+    const newLists = [...lists];
+    newLists[Math.floor(currentTabId / 2)] = postsByUser;
+    setLists(newLists);
+  };
 
   const handleClickTab = (tabId: number) => {
     setCurrentTabId(tabId);
@@ -17,8 +31,9 @@ export default function Report() {
     const Component =
       ReportMenu[Math.floor(currentTabId / 2)].items[currentTabId % 2]
         .Component;
-    return <Component />;
-  }, [currentTabId]);
+
+    return <Component data={lists[Math.floor(currentTabId / 2)]} />;
+  }, [currentTabId, lists]);
   return (
     <CheckAdmin>
       <DefaultLayout>

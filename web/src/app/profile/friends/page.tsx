@@ -8,14 +8,12 @@ import {
   getFriendRequests,
 } from "@/services/friendServices";
 import { useState, useEffect, useCallback } from "react";
-import { useSelector } from "react-redux";
 
 export default function Friends() {
   const [currentTabId, setCurrentTabId] = useState(0);
   const [friendsLists, setFriendsLists] = useState(
     new Array(FriendMenu.length),
   );
-  const auth = useSelector((state: any) => state.auth);
 
   useEffect(() => {
     !friendsLists[currentTabId] && getFriendsListsData();
