@@ -12,9 +12,7 @@ type CheckAdminProps = {
 export default function CheckAdmin({ children }: CheckAdminProps) {
   const auth: any = useSelector((state: any) => state.auth);
 
-  console.log(auth);
-
   return (
-    <>{auth.user?.role === Role.Admin ? children : <UnauthorizedError />}</>
+    <>{auth.user?.role !== Role.Admin ? children : <UnauthorizedError />}</>
   );
 }

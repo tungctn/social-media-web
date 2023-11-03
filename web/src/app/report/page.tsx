@@ -15,7 +15,8 @@ export default function Report() {
 
   const renderList = useCallback(() => {
     const Component =
-      ReportMenu[Math.ceil(currentTabId / 2)].items[currentTabId].Component;
+      ReportMenu[Math.floor(currentTabId / 2)].items[currentTabId % 2]
+        .Component;
     return <Component />;
   }, [currentTabId]);
   return (
