@@ -51,7 +51,7 @@ export const posts: Post[] = [
     userId: currentUser.user_id,
     user: currentUser,
     content:
-      "There are many variations of passages of Lorem Ipsum available.",
+      "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
     created_at: new Date("2023-09-21 17:33"),
     images: [images[0]],
     likes_count: 1200,

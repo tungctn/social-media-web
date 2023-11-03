@@ -6,9 +6,9 @@ import Button from "@/components/Button";
 
 export default function NeareastPost() {
   return (
-    <div className="bg-white rounded-[30px] pt-[30px] pb-[17px] px-[30px] w-full">
+    <div className="bg-white rounded-[30px] pt-[30px] pb-[17px] px-[30px] max-w-full">
       <BoxHeader title="Nearest Post" />
-      <div className="flex flex-row mt-3 gap-9 min-w-max">
+      <div className="flex flex-row mt-3 gap-9 max-w-full">
         <div className="min-w-[140px] relative cursor-pointer">
           <Image
             src={nearestPost.images[0].url}
@@ -26,9 +26,11 @@ export default function NeareastPost() {
           )}
         </div>
         {nearestPost.content ? (
-          <p className="text-xs line-clamp-3 text-ellipsis h-fit">
-            {nearestPost.content}
-          </p>
+          <div className="">
+            <p className="text-xs line-clamp-3 text-ellipsis h-fit">
+              {nearestPost.content}
+            </p>
+          </div>
         ) : (
           <div className="min-w-fit">
             <span className="font-bold text-2xl text-spanish-gray min-w-fit">
