@@ -1,19 +1,17 @@
 require_relative "../enum/enum.rb"
 
 class FriendsController < ApplicationController
-  skip_before_action :authenticate_request, only: [:get_all]
+  skip_before_action :authenticate_request, only: [:show]
+
+  #lấy ra bạn bè của bản thân
+  def index
+    friend_datas = get_friends(@current_user.id, Enums::FRIEND_STATUS[:accept])
+    render json: { friends: friend_datas }, status: :ok
+  end
 
   # lấy ra tất cả bạn bè
-  def get_all
-    get_current_user() # gán current_user nếu có token truyền lên
-
-    user_id = nil
-
-    if params[:id]
-      user_id = params[:id]
-    else
-      user_id = @current_user.id
-    end
+  def show
+    user_id = params[:id]
 
     if !user_id
       render json: { errors: "Chưa có thông tin người dùng." }, status: :ok
@@ -110,7 +108,7 @@ class FriendsController < ApplicationController
   end
 
   # xóa lời mời kết bạn, hủy kết bạn
-  def delete
+  def destroy
     current_user_id = @current_user.id
     receiver_id = params[:receiver_id]
 
@@ -204,7 +202,7 @@ class FriendsController < ApplicationController
     friends.each do |friend|
       friend_info = nil
 
-      if friend.sender_id == user_id
+      if friend.sender_id.to_i == user_id.to_i
         friend_info = UserInfo.select(:full_name, :avatar_url, :user_id).find_by(user_id: friend.receiver_id)
       else
         friend_info = UserInfo.select(:full_name, :avatar_url, :user_id).find_by(user_id: friend.sender_id)
