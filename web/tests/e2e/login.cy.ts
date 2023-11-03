@@ -20,6 +20,7 @@ describe("Login Test", () => {
     // Kiểm tra xem đã chuyển hướng đến trang chủ sau khi đăng nhập thành công
     cy.wait(2000);
     cy.url().should("include", "/");
+    cy.visit("/");
     // Kiểm tra xem có thông báo chào mừng người dùng
     cy.contains("Welcom back! Have a good time!");
 
