@@ -36,6 +36,8 @@ jobs:
         run: |
           cd ./web
           npm ci
+          touch .env
+          echo "${{ secrets.PROD_FRONTEND }}" > .env
           npm run test:e2e:ci
 
   build:
