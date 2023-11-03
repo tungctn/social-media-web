@@ -21,18 +21,14 @@ export default function UserInfoDetail({ onClose, id }: UserInfoDetailProps) {
   }, [id]);
 
   const getUserInfo = async () => {
-    // const res: any = await getUserById(id);
-    // if (res.success) {
-    //   setUser({
-    //     ...(res.data.user_info ?? {}),
-    //     email: res.data.email,
-    //     user_id: res.data.user_id,
-    //   });
-    // }
-    //----
-    // Test
-    //----
-    setUser(users[id - 1]);
+    const res: any = await getUserById(id);
+    if (res.success) {
+      setUser({
+        ...(res.data.user_info ?? {}),
+        email: res.data.email,
+        user_id: res.data.user_id,
+      });
+    }
   };
   return (
     <div className="fixed top-0 left-0 z-20">

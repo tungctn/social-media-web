@@ -29,17 +29,21 @@ type PostDetailProps = {
   open?: boolean;
   onClose?: MouseEventHandler<HTMLDivElement>;
   id: number;
+  onChange: Function;
 };
 
 export default function PostDetail({
   open = false,
   onClose,
   id,
+  onChange,
 }: PostDetailProps) {
   const [post, setPost] = useState<Post | undefined>();
   const headerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLDivElement>(null);
   const commentsListRef = useRef<HTMLDivElement>(null);
+  const [replyComment, setReplyComment] = useState();
+  const [newComment, setNewComment] = useState();
   const { width } = useWindowDimensions();
   const auth = useSelector((state: any) => state.auth);
   const forceUpdate = useForceUpdate();
@@ -66,29 +70,36 @@ export default function PostDetail({
   };
 
   const handleSendNewComment = (newComment: any) => {
-    const newComments: any = [
-      {
-        ...newComment,
-        user_id: auth.user.user_id,
-        user: auth.user,
-      },
-      ...(post?.comments ?? []),
-    ];
-
+    setNewComment({
+      ...newComment,
+      user: auth.user,
+    });
     const newPost: any = {
       ...post,
-      comments: newComments,
       comments_count: (post?.comments_count ?? 0) + 1,
     };
 
+    onChange({
+      comments_count: (post?.comments_count ?? 0) + 1,
+    });
     setPost(newPost);
   };
 
   const renderPostCommentsLists = useCallback(() => {
     if (post) {
-      return post.comments && <PostCommentsList comments={post.comments} />;
+      return (
+        <PostCommentsList
+          postId={post.id}
+          onReply={handleReply}
+          newComment={newComment}
+        />
+      );
     }
-  }, [post]);
+  }, [post, newComment]);
+
+  const handleReply = (comment: any) => {
+    setReplyComment(comment);
+  };
 
   const handleChangeInput = (newValue: string) => {
     forceUpdate();
@@ -100,6 +111,9 @@ export default function PostDetail({
       type_react: reactType,
     };
 
+    onChange({
+      type_react: reactType,
+    });
     setPost(newPost);
   };
 
@@ -217,6 +231,7 @@ export default function PostDetail({
                   ref={inputRef}
                   postId={id}
                   onSend={handleSendNewComment}
+                  reply={replyComment}
                 />
               </div>
             </div>

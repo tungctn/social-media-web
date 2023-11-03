@@ -12,6 +12,7 @@ type CommentProps = {
   avatarSize?: number;
   userNameClassName?: string;
   created_atClassName?: string;
+  onReply: Function;
 };
 
 export default function Comment({
@@ -19,6 +20,7 @@ export default function Comment({
   avatarSize = 50,
   userNameClassName = "",
   created_atClassName = "",
+  onReply = () => {},
 }: CommentProps) {
   const [showReplies, setShowReplies] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
@@ -28,6 +30,11 @@ export default function Comment({
 
   const handleLike = () => {
     setIsLiked(!isLiked);
+  };
+
+  const handleReply = (comment: any) => {
+    setShowReplies(true);
+    onReply(comment);
   };
   return (
     <div className="flex flex-col gap-[10px]">
@@ -73,26 +80,26 @@ export default function Comment({
               >
                 {isLiked ? "Liked" : "Like"}
               </button>
-              <button>Reply</button>
+              <button onClick={() => handleReply(comment)}>Reply</button>
             </div>
           </div>
           <div className="3xl:text-xl text-lg text-deep-lilac min-w-fit">
             <FaEllipsis />
           </div>
         </div>
-        {comment.reply_comments ? (
+        {comment.replies_comment && comment.replies_comment.length > 0 ? (
           !showReplies ? (
             <div
               className="flex flex-row cursor-pointer gap-[11px] items-center before:content-[''] before:block before:3xl:w-[117px] before:w-[calc(117px/6*5)] before:h-[1px] before:bg-spanish-gray"
               onClick={handleShowReplies}
             >
               <span className="text-[14px] text-spanish-gray">
-                Watch the reply ({comment.reply_comments?.length})
+                Watch the reply ({comment.replies_comment?.length})
               </span>
             </div>
           ) : (
             <div className="flex flex-col gap-2">
-              {comment.reply_comments.map((comment) => {
+              {comment.replies_comment?.map((comment) => {
                 return (
                   <Comment
                     key={comment.id}
@@ -100,6 +107,7 @@ export default function Comment({
                     userNameClassName="!text-[14px] !leading-[16px]"
                     created_atClassName="!text-[10px] !leading-[12px]"
                     avatarSize={40}
+                    onReply={() => onReply(comment)}
                   />
                 );
               })}

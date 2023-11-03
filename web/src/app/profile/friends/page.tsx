@@ -1,9 +1,12 @@
 "use client";
 
 import Container from "@/components/Container";
-import { FriendMenu } from "@/constants/DefaultMenu";
+import { FriendMenu, FriendMenuEnum } from "@/constants/DefaultMenu";
 import DefaultLayout from "@/layouts/DefaultLayout";
-import { friends } from "@/utils/fakeData/User";
+import {
+  getAuthFriendsList,
+  getFriendRequests,
+} from "@/services/friendServices";
 import { useState, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 
@@ -18,9 +21,20 @@ export default function Friends() {
     !friendsLists[currentTabId] && getFriendsListsData();
   }, [currentTabId]);
 
-  const getFriendsListsData = () => {
+  const getFriendsListsData = async () => {
     const newFriendsLists = [...friendsLists];
-    newFriendsLists[currentTabId] = friends;
+    switch (currentTabId) {
+      case FriendMenuEnum.Require:
+        const requestRes = await getFriendRequests();
+        newFriendsLists[currentTabId] = requestRes.data.friends;
+        break;
+      case FriendMenuEnum.Friend:
+        const friendRes = await getAuthFriendsList();
+        newFriendsLists[currentTabId] = friendRes.data.friends;
+        break;
+      default:
+        break;
+    }
     setFriendsLists(newFriendsLists);
   };
 

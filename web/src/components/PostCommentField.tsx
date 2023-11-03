@@ -2,7 +2,7 @@ import { LoadingContext } from "@/providers/LoadingProvider";
 import { createComment } from "@/services/commentServices";
 import { moderateImage, uploadImage } from "@/services/imageServices";
 import Image from "next/image";
-import { forwardRef, useContext, useEffect, useRef, useState } from "react";
+import { forwardRef, useContext, useEffect, useRef } from "react";
 import {
   FaImages,
   FaRegFaceSmile,
@@ -15,10 +15,11 @@ type PostCommentFieldProps = {
   postId: number;
   onSend: Function;
   onChange: Function;
+  reply?: any;
 };
 
 function PostCommentField(
-  { postId, onSend, onChange }: PostCommentFieldProps,
+  { postId, onSend, onChange, reply }: PostCommentFieldProps,
   ref: any,
 ) {
   const { setIsLoading } = useContext(LoadingContext);
@@ -30,6 +31,13 @@ function PostCommentField(
   });
 
   useEffect(() => {
+    if (reply && textareaRef.current) {
+      textareaRef.current.value = "Reply " + reply.user.full_name + " ";
+      textareaRef.current.focus();
+    }
+  }, [reply]);
+
+  useEffect(() => {
     return () => {
       if (img.current.url) {
         URL.revokeObjectURL(img.current.url);
@@ -39,53 +47,68 @@ function PostCommentField(
   const handleSendComment = async (event: any) => {
     event.preventDefault();
     setIsLoading(true);
-    let image_ids = [];
-    try {
-      if (img.current.file) {
-        const res = await uploadImage(img.current.file);
-        const moderateRes = await moderateImage(res.data.image.url);
+    const regex = reply ? new RegExp(`^Reply ${reply.user.full_name} `) : "";
+    const content = reply
+      ? event.target.content.value.replace(regex, "")
+      : event.target.content.value;
+    if (content || img.current.url) {
+      let image_ids = [];
+      try {
+        if (img.current.file) {
+          const res = await uploadImage(img.current.file);
+          const moderateRes = await moderateImage(res.data.image.url);
 
-        if (!moderateRes.success) {
-          toast.error(moderateRes.message);
-        } else {
-          image_ids.push(res.data.image.id);
-          img.current.url = res.data.image.url;
+          if (!moderateRes.success) {
+            toast.error(moderateRes.message);
+            (img.current.url = ""), (img.current.file = null);
+          } else {
+            image_ids.push(res.data.image.id);
+            img.current.url = res.data.image.url;
+          }
         }
+      } catch (error) {
+        toast.error("Error upload image!");
+        (img.current.url = ""), (img.current.file = null);
       }
-    } catch (error) {
-      toast.error("Error upload image!");
-    }
 
-    const newComment = {
-      content: event.target.content.value,
-      post_id: postId,
-      created_at: new Date(),
-      image_ids,
-    };
-    try {
-      await createComment(newComment);
-      onSend({
-        ...newComment,
-        images:
-          image_ids.length > 0
-            ? [
-                {
-                  id: image_ids[0],
-                  url: img.current.url,
-                },
-              ]
-            : [],
-      });
-      img.current = {
-        url: "",
-        file: null,
+      const newComment = {
+        content: content,
+        comment_reply: reply ? reply.id : null,
+        post_id: postId,
+        created_at: new Date(),
+        image_ids,
       };
-      event.target.reset();
-      if (textareaRef.current) {
-        textareaRef.current.style.height = "";
+
+      try {
+        const res = await createComment(newComment);
+
+        onSend({
+          id: res.data.comment.id,
+          ...newComment,
+          images:
+            image_ids.length > 0
+              ? [
+                  {
+                    id: image_ids[0],
+                    url: img.current.url,
+                  },
+                ]
+              : [],
+        });
+        img.current = {
+          url: "",
+          file: null,
+        };
+        event.target.reset();
+        if (textareaRef.current) {
+          textareaRef.current.style.height = "";
+        }
+      } catch (error) {
+        toast.error("Error!");
       }
-    } catch (error) {
-      toast.error("Error!");
+    } else {
+      event.target.reset();
+      toast.error("Please enter comment to send!");
     }
     setIsLoading(false);
   };
@@ -105,6 +128,7 @@ function PostCommentField(
 
   const handleKeyDownInput = (event: any) => {
     if (event.key === "Enter") {
+      event.preventDefault();
       if (submitRef.current) {
         submitRef.current.click();
       }

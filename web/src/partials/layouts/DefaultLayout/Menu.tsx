@@ -4,14 +4,16 @@ import MenuItem from "@/components/MenuItem";
 import { usePathname, useRouter } from "next/navigation";
 import DefaultMenu from "@/constants/DefaultMenu";
 import { FaArrowRightToBracket } from "react-icons/fa6";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { checkLogedInAction } from "@/store/actions/authActions";
 import { toast } from "react-toastify";
+import { Role } from "@/utils/fakeData/User";
 
 export default function Menu() {
   const pathname = usePathname();
   const router = useRouter();
   const dispatch = useDispatch();
+  const auth = useSelector((state: any) => state.auth);
 
   const handleClickMenuItem = (href: string) => {
     if (href) {
@@ -30,19 +32,31 @@ export default function Menu() {
       <nav>
         <div className="flex flex-col 3xl:gap-5 gap-2">
           {DefaultMenu.map((menuItem: any) => {
-            return (
-              <MenuItem
-                key={menuItem.label}
-                prefixIcon={<menuItem.PrefixIcon />}
-                label={menuItem.label}
-                isActive={menuItem.href === pathname}
-                onClick={() => handleClickMenuItem(menuItem.href)}
-              />
-            );
+            if (auth.user?.role === Role.Admin && menuItem.onlyAdmin) {
+              return (
+                <MenuItem
+                  key={menuItem.label}
+                  prefixIcon={<menuItem.PrefixIcon />}
+                  label={menuItem.label}
+                  isActive={menuItem.href === pathname}
+                  onClick={() => handleClickMenuItem(menuItem.href)}
+                />
+              );
+            } else if (!menuItem.onlyAdmin) {
+              return (
+                <MenuItem
+                  key={menuItem.label}
+                  prefixIcon={<menuItem.PrefixIcon />}
+                  label={menuItem.label}
+                  isActive={menuItem.href === pathname}
+                  onClick={() => handleClickMenuItem(menuItem.href)}
+                />
+              );
+            }
           })}
         </div>
       </nav>
-      <div className="absolute 3xl:bottom-[40px] bottom-[calc(40px/6*5)]">
+      <div className="absolute 3xl:bottom-[40px] bottom-[calc(40px/4*3)]">
         <MenuItem
           prefixIcon={<FaArrowRightToBracket />}
           onClick={handleSignOut}

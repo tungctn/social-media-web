@@ -15,7 +15,7 @@ export default function FriendsRequireList({
 }: FriendsRequireListProps) {
   const { width } = useWindowDimensions();
   const ref = useRef<HTMLDivElement>(null);
-
+  
   useEffect(() => {
     if (ref.current) {
       let gap = 40;
@@ -35,11 +35,15 @@ export default function FriendsRequireList({
         className="3xl:my-11 my-9 flex flex-row flex-wrap 3xl:mx-auto mx-16 3xl:justify-center"
         ref={ref}
       >
-        {friendsList?.map((friendItem: User) => {
-          return (
-            <FriendRequireCard key={friendItem.user_id} friend={friendItem} />
-          );
-        })}
+        {friendsList?.length > 0 ? (
+          friendsList.map((friendItem: User) => {
+            return (
+              <FriendRequireCard key={friendItem.user_id} friend={friendItem} />
+            );
+          })
+        ) : (
+          <span>Không có lời mời kết bạn nào</span>
+        )}
       </div>
     </div>
   );
