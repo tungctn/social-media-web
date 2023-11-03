@@ -6,11 +6,11 @@ Rails.application.routes.draw do
     post "/auth/register", to: "users#register"
 
     #thông tin người dùng
-    get "/users/:id", to: "users#info_index"
-    get "/users", to: "users#info_current_user"
-    put "/users", to: "users#info_update"
-    put "/users/password", to: "users#update_password"
-    delete "/users/avatar", to: "users#info_delete_avatar"
+    get "/users", to: "user_infos#index"
+    get "/users/:id", to: "user_infos#show"
+    put "/users", to: "user_infos#update"
+    put "/users/password", to: "user_infos#update_password"
+    delete "/users/avatar", to: "user_infos#delete_avatar"
 
     #upload ảnh
     get "/images/:id", to: "images#show"
