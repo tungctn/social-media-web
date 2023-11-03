@@ -43,10 +43,10 @@ Rails.application.routes.draw do
     #Bạn bè
     get "/friends/request", to: "friends#get_request" # lấy ra tất cả danh sách lời mời kết bạn
     get "/friends/block", to: "friends#get_block" # lấy ra tất cả danh sách đã chặn
-    get "/friends/:id", to: "friends#get_all" # lấy ra tất cả danh sách bạn bè của user_id = id
-    get "/friends", to: "friends#get_all" # lấy ra tất cả danh sách bạn bè của bản thân
+    get "/friends/:id", to: "friends#show" # lấy ra tất cả danh sách bạn bè của user_id = id
+    get "/friends", to: "friends#index" # lấy ra tất cả danh sách bạn bè của bản thân
     post "/friends", to: "friends#create" # gửi lời mời kết bạn
     put "/friends", to: "friends#update"  # chấp nhận lời mời, block, chuyển loại bạn bè
-    delete "/friends", to: "friends#delete" # xóa lời mời kết bạn, xóa bạn bè
+    delete "/friends", to: "friends#destroy" # xóa lời mời kết bạn, xóa bạn bè
   end
 end

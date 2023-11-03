@@ -6,16 +6,7 @@ class UserInfosController < ApplicationController
   #lấy thông tin người dùng qua token
   #created by: ttanh (02/10/2023)
   def index
-    user = @current_user
-
-    if !user
-      render json: { errors: "Không tìm thấy người dùng" }, status: :bad_request
-      return
-    end
-
-    user_info = user.user_info
-
-    render json: { user_info: user_info, email: user.email, user_id: user.id, role: user.role }, status: :ok
+    render json: { user_info: @current_user.user_info, email: @current_user.email, user_id: @current_user.id, role: @current_user.role }, status: :ok
   end
 
   # lấy thông tin người dùng bất kì
