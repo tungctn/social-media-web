@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     get "/users", to: "user_infos#index"
     get "/users/:id", to: "user_infos#show"
     put "/users", to: "user_infos#update"
-    put "/users/password", to: "user_infos#update_password"
+    put "/users/password", to: "users#update_password"
     delete "/users/avatar", to: "user_infos#delete_avatar"
 
     #upload ảnh

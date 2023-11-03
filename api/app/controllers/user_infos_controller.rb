@@ -47,24 +47,6 @@ class UserInfosController < ApplicationController
     end
   end
 
-  # cập nhật password
-  # ttanh (11/10/2023)
-  def update_password
-    if !@current_user&.authenticate(params[:old_password])
-      render json: { errors: "Mật khẩu cũ chưa đúng." },
-            status: :bad_request
-      return
-    end
-
-    if @current_user.update(password_update)
-      render json: { message: "Thành công!" },
-            status: :ok
-    else
-      render json: { errors: @current_user.errors.full_messages },
-            status: :bad_request
-    end
-  end
-
   # xóa avatar
   # created by: ttanh (26/09/2023)
   def delete_avatar
@@ -90,9 +72,5 @@ class UserInfosController < ApplicationController
       :date_of_birth, :gender, :avatar,
       :join_date, :last_login, :bio,
       :address, :relationship_status)
-  end
-
-  def password_update
-    params.permit(:password)
   end
 end
