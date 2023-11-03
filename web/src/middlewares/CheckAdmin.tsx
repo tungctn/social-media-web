@@ -10,7 +10,7 @@ type CheckAdminProps = {
 };
 
 export default function CheckAdmin({ children }: CheckAdminProps) {
-  const auth = useSelector((state: any) => state.auth);
+  const auth: any = useSelector((state: any) => state.auth);
 
   console.log(auth);
 

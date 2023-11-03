@@ -29,14 +29,14 @@ type PostDetailProps = {
   open?: boolean;
   onClose?: MouseEventHandler<HTMLDivElement>;
   id: number;
-  onChange: Function;
+  onChange?: Function;
 };
 
 export default function PostDetail({
   open = false,
   onClose,
   id,
-  onChange,
+  onChange = () => {},
 }: PostDetailProps) {
   const [post, setPost] = useState<Post | undefined>();
   const headerRef = useRef<HTMLDivElement>(null);
