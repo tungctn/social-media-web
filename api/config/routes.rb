@@ -19,22 +19,26 @@ Rails.application.routes.draw do
 
     #bài viết
     get "/posts/:id", to: "posts#show"
-    get "/posts", to: "posts#get_all"
+    get "/posts", to: "posts#index"
     post "/posts", to: "posts#create"
     put "/posts/:id", to: "posts#update"
-    delete "/posts/:id", to: "posts#delete"
+    delete "/posts/:id", to: "posts#destroy"
 
     #comment
-    get "/comments/:post_id", to: "posts#get_comment" #lấy comment cho 1 bài viết
-    post "/comments/reacts", to: "posts#react_comment"
-    delete "/comments/unreact/:comment_id", to: "posts#unreact_comment"
-    post "/comments", to: "posts#create_comment"
-    put "/comments/:id", to: "posts#update_comment"
-    delete "/comments/:id", to: "posts#delete_comment"
+    get "/comments/:post_id", to: "post_comments#show" #lấy comment cho 1 bài viết
+
+    #biểu cảm với bình luận
+    post "/comments/reacts", to: "reacts_post_comments#create"
+    delete "/comments/unreact/:comment_id", to: "reacts_post_comments#destroy"
+
+    #tạo bình luận
+    post "/comments", to: "post_comments#create"
+    put "/comments/:id", to: "post_comments#update"
+    delete "/comments/:id", to: "post_comments#destroy"
 
     #react
-    post "/posts/reacts", to: "posts#react_post"
-    delete "/posts/unreact/:post_id", to: "posts#unreact_post"
+    post "/posts/reacts", to: "reacts_posts#create"
+    delete "/posts/unreact/:post_id", to: "reacts_posts#destroy"
 
     #Bạn bè
     get "/friends/request", to: "friends#get_request" # lấy ra tất cả danh sách lời mời kết bạn
