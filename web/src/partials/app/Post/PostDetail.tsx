@@ -22,6 +22,7 @@ import { useSelector } from "react-redux";
 import useForceUpdate from "@/hooks/useForceUpdate";
 import { REACT_TYPE } from "@/constants/Others";
 import CustomCarousel from "@/components/CustomCarousel";
+import { reactPost } from "@/utils/post";
 
 type PostDetailProps = {
   open?: boolean;
@@ -104,18 +105,7 @@ export default function PostDetail({
   };
 
   const handleChangeReact = (reactType: REACT_TYPE) => {
-    const newPost: any = {
-      ...post,
-    };
-    if (post?.type_react === null) {
-      newPost.likes_count += 1;
-      newPost.type_react = reactType;
-    } else if (post?.type_react === reactType) {
-      newPost.likes_count -= 1;
-      newPost.type_react = null;
-    } else {
-      newPost.type_react = reactType;
-    }
+    const newPost: any = post && reactPost(post, reactType);
 
     setPost(newPost);
   };
@@ -129,11 +119,7 @@ export default function PostDetail({
       ></div>
       <div className="bg-white 3xl:h-[850px] h-[calc(850px/4*3)] 3xl:w-[1186px] w-[calc(1186px/4*3)] absolute z-30 top-[50vh] -translate-y-1/2 left-[50vw] -translate-x-1/2 rounded-[30px]">
         <div className="flex flex-row h-full w-full">
-          {post ? (
-            <CustomCarousel images={post.images} />
-          ) : (
-            <></>
-          )}
+          {post ? <CustomCarousel images={post.images} /> : <></>}
           <div className="w-full flex flex-col">
             <div className="flex flex-col 3xl:gap-5 gap-4" ref={headerRef}>
               <div className="3xl:pl-10 pl-8 3xl:pr-[35px] pr-7 3xl:mt-5 mt-4 flex flex-row justify-between w-full">

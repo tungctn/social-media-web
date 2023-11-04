@@ -11,6 +11,7 @@ import PostReactCounts from "./PostReactCounts";
 import PostDetail from "@/partials/app/Post/PostDetail";
 import { useEffect, useState } from "react";
 import { REACT_TYPE } from "@/constants/Others";
+import { reactPost } from "@/utils/post";
 
 type PostCardProps = {
   post: Post;
@@ -29,23 +30,10 @@ export default function PostCard({ post }: PostCardProps) {
   };
 
   const handleChangeReact = (reactType: REACT_TYPE) => {
-    const newPost: any = {
-      ...postDetail,
-    };
-    
-    if (postDetail?.type_react === null) {
-      newPost.likes_count += 1;
-      newPost.type_react = reactType;
-    } else if (postDetail?.type_react === reactType) {
-      newPost.likes_count -= 1;
-      newPost.type_react = null;
-    } else {
-      newPost.type_react = reactType;
-    }
+    const newPost: any = postDetail && reactPost(postDetail, reactType);
 
     setPostDetail(newPost);
   };
-  
 
   const handleChangeDetail = (changeField: any) => {
     const newPost: any = {
@@ -72,7 +60,7 @@ export default function PostCard({ post }: PostCardProps) {
                 </Link>
                 <time className="first-letter:uppercase text-xs text-spanish-gray">
                   {dayjs(postDetail.created_at).format(
-                    "dddd, HH:mm DD/MM/YYYY"
+                    "dddd, HH:mm DD/MM/YYYY",
                   )}
                 </time>
               </div>
