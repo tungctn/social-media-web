@@ -19,6 +19,8 @@ class ReactsPostCommentsController < ApplicationController
     if !react_comment
       comment_react = ReactsPostComment.new(post_comment: comment, react: react, user: @current_user)
       comment_react.save
+      comment.likes_count = comment.likes_count + 1
+      comment.save
     else
       react_comment.update(react: react)
     end
@@ -40,6 +42,14 @@ class ReactsPostCommentsController < ApplicationController
 
     if react_comment
       react_comment.destroy
+
+      if comment.likes_count <= 0
+        comment.likes_count = 0
+      else
+        comment.likes_count = comment.likes_count - 1
+      end
+      comment.save
+
       render json: { message: "Thành công" }, status: :ok
     else
       render json: { errors: "Người dùng chưa tương tác với bài viết." }, status: :ok

@@ -19,6 +19,8 @@ class ReactsPostsController < ApplicationController
     if !react_post
       post_react = ReactsPost.new(post: post, react: react, user: @current_user)
       post_react.save
+      post.likes_count = post.likes_count + 1
+      post.save
     else
       react_post.update(react: react)
     end
@@ -40,6 +42,14 @@ class ReactsPostsController < ApplicationController
 
     if react_post
       react_post.destroy
+
+      if post.likes_count <= 0
+        post.likes_count = 0
+      else
+        post.likes_count = post.likes_count - 1
+      end
+      post.save
+
       render json: { message: "Thành công" }, status: :ok
     else
       render json: { errors: "Người dùng chưa tương tác với bài viết." }, status: :ok
