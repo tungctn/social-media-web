@@ -1,7 +1,7 @@
 "use client";
 
 import FriendRequireCard from "@/components/FriendRequireCard";
-import { FRIEND_STATUS } from "@/constants/Others";
+import { FriendStatus } from "@/constants/Others";
 import { BREAKPOINTS } from "@/constants/WindowSizes";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import User from "@/utils/fakeData/User";

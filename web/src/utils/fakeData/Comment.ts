@@ -1,3 +1,4 @@
+import { ReactType } from "@/constants/Others";
 import { Image } from "./Image";
 import User, { users } from "./User";
 
@@ -10,6 +11,7 @@ type Comment = {
   replies_comment?: Comment[];
   content: string;
   images?: Image[];
+  type_react?: ReactType;
 };
 
 export const commentsByPostId: Comment[] = [

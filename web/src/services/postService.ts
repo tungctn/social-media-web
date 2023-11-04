@@ -1,5 +1,5 @@
 import instance from "@/config/axios";
-import { REACT_TYPE } from "@/constants/Others";
+import { ReactType } from "@/constants/Others";
 import axios from "axios";
 
 export function createPost(post: any) {
@@ -14,7 +14,7 @@ export function getPostById(id: number) {
   return instance.get(`/api/posts/${id}`);
 }
 
-export function reactPost(id: number, reactType: REACT_TYPE) {
+export function reactPost(id: number, reactType: ReactType) {
   return instance.post("/api/posts/reacts", {
     type_react: reactType,
     post_id: id,

@@ -20,7 +20,7 @@ import { BREAKPOINTS } from "@/constants/WindowSizes";
 import { getPostById } from "@/services/postService";
 import { useSelector } from "react-redux";
 import useForceUpdate from "@/hooks/useForceUpdate";
-import { REACT_TYPE } from "@/constants/Others";
+import { ReactType } from "@/constants/Others";
 import CustomCarousel from "@/components/CustomCarousel";
 import { reactPost } from "@/utils/post";
 
@@ -43,6 +43,7 @@ export default function PostDetail({
   const commentsListRef = useRef<HTMLDivElement>(null);
   const [replyComment, setReplyComment] = useState();
   const [newComment, setNewComment] = useState();
+  const [editingComment, setEditingComment] = useState();
   const { width } = useWindowDimensions();
   const auth = useSelector((state: any) => state.auth);
   const forceUpdate = useForceUpdate();
@@ -68,20 +69,23 @@ export default function PostDetail({
     }
   };
 
-  const handleSendNewComment = (newComment: any) => {
+  const handleSendNewComment = (newComment: any, isExists?: boolean) => {  
     setNewComment({
       ...newComment,
       user: auth.user,
     });
-    const newPost: any = {
-      ...post,
-      comments_count: (post?.comments_count ?? 0) + 1,
-    };
+    setEditingComment(undefined);
+    if (!isExists) {
+      const newPost: any = {
+        ...post,
+        comments_count: (post?.comments_count ?? 0) + 1,
+      };
 
-    onChange({
-      comments_count: (post?.comments_count ?? 0) + 1,
-    });
-    setPost(newPost);
+      onChange({
+        comments_count: (post?.comments_count ?? 0) + 1,
+      });
+      setPost(newPost);
+    }
   };
 
   const renderPostCommentsLists = useCallback(() => {
@@ -91,6 +95,7 @@ export default function PostDetail({
           postId={post.id}
           onReply={handleReply}
           newComment={newComment}
+          onAction={handleAction}
         />
       );
     }
@@ -100,13 +105,36 @@ export default function PostDetail({
     setReplyComment(comment);
   };
 
+  const handleAction = (type: string, comment: any) => {
+    if (type === "delete") {
+      const newPost: any = {
+        ...post,
+        comments_count: (post?.comments_count ?? 0) - 1,
+      };
+
+      onChange({
+        comments_count: (post?.comments_count ?? 0) - 1,
+      });
+      setPost(newPost);
+    } else if (type === "edit") {
+      console.log(comment);
+      
+      setNewComment(undefined);
+      setEditingComment(comment);
+    }
+  };
+
   const handleChangeInput = (newValue: string) => {
     forceUpdate();
   };
 
-  const handleChangeReact = (reactType: REACT_TYPE) => {
+  const handleChangeReact = (reactType: ReactType) => {
     const newPost: any = post && reactPost(post, reactType);
 
+    onChange({
+      likes_count: newPost.likes_count,
+      type_react: newPost.type_react,
+    });
     setPost(newPost);
   };
 
@@ -181,6 +209,7 @@ export default function PostDetail({
                   postId={id}
                   onSend={handleSendNewComment}
                   reply={replyComment}
+                  defaultComment={editingComment}
                 />
               </div>
             </div>

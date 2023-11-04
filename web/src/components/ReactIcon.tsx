@@ -1,4 +1,4 @@
-import { REACT_TYPE } from "@/constants/Others";
+import { ReactType } from "@/constants/Others";
 import Image from "next/image";
 import { useCallback } from "react";
 import { FaRegThumbsUp, FaThumbsUp } from "react-icons/fa6";
@@ -9,13 +9,13 @@ import EmojiCryImg from "@/assets/imgs/emojicry 1.png";
 import EmojiAngryImg from "@/assets/imgs/emojiangry 1.png";
 
 type ReactIconProps = {
-  reactType: REACT_TYPE | undefined;
+  reactType: ReactType | undefined;
 };
 
 export default function ReactIcon({ reactType }: ReactIconProps) {
   const renderIcon = useCallback(() => {
     switch (reactType) {
-      case REACT_TYPE.like:
+      case ReactType.like:
         return (
           <div
             className={
@@ -25,7 +25,7 @@ export default function ReactIcon({ reactType }: ReactIconProps) {
             <FaThumbsUp />
           </div>
         );
-      case REACT_TYPE.love:
+      case ReactType.love:
         return (
           <Image
             src={EmojiLoveImg}
@@ -33,7 +33,7 @@ export default function ReactIcon({ reactType }: ReactIconProps) {
             className="3xl:h-[24px] h-[calc(24px/6*5)] 3xl:w-[24px] w-[calc(24px/6*5)] object-contain transition-all ease-linear hover:scale-[1.75]"
           />
         );
-      case REACT_TYPE.cute:
+      case ReactType.cute:
         return (
           <Image
             src={EmojiCuteImg}
@@ -41,7 +41,7 @@ export default function ReactIcon({ reactType }: ReactIconProps) {
             className="3xl:h-[24px] h-[calc(24px/6*5)] 3xl:w-[24px] w-[calc(24px/6*5)] object-contain transition-all ease-linear hover:scale-[1.75]"
           />
         );
-      case REACT_TYPE.angry:
+      case ReactType.angry:
         return (
           <Image
             src={EmojiAngryImg}
@@ -49,7 +49,7 @@ export default function ReactIcon({ reactType }: ReactIconProps) {
             className="3xl:h-[24px] h-[calc(24px/6*5)] 3xl:w-[24px] w-[calc(24px/6*5)] object-contain transition-all ease-linear hover:scale-[1.75]"
           />
         );
-      case REACT_TYPE.sad:
+      case ReactType.sad:
         return (
           <Image
             src={EmojiCryImg}
@@ -57,7 +57,7 @@ export default function ReactIcon({ reactType }: ReactIconProps) {
             className="3xl:h-[24px] h-[calc(24px/6*5)] 3xl:w-[24px] w-[calc(24px/6*5)] object-contain transition-all ease-linear hover:scale-[1.75]"
           />
         );
-      case REACT_TYPE.wow:
+      case ReactType.wow:
         return (
           <Image
             src={EmojiWowImg}
@@ -80,17 +80,17 @@ export default function ReactIcon({ reactType }: ReactIconProps) {
 
   const renderLabel = useCallback(() => {
     switch (reactType) {
-      case REACT_TYPE.like:
+      case ReactType.like:
         return "Liked";
-      case REACT_TYPE.love:
+      case ReactType.love:
         return "Loved";
-      case REACT_TYPE.angry:
+      case ReactType.angry:
         return "Angry";
-      case REACT_TYPE.cute:
+      case ReactType.cute:
         return "Cute";
-      case REACT_TYPE.sad:
+      case ReactType.sad:
         return "Sad";
-      case REACT_TYPE.wow:
+      case ReactType.wow:
         return "Wow";
       default:
         return "Like";

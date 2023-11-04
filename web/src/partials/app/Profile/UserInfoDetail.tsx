@@ -1,5 +1,5 @@
 import Avatar from "@/components/Avatar";
-import { GENDER } from "@/constants/Others";
+import { Gender } from "@/constants/Others";
 import { getUserById } from "@/services/userServices";
 import User, { users } from "@/utils/fakeData/User";
 import dayjs from "dayjs";
@@ -45,7 +45,7 @@ export default function UserInfoDetail({ onClose, id }: UserInfoDetailProps) {
                 {user.full_name}
               </span>
               {typeof user.gender === "number" && (
-                <span>Gender: {GENDER[user.gender]}</span>
+                <span>Gender: {Gender[user.gender]}</span>
               )}
               <span>
                 Date of birth: {dayjs(user.date_of_birth).format("DD/MM/YYYY")}

@@ -2,7 +2,7 @@
 
 import Container from "@/components/Container";
 import { FriendMenu, FriendMenuEnum } from "@/constants/DefaultMenu";
-import { FRIEND_STATUS } from "@/constants/Others";
+import { FriendStatus } from "@/constants/Others";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import {
   getAuthFriendsList,
@@ -42,12 +42,12 @@ export default function Friends() {
     setCurrentTabId(tabId);
   };
 
-  const handleChangeList = (friend: User, status: FRIEND_STATUS) => {
+  const handleChangeList = (friend: User, status: FriendStatus) => {
     const newLists = [...friendsLists];
     console.log(newLists[FriendMenuEnum.Friend]);
     
     switch (status) {
-      case FRIEND_STATUS.accept:
+      case FriendStatus.accept:
         newLists[FriendMenuEnum.Require] = newLists[
           FriendMenuEnum.Require
         ].filter((item: any) => item.user_id !== friend.user_id);
@@ -56,7 +56,7 @@ export default function Friends() {
           friend,
         ];
         break;
-      case FRIEND_STATUS.refuse:
+      case FriendStatus.refuse:
         newLists[FriendMenuEnum.Require] = newLists[
           FriendMenuEnum.Require
         ].filter((item: any) => item.user_id !== friend.user_id);

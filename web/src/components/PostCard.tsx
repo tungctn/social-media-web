@@ -10,7 +10,7 @@ import PostReacts from "./PostReacts";
 import PostReactCounts from "./PostReactCounts";
 import PostDetail from "@/partials/app/Post/PostDetail";
 import { useEffect, useState } from "react";
-import { REACT_TYPE } from "@/constants/Others";
+import { ReactType } from "@/constants/Others";
 import { reactPost } from "@/utils/post";
 
 type PostCardProps = {
@@ -29,7 +29,7 @@ export default function PostCard({ post }: PostCardProps) {
     setShowDetail(true);
   };
 
-  const handleChangeReact = (reactType: REACT_TYPE) => {
+  const handleChangeReact = (reactType: ReactType) => {
     const newPost: any = postDetail && reactPost(postDetail, reactType);
 
     setPostDetail(newPost);
@@ -141,6 +141,7 @@ export default function PostCard({ post }: PostCardProps) {
           open={showDetail}
           onClose={() => setShowDetail(false)}
           id={postDetail.id}
+          onChange={handleChangeDetail}
         />
       )}
     </>

@@ -1,20 +1,19 @@
-import {
-  FaRegMessage,
-  FaRegShareFromSquare,
-} from "react-icons/fa6";
+import { FaRegMessage, FaRegShareFromSquare } from "react-icons/fa6";
 import { useState } from "react";
 import PostDetail from "@/partials/app/Post/PostDetail";
 import ReactsBox from "./ReactsBox";
 import useComponentVisible from "@/hooks/useComponentVisible";
 import ReactIcon from "./ReactIcon";
-import { REACT_TYPE } from "@/constants/Others";
+import { ReactType } from "@/constants/Others";
+import { reactPost, unReactPost } from "@/services/postService";
+import { toast } from "react-toastify";
 
 type PostReactsProps = {
   iconCustomClassName?: string;
   customClassName?: string;
   postId: number;
   onComment?: Function;
-  reactType: REACT_TYPE | undefined;
+  reactType: ReactType | undefined;
   onChange: Function;
 };
 
@@ -44,6 +43,20 @@ export default function PostReacts({
   const handleCloseReactsBox = () => {
     setShowReactsBox(false);
   };
+
+  const handleReact = async (rT: ReactType) => {
+    try {
+      if (rT === reactType) {
+        await unReactPost(postId);
+      } else {
+        await reactPost(postId, rT);
+      }
+      onChange(rT);
+    } catch (error) {
+      toast.error("Error!");
+    }
+    handleCloseReactsBox();
+  };
   return (
     <>
       <div
@@ -63,12 +76,7 @@ export default function PostReacts({
             }
             ref={ref}
           >
-            <ReactsBox
-              onClose={handleCloseReactsBox}
-              postId={postId}
-              onChange={onChange}
-              defaultReactType={reactType}
-            />
+            <ReactsBox onReact={handleReact} />
           </div>
           <ReactIcon reactType={reactType} />
         </div>
