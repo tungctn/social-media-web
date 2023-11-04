@@ -11,4 +11,3 @@ export enum REACT_TYPE {
   sad = 5,
   angry = 6,
 }
-

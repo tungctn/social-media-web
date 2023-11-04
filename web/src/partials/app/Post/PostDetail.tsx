@@ -24,6 +24,7 @@ import { getPostById } from "@/services/postService";
 import { useSelector } from "react-redux";
 import useForceUpdate from "@/hooks/useForceUpdate";
 import { REACT_TYPE } from "@/constants/Others";
+import CustomCarousel from "@/components/CustomCarousel";
 
 type PostDetailProps = {
   open?: boolean;
@@ -127,48 +128,7 @@ export default function PostDetail({
       <div className="bg-white 3xl:h-[850px] h-[calc(850px/4*3)] 3xl:w-[1186px] w-[calc(1186px/4*3)] absolute z-30 top-[50vh] -translate-y-1/2 left-[50vw] -translate-x-1/2 rounded-[30px]">
         <div className="flex flex-row h-full w-full">
           {post ? (
-            <Carousel
-              slide={false}
-              indicators={false}
-              leftControl={
-                post.images?.length > 1 ? (
-                  <div className="3xl:text-[50px] text-[calc(50px/4*3)] text-lavender transition-all duration-300 hover:opacity-80">
-                    <FaCircleChevronLeft />
-                  </div>
-                ) : (
-                  <></>
-                )
-              }
-              rightControl={
-                post.images?.length > 1 ? (
-                  <div className="3xl:text-[50px] text-[calc(50px/4*3)] text-lavender transition-all duration-300 hover:opacity-80">
-                    <FaCircleChevronRight />
-                  </div>
-                ) : (
-                  <></>
-                )
-              }
-              theme={{
-                item: {
-                  base: "absolute top-1/2 block w-full -translate-y-1/2",
-                },
-                scrollContainer: {
-                  base: "flex h-full snap-mandatory overflow-y-hidden overflow-x-scroll scroll-smooth rounded-0",
-                },
-              }}
-            >
-              {post.images &&
-                post.images.map((image, index) => (
-                  <Image
-                    key={index}
-                    src={image.url}
-                    alt=""
-                    width={573}
-                    height={850}
-                    className="h-full w-[calc(100%-0.45px)] object-cover rounded-s-[30px]"
-                  />
-                ))}
-            </Carousel>
+            <CustomCarousel images={post.images} />
           ) : (
             <></>
           )}
