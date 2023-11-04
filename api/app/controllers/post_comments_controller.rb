@@ -109,10 +109,22 @@ class PostCommentsController < ApplicationController
       return
     end
 
-    #link ảnh vào bài viết
-    #xóa liên kết với ảnh cũ để tạo lại hết
-    comment.images.destroy_all
-    image_add(comment, params[:image_ids])
+    if params[:image_ids]
+      #link ảnh vào bình luận
+      #xóa liên kết với ảnh cũ để tạo lại hết
+      comment.images.destroy_all
+      image_add(comment, params[:image_ids])  
+    end
+
+    if params[:content].strip == "" and comment.images == []
+      render json: { errors: "Nội dung không được để trống" }, status: :bad_request
+      return
+    end
+
+    if params[:content].strip == nil and comment.images == []
+      render json: { errors: "Nội dung không được để trống" }, status: :bad_request
+      return
+    end
 
     if comment.update(update_comment_params)
       render json: { comment: comment, images: comment.images }, status: :ok
@@ -156,6 +168,6 @@ class PostCommentsController < ApplicationController
   end
 
   def update_comment_params
-    params.permit(:image_ids, :content)
+    params.permit(:content)
   end
 end

@@ -107,10 +107,22 @@ class PostsController < ApplicationController
       return
     end
 
-    #link ảnh vào bài viết
-    #xóa liên kết với ảnh cũ để tạo lại hết
-    post.images.destroy_all
-    image_add(post, params[:image_ids])
+    if params[:image_ids]
+      #link ảnh vào bài viết
+      #xóa liên kết với ảnh cũ để tạo lại hết
+      post.images.destroy_all
+      image_add(post, params[:image_ids])
+    end
+
+    if params[:content].strip == "" and post.images == []
+      render json: { errors: "Nội dung không được để trống" }, status: :bad_request
+      return
+    end
+
+    if params[:content].strip == nil and post.images == []
+      render json: { errors: "Nội dung không được để trống" }, status: :bad_request
+      return
+    end
 
     if post.update(update_post_params)
       render json: { message: "Thành công" }, status: :ok
@@ -146,6 +158,6 @@ class PostsController < ApplicationController
   end
 
   def update_post_params
-    params.permit(:image_ids, :content)
+    params.permit(:content)
   end
 end
