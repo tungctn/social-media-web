@@ -8,7 +8,7 @@ class ImagesController < ApplicationController
 
     if image.save
       key = image.image.key
-      image.url = "https://d2n33bp2yovvw9.cloudfront.net//#{key}" if image.image.attached?
+      image.url = "https://d2n33bp2yovvw9.cloudfront.net/#{key}" if image.image.attached?
       image.user_id = @current_user.id
       image.save
       render json: { image: image }, status: :ok
