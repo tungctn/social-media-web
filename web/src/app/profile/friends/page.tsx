@@ -2,11 +2,13 @@
 
 import Container from "@/components/Container";
 import { FriendMenu, FriendMenuEnum } from "@/constants/DefaultMenu";
+import { FRIEND_STATUS } from "@/constants/Others";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import {
   getAuthFriendsList,
   getFriendRequests,
 } from "@/services/friendServices";
+import User from "@/utils/fakeData/User";
 import { useState, useEffect, useCallback } from "react";
 
 export default function Friends() {
@@ -40,12 +42,36 @@ export default function Friends() {
     setCurrentTabId(tabId);
   };
 
+  const handleChangeList = (friend: User, status: FRIEND_STATUS) => {
+    const newLists = [...friendsLists];
+    switch (status) {
+      case FRIEND_STATUS.accept:
+        newLists[FriendMenuEnum.Require] = newLists[
+          FriendMenuEnum.Require
+        ].filter((item: any) => item.user_id !== friend.user_id);
+        newLists[FriendMenuEnum.Friend] = [
+          ...newLists[FriendMenuEnum.Friend],
+          friend,
+        ];
+        break;
+      case FRIEND_STATUS.refuse:
+        newLists[FriendMenuEnum.Require] = newLists[
+          FriendMenuEnum.Require
+        ].filter((item: any) => item.user_id !== friend.user_id);
+        break;
+      default:
+        break;
+    }
+    setFriendsLists(newLists);
+  };
+
   const renderList = useCallback(() => {
     const Component = FriendMenu[currentTabId].Component;
     return (
       <Component
         friendsList={friendsLists[currentTabId]}
         title={FriendMenu[currentTabId]?.title}
+        onChange={handleChangeList}
       />
     );
   }, [currentTabId, friendsLists]);

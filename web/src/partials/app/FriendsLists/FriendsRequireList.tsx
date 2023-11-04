@@ -1,21 +1,29 @@
 "use client";
 
 import FriendRequireCard from "@/components/FriendRequireCard";
+import { FRIEND_STATUS } from "@/constants/Others";
 import { BREAKPOINTS } from "@/constants/WindowSizes";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import User from "@/utils/fakeData/User";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
 type FriendsRequireListProps = {
   friendsList: User[];
+  onChange: Function;
 };
 
 export default function FriendsRequireList({
   friendsList,
+  onChange
 }: FriendsRequireListProps) {
   const { width } = useWindowDimensions();
   const ref = useRef<HTMLDivElement>(null);
-  
+  const [list, setList] = useState<any[]>([]);
+
+  useEffect(() => {
+    friendsList && setList(friendsList);
+  }, [friendsList]);
+
   useEffect(() => {
     if (ref.current) {
       let gap = 40;
@@ -35,10 +43,14 @@ export default function FriendsRequireList({
         className="3xl:my-11 my-9 flex flex-row flex-wrap 3xl:mx-auto mx-16 3xl:justify-center"
         ref={ref}
       >
-        {friendsList?.length > 0 ? (
-          friendsList.map((friendItem: User) => {
+        {list?.length > 0 ? (
+          list.map((friendItem: User) => {
             return (
-              <FriendRequireCard key={friendItem.user_id} friend={friendItem} />
+              <FriendRequireCard
+                key={friendItem.user_id}
+                friend={friendItem}
+                onChange={onChange}
+              />
             );
           })
         ) : (

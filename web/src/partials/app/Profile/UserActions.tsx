@@ -4,7 +4,10 @@ import Button from "@/components/Button";
 import FollowingButton from "./FollowingButton";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import { createFriendRequest } from "@/services/friendServices";
+import {
+  createFriendRequest,
+  refuseFriendRequest,
+} from "@/services/friendServices";
 import { useState } from "react";
 import { CustomFlowbiteTheme, Tooltip } from "flowbite-react";
 
@@ -34,21 +37,21 @@ export default function UserActions({ userId }: UserActionsProps) {
   };
 
   const handleAddFriend = async () => {
-    // const res = await createFriendRequest({
-    //   receiver_id: userId,
-    // });
-    // console.log(res);
+    const data = {
+      receiver_id: userId,
+    };
     switch (friendState) {
       case FriendState.NotFriendYet:
-        setFriendState(FriendState.Requested);
-        break;
-      case FriendState.IsFriend:
-        setFriendState(FriendState.NotFriendYet);
-        break;
-      case FriendState.Requested:
-        setFriendState(FriendState.NotFriendYet);
+        const reqRes: any = await createFriendRequest(data);
+        if (reqRes.success) {
+          setFriendState(FriendState.Requested);
+        }
         break;
       default:
+        const deleteRes: any = await refuseFriendRequest(data);
+        if (deleteRes.success) {
+          setFriendState(FriendState.NotFriendYet);
+        }
         break;
     }
   };

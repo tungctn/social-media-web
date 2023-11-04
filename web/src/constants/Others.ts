@@ -11,3 +11,10 @@ export enum REACT_TYPE {
   sad = 5,
   angry = 6,
 }
+
+export enum FRIEND_STATUS {
+  pending = 1,
+  accept = 2,
+  block = 3,
+  refuse = 4,
+}
