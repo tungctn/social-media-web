@@ -22,15 +22,21 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-      - name: Test unit for frontend
+      - name: Install dependencies
         run: |
           cd ./web
           npm ci
+      - name: Test build for frontend
+        run: |
+          cd ./web
+          npm run build
+      - name: Test unit for frontend
+        run: |
+          cd ./web
           npm run test:unit
       - name: Test integration for frontend
         run: |
           cd ./web
-          npm ci
           npm run test:integrate
       - name: Test e2e for frontend
         run: |
