@@ -106,12 +106,17 @@ export default function PostDetail({
   const handleChangeReact = (reactType: REACT_TYPE) => {
     const newPost: any = {
       ...post,
-      type_react: reactType,
     };
+    if (post?.type_react === null) {
+      newPost.likes_count += 1;
+      newPost.type_react = reactType;
+    } else if (post?.type_react === reactType) {
+      newPost.likes_count -= 1;
+      newPost.type_react = null;
+    } else {
+      newPost.type_react = reactType;
+    }
 
-    onChange({
-      type_react: reactType,
-    });
     setPost(newPost);
   };
 

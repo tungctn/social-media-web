@@ -21,6 +21,10 @@ export function reactPost(id: number, reactType: REACT_TYPE) {
   });
 }
 
+export function unReactPost(id: number) {
+  return instance.delete(`/api/posts/unreact/${id}`);
+}
+
 export async function moderateContent(content: string) {
   return (
     await axios.post(
