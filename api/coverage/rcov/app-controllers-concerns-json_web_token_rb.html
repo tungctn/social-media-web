@@ -26,16 +26,16 @@
           <tr>
             <td class="left_align"><a href="app-controllers-concerns-json_web_token_rb.html">app/controllers/concerns/json_web_token.rb</a></td>
             <td class='right_align'><tt>15</tt></td>
-            <td class='right_align'><tt>12</tt></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>20.00%</tt></div>
+            <td class='right_align'><tt>9</tt></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>100.00%</tt></div>
       <div class="percent_graph">
-        <div class="covered" style="width:20px"></div>
-        <div class="uncovered" style="width:80px"></div>
+        <div class="covered" style="width:100px"></div>
+        <div class="uncovered" style="width:0px"></div>
       </div></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>0.00%</tt></div>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>100.00%</tt></div>
       <div class="percent_graph">
-        <div class="covered" style="width:0px"></div>
-        <div class="uncovered" style="width:100px"></div>
+        <div class="covered" style="width:100px"></div>
+        <div class="uncovered" style="width:0px"></div>
       </div></td>
           </tr>
         </tbody>
@@ -50,55 +50,55 @@
 
     <table class="details">
       <tbody>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line2">2</a> require &quot;jwt&quot;</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line3">3</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line4">4</a> module JsonWebToken</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line5">5</a>   extend ActiveSupport::Concern</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line6">6</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line7">7</a>   def jwt_encode(payload, exp = 365.days.from_now)</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line8">8</a>     payload[:exp] = exp.to_i</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line9">9</a>     JWT.encode(payload, ENV[&quot;AUTH_SECRET&quot;])</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="inferred">
           <td><pre><a name="line10">10</a>   end</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line11">11</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line12">12</a>   def jwt_decode token</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line13">13</a>     decoded = JWT.decode(token, ENV[&quot;AUTH_SECRET&quot;])[0]</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line14">14</a>     HashWithIndifferentAccess.new decoded</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="inferred">
           <td><pre><a name="line15">15</a>   end</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="inferred">
           <td><pre><a name="line16">16</a> end</pre></td>
         </tr>
       </tbody>
     </table>
 
-    <p>Generated on 2023-11-03 11:21:59 +0700 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.3</a></p>
+    <p>Generated on 2023-11-04 11:43:19 +0700 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.3</a></p>
 
   </body>
 </html>

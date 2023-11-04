@@ -7,6 +7,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.role = Enums::USER_ROLE[:user]
     if @user.save
+
       token = jwt_encode({user_id: @user.id})
 
       # tạo thông tin người dùng
@@ -48,9 +49,9 @@ class UsersController < ApplicationController
   def user_params
     params.permit(:email, :password)
   end
-  
+
   def user_info_params
-    params.permit(:first_name, :last_name, 
+    params.permit(:first_name, :last_name,
       :full_name, :phone_number,
       :date_of_birth, :gender, :avatar,
       :join_date, :last_login, :bio,
