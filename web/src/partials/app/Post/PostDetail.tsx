@@ -7,7 +7,6 @@ import PostReactCounts from "@/components/PostReactCounts";
 import PostReacts from "@/components/PostReacts";
 import Post from "@/utils/fakeData/Post";
 import dayjs from "dayjs";
-import Image from "next/image";
 import {
   MouseEventHandler,
   useCallback,
@@ -18,8 +17,6 @@ import {
 import PostCommentsList from "./PostCommentsList";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { BREAKPOINTS } from "@/constants/WindowSizes";
-import { Carousel } from "flowbite-react";
-import { FaCircleChevronLeft, FaCircleChevronRight } from "react-icons/fa6";
 import { getPostById } from "@/services/postService";
 import { useSelector } from "react-redux";
 import useForceUpdate from "@/hooks/useForceUpdate";

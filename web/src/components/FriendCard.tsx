@@ -1,14 +1,24 @@
+"use client";
+
 import User from "@/utils/fakeData/User";
 import SquareAvatar from "./SquareAvatar";
 import { FaEllipsis } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
 
 type FriendCardProps = {
   friend: User;
 };
 
 export default function FriendCard({ friend }: FriendCardProps) {
+  const router = useRouter();
+  const handleClick = () => {
+    router.push(`/profile/${friend.user_id}`);
+  };
   return (
-    <div className="bg-white rounded-[30px] w-full 3xl:max-w-[calc(50%-30px)] max-w-[calc(50%-20px)] 3xl:py-[18px] py-4 3xl:pl-[28px] 3xl:pr-10 pl-5 pr-8 border border-deep-lilac">
+    <div
+      onClick={handleClick}
+      className="bg-white cursor-pointer rounded-[30px] w-full 3xl:max-w-[calc(50%-30px)] max-w-[calc(50%-20px)] 3xl:py-[18px] py-4 3xl:pl-[28px] 3xl:pr-10 pl-5 pr-8 border border-deep-lilac"
+    >
       <div className="flex flex-row justify-between">
         <div className="flex flex-row 3xl:gap-5 gap-4 items-center">
           <SquareAvatar size={120} src={friend.avatar_url} />

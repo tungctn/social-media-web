@@ -6,6 +6,7 @@ import Avatar from "@/components/Avatar";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getAuthFriendsList } from "@/services/friendServices";
+import Button from "@/components/Button";
 
 export default function FriendsList() {
   const router = useRouter();
@@ -28,11 +29,15 @@ export default function FriendsList() {
     router.push("/profile/friends");
   };
 
+  const handleSearchFriend = () => {
+    router.push("/search");
+  }
+
   return (
     <div className="w-full py-[30px] px-[30px] bg-white rounded-[30px]">
       <BoxHeader title="Friend List" onMore={handleSeeFriendsList} />
       <div className="flex flex-col gap-6 mt-9">
-        {friends ? (
+        {friends && friends.length > 0 ? (
           <>
             {friends.slice(0, 5).map((user) => {
               return (
@@ -48,7 +53,10 @@ export default function FriendsList() {
             })}
           </>
         ) : (
-          <span>Chưa có bạn nào</span>
+          <>
+            <span>Chưa có bạn nào</span>
+            <Button onClick={handleSearchFriend}>Tìm kiếm</Button>
+          </>
         )}
       </div>
     </div>

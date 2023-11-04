@@ -9,9 +9,10 @@ import { useEffect, useRef } from "react";
 type FriendsListProps = {
   friendsList: User[];
   title: string;
+  onChange: Function;
 };
 
-export default function FriendsList({ friendsList, title }: FriendsListProps) {
+export default function FriendsList({ friendsList, title, onChange }: FriendsListProps) {
   const { width } = useWindowDimensions();
   const ref = useRef<HTMLDivElement>(null);
 
