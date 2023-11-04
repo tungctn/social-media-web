@@ -1,7 +1,6 @@
 import {
   FaRegMessage,
   FaRegShareFromSquare,
-  FaRegThumbsUp,
 } from "react-icons/fa6";
 import { useState } from "react";
 import PostDetail from "@/partials/app/Post/PostDetail";
