@@ -21,7 +21,7 @@ export default function Home() {
             <PostsList />
           </div>
         </div>
-        <div className="3xl:max-w-[412px] max-w-[360px] mr-[33px] my-[70px] relative">
+        <div className="3xl:min-w-[calc(412px)] 3xl:max-w-[calc(412px)] min-w-[calc(412px/6*5)] max-w-[calc(412px/6*5)] mr-[33px] my-[70px] relative">
           <div className="flex flex-col gap-[30px] w-full">
             <FriendsList />
             <NeareastPost />

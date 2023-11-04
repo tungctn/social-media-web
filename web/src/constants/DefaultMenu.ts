@@ -27,7 +27,7 @@ const DefaultMenu: any = [
   {
     label: "Report",
     PrefixIcon: TbReportOff,
-    href: "/report",
+    href: "/report/",
     onlyAdmin: true,
   },
 ];
@@ -65,7 +65,7 @@ export const FriendMenu: any = [
   },
 ];
 
-export enum ReportMenuNum {
+export enum ReportMenuEnum {
   ReportImage = 0,
   ReportText = 1,
   CommentImage = 2,
@@ -78,12 +78,12 @@ export const ReportMenu: any = [
     label: "Report comment",
     items: [
       {
-        id: ReportMenuNum.ReportImage,
+        id: ReportMenuEnum.CommentImage,
         label: "Violated images",
         Component: ImagesList,
       },
       {
-        id: ReportMenuNum.ReportText,
+        id: ReportMenuEnum.CommentText,
         label: "Violated text",
         Component: TextList,
       },
@@ -94,12 +94,12 @@ export const ReportMenu: any = [
     label: "Report post",
     items: [
       {
-        id: ReportMenuNum.CommentImage,
+        id: ReportMenuEnum.ReportImage,
         label: "Violated images",
         Component: ImagesList,
       },
       {
-        id: ReportMenuNum.CommentText,
+        id: ReportMenuEnum.ReportText,
         label: "Violated text",
         Component: TextList,
       },

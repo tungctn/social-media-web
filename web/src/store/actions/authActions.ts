@@ -32,10 +32,10 @@ const checkLogedInAction = () => async (dispatch: any, getState: any) => {
     try {
       const res: any = await getCurrentUserInfos();
       if (res.success) {
-        const { user_info: userInfo, email } = res.data;
+        const { user_info: userInfo, email, role } = res.data;
         dispatch({
           type: CHECK_LOGED_IN,
-          userInfo: userInfo ? { ...userInfo, email } : {},
+          userInfo: userInfo ? { ...userInfo, email, role } : {},
         });
       } else {
         toast.error("API Check Loged in false!");

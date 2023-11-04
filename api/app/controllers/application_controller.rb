@@ -77,6 +77,42 @@ class ApplicationController < ActionController::Base
     return models_with_images
   end
 
+  
+  # check react tồn tại
+  # ttanh - 17/10/2023
+  def get_react_by_type(type)
+    react = React.where(["type_react = :t", { t: type }]).first
+
+    if react == nil
+      render json: { errors: "Truyền sai react type" }, status: :bad_request
+      return false
+    end
+
+    return react
+  end
+
+  # check bài viết tồn tại
+  # ttanh - 04/10/2023
+  def get_post_by_id(id)
+    post = Post.find_by_id(id)
+    if !post
+      render json: { errors: "Không tìm thấy bài viết với id: #{id}" }, status: :bad_request
+      return false
+    end
+    return post
+  end
+
+  # check comment tồn tại
+  # ttanh - 04/10/2023
+  def get_comment_by_id(id)
+    comment = PostComment.find_by_id(id)
+    if !comment
+      render json: { errors: "Không tìm thấy comment với id: #{id}" }, status: :bad_request
+      return false
+    end
+    return comment
+  end
+
   private
   
   # updated by - ttanh (23/09/23) Thêm xử lý cho việc người dùng không gửi token

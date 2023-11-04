@@ -1,11 +1,13 @@
 import ImageReportCard from "@/components/ImageReportCard";
 import { BREAKPOINTS } from "@/constants/WindowSizes";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
-import { images } from "@/utils/fakeData/Image";
-import { users } from "@/utils/fakeData/User";
 import { useEffect, useRef } from "react";
 
-export default function ImagesList() {
+type ImagesListProps = {
+  data: any
+}
+
+export default function ImagesList({ data }: ImagesListProps) {
   const { width } = useWindowDimensions();
   const ref = useRef<HTMLDivElement>(null);
 
@@ -26,13 +28,13 @@ export default function ImagesList() {
       ref={ref}
       className="mx-5 py-[54px] flex flex-row flex-wrap justify-center overflow-auto scrollbar-none 3xl:h-[calc(100vh-40px*2)] h-[calc(100vh-32px*2)]"
     >
-      {users.map((user) => {
+      {data?.map((item: any) => {
         return (
           <ImageReportCard
-            key={user.user_id}
-            full_name={user.full_name}
+            key={item.user.user_id}
+            full_name={item.user.full_name}
             report_id={1}
-            images={images.slice(0, 2)}
+            images={item.images.slice(0, 2)}
           />
         );
       })}
