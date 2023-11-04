@@ -68,6 +68,7 @@ export default function PostReacts({
               onClose={handleCloseReactsBox}
               postId={postId}
               onChange={onChange}
+              defaultReactType={reactType}
             />
           </div>
           <ReactIcon reactType={reactType} />

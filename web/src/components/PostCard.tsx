@@ -30,12 +30,22 @@ export default function PostCard({ post }: PostCardProps) {
 
   const handleChangeReact = (reactType: REACT_TYPE) => {
     const newPost: any = {
-      ...post,
-      type_react: reactType,
+      ...postDetail,
     };
+    
+    if (postDetail?.type_react === null) {
+      newPost.likes_count += 1;
+      newPost.type_react = reactType;
+    } else if (postDetail?.type_react === reactType) {
+      newPost.likes_count -= 1;
+      newPost.type_react = null;
+    } else {
+      newPost.type_react = reactType;
+    }
 
     setPostDetail(newPost);
   };
+  
 
   const handleChangeDetail = (changeField: any) => {
     const newPost: any = {

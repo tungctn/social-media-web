@@ -6,23 +6,29 @@ import EmojiWowImg from "@/assets/imgs/emojiwow 1.png";
 import EmojiCryImg from "@/assets/imgs/emojicry 1.png";
 import EmojiAngryImg from "@/assets/imgs/emojiangry 1.png";
 import { REACT_TYPE } from "@/constants/Others";
-import { reactPost } from "@/services/postService";
+import { reactPost, unReactPost } from "@/services/postService";
 import { toast } from "react-toastify";
 
 type ReactsBoxProps = {
   postId: number;
   onClose: Function;
   onChange: Function;
+  defaultReactType: REACT_TYPE | undefined;
 };
 
 export default function ReactsBox({
   postId,
   onClose,
   onChange,
+  defaultReactType,
 }: ReactsBoxProps) {
   const handleReact = async (reactType: REACT_TYPE) => {
     try {
-      await reactPost(postId, reactType);
+      if (reactType === defaultReactType) {
+        await unReactPost(postId);
+      } else {
+        await reactPost(postId, reactType);
+      }
       onChange(reactType);
     } catch (error) {
       toast.error("Error!");
