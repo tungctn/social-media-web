@@ -1,7 +1,7 @@
-import { REACT_TYPE } from "@/constants/Others";
+import { ReactType } from "@/constants/Others";
 import Post from "./fakeData/Post";
 
-export function reactPost(post: Post, reactType: REACT_TYPE) {
+export function reactPost(post: Post, reactType: ReactType) {
   const newPost: any = {
     ...post,
   };

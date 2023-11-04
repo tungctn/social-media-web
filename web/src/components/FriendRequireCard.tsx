@@ -5,7 +5,7 @@ import {
   refuseFriendRequest,
   updateFriendState,
 } from "@/services/friendServices";
-import { FRIEND_STATUS } from "@/constants/Others";
+import { FriendStatus } from "@/constants/Others";
 import { toast } from "react-toastify";
 
 type FriendRequireCardProps = {
@@ -20,12 +20,12 @@ export default function FriendRequireCard({
   const handleAccept = async () => {
     const res: any = await updateFriendState({
       receiver_id: friend.user_id,
-      friend_status: FRIEND_STATUS.accept,
+      friend_status: FriendStatus.accept,
     });
 
     if (res.success) {
       toast.success("Đã chấp nhận lời mời kết bạn!");
-      onChange(friend, FRIEND_STATUS.accept);
+      onChange(friend, FriendStatus.accept);
     }
   };
 
@@ -36,7 +36,7 @@ export default function FriendRequireCard({
 
     if (res.success) {
       toast.success("Đã từ chối lời mời kết bạn!");
-      onChange(friend, FRIEND_STATUS.refuse);
+      onChange(friend, FriendStatus.refuse);
     }
   };
   return (

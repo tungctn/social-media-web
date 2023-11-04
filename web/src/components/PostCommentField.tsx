@@ -1,14 +1,17 @@
+"use client";
+
 import { LoadingContext } from "@/providers/LoadingProvider";
-import { createComment } from "@/services/commentServices";
+import { createComment, updateComment } from "@/services/commentServices";
 import { moderateImage, uploadImage } from "@/services/imageServices";
 import Image from "next/image";
-import { forwardRef, useContext, useEffect, useRef } from "react";
+import { forwardRef, useContext, useEffect, useRef, useState } from "react";
 import {
   FaImages,
   FaRegFaceSmile,
   FaRegPaperPlane,
   FaTrash,
 } from "react-icons/fa6";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 type PostCommentFieldProps = {
@@ -16,10 +19,11 @@ type PostCommentFieldProps = {
   onSend: Function;
   onChange: Function;
   reply?: any;
+  defaultComment?: any;
 };
 
 function PostCommentField(
-  { postId, onSend, onChange, reply }: PostCommentFieldProps,
+  { postId, onSend, onChange, reply, defaultComment }: PostCommentFieldProps,
   ref: any,
 ) {
   const { setIsLoading } = useContext(LoadingContext);
@@ -29,10 +33,35 @@ function PostCommentField(
     url: "",
     file: null,
   });
+  const [defaultSate, setDefaultState] = useState({
+    reply: null as any,
+    defaultComment: null,
+  });
+  const auth = useSelector((state: any) => state.auth);
 
   useEffect(() => {
+    setDefaultState({
+      defaultComment: defaultComment,
+      reply: null,
+    });
+    if (defaultComment && textareaRef.current) {
+      textareaRef.current.value = defaultComment.content;
+      textareaRef.current.focus();
+
+      img.current.url = defaultComment.images[0]?.url;
+
+      textareaRef.current.style.height =
+        textareaRef.current.scrollHeight + "px";
+      onChange(textareaRef.current.value);
+    }
+  }, [defaultComment, textareaRef]);
+
+  useEffect(() => {
+    setDefaultState({
+      defaultComment: null,
+      reply: reply,
+    });
     if (reply && textareaRef.current) {
-      textareaRef.current.value = "Reply " + reply.user.full_name + " ";
       textareaRef.current.focus();
     }
   }, [reply]);
@@ -44,13 +73,11 @@ function PostCommentField(
       }
     };
   }, [img]);
+
   const handleSendComment = async (event: any) => {
     event.preventDefault();
     setIsLoading(true);
-    const regex = reply ? new RegExp(`^Reply ${reply.user.full_name} `) : "";
-    const content = reply
-      ? event.target.content.value.replace(regex, "")
-      : event.target.content.value;
+    const content = event.target.content.value;
     if (content || img.current.url) {
       let image_ids = [];
       try {
@@ -73,33 +100,53 @@ function PostCommentField(
 
       const newComment = {
         content: content,
-        comment_reply: reply ? reply.id : null,
+        comment_reply: defaultSate.reply ? defaultSate.reply.id : null,
         post_id: postId,
         created_at: new Date(),
         image_ids,
+        user_id: auth.user.user_id,
       };
 
       try {
-        const res = await createComment(newComment);
+        let commentId = null;
+        if (reply) {
+          const res = await createComment(newComment);
+          commentId = res.data.comment.id;
+        }
 
-        onSend({
-          id: res.data.comment.id,
-          ...newComment,
-          images:
-            image_ids.length > 0
-              ? [
-                  {
-                    id: image_ids[0],
-                    url: img.current.url,
-                  },
-                ]
-              : [],
-        });
+        if (defaultComment) {
+          const res = await updateComment(defaultComment.id, {
+            content: newComment.content,
+            images_ids: newComment.image_ids,
+          });
+          commentId = defaultComment.id;
+        }
+
+        onSend(
+          {
+            id: commentId,
+            ...newComment,
+            images:
+              image_ids.length > 0
+                ? [
+                    {
+                      id: image_ids[0],
+                      url: img.current.url,
+                    },
+                  ]
+                : [],
+          },
+          Boolean(defaultComment),
+        );
         img.current = {
           url: "",
           file: null,
         };
         event.target.reset();
+        setDefaultState({
+          reply: null,
+          defaultComment: null,
+        });
         if (textareaRef.current) {
           textareaRef.current.style.height = "";
         }
@@ -144,8 +191,6 @@ function PostCommentField(
   };
 
   const handleDeleteImg = () => {
-    console.log("delete");
-
     if (img.current.url) {
       URL.revokeObjectURL(img.current.url);
     }
@@ -181,7 +226,21 @@ function PostCommentField(
         className="flex flex-row w-full h-full"
         onSubmit={handleSendComment}
       >
-        <div className="3xl:min-h-[60px] min-h-[48px] w-full">
+        <div className="3xl:min-h-[60px] min-h-[48px] w-full relative">
+          <span className="absolute 3xl:top-[4px] top-[2px] left-3 text-[8px]">
+            {defaultSate.reply ? (
+              <>
+                Reply{" "}
+                <span className="text-deep-lilac font-semibold">
+                  {defaultSate.reply.user.full_name}
+                </span>
+              </>
+            ) : defaultSate.defaultComment ? (
+              <>Edit</>
+            ) : (
+              <></>
+            )}
+          </span>
           <textarea
             placeholder="Add comment"
             className="border-0 text-[14px] 3xl:h-[calc(60px-13px)] h-[calc(48px-13px)] pb-0 pt-0 3xl:mt-5 mt-3 w-full placeholder:text-spanish-gray placeholder:font-bold focus:outline-none focus:ring-0 scrollbar-thin resize-none"

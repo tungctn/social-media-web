@@ -1,4 +1,4 @@
-import { REACT_TYPE } from "@/constants/Others";
+import { ReactType } from "@/constants/Others";
 import Comment, { commentsByPostId } from "./Comment";
 import { Image, images } from "./Image";
 import User, { currentUser } from "./User";
@@ -15,7 +15,7 @@ type Post = {
   comments: Comment[];
   comments_count: number;
   shares_count: number;
-  type_react?: REACT_TYPE;
+  type_react?: ReactType;
 };
 
 export const nearestPost: Post = {

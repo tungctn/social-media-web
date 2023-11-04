@@ -5,36 +5,17 @@ import EmojiCuteImg from "@/assets/imgs/emojicute 1.png";
 import EmojiWowImg from "@/assets/imgs/emojiwow 1.png";
 import EmojiCryImg from "@/assets/imgs/emojicry 1.png";
 import EmojiAngryImg from "@/assets/imgs/emojiangry 1.png";
-import { REACT_TYPE } from "@/constants/Others";
+import { ReactType } from "@/constants/Others";
 import { reactPost, unReactPost } from "@/services/postService";
 import { toast } from "react-toastify";
 
 type ReactsBoxProps = {
-  postId: number;
-  onClose: Function;
-  onChange: Function;
-  defaultReactType: REACT_TYPE | undefined;
+  onReact: Function;
 };
 
 export default function ReactsBox({
-  postId,
-  onClose,
-  onChange,
-  defaultReactType,
+  onReact,
 }: ReactsBoxProps) {
-  const handleReact = async (reactType: REACT_TYPE) => {
-    try {
-      if (reactType === defaultReactType) {
-        await unReactPost(postId);
-      } else {
-        await reactPost(postId, reactType);
-      }
-      onChange(reactType);
-    } catch (error) {
-      toast.error("Error!");
-    }
-    onClose();
-  };
   return (
     <div
       className={
@@ -46,7 +27,7 @@ export default function ReactsBox({
           className={
             "transition-all ease-linear hover:text-deep-lilac hover:scale-[1.75] 3xl:text-[30px] text-[calc(30px/6*5)] text-deep-lilac"
           }
-          onClick={() => handleReact(REACT_TYPE.like)}
+          onClick={() => onReact(ReactType.like)}
         >
           <FaRegThumbsUp />
         </div>
@@ -54,31 +35,31 @@ export default function ReactsBox({
           src={EmojiLoveImg}
           alt="love"
           className="3xl:h-[24px] h-[calc(24px/6*5)] 3xl:w-[24px] w-[calc(24px/6*5)] object-contain transition-all ease-linear hover:scale-[1.75]"
-          onClick={() => handleReact(REACT_TYPE.love)}
+          onClick={() => onReact(ReactType.love)}
         />
         <Image
           src={EmojiCuteImg}
           alt="love"
           className="3xl:h-[24px] h-[calc(24px/6*5)] 3xl:w-[24px] w-[calc(24px/6*5)] object-contain transition-all ease-linear hover:scale-[1.75]"
-          onClick={() => handleReact(REACT_TYPE.cute)}
+          onClick={() => onReact(ReactType.cute)}
         />
         <Image
           src={EmojiWowImg}
           alt="love"
           className="3xl:h-[24px] h-[calc(24px/6*5)] 3xl:w-[24px] w-[calc(24px/6*5)] object-contain transition-all ease-linear hover:scale-[1.75]"
-          onClick={() => handleReact(REACT_TYPE.wow)}
+          onClick={() => onReact(ReactType.wow)}
         />
         <Image
           src={EmojiCryImg}
           alt="love"
           className="3xl:h-[24px] h-[calc(24px/6*5)] 3xl:w-[24px] w-[calc(24px/6*5)] object-contain transition-all ease-linear hover:scale-[1.75]"
-          onClick={() => handleReact(REACT_TYPE.sad)}
+          onClick={() => onReact(ReactType.sad)}
         />
         <Image
           src={EmojiAngryImg}
           alt="love"
           className="3xl:h-[24px] h-[calc(24px/6*5)] 3xl:w-[24px] w-[calc(24px/6*5)] object-contain transition-all ease-linear hover:scale-[1.75]"
-          onClick={() => handleReact(REACT_TYPE.angry)}
+          onClick={() => onReact(ReactType.angry)}
         />
       </div>
     </div>
