@@ -32,9 +32,10 @@ export default function ImagesList({ data }: ImagesListProps) {
         return (
           <ImageReportCard
             key={item.user.user_id}
-            full_name={item.user.full_name}
-            report_id={1}
-            images={item.images.slice(0, 2)}
+            user={item.user}
+            reportId={1}
+            images={item.images}
+            reportedAt={new Date()}
           />
         );
       })}

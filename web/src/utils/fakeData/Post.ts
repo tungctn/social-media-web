@@ -53,7 +53,7 @@ export const posts: Post[] = [
     content:
       "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
     created_at: new Date("2023-09-21 17:33"),
-    images: [images[0]],
+    images: [images[0], images[1]],
     likes_count: 1200,
     comments: commentsByPostId,
     comments_count: 100,
@@ -105,7 +105,7 @@ export const posts: Post[] = [
     content:
       "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
     created_at: new Date("2023-09-21 17:33"),
-    images: [images[8], images[9]],
+    images: [images[8], images[9], images[10]],
     likes_count: 1200,
     comments: commentsByPostId,
     comments_count: 100,
