@@ -519,6 +519,8 @@ POST /api/comments
 | `post_id`   | `int`    | **Required** |
 | `image_ids` | `Array`  | **Optional** |
 | `reply_comment` | `Array`  | **Optional** |
+| `user_reply_name` | `String`  | **Optional** |
+| `user_reply_id` | `integer`  | **Optional** |
 
 ```javascript
 {
@@ -551,6 +553,8 @@ PUT /api/comments/:id
 | :---------- | :------- | :-------------------------------------------- |
 | `content`   | `string` | **Optional**                                  |
 | `image_ids` | `Array`  | **Optional** có ảnh thì nhớ truyền hết id lên |
+| `user_reply_name` | `String`  | **Optional** |
+| `user_reply_id` | `integer`  | **Optional** |
 
 #### Delete comment
 
