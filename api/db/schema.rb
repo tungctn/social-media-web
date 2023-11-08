@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_04_064225) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_08_213508) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -84,6 +84,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_04_064225) do
     t.datetime "updated_at", null: false
     t.integer "comment_reply", comment: "Id của bình luận cha"
     t.integer "likes_count", default: 0, comment: "Số like"
+    t.string "user_reply_name", comment: "Người dùng của bình luận cha"
+    t.integer "user_reply_id", comment: "Id người dùng của bình luận cha"
     t.index ["post_id"], name: "index_post_comments_on_post_id"
     t.index ["user_id"], name: "index_post_comments_on_user_id"
   end
