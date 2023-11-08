@@ -113,6 +113,21 @@ class ApplicationController < ActionController::Base
     return comment
   end
 
+  # kiểm tra xem bài viết, bình luận có trống dữ liệu không
+  def validate_null_content_image(model)
+    if params[:content].strip == "" and model.images == []
+      render json: { errors: "Nội dung không được để trống" }, status: :bad_request
+      return false
+    end
+
+    if params[:content].strip == nil and model.images == []
+      render json: { errors: "Nội dung không được để trống" }, status: :bad_request
+      return false
+    end
+
+    return true
+  end
+
   private
   
   # updated by - ttanh (23/09/23) Thêm xử lý cho việc người dùng không gửi token

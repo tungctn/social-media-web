@@ -89,6 +89,10 @@ class PostCommentsController < ApplicationController
     #link ảnh vào comment
     image_add(comment, params[:image_ids])
 
+    if (!validate_null_content_image(comment))
+      return
+    end
+
     if comment.save
       post.comments_count = post.comments_count + 1
       post.save
@@ -116,13 +120,7 @@ class PostCommentsController < ApplicationController
       image_add(comment, params[:image_ids])  
     end
 
-    if params[:content].strip == "" and comment.images == []
-      render json: { errors: "Nội dung không được để trống" }, status: :bad_request
-      return
-    end
-
-    if params[:content].strip == nil and comment.images == []
-      render json: { errors: "Nội dung không được để trống" }, status: :bad_request
+    if (!validate_null_content_image(comment))
       return
     end
 
@@ -164,10 +162,10 @@ class PostCommentsController < ApplicationController
 
   private
   def create_comment_params
-    params.permit(:image_ids, :content, :post_id)
+    params.permit(:image_ids, :content, :post_id, :user_reply_name, :user_reply_id)
   end
 
   def update_comment_params
-    params.permit(:content)
+    params.permit(:content, :user_reply_name, :user_reply_id)
   end
 end
