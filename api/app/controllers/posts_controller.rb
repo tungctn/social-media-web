@@ -12,6 +12,10 @@ class PostsController < ApplicationController
     #link ảnh vào bài viết
     image_add(post, params[:image_ids])
 
+    if (!validate_null_content_image(post))
+      return
+    end
+
     if post.save
       render json: { post: post, images: post.images }, status: :ok
     else
@@ -114,13 +118,7 @@ class PostsController < ApplicationController
       image_add(post, params[:image_ids])
     end
 
-    if params[:content].strip == "" and post.images == []
-      render json: { errors: "Nội dung không được để trống" }, status: :bad_request
-      return
-    end
-
-    if params[:content].strip == nil and post.images == []
-      render json: { errors: "Nội dung không được để trống" }, status: :bad_request
+    if (!validate_null_content_image(post))
       return
     end
 
