@@ -1,98 +1,32 @@
-name: Deploy Web App to Cloud Server
+name: Deploy to Servers
 
 on:
   push:
     paths:
-      - "web/**"
-      - "api/**"
-      - ".github/workflows/web.yml"
-    branches: ["main"]
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+      - '.github/**'
+      - 'deploy_script.sh'
+    branches:
+      - cicd_ssh
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js18
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-      - name: Install dependencies
-        run: |
-          cd ./web
-          npm ci
-      - name: Test build for frontend
-        run: |
-          cd ./web
-          npm run build
-      - name: Test unit for frontend
-        run: |
-          cd ./web
-          npm run test:unit
-      - name: Test integration for frontend
-        run: |
-          cd ./web
-          npm run test:integrate
-      - name: Test e2e for frontend
-        run: |
-          cd ./web
-          npm ci
-          touch .env
-          echo "${{ secrets.PROD_FRONTEND }}" > .env
-          npm run test:e2e:ci
-
-  build:
-    runs-on: self-hosted
-    needs: test
-    # strategy:
-    #   matrix:
-    #     component: ["frontend", "backend"]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js18
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-      - name: Set up Ruby 3.0.2
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.0.2
-      - name: Setup for frontend
-        run: |
-          cd ./web
-          npm ci
-          npm run build
-      - name: Setup for backend
-        run: |
-          cd ./api
-          gem install bundler
-          bundle install
-          touch config/application.yml
-          echo "${{ secrets.PROD_BACKEND }}" > config/application.yml
-
-  # Deployment
   deploy:
-    runs-on: self-hosted
-    needs: build
+    runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        component: ["frontend", "backend"]
+        servers: ['27.66.108.160']
     steps:
-      - name: Use Node.js18
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-      - name: Deploy frontend
-        if: matrix.component == 'frontend'
-        run: |
-          npm install pm2 -g
-          pm2 restart nextjs-app
-      - name: Deploy backend
-        if: matrix.component == 'backend'
-        run: |
-          echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S systemctl start puma.service
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Deploy to Server
+      env:
+        PROD_BACKEND: ${{ secrets.PROD_BACKEND }}
+        SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
+      run: |
+        ssh -o "StrictHostKeyChecking=no" runner@${{ matrix.servers }} "PROD_BACKEND=${PROD_BACKEND} SUDO_PASSWORD=${SUDO_PASSWORD} bash -s" < deploy_script.sh
