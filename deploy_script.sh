@@ -11,7 +11,6 @@ pm2 restart nextjs-app
 # Install dependencies rails
 cd ../api
 bundle install
-echo "$PROD_BACKEND" > config/application.yml
-# echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S systemctl start puma.service
-echo "$SUDO_PASSWORD" | sudo -S systemctl restart puma.service
+# echo "$PROD_BACKEND" > config/application.yml
+echo "tung2002" | sudo -S systemctl restart puma.service
 
