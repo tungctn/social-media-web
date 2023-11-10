@@ -13,23 +13,20 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Set up Node 18.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-      - name: Set up Ruby 3.0.2
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.0.2
-      - name: Install dependencies frontend
-        run: |
-          cd ./web
-          npm ci
-          npm run build
+      # - name: Set up Node 18.x
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 18.x
+      # - name: Set up Ruby 3.0.2
+      #   uses: ruby/setup-ruby@v1
+      #   with:
+      #     ruby-version: 3.0.2
+      # - name: Install dependencies frontend
+      #   run: |
+      #     cd ./web
       - name: Install dependencies backend
         run: |
           cd ./api
-          bundle install
           touch config/application.yml
           echo "${{ secrets.PROD_BACKEND }}" > config/application.yml
       - name: Return artifacts
