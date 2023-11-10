@@ -3,8 +3,8 @@ name: Deploy to Servers
 on:
   push:
     paths:
-      - '.github/**'
-      - 'deploy_script.sh'
+      - ".github/**"
+      - "deploy_script.sh"
     branches:
       - cicd_ssh
 
@@ -14,25 +14,25 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        servers: ['27.66.108.160']
+        servers: ["27.66.108.160"]
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up SSH
-      uses: webfactory/ssh-agent@v0.8.0
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Add SSH key with passphrase
-      env:
-        SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
-      run: |
-        echo "$SSH_PASSPHRASE" | ssh-add -
+        # - name: Add SSH key with passphrase
+        #   env:
+        #     SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
+        #   run: |
+        #     echo "$SSH_PASSPHRASE" | ssh-add -
 
-    - name: Deploy to Server
-      env:
-        PROD_BACKEND: ${{ secrets.PROD_BACKEND }}
-        SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
-      run: |
-        ssh -o "StrictHostKeyChecking=no" runner@${{ matrix.servers }} "PROD_BACKEND=${PROD_BACKEND} SUDO_PASSWORD=${SUDO_PASSWORD} bash -s" < deploy_script.sh
+      - name: Deploy to Server
+        env:
+          PROD_BACKEND: ${{ secrets.PROD_BACKEND }}
+          SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
+        run: |
+          ssh -o "StrictHostKeyChecking=no" runner@${{ matrix.servers }} "PROD_BACKEND=${PROD_BACKEND} SUDO_PASSWORD=${SUDO_PASSWORD} bash -s" < deploy_script.sh
