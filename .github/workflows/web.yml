@@ -4,29 +4,54 @@ on:
   push:
     paths:
       - ".github/**"
-      - "deploy_script.sh"
     branches:
       - cicd_ssh
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set up Node 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: Set up Ruby 3.0.2
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.2
+      - name: Install dependencies frontend
+        run: |
+          cd ./web
+          npm ci
+          npm run build
+      - name: Install dependencies backend
+        run: |
+          cd ./api
+          bundle install
+          touch config/application.yml
+          echo "${{ secrets.PROD_BACKEND }}" > config/application.yml
+      - name: Return artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifacts
+          # path all files in folder
+          path: ./
+
   deploy:
     runs-on: ubuntu-latest
+    needs: build
     strategy:
       fail-fast: false
       matrix:
         servers: ["27.66.108.160"]
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.8.0
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Deploy to Server
-        env:
-          PROD_BACKEND: ${{ secrets.PROD_BACKEND }}
-          SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
+          name: artifacts
+          path: ./downloaded_artifact
+      - name: Deploy to server
         run: |
-          ssh -o "StrictHostKeyChecking=no" runner@${{ matrix.servers }} "bash -s" < deploy_script.sh
+          scp -r -o StrictHostKeyChecking=no ./downloaded_artifact/* ${{ matrix.servers }}:/home/runner
