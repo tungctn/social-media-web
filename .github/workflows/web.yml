@@ -56,20 +56,14 @@ jobs:
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-        
             
             export PATH="$HOME/.rbenv/bin:$PATH"
             eval "$(rbenv init -)"
-        
-            
+
+
             export PATH=$PATH:~/.local/bin
-        
-            
-            node -v;
-            ruby -v;
-        
-            
-            cd social-media-web && git pull origin main && bundle install;
+
+            cd social-media-web && git pull origin main;
+            cd api && bundle install;
             cd web && npm install && npm run build;
           '
-    
