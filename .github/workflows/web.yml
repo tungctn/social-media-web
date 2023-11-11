@@ -51,4 +51,4 @@ jobs:
           path: ./downloaded_artifact
       - name: Deploy to server
         run: |
-          scp -r -o StrictHostKeyChecking=no ./downloaded_artifact/* ${{ matrix.servers }}:/home/runner
+          scp -r -o StrictHostKeyChecking=no ./downloaded_artifact/* runner@${{ matrix.servers }}:/home/runner
