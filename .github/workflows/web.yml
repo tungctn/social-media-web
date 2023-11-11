@@ -13,28 +13,25 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      # - name: Set up Node 18.x
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 18.x
-      # - name: Set up Ruby 3.0.2
-      #   uses: ruby/setup-ruby@v1
-      #   with:
-      #     ruby-version: 3.0.2
-      # - name: Install dependencies frontend
-      #   run: |
-      #     cd ./web
+      - name: Set up Node 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: Set up Ruby 3.0.2
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.2
+      - name: Install dependencies frontend
+        run: |
+          cd ./web
+          npm install
+          npm run build
       - name: Install dependencies backend
         run: |
           cd ./api
+          bundle install
           touch config/application.yml
           echo "${{ secrets.PROD_BACKEND }}" > config/application.yml
-      - name: Return artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: artifacts
-          # path all files in folder
-          path: ./
 
   deploy:
     runs-on: ubuntu-latest
@@ -44,11 +41,14 @@ jobs:
       matrix:
         servers: ["27.66.108.160"]
     steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: artifacts
-          path: ./downloaded_artifact
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+      - name: Create SSH key
+        run: |
+          touch ~/.ssh/tungaws.pem
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/tungaws.pem
+          chmod 400 ~/.ssh/tungaws.pem
       - name: Deploy to server
         run: |
-          scp -r -o StrictHostKeyChecking=no ./downloaded_artifact/* runner@${{ matrix.servers }}:/home/runner
+          sshpass -p ${{ secrets.SUDO_PASSWORD }} ssh -o StrictHostKeyChecking=no -i ~/.ssh/tungaws.pem runner@${{ matrix.servers }}
+          cd /home/runner/
