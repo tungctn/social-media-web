@@ -53,6 +53,6 @@ jobs:
         run: |
           sshpass -p ${{ secrets.SUDO_PASSWORD }} ssh -o StrictHostKeyChecking=no -i ~/.ssh/tungaws.pem runner@${{ matrix.servers }} '  
             ls -a;
-            cd social-media-web && git pull origin main && cd api && bundle install;
+            cd social-media-web && git pull origin main && cd api && bundler install;
             cd web && npm install && npm run build;
           '
