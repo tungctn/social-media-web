@@ -52,11 +52,24 @@ jobs:
       - name: Deploy to server
         run: |
           sshpass -p ${{ secrets.SUDO_PASSWORD }} ssh -o StrictHostKeyChecking=no -i ~/.ssh/tungaws.pem runner@${{ matrix.servers }} '
-            source ~/.bashrc;         
-            echo $PATH;      
+            
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+        
+            
+            export PATH="$HOME/.rbenv/bin:$PATH"
+            eval "$(rbenv init -)"
+        
+            
+            export PATH=$PATH:~/.local/bin
+        
+            
             node -v;
-            ruby -v;  
-            ls -a;
-            cd social-media-web && git pull origin main && gem install bundler && cd api && bundler install;
+            ruby -v;
+        
+            
+            cd social-media-web && git pull origin main && bundle install;
             cd web && npm install && npm run build;
           '
+    
