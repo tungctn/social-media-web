@@ -45,6 +45,7 @@ jobs:
         run: sudo apt-get install -y sshpass
       - name: Create SSH key
         run: |
+          mkdir ~/.ssh/
           touch ~/.ssh/tungaws.pem
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/tungaws.pem
           chmod 400 ~/.ssh/tungaws.pem
