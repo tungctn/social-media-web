@@ -51,7 +51,9 @@ jobs:
           chmod 400 ~/.ssh/tungaws.pem
       - name: Deploy to server
         run: |
-          sshpass -p ${{ secrets.SUDO_PASSWORD }} ssh -o StrictHostKeyChecking=no -i ~/.ssh/tungaws.pem runner@${{ matrix.servers }} '  
+          sshpass -p ${{ secrets.SUDO_PASSWORD }} ssh -o StrictHostKeyChecking=no -i ~/.ssh/tungaws.pem runner@${{ matrix.servers }} '
+            node -v;
+            ruby -v;  
             ls -a;
             cd social-media-web && git pull origin main && gem install bundler && cd api && bundler install;
             cd web && npm install && npm run build;
