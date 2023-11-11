@@ -52,6 +52,7 @@ jobs:
       - name: Deploy to server
         run: |
           sshpass -p ${{ secrets.SUDO_PASSWORD }} ssh -o StrictHostKeyChecking=no -i ~/.ssh/tungaws.pem runner@${{ matrix.servers }}
-          cd /home/runner/social-media-web && git pull origin main
+          ls -a
+          cd social-media-web && git pull origin main
           cd ./api && bundle install
           cd ./web && npm install && npm run build
