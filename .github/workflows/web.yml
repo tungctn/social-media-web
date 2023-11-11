@@ -65,5 +65,5 @@ jobs:
 
             cd social-media-web && git pull origin main;
             cd api && bundle install;
-            cd web && npm install && npm run build;
+            cd ../web && npm install && npm run build;
           '
