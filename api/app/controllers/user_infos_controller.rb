@@ -12,6 +12,8 @@ class UserInfosController < ApplicationController
   # lấy thông tin người dùng bất kì
   # created by: ttanh (24/09/2023)
   def show
+    get_current_user()
+
     user = get_user_by_id(params[:id])
 
     if !user
@@ -20,7 +22,29 @@ class UserInfosController < ApplicationController
 
     user_info = user.user_info
 
-    render json: { user_info: user_info, email: user.email, user_id: user.id }, status: :ok
+    friend = {
+      friend_status: nil,
+      is_sender: nil
+    }
+    
+    if @current_user
+      friend_request = nil
+      friend_request = Friend.find_by(receiver_id: @current_user.id, sender_id: user.id)
+
+      if !friend_request
+        friend_request = Friend.find_by(sender_id: @current_user.id, receiver_id: user.id)
+
+        if friend_request
+          friend["friend_status"] = friend_request.friend_status
+          friend["is_sender"] = true
+        end
+      else
+        friend["friend_status"] = friend_request.friend_status
+        friend["is_sender"] = false
+      end
+    end
+
+    render json: { user_info: user_info, email: user.email, user_id: user.id, friend: friend }, status: :ok
   end
 
   # cập nhật thông tin người dùng hiện tại
