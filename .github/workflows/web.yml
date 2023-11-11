@@ -52,6 +52,8 @@ jobs:
       - name: Deploy to server
         run: |
           sshpass -p ${{ secrets.SUDO_PASSWORD }} ssh -o StrictHostKeyChecking=no -i ~/.ssh/tungaws.pem runner@${{ matrix.servers }} '
+            source ~/.bashrc;         
+            echo $PATH;      
             node -v;
             ruby -v;  
             ls -a;
