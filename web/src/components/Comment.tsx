@@ -29,12 +29,12 @@ export default function Comment({
   isReply = false,
   onAction = () => {},
 }: CommentProps) {
-  const [c, setC] = useState<any>();
-  const [showReplies, setShowReplies] = useState(false);  
+  const [c, setC] = useState<any>(comment || null);
+  const [showReplies, setShowReplies] = useState(false);
 
-  useEffect(() => {
-    comment && setC(comment);
-  }, [comment]);
+  // useEffect(() => {
+  //   comment && setC(comment);
+  // }, [comment]);
 
   const handleShowReplies = () => {
     setShowReplies(true);
@@ -124,7 +124,7 @@ export default function Comment({
                 </div>
               </div>
               <CommentActions
-                authorId={c.user_id}
+                authorId={c?.user_id}
                 commentId={c.id}
                 onChange={handleAction}
               />
