@@ -30,7 +30,7 @@ export default function Comment({
   onAction = () => {},
 }: CommentProps) {
   const [c, setC] = useState<any>();
-  const [showReplies, setShowReplies] = useState(false);
+  const [showReplies, setShowReplies] = useState(false);  
 
   useEffect(() => {
     comment && setC(comment);
@@ -95,8 +95,8 @@ export default function Comment({
               <div className="bg-lavender px-4 pt-4 pb-[14px] rounded-[10px] w-full flex flex-col gap-2">
                 <p className="pb-0">
                   {isReply ? (
-                    <Link href={`/profile/${c?.user_id}`}>
-                      <b className="text-deep-lilac">{c?.user?.full_name}</b>
+                    <Link href={`/profile/${c?.user_reply_id}`}>
+                      <b className="text-deep-lilac">{c?.user_reply_name}</b>
                     </Link>
                   ) : (
                     <></>

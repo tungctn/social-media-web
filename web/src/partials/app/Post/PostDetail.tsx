@@ -117,7 +117,6 @@ export default function PostDetail({
       });
       setPost(newPost);
     } else if (type === "edit") {
-      console.log(comment);
       
       setNewComment(undefined);
       setEditingComment(comment);

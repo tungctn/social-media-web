@@ -21,8 +21,6 @@ export default function PostCommentsList({
   useEffect(() => {
     postId && getCommentsData();
   }, [postId, newComment]);
-
-  console.log(comments);
   
 
   const getCommentsData = async () => {
