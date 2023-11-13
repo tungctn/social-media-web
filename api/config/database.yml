@@ -53,6 +53,6 @@ test:
 #
 production:
   <<: *default
-  database: social_media_production
-  username: social_media_app
-  password: <%= ENV["SOCIAL_MEDIA_APP_DATABASE_PASSWORD"] %>
+  database: social_media
+  # username: social_media_app
+  # password: <%= ENV["SOCIAL_MEDIA_APP_DATABASE_PASSWORD"] %>
