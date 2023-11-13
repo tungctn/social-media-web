@@ -22,7 +22,7 @@ export function updateComment(
   id: number,
   data: {
     content: string;
-    images_ids?: number[];
+    image_ids?: number[];
   },
 ) {
   return instance.put(`/api/comments/${id}`, data);

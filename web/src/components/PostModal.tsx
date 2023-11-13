@@ -29,7 +29,6 @@ const PostModal = () => {
         try {
           const response = await uploadImage(file as File);
           const moderate = await moderateImage(response.data.image.url);
-          console.log(moderate.message);
           if (!moderate.success) {
             toast.error(moderate.message);
             continue;

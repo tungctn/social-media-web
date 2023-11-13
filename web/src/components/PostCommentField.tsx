@@ -98,7 +98,7 @@ function PostCommentField(
         (img.current.url = ""), (img.current.file = null);
       }
 
-      const newComment = {
+      const newComment: any = {
         content: content,
         comment_reply: defaultSate.reply ? defaultSate.reply.id : null,
         post_id: postId,
@@ -109,17 +109,25 @@ function PostCommentField(
 
       try {
         let commentId = null;
+
         if (reply) {
-          const res = await createComment(newComment);
-          commentId = res.data.comment.id;
+          newComment.user_reply_name = reply.user.full_name;
+          newComment.user_reply_id = reply.user.id;
         }
 
         if (defaultComment) {
+          if (defaultComment.user_reply_name && defaultComment.user_reply_id) {
+            newComment.user_reply_name = defaultComment.user_reply_name;
+            newComment.user_reply_id = defaultComment.user_reply_id;
+          }
           const res = await updateComment(defaultComment.id, {
             content: newComment.content,
-            images_ids: newComment.image_ids,
+            image_ids: newComment.image_ids,
           });
           commentId = defaultComment.id;
+        } else {
+          const res = await createComment(newComment);
+          commentId = res.data.comment.id;
         }
 
         onSend(
@@ -150,7 +158,7 @@ function PostCommentField(
         if (textareaRef.current) {
           textareaRef.current.style.height = "";
         }
-      } catch (error) {
+      } catch (error) {       
         toast.error("Error!");
       }
     } else {

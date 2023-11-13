@@ -44,7 +44,6 @@ export default function Friends() {
 
   const handleChangeList = (friend: User, status: FriendStatus) => {
     const newLists = [...friendsLists];
-    console.log(newLists[FriendMenuEnum.Friend]);
     
     switch (status) {
       case FriendStatus.accept:

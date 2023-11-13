@@ -1,10 +1,6 @@
 "use client";
 
 import DefaultLayout from "@/layouts/DefaultLayout";
-import Avatar from "@/components/Avatar";
-import { users } from "@/utils/fakeData/User";
-import UserActionsButton from "@/partials/app/Profile/UserActionsButton";
-import UserActions from "@/partials/app/Profile/UserActions";
 import PostTabs from "@/partials/app/Profile/PostTabs";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -18,7 +14,7 @@ export default function Profile({ params }: { params: { id: number } }) {
 
   useEffect(() => {
     auth.isLogedIn && getUserInfo();
-  }, [params.id, auth.isLogedIn]);
+  }, [params.id, auth.isLogedIn]);  
 
   const getUserInfo = async () => {
     if (Number(params.id) === auth.user.user_id) {
