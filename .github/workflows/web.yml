@@ -82,19 +82,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        servers: ["27.66.108.160", "116.103.226.252"]
+        servers: ["34.124.214.221"]
     steps:
-      - name: Install sshpass
-        run: sudo apt-get install -y sshpass
       - name: Create SSH key
         run: |
           mkdir ~/.ssh/
-          touch ~/.ssh/tungaws.pem
-          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/tungaws.pem
-          chmod 400 ~/.ssh/tungaws.pem
+          touch ~/.ssh/tunggcp
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/tunggcp
+          chmod 400 ~/.ssh/tunggcp
       - name: Deploy to server
         run: |
-          sshpass -p ${{ secrets.SUDO_PASSWORD }} ssh -o StrictHostKeyChecking=no -i ~/.ssh/tungaws.pem runner@${{ matrix.servers }} '
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp tunggcp@${{ matrix.servers }} '
             
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
@@ -108,6 +106,7 @@ jobs:
             cd social-media-web && git pull origin main;
             
             cd api && bundle install;
+            echo "${{ secrets.PROD_BACKEND }}" > config/application.yml
 
             cd ../web && npm install && npm run build;
 
