@@ -72,6 +72,25 @@ jobs:
   #         bundle install
   #         touch config/application.yml
   #         echo "${{ secrets.PROD_BACKEND }}" > config/application.yml
+  # '
+  #           export NVM_DIR="$HOME/.nvm"
+  #           [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  #           [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+  #           export PATH="$HOME/.rbenv/bin:$PATH"
+  #           eval "$(rbenv init -)"
+
+  #           export PATH=$PATH:~/.local/bin
+
+  #           cd social-media-web && git pull origin main;
+
+  #           cd api && bundle install;
+  #           echo "${{ secrets.PROD_BACKEND }}" > config/application.yml;
+
+  #           cd ../web && npm install && npm run build;
+
+  #           cd .. && pm2 start ecosystem.config.js;
+  #         '
 
   # Deployment
   deploy:
@@ -85,10 +104,10 @@ jobs:
       - name: Create SSH key
         run: |
           mkdir ~/.ssh/
-          touch ~/.ssh/tunggcp
-          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/tunggcp
-          chmod 400 ~/.ssh/tunggcp
-          chmod 600 ~/.ssh/tunggcp
+          touch ~/.ssh/tunggcp.pem
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/tunggcp.pem
+          chmod 400 ~/.ssh/tunggcp.pem
+          chmod 600 ~/.ssh/tunggcp.pem
       - name: Deploy to server
         run: |
-          ssh -i ~/.ssh/tunggcp tunggcp@${{ matrix.servers }}
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp.pem tunggcp@${{ matrix.servers }}
