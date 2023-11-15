@@ -111,6 +111,7 @@ jobs:
           echo ${{ secrets.SSH_PUBLIC_KEY }} > ~/.ssh/tunggcp.pub
           chmod 400 ~/.ssh/tunggcp.pem
           chmod 600 ~/.ssh/tunggcp.pub
+          touch ~/.ssh/authorized_keys
           echo "${{ secrets.SSH_PUBLIC_KEY }}" > ~/.ssh/authorized_keys
           chmod 600 ~/.ssh/authorized_keys
 
