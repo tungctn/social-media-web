@@ -92,22 +92,4 @@ jobs:
       - name: Deploy to server
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp tunggcp@${{ matrix.servers }} 
-          '
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-            
-            export PATH="$HOME/.rbenv/bin:$PATH"
-            eval "$(rbenv init -)"
-
-            export PATH=$PATH:~/.local/bin
-
-            cd social-media-web && git pull origin main;
-            
-            cd api && bundle install;
-            echo "${{ secrets.PROD_BACKEND }}" > config/application.yml;
-
-            cd ../web && npm install && npm run build;
-
-            cd .. && pm2 start ecosystem.config.js;
-          '
+          
