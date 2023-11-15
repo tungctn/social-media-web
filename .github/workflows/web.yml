@@ -90,6 +90,7 @@ jobs:
           touch ~/.ssh/tunggcp
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/tunggcp
           chmod 400 ~/.ssh/tunggcp
+          chmod 600 ~/.ssh/tunggcp
       - name: Deploy to server
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp tunggcp@${{ matrix.servers }} '
