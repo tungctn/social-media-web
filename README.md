@@ -420,6 +420,7 @@ POST /api/posts
 | `content`   | `string` | **Required**                                        |
 | `user_id`   | `int`    | **Required** Đăng bài lên trang cá nhân của ông này |
 | `image_ids` | `Array`  | **Optional**                                        |
+| `share_id` | `int`  | id của bài viết muốn chia sẻ                                        |
 
 ```javascript
 {

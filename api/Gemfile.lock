@@ -222,6 +222,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.7.1)
     rack (2.2.8)
+    rack-cors (2.0.1)
+      rack (>= 2.0.0)
     rack-test (0.8.3)
       rack (>= 1.0, < 3)
     rails (7.0.7.2)
@@ -366,6 +368,7 @@ DEPENDENCIES
   jwt
   mysql2 (~> 0.5)
   puma (~> 5.0)
+  rack-cors
   rails (~> 7.0.7, >= 7.0.7.2)
   rspec-rails (~> 6.0.0)
   selenium-webdriver

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_08_213508) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_15_141509) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -109,7 +109,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_08_213508) do
     t.integer "comments_count", default: 0, comment: "Số lượng comment"
     t.integer "likes_count", default: 0, comment: "Số lượng biểu cảm"
     t.integer "shares_count", default: 0, comment: "Số lượng share"
+    t.bigint "share_id", comment: "Chia sẻ bài viết"
     t.index ["sender_id"], name: "index_posts_on_sender_id"
+    t.index ["share_id"], name: "index_posts_on_share_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -187,6 +189,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_08_213508) do
   add_foreign_key "post_comments", "users"
   add_foreign_key "post_tags", "posts"
   add_foreign_key "post_tags", "tags"
+  add_foreign_key "posts", "posts", column: "share_id"
   add_foreign_key "posts", "users", column: "sender_id", on_delete: :cascade
   add_foreign_key "posts", "users", on_delete: :cascade
   add_foreign_key "reacts_post_comments", "post_comments"
