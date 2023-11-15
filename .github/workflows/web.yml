@@ -1,19 +1,58 @@
-name: Deploy to Servers
+name: Deploy Web App to Cloud Server
 
 on:
   push:
     paths:
       - ".github/**"
-    branches:
-      - cicd_ssh
+    branches: ["cicd_ssh"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  # build:
+  # test:
   #   runs-on: ubuntu-latest
   #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
-  #     - name: Set up Node 18.x
+  #     - uses: actions/checkout@v3
+  #     - name: Use Node.js18
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 18.x
+  #     - name: Install dependencies
+  #       run: |
+  #         cd ./web
+  #         npm ci
+  #     - name: Test build for frontend
+  #       run: |
+  #         cd ./web
+  #         npm run build
+  #     - name: Test unit for frontend
+  #       run: |
+  #         cd ./web
+  #         npm run test:unit
+  #     - name: Test integration for frontend
+  #       run: |
+  #         cd ./web
+  #         npm run test:integrate
+  #     - name: Test e2e for frontend
+  #       run: |
+  #         cd ./web
+  #         npm ci
+  #         touch .env
+  #         echo "${{ secrets.PROD_FRONTEND }}" > .env
+  #         npm run test:e2e:ci
+
+  # build:
+  #   runs-on: self-hosted
+  #   # needs: test
+  #   # strategy:
+  #   #   matrix:
+  #   #     component: ["frontend", "backend"]
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Use Node.js18
   #       uses: actions/setup-node@v3
   #       with:
   #         node-version: 18.x
@@ -21,38 +60,39 @@ jobs:
   #       uses: ruby/setup-ruby@v1
   #       with:
   #         ruby-version: 3.0.2
-  #     - name: Install dependencies frontend
+  #     - name: Setup for frontend
   #       run: |
   #         cd ./web
-  #         npm install
+  #         npm ci
   #         npm run build
-  #     - name: Install dependencies backend
+  #     - name: Setup for backend
   #       run: |
   #         cd ./api
+  #         gem install bundler
   #         bundle install
   #         touch config/application.yml
   #         echo "${{ secrets.PROD_BACKEND }}" > config/application.yml
 
+  # Deployment
   deploy:
     runs-on: ubuntu-latest
     # needs: build
     strategy:
       fail-fast: false
       matrix:
-        servers: ["27.66.108.160", "116.103.226.252"]
+        servers: ["34.124.196.144"]
     steps:
-      - name: Install sshpass
-        run: sudo apt-get install -y sshpass
       - name: Create SSH key
         run: |
           mkdir ~/.ssh/
-          touch ~/.ssh/tungaws.pem
-          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/tungaws.pem
-          chmod 400 ~/.ssh/tungaws.pem
+          touch ~/.ssh/tunggcp
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/tunggcp
+          chmod 400 ~/.ssh/tunggcp
+          chmod 600 ~/.ssh/tunggcp
       - name: Deploy to server
         run: |
-          sshpass -p ${{ secrets.SUDO_PASSWORD }} ssh -o StrictHostKeyChecking=no -i ~/.ssh/tungaws.pem runner@${{ matrix.servers }} '
-            
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp tunggcp@${{ matrix.servers }} 
+          '
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
@@ -63,8 +103,11 @@ jobs:
             export PATH=$PATH:~/.local/bin
 
             cd social-media-web && git pull origin main;
+            
             cd api && bundle install;
+            echo "${{ secrets.PROD_BACKEND }}" > config/application.yml;
+
             cd ../web && npm install && npm run build;
 
-            pm2 start ecosystem.config.js;
+            cd .. && pm2 start ecosystem.config.js;
           '
