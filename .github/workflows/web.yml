@@ -103,11 +103,11 @@ jobs:
     steps:
       - name: Create SSH key
         run: |
-          mkdir ~/.ssh/
+          mkdir -p ~/.ssh/
           touch ~/.ssh/tunggcp.pem
           touch ~/.ssh/tunggcp.pub
-          echo ${{ secrets.SSH_PRIVATE_KEY }} > ~/.ssh/tunggcp.pem
-          echo ${{ secrets.SSH_PUBLIC_KEY }} > ~/.ssh/tunggcp.pub
+          echo "${{ secrets.SSH_PRIVATE_KEY }}"" > ~/.ssh/tunggcp.pem
+          echo "${{ secrets.SSH_PUBLIC_KEY }}"" > ~/.ssh/tunggcp.pub
           chmod 400 ~/.ssh/tunggcp.pem
           chmod 600 ~/.ssh/tunggcp.pub
           echo "${{ secrets.SSH_PUBLIC_KEY }}" >> ~/.ssh/authorized_keys
