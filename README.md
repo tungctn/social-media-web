@@ -455,6 +455,28 @@ GET /api/posts - Lấy tất cả bài viết
 | `page_index`           | `int` | **Optional** |
 | `page_size`           | `int` | **Optional** |
 
+#### Get user post
+
+```http
+GET /api/posts/user/:id - Lấy tất cả bài viết của một người dùng
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `page_index`           | `int` | **Optional** |
+| `page_size`           | `int` | **Optional** |
+
+#### My post
+
+```http
+GET /api/posts/user - Lấy tất cả bài viết của bản thân
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `page_index`           | `int` | **Optional** |
+| `page_size`           | `int` | **Optional** |
+
 #### Update post
 
 ```http

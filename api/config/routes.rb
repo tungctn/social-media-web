@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     delete "/images", to: "images#deletes"
 
     #bài viết
+    get "/posts/user/:id", to: "posts#show_user_post"
+    get "/posts/user", to: "posts#my_post"
     get "/posts/:id", to: "posts#show"
     get "/posts", to: "posts#index"
     post "/posts", to: "posts#create"
