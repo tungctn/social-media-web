@@ -93,8 +93,8 @@ jobs:
           chmod 600 ~/.ssh/tunggcp
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp tunggcp@${{ matrix.servers }} '
-            
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp tunggcp@${{ matrix.servers }} 
+          '
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
@@ -107,7 +107,7 @@ jobs:
             cd social-media-web && git pull origin main;
             
             cd api && bundle install;
-            echo "${{ secrets.PROD_BACKEND }}" > config/application.yml
+            echo "${{ secrets.PROD_BACKEND }}" > config/application.yml;
 
             cd ../web && npm install && npm run build;
 
