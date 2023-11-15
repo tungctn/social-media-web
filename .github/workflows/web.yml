@@ -82,7 +82,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        servers: ["34.124.214.221"]
+        servers: ["34.124.196.144"]
     steps:
       - name: Create SSH key
         run: |
