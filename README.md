@@ -477,6 +477,55 @@ GET /api/posts/user - Lấy tất cả bài viết của bản thân
 | `page_index`           | `int` | **Optional** |
 | `page_size`           | `int` | **Optional** |
 
+#### My save post
+
+```http
+Authorization: Bearer YOUR_TOKEN
+GET /api/posts/save - Lấy các bài viết đã lưu của bản thân
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `page_index`           | `int` | **Optional** |
+| `page_size`           | `int` | **Optional** |
+
+#### Check save post
+
+```http
+Authorization: Bearer YOUR_TOKEN
+GET /api/posts/save/:id - Kiểm tra xem đã lưu bài viết này chưa
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+#### Save post
+
+```http
+Authorization: Bearer YOUR_TOKEN
+POST /api/posts/save/:id - Lưu bài viết
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+#### Unsave post
+
+```http
+Authorization: Bearer YOUR_TOKEN
+POST /api/posts/save/:id - Bỏ lưu bài viết
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
 #### Update post
 
 ```http

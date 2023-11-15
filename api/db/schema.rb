@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_15_141509) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_15_153348) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -88,6 +88,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_15_141509) do
     t.integer "user_reply_id", comment: "Id người dùng của bình luận cha"
     t.index ["post_id"], name: "index_post_comments_on_post_id"
     t.index ["user_id"], name: "index_post_comments_on_user_id"
+  end
+
+  create_table "post_saves", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "post_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_post_saves_on_post_id"
+    t.index ["user_id"], name: "index_post_saves_on_user_id"
   end
 
   create_table "post_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -187,6 +196,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_15_141509) do
   add_foreign_key "images_posts", "posts", on_delete: :cascade
   add_foreign_key "post_comments", "posts"
   add_foreign_key "post_comments", "users"
+  add_foreign_key "post_saves", "posts"
+  add_foreign_key "post_saves", "users"
   add_foreign_key "post_tags", "posts"
   add_foreign_key "post_tags", "tags"
   add_foreign_key "posts", "posts", column: "share_id"
