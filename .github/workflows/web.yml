@@ -106,7 +106,6 @@ jobs:
           mkdir ~/.ssh/
           touch ~/.ssh/tunggcp.pem
           touch ~/.ssh/tunggcp.pub
-          sudo nano ~/.ssh/authorized_keys
           echo ${{ secrets.SSH_PRIVATE_KEY }} > ~/.ssh/tunggcp.pem
           echo ${{ secrets.SSH_PUBLIC_KEY }} > ~/.ssh/tunggcp.pub
           chmod 400 ~/.ssh/tunggcp.pem
