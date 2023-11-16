@@ -103,7 +103,7 @@ jobs:
     steps:
       - name: Create SSH key
         run: |
-          mkdir -p ~/.ssh/
+          mkdir ~/.ssh/
           touch ~/.ssh/tunggcp.pem
           touch ~/.ssh/tunggcp.pub
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/tunggcp.pem
