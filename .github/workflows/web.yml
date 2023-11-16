@@ -103,15 +103,14 @@ jobs:
     steps:
       - name: Create SSH key
         run: |
-          mkdir ~/.ssh/
-          touch ~/.ssh/tunggcp.pem
-          touch ~/.ssh/tunggcp.pub
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/tunggcp.pem
-          echo "${{ secrets.SSH_PUBLIC_KEY }}" > ~/.ssh/tunggcp.pub
-          chmod 400 ~/.ssh/tunggcp.pem
-          chmod 600 ~/.ssh/tunggcp.pub
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp.pem -T tunggcp@34.124.196.144
-          ssh -vvv
+          sudo apt-get install openssh-client
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa ${{ matrix.servers }} >> ~/.ssh/known_hosts
+      - name: Deploy to server
+        run: |
+          ssh -i ~/.ssh/id_rsa root@${{ matrix.servers }} 
 
       # - name: Deploy to server
       #   run: |
