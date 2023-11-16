@@ -1,3 +1,5 @@
+require_relative "../enum/enum.rb"
+
 class PostCommentsController < ApplicationController
   skip_before_action :authenticate_request, only: [:show]
   #comment
@@ -157,6 +159,22 @@ class PostCommentsController < ApplicationController
       render json: { message: "thành công" }, status: :ok
     else
       render json: { errors: "lỗi" }, status: :bad_request
+    end
+  end
+  
+  def report
+    comment = get_comment_by_id(params[:id])
+
+    if !comment
+      return
+    end
+
+    comment.status = Enums::ACTIVE_STATUS[:pending]
+
+    if comment.save
+      render json: { message: "Báo cáo thành công" }, status: :ok
+    else
+      render json: { errors: "Bị lỗi" }, status: :bad_request
     end
   end
 
