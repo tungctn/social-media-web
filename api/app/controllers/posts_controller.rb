@@ -1,3 +1,5 @@
+require_relative "../enum/enum.rb"
+
 class PostsController < ApplicationController
   skip_before_action :authenticate_request, only: [:index, :show, :show_user_post]
 
@@ -138,6 +140,22 @@ class PostsController < ApplicationController
       render json: { message: "thành công" }, status: :ok
     else
       render json: { errors: "lỗi" }, status: :bad_request
+    end
+  end
+
+  def report
+    post = get_post_by_id(params[:id])
+    
+    if !post
+      return
+    end
+
+    post.status = Enums::ACTIVE_STATUS[:pending]
+
+    if post.save
+      render json: { message: "Báo cáo thành công" }, status: :ok
+    else
+      render json: { errors: "Bị lỗi" }, status: :bad_request
     end
   end
   

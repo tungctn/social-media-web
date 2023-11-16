@@ -561,6 +561,22 @@ DELETE /api/posts/:id
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
+#### Report post
+
+```http
+Authorization: Bearer YOUR_TOKEN
+POST /api/posts/report/:id
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `id`           | `string` | **Required** |
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+
 ### Comment module
 
 #### Get comment
@@ -633,6 +649,21 @@ PUT /api/comments/:id
 ```http
 Authorization: Bearer YOUR_TOKEN
 DELETE /api/comments/:id
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `id`           | `string` | **Required** |
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+#### Report comment
+
+```http
+Authorization: Bearer YOUR_TOKEN
+POST /api/comments/report/:id
 ```
 
 | Path Variables | Type     | Description  |
