@@ -110,7 +110,7 @@ jobs:
           ssh-keyscan -t rsa ${{ matrix.servers }} >> ~/.ssh/known_hosts
       - name: Deploy to server
         run: |
-          ssh -i ~/.ssh/id_rsa root@${{ matrix.servers }} 
+          ssh -i ~/.ssh/id_rsa tunggcp@${{ matrix.servers }} 
 
       # - name: Deploy to server
       #   run: |
