@@ -18,6 +18,18 @@ Rails.application.routes.draw do
     delete "/images", to: "images#deletes"
 
     #bài viết
+    #báo cáo bài viết
+    post "/posts/report/:id", to: "posts#report"
+
+    #lưu bài viết
+    get "/posts/save", to: "post_saves#index"
+    get "/posts/save/:id", to: "post_saves#check_save"
+    post "/posts/save/:id", to: "post_saves#create"
+    delete "/posts/save/:id", to: "post_saves#destroy"
+
+    # tương tác chính
+    get "/posts/user/:id", to: "posts#show_user_post"
+    get "/posts/user", to: "posts#my_post"
     get "/posts/:id", to: "posts#show"
     get "/posts", to: "posts#index"
     post "/posts", to: "posts#create"
@@ -25,6 +37,8 @@ Rails.application.routes.draw do
     delete "/posts/:id", to: "posts#destroy"
 
     #comment
+    post "/comments/report/:id", to: "post_comments#report"
+
     get "/comments/:post_id", to: "post_comments#show" #lấy comment cho 1 bài viết
 
     #biểu cảm với bình luận

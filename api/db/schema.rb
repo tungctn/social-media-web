@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_08_213508) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_16_142934) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -86,8 +86,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_08_213508) do
     t.integer "likes_count", default: 0, comment: "Số like"
     t.string "user_reply_name", comment: "Người dùng của bình luận cha"
     t.integer "user_reply_id", comment: "Id người dùng của bình luận cha"
+    t.integer "status", comment: "Trạng thái comment"
     t.index ["post_id"], name: "index_post_comments_on_post_id"
     t.index ["user_id"], name: "index_post_comments_on_user_id"
+  end
+
+  create_table "post_saves", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "post_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_post_saves_on_post_id"
+    t.index ["user_id"], name: "index_post_saves_on_user_id"
   end
 
   create_table "post_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -109,7 +119,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_08_213508) do
     t.integer "comments_count", default: 0, comment: "Số lượng comment"
     t.integer "likes_count", default: 0, comment: "Số lượng biểu cảm"
     t.integer "shares_count", default: 0, comment: "Số lượng share"
+    t.bigint "share_id", comment: "Chia sẻ bài viết"
     t.index ["sender_id"], name: "index_posts_on_sender_id"
+    t.index ["share_id"], name: "index_posts_on_share_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -185,8 +197,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_08_213508) do
   add_foreign_key "images_posts", "posts", on_delete: :cascade
   add_foreign_key "post_comments", "posts"
   add_foreign_key "post_comments", "users"
+  add_foreign_key "post_saves", "posts"
+  add_foreign_key "post_saves", "users"
   add_foreign_key "post_tags", "posts"
   add_foreign_key "post_tags", "tags"
+  add_foreign_key "posts", "posts", column: "share_id"
   add_foreign_key "posts", "users", column: "sender_id", on_delete: :cascade
   add_foreign_key "posts", "users", on_delete: :cascade
   add_foreign_key "reacts_post_comments", "post_comments"

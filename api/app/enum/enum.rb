@@ -36,4 +36,11 @@ module Enums
     normal: 2, # bạn bè bình thường
     dating: 3 # hẹn hò
   }.freeze
+
+  # Trạng thái hoạt động của bài viết, comment
+  ACTIVE_STATUS = {
+    active: 1, #hoạt động
+    pending: 2, #bị báo cáo và đang chờ duyệt
+    ban: 3 #bị báo cáo và bị chặn
+  }
 end

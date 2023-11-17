@@ -102,6 +102,96 @@ class ApplicationController < ActionController::Base
     return post
   end
 
+  # Lấy dữ liệu chi tiết của 1 bài viết
+  def get_post_data_by_id(id)
+    post = get_post_by_id(id)
+
+    if !post
+      return false
+    end
+
+    post_data = image_get([post])[0]
+
+    post_data["type_react"] = nil
+
+    post_data["user"] = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: post.user_id)
+
+    if post.comments_count <= 0
+      count_comment = post.post_comments.size
+      post.comments_count = count_comment
+      post.save
+      post_data["comments_count"] = count_comment
+    end
+
+    if @current_user
+      react_post = post.reacts_post.find_by(user_id: @current_user.id)
+
+      if !react_post
+      else
+        react = React.find_by_id(react_post.react_id)
+        post_data["type_react"] = react.type_react
+      end
+    end
+
+    return post_data
+  end
+
+  # Lấy dữ liệu chi tiết của nhiều bài viết
+  def get_list_post_data_by_filter(user_id)
+    posts = nil
+
+    if !params[:page_index] || !params[:page_size]
+      if user_id
+        posts = Post.where(["user_id = :user_id", { user_id: user_id }]).order("created_at desc")
+      else
+        posts = Post.all.order("created_at desc")
+      end
+    else
+      skip = params[:page_size].to_i * (params[:page_index].to_i - 1)
+
+      if user_id
+        posts = Post.where(["user_id = :user_id", { user_id: user_id }]).limit(params[:page_size].to_i).offset(skip).order("created_at desc")
+      else
+        posts = Post.limit(params[:page_size].to_i).offset(skip).order("created_at desc")
+      end
+    end
+
+    posts_data = image_get(posts)
+
+    posts_data.each_with_index do |post_data, index|
+      if posts[index].comments_count <= 0
+        count_comment = posts[index].post_comments.size
+        posts[index].comments_count = count_comment
+        posts[index].save
+        post_data["comments_count"] = count_comment
+      end
+
+      post_data["type_react"] = nil
+      post_data["user"] = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: posts[index].user_id)
+
+      #react
+      if !@current_user
+        next
+      end
+
+      react_post = posts[index].reacts_post.find_by(user_id: @current_user.id)
+
+      if !react_post
+      else
+        react = React.find_by_id(react_post.react_id)
+        post_data["type_react"] = react.type_react
+      end
+
+      if post_data["share_id"]
+        post_data["share_post"] = get_post_data_by_id(post_data["share_id"])
+      else
+        post_data["share_post"] = nil
+      end
+    end
+
+    return posts_data
+  end
+
   # check comment tồn tại
   # ttanh - 04/10/2023
   def get_comment_by_id(id)
