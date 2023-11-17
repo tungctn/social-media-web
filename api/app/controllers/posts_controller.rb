@@ -1,5 +1,27 @@
+require_relative "../enum/enum.rb"
+
 class PostsController < ApplicationController
-  skip_before_action :authenticate_request, only: [:index, :show]
+  skip_before_action :authenticate_request, only: [:index, :show, :show_user_post]
+
+  def show_user_post
+    get_current_user() # gán current_user nếu có token truyền lên
+
+    user = get_user_by_id(params[:id])
+
+    if !user
+      return
+    end
+
+    posts_data = get_list_post_data_by_filter(user.id)
+
+    render json: { posts: posts_data }, status: :ok
+  end
+
+  def my_post
+    posts_data = get_list_post_data_by_filter(@current_user.id)
+
+    render json: { posts: posts_data }, status: :ok
+  end
 
   def create
     post = Post.new(create_post_params)
@@ -9,11 +31,33 @@ class PostsController < ApplicationController
       return
     end
 
-    #link ảnh vào bài viết
-    image_add(post, params[:image_ids])
+    #chia sẻ bài viết
+    share_id = params[:share_id]
+    share_post = nil
+    
+    if share_id
+      share_post = get_post_by_id(share_id)
 
-    if (!validate_null_content_image(post))
-      return
+      if share_post
+        share_post.shares_count = share_post.shares_count + 1
+        share_post.save
+
+        if share_post.share_id
+          post.share_id = share_post.share_id
+        else
+          post.share_id = share_id
+        end
+
+      else
+        return;
+      end
+    else
+      #link ảnh vào bài viết
+      image_add(post, params[:image_ids])
+
+      if (!validate_null_content_image(post))
+        return
+      end
     end
 
     if post.save
@@ -26,33 +70,16 @@ class PostsController < ApplicationController
   def show
     get_current_user() # gán current_user nếu có token truyền lên
 
-    post = get_post_by_id(params[:id])
+    post_data = get_post_data_by_id(params[:id])
 
-    if !post
+    if !post_data
       return
     end
 
-    post_data = image_get([post])[0]
-
-    post_data["type_react"] = nil
-
-    post_data["user"] = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: post.user_id)
-
-    if post.comments_count <= 0
-      count_comment = post.post_comments.size
-      post.comments_count = count_comment
-      post.save
-      post_data["comments_count"] = count_comment
-    end
-
-    if @current_user
-      react_post = post.reacts_post.find_by(user_id: @current_user.id)
-
-      if !react_post
-      else
-        react = React.find_by_id(react_post.react_id)
-        post_data["type_react"] = react.type_react
-      end
+    if post_data["share_id"]
+      post_data["share_post"] = get_post_data_by_id(post_data["share_id"])
+    else
+        post_data["share_post"] = nil
     end
 
     render json: { post: post_data }, status: :ok
@@ -61,41 +88,7 @@ class PostsController < ApplicationController
   def index
     get_current_user() # gán current_user nếu có token truyền lên
 
-    posts = nil
-
-    if !params[:page_index] || !params[:page_size]
-      posts = Post.all.order("created_at desc")
-    else
-      skip = params[:page_size].to_i * (params[:page_index].to_i - 1)
-      posts = Post.limit(params[:page_size].to_i).offset(skip).order("created_at desc")
-    end
-
-    posts_data = image_get(posts)
-
-    posts_data.each_with_index do |post_data, index|
-      if posts[index].comments_count <= 0
-        count_comment = posts[index].post_comments.size
-        posts[index].comments_count = count_comment
-        posts[index].save
-        post_data["comments_count"] = count_comment
-      end
-
-      post_data["type_react"] = nil
-      post_data["user"] = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: posts[index].user_id)
-
-      #react
-      if !@current_user
-        next
-      end
-
-      react_post = posts[index].reacts_post.find_by(user_id: @current_user.id)
-
-      if !react_post
-      else
-        react = React.find_by_id(react_post.react_id)
-        post_data["type_react"] = react.type_react
-      end
-    end
+    posts_data = get_list_post_data_by_filter(nil)
 
     render json: { posts: posts_data }, status: :ok
   end
@@ -149,10 +142,26 @@ class PostsController < ApplicationController
       render json: { errors: "lỗi" }, status: :bad_request
     end
   end
+
+  def report
+    post = get_post_by_id(params[:id])
+    
+    if !post
+      return
+    end
+
+    post.status = Enums::ACTIVE_STATUS[:pending]
+
+    if post.save
+      render json: { message: "Báo cáo thành công" }, status: :ok
+    else
+      render json: { errors: "Bị lỗi" }, status: :bad_request
+    end
+  end
   
   private
   def create_post_params
-    params.permit(:image_ids, :content, :user_id)
+    params.permit(:image_ids, :content, :user_id, :share_id)
   end
 
   def update_post_params

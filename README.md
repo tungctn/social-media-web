@@ -420,6 +420,7 @@ POST /api/posts
 | `content`   | `string` | **Required**                                        |
 | `user_id`   | `int`    | **Required** Đăng bài lên trang cá nhân của ông này |
 | `image_ids` | `Array`  | **Optional**                                        |
+| `share_id` | `int`  | id của bài viết muốn chia sẻ                                        |
 
 ```javascript
 {
@@ -453,6 +454,77 @@ GET /api/posts - Lấy tất cả bài viết
 | :------------- | :------- | :----------- |
 | `page_index`           | `int` | **Optional** |
 | `page_size`           | `int` | **Optional** |
+
+#### Get user post
+
+```http
+GET /api/posts/user/:id - Lấy tất cả bài viết của một người dùng
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `page_index`           | `int` | **Optional** |
+| `page_size`           | `int` | **Optional** |
+
+#### My post
+
+```http
+GET /api/posts/user - Lấy tất cả bài viết của bản thân
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `page_index`           | `int` | **Optional** |
+| `page_size`           | `int` | **Optional** |
+
+#### My save post
+
+```http
+Authorization: Bearer YOUR_TOKEN
+GET /api/posts/save - Lấy các bài viết đã lưu của bản thân
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `page_index`           | `int` | **Optional** |
+| `page_size`           | `int` | **Optional** |
+
+#### Check save post
+
+```http
+Authorization: Bearer YOUR_TOKEN
+GET /api/posts/save/:id - Kiểm tra xem đã lưu bài viết này chưa
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+#### Save post
+
+```http
+Authorization: Bearer YOUR_TOKEN
+POST /api/posts/save/:id - Lưu bài viết
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+#### Unsave post
+
+```http
+Authorization: Bearer YOUR_TOKEN
+POST /api/posts/save/:id - Bỏ lưu bài viết
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
 #### Update post
 
@@ -488,6 +560,22 @@ DELETE /api/posts/:id
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+#### Report post
+
+```http
+Authorization: Bearer YOUR_TOKEN
+POST /api/posts/report/:id
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `id`           | `string` | **Required** |
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
 
 ### Comment module
 
@@ -561,6 +649,21 @@ PUT /api/comments/:id
 ```http
 Authorization: Bearer YOUR_TOKEN
 DELETE /api/comments/:id
+```
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `id`           | `string` | **Required** |
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+#### Report comment
+
+```http
+Authorization: Bearer YOUR_TOKEN
+POST /api/comments/report/:id
 ```
 
 | Path Variables | Type     | Description  |
