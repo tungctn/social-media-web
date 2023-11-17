@@ -98,18 +98,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        servers: ["34.124.196.144"]
+        servers: ["34.142.196.144"]
     steps:
       - name: Create SSH key
         run: |
           mkdir -p ~/.ssh
           touch ~/.ssh/tunggcp
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/tunggcp
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" 
+          > ~/.ssh/tunggcp
           cat ~/.ssh/tunggcp
           chmod 600 ~/.ssh/tunggcp
           ssh-keyscan -H 34.142.196.144 >> ~/.ssh/known_hosts
-          ssh-keyscan -H 34.142.196.144 >> ~/.ssh/known_hosts2
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp tunggcp@34.124.196.144
 
-      # - name: Deploy to server
-      #   run: |
+      - name: Deploy to server
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp tunggcp@${{ matrix.servers }}
