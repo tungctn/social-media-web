@@ -104,8 +104,7 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           touch ~/.ssh/tunggcp
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" 
-          > ~/.ssh/tunggcp
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/tunggcp
           cat ~/.ssh/tunggcp
           chmod 600 ~/.ssh/tunggcp
           ssh-keyscan -H 34.142.196.144 >> ~/.ssh/known_hosts
