@@ -108,7 +108,7 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/tunggcp
           chmod 600 ~/.ssh/tunggcp
           ssh-keyscan -H 34.142.196.144 >> ~/.ssh/known_hosts
-
-      - name: Deploy to server
-        run: |
           ssh -vvv -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp tunggcp@${{ matrix.servers }}
+
+      # - name: Deploy to server
+      #   run: |
