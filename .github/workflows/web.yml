@@ -73,23 +73,7 @@ jobs:
   #         touch config/application.yml
   #         echo "${{ secrets.PROD_BACKEND }}" > config/application.yml
   # '
-  # export NVM_DIR="$HOME/.nvm"
-  # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-  # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
-  # export PATH="$HOME/.rbenv/bin:$PATH"
-  # eval "$(rbenv init -)"
-
-  # export PATH=$PATH:~/.local/bin
-
-  # cd social-media-web && git pull origin main;
-
-  # cd api && bundle install;
-  # echo "${{ secrets.PROD_BACKEND }}" > config/application.yml;
-
-  # cd ../web && npm install && npm run build;
-
-  # cd .. && pm2 start ecosystem.config.js;
+  
   # '
 
   # Deployment
@@ -105,10 +89,27 @@ jobs:
           mkdir -p ~/.ssh
           touch ~/.ssh/tunggcp
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/tunggcp
-          cat ~/.ssh/tunggcp
           chmod 600 ~/.ssh/tunggcp
-          ssh-keyscan -H 34.142.196.144 >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ matrix.servers }} >> ~/.ssh/known_hosts
 
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp tunggcp@${{ matrix.servers }}
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp tunggcp@${{ matrix.servers }} '
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+          export PATH="$HOME/.rbenv/bin:$PATH"
+          eval "$(rbenv init -)"
+
+          export PATH=$PATH:~/.local/bin
+
+          cd social-media-web && git pull origin main;
+
+          cd api && bundle install;
+          echo "${{ secrets.PROD_BACKEND }}" > config/application.yml;
+
+          cd ../web && npm install && npm run build;
+
+          cd .. && pm2 start ecosystem.config.js;
+          '
