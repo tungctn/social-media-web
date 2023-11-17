@@ -102,12 +102,11 @@ jobs:
     steps:
       - name: Create SSH key
         run: |
-          sudo apt-get install openssh-client
           mkdir -p ~/.ssh
           touch ~/.ssh/tunggcp
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/tunggcp
           chmod 600 ~/.ssh/tunggcp
-          ssh-keyscan -H 34.142.196.144 >> ~/.ssh/known_hosts
+          ssh-keyscan -H 34.142.196.144 >> ~/.ssh/known_hosts2
           ssh -vvv -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp tunggcp@${{ matrix.servers }}
 
       # - name: Deploy to server
