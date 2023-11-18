@@ -70,4 +70,8 @@ Rails.application.configure do
 
   #chấp nhận tất cả các host
   config.hosts.clear
+
+  #timezone
+  config.time_zone = 'Asia/Bangkok'
+  config.active_record.default_timezone = :local
 end
