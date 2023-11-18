@@ -16,174 +16,60 @@
 - Ruby 3.0.2
 - Rails 7.0.7.2
 
-## How to setup
-
-### web
+## Install dependencies
 
 ```bash
-$ cd web
-$ npm install
-```
-
-### api
-
-```bash
-$ cd api
-$ bundle install
+bash deploy-script.sh
 ```
 
 ## How to run
 
-### web
-
 ```bash
-$ cd web
-
-# development
-$ npm run dev
-
-# production
-$ npm run build
-$ npm run start
-
+bash run-script.sh
 ```
-
-### api
-
-```bash
-$ cd api
-
-# development
-$ rails server
-
-# production
-$ rails server
-```
-
-## Set up cloud server Next.js
-
-### Install pm2
-
-```bash
-$ npm install pm2 -g
-```
-
-### Set up pm2 process
-
-```bash
-cd /path/to/your/project (ex: cd /home/runner/actions-runner/_work/social-media-web/social-media-web/web)
-pm2 start ecosystem.config.js
-```
-
-### Check pm2 status
-
-```bash
-pm2 status
-```
-
-## Set up cloud server ruby on rails
-
-### Install systemd
-
-```bash
-$ sudo apt install -y systemd
-```
-
-### Set up Puma
-
-```bash
-$ sudo nano /etc/systemd/system/puma.service
-```
-
-Copy and paste the following configuration:
-
-```bash
-[Unit]
-Description=Puma HTTP Server
-After=network.target
-
-[Service]
-Type=simple
-User=runner
-WorkingDirectory=/home/runner/actions-runner/_work/social-media-web/social-media-web/api
-ExecStart=/home/runner/.rbenv/shims/rails server -b 0.0.0.0 -p 4000
-Restart=always
-RestartSec=5
-
-[Install]
-WantedBy=multi-user.target[Unit]
-```
-
-### Start Puma
-
-```bash
-$ sudo systemctl start puma.service
-```
-
-### Check Puma status
-
-```bash
-$ sudo systemctl status puma.service
-```
-
-## Todo list
-
-### Auth module
-
-- [x] [Login](#login)
-
-### User module
-
-- [x] [Create user](#create-user)
-- [x] [Get user detail](#get-user-detail)
-- [x] [Update user](#update-user)
-- [x] [Delete user](#delete-user)
-
-### Post module
-
-- [x] [Create post](#create-post)
-- [x] [Get post detail](#get-post-detail)
-- [x] [Update post](#update-post)
-- [x] [Delete post](#delete-post)
-
-### Image module
-
-- [x] [Upload image](#upload-image)
-- [x] [Get image](#get-image)
 
 ## API Reference
 
-### Auth module
+<details>
+<summary>User module</summary>
 
 #### Login
 
-```http
-POST /api/auth/login
-```
+<details>
+<summary><code>POST /api/auth/login</code></summary>
+<br>
 
-| Parameter  | Type     | Description  |
-| :--------- | :------- | :----------- |
-| `email`    | `string` | **Required** |
-| `password` | `string` | **Required** |
+#### Parameters
 
-```javascript
+| Parameter  | Type     | Description                                  |
+| :--------- | :------- | :------------------------------------------- |
+| `email`    | `string` | **Required**. The email address of the user. |
+| `password` | `string` | **Required**. The password of the user.      |
+
+#### Response
+
+```json
 {
-    "success": true,
-    "message": "Login successfully",
-    "data": {
-        "user": {
-            ...
-        },
-        "token": "..."
+  "success": true,
+  "message": "Login successfully",
+  "data": {
+    "user": {
+      // User details here...
     },
+    "token": "..."
+  }
 }
 ```
 
+</details>
+
 #### Register
 
-```http
-POST /api/auth/register
-```
+<details>
+<summary><code>POST /api/auth/register</code></summary>
+<br>
+
+#### Parameters
 
 | Parameter    | Type     | Description  |
 | :----------- | :------- | :----------- |
@@ -205,14 +91,15 @@ POST /api/auth/register
 }
 ```
 
-### User module
+</details>
 
 #### Get user detail
 
-```http
-Authorization: Bearer YOUR_TOKEN
-GET /api/users/:id
-```
+<details>
+<summary><code>GET /api/users/:id</code></summary>
+<br>
+
+#### Parameters
 
 Không truyền ID thì lấy thông tin qua token
 Còn truyền ID thì không cần token
@@ -237,12 +124,15 @@ Còn truyền ID thì không cần token
 }
 ```
 
+</details>
+
 #### Update password
 
-```http
-Authorization: Bearer YOUR_TOKEN
-PUT /api/users/password
-```
+<details>
+<summary><code>PUT /api/users/password</code></summary>
+<br>
+
+#### Parameters
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
@@ -265,12 +155,15 @@ PUT /api/users/password
 }
 ```
 
+</details>
+
 #### Update user
 
-```http
-Authorization: Bearer YOUR_TOKEN
-PUT /api/users
-```
+<details>
+<summary><code>PUT /api/users</code></summary>
+<br>
+
+#### Parameters
 
 Dùng form-data để truyền avatar
 
@@ -303,12 +196,15 @@ Dùng form-data để truyền avatar
 }
 ```
 
+</details>
+
 #### Delete avatar
 
-```http
-Authorization: Bearer YOUR_TOKEN
-DELETE /api/users/avatar
-```
+<details>
+<summary><code>DELETE /api/users/avatar</code></summary>
+<br>
+
+#### Parameters
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
@@ -324,15 +220,13 @@ DELETE /api/users/avatar
 }
 ```
 
-### Image module
-
-Luồng riêng để tải ảnh
+</details>
 
 #### Get image
 
-```http
-GET /api/images/:id
-```
+<details>
+<summary><code>GET /api/images/:id</code></summary>
+<br>
 
 ```javascript
 {
@@ -346,12 +240,17 @@ GET /api/images/:id
 }
 ```
 
+</details>
+
 #### Upload image
 
-```http
-Authorization: Bearer YOUR_TOKEN
-POST /api/images
-```
+<details>
+<summary><code>POST /api/images</code></summary>
+<br>
+
+Dùng form-data để truyền ảnh
+
+#### Parameters
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
@@ -373,12 +272,15 @@ POST /api/images
 }
 ```
 
+</details>
+
 #### Delete images
 
-```http
-Authorization: Bearer YOUR_TOKEN
-DELETE /api/images
-```
+<details>
+<summary><code>DELETE /api/images</code></summary>
+<br>
+
+#### Parameters
 
 Chỉ xóa được những ảnh mà user đang đăng nhập tạo
 
@@ -402,28 +304,29 @@ Chỉ xóa được những ảnh mà user đang đăng nhập tạo
 }
 ```
 
-### Post module
+</details>
 
 #### Create post
 
-```http
-Authorization: Bearer YOUR_TOKEN
-POST /api/posts
-```
+<details>
+<summary><code>POST /api/posts</code></summary>
+<br>
+
+#### Parameters
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Parameter   | Type     | Description                                         |
-| :---------- | :------- | :-------------------------------------------------- |
-| `content`   | `string` | **Required**                                        |
-| `user_id`   | `int`    | **Required** Đăng bài lên trang cá nhân của ông này |
-| `image_ids` | `Array`  | **Optional**                                        |
-| `share_id` | `int`  | id của bài viết muốn chia sẻ                                        |
-| `label` | `integer`  | **Optional** |
-| `status` | `integer`  | **Optional** |
-| `error_list` | `json`  | **Optional**, '[1,2,3]' |
+| Parameter    | Type      | Description                                         |
+| :----------- | :-------- | :-------------------------------------------------- |
+| `content`    | `string`  | **Required**                                        |
+| `user_id`    | `int`     | **Required** Đăng bài lên trang cá nhân của ông này |
+| `image_ids`  | `Array`   | **Optional**                                        |
+| `share_id`   | `int`     | id của bài viết muốn chia sẻ                        |
+| `label`      | `integer` | **Optional**                                        |
+| `status`     | `integer` | **Optional**                                        |
+| `error_list` | `json`    | **Optional**, '[1,2,3]'                             |
 
 ```javascript
 {
@@ -437,104 +340,147 @@ POST /api/posts
 }
 ```
 
+</details>
+
 #### Get post detail
 
-```http
-GET /api/posts/:id - có đi kèm với comment
-```
+<details>
+<summary><code>GET /api/posts/:id</code></summary>
+<br>
+
+#### Parameters
 
 | Path Variables | Type     | Description  |
 | :------------- | :------- | :----------- |
 | `id`           | `string` | **Required** |
 
-#### Get post
-
-```http
-GET /api/posts - Lấy tất cả bài viết
+```javascript
+{
+    "success": true,
+    "message": "Post detail",
+    "data": {
+        "post": {
+            ...
+        },
+    },
+}
 ```
 
-| Path Variables | Type     | Description  |
-| :------------- | :------- | :----------- |
-| `page_index`           | `int` | **Optional** |
-| `page_size`           | `int` | **Optional** |
+</details>
+
+#### Get post
+
+<details>
+<summary><code>GET /api/posts</code></summary>
+<br>
+
+#### Parameters
+
+| Path Variables | Type  | Description  |
+| :------------- | :---- | :----------- |
+| `page_index`   | `int` | **Optional** |
+| `page_size`    | `int` | **Optional** |
+
+</details>
 
 #### Get user post
 
-```http
-GET /api/posts/user/:id - Lấy tất cả bài viết của một người dùng
-```
+<details>
+<summary><code>GET /api/posts/user/:id</code></summary>
+<br>
 
-| Path Variables | Type     | Description  |
-| :------------- | :------- | :----------- |
-| `page_index`           | `int` | **Optional** |
-| `page_size`           | `int` | **Optional** |
+#### Parameters
+
+| Path Variables | Type  | Description  |
+| :------------- | :---- | :----------- |
+| `page_index`   | `int` | **Optional** |
+| `page_size`    | `int` | **Optional** |
+
+</details>
 
 #### My post
 
-```http
-GET /api/posts/user - Lấy tất cả bài viết của bản thân
-```
+<details>
+<summary><code>GET /api/posts/user</code></summary>
+<br>
 
-| Path Variables | Type     | Description  |
-| :------------- | :------- | :----------- |
-| `page_index`           | `int` | **Optional** |
-| `page_size`           | `int` | **Optional** |
+#### Parameters
+
+| Path Variables | Type  | Description  |
+| :------------- | :---- | :----------- |
+| `page_index`   | `int` | **Optional** |
+| `page_size`    | `int` | **Optional** |
+
+</details>
 
 #### My save post
 
-```http
-Authorization: Bearer YOUR_TOKEN
-GET /api/posts/save - Lấy các bài viết đã lưu của bản thân
-```
+<details>
+<summary><code>GET /api/posts/save</code></summary>
+<br>
+
+#### Parameters
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Path Variables | Type     | Description  |
-| :------------- | :------- | :----------- |
-| `page_index`           | `int` | **Optional** |
-| `page_size`           | `int` | **Optional** |
+| Path Variables | Type  | Description  |
+| :------------- | :---- | :----------- |
+| `page_index`   | `int` | **Optional** |
+| `page_size`    | `int` | **Optional** |
+
+</details>
 
 #### Check save post
 
-```http
-Authorization: Bearer YOUR_TOKEN
-GET /api/posts/save/:id - Kiểm tra xem đã lưu bài viết này chưa
-```
+<details>
+<summary><code>GET /api/posts/save/:id</code></summary>
+<br>
+
+#### Parameters
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+</details>
 
 #### Save post
 
-```http
-Authorization: Bearer YOUR_TOKEN
-POST /api/posts/save/:id - Lưu bài viết
-```
+<details>
+<summary><code>POST /api/posts/save/:id</code></summary>
+<br>
+
+#### Parameters
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+</details>
 
 #### Unsave post
 
-```http
-Authorization: Bearer YOUR_TOKEN
-POST /api/posts/save/:id - Bỏ lưu bài viết
-```
+<details>
+<summary><code>POST /api/posts/unsave/:id</code></summary>
+<br>
+
+#### Parameters
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
+</details>
+
 #### Update post
 
-```http
-Authorization: Bearer YOUR_TOKEN
-PUT /api/posts/:id
-```
+<details>
+<summary><code>PUT /api/posts/:id</code></summary>
+<br>
+
+#### Parameters
 
 | Path Variables | Type     | Description  |
 | :------------- | :------- | :----------- |
@@ -549,12 +495,15 @@ PUT /api/posts/:id
 | `content`   | `string` | **Optional**                                  |
 | `image_ids` | `Array`  | **Optional** có ảnh thì nhớ truyền hết id lên |
 
+</details>
+
 #### Delete post
 
-```http
-Authorization: Bearer YOUR_TOKEN
-DELETE /api/posts/:id
-```
+<details>
+<summary><code>DELETE /api/posts/:id</code></summary>
+<br>
+
+#### Parameters
 
 | Path Variables | Type     | Description  |
 | :------------- | :------- | :----------- |
@@ -563,13 +512,16 @@ DELETE /api/posts/:id
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+</details>
 
 #### Report post
 
-```http
-Authorization: Bearer YOUR_TOKEN
-POST /api/posts/report/:id
-```
+<details>
+<summary><code>POST /api/posts/report/:id</code></summary>
+<br>
+
+#### Parameters
 
 | Path Variables | Type     | Description  |
 | :------------- | :------- | :----------- |
@@ -579,42 +531,46 @@ POST /api/posts/report/:id
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-
-### Comment module
+</details>
 
 #### Get comment
 
-```http
-GET /api/comments/:post_id - Lấy bình luận bài viết
-```
+<details>
+<summary><code>GET /api/comments/:post_id</code></summary>
+<br>
 
-| Path Variables | Type     | Description  |
-| :------------- | :------- | :----------- |
-| `page_index`           | `int` | **Optional** |
-| `page_size`           | `int` | **Optional** |
+#### Parameters
+
+| Path Variables | Type  | Description  |
+| :------------- | :---- | :----------- |
+| `page_index`   | `int` | **Optional** |
+| `page_size`    | `int` | **Optional** |
+
+</details>
 
 #### Create comment
 
-```http
-Authorization: Bearer YOUR_TOKEN
-POST /api/comments
-```
+<details>
+<summary><code>POST /api/comments</code></summary>
+<br>
+
+#### Parameters
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Parameter   | Type     | Description  |
-| :---------- | :------- | :----------- |
-| `content`   | `string` | **Required** |
-| `post_id`   | `int`    | **Required** |
-| `image_ids` | `Array`  | **Optional** |
-| `reply_comment` | `Array`  | **Optional** |
-| `user_reply_name` | `String`  | **Optional** |
-| `user_reply_id` | `integer`  | **Optional** |
-| `label` | `integer`  | **Optional** |
-| `status` | `integer`  | **Optional** |
-| `error_list` | `json`  | **Optional**, '[1,2,3]' |
+| Parameter         | Type      | Description             |
+| :---------------- | :-------- | :---------------------- |
+| `content`         | `string`  | **Required**            |
+| `post_id`         | `int`     | **Required**            |
+| `image_ids`       | `Array`   | **Optional**            |
+| `reply_comment`   | `Array`   | **Optional**            |
+| `user_reply_name` | `String`  | **Optional**            |
+| `user_reply_id`   | `integer` | **Optional**            |
+| `label`           | `integer` | **Optional**            |
+| `status`          | `integer` | **Optional**            |
+| `error_list`      | `json`    | **Optional**, '[1,2,3]' |
 
 ```javascript
 {
@@ -628,12 +584,15 @@ POST /api/comments
 }
 ```
 
+</details>
+
 #### Update comment
 
-```http
-Authorization: Bearer YOUR_TOKEN
-PUT /api/comments/:id
-```
+<details>
+<summary><code>PUT /api/comments/:id</code></summary>
+<br>
+
+#### Parameters
 
 | Path Variables | Type     | Description  |
 | :------------- | :------- | :----------- |
@@ -643,19 +602,22 @@ PUT /api/comments/:id
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Parameter   | Type     | Description                                   |
-| :---------- | :------- | :-------------------------------------------- |
-| `content`   | `string` | **Optional**                                  |
-| `image_ids` | `Array`  | **Optional** có ảnh thì nhớ truyền hết id lên |
-| `user_reply_name` | `String`  | **Optional** |
-| `user_reply_id` | `integer`  | **Optional** |
+| Parameter         | Type      | Description                                   |
+| :---------------- | :-------- | :-------------------------------------------- |
+| `content`         | `string`  | **Optional**                                  |
+| `image_ids`       | `Array`   | **Optional** có ảnh thì nhớ truyền hết id lên |
+| `user_reply_name` | `String`  | **Optional**                                  |
+| `user_reply_id`   | `integer` | **Optional**                                  |
+
+</details>
 
 #### Delete comment
 
-```http
-Authorization: Bearer YOUR_TOKEN
-DELETE /api/comments/:id
-```
+<details>
+<summary><code>DELETE /api/comments/:id</code></summary>
+<br>
+
+#### Parameters
 
 | Path Variables | Type     | Description  |
 | :------------- | :------- | :----------- |
@@ -664,13 +626,16 @@ DELETE /api/comments/:id
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+</details>
 
 #### Report comment
 
-```http
-Authorization: Bearer YOUR_TOKEN
-POST /api/comments/report/:id
-```
+<details>
+<summary><code>POST /api/comments/report/:id</code></summary>
+<br>
+
+#### Parameters
 
 | Path Variables | Type     | Description  |
 | :------------- | :------- | :----------- |
@@ -680,23 +645,24 @@ POST /api/comments/report/:id
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-### React module (biểu cảm)
+</details>
 
 #### Create react post
 
-```http
-Authorization: Bearer YOUR_TOKEN
-POST /api/posts/reacts
-```
+<details>
+<summary><code>POST /api/posts/reacts</code></summary>
+<br>
+
+#### Parameters
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Parameter  | Type     | Description  |
-| :--------- | :------- | :----------- |
-| `type_react`  | `enum - type_react` | **Required** |
-| `post_id`    | `int` | **Required**|
+| Parameter    | Type                | Description  |
+| :----------- | :------------------ | :----------- |
+| `type_react` | `enum - type_react` | **Required** |
+| `post_id`    | `int`               | **Required** |
 
 ```javascript
 {
@@ -707,37 +673,43 @@ POST /api/posts/reacts
     },
 }
 ```
+
+</details>
 
 #### Delete react post
 
-```http
-Authorization: Bearer YOUR_TOKEN
-DELETE /api/posts/unreact/:post_id
-```
+<details>
+<summary><code>DELETE /api/posts/unreact/:post_id</code></summary>
+<br>
 
-| Path Variables | Type     | Description  |
-| :------------- | :------- | :----------- |
-| `post_id`           | `int` | **Required** |
+#### Parameters
+
+| Path Variables | Type  | Description  |
+| :------------- | :---- | :----------- |
+| `post_id`      | `int` | **Required** |
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+</details>
 
 #### Create react comment
 
-```http
-Authorization: Bearer YOUR_TOKEN
-POST /api/comments/reacts
-```
+<details>
+<summary><code>POST /api/comments/reacts</code></summary>
+<br>
+
+#### Parameters
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Parameter  | Type     | Description  |
-| :--------- | :------- | :----------- |
-| `type_react`  | `enum - type_react` | **Required** |
-| `comment_id`    | `int` | **Required**|
+| Parameter    | Type                | Description  |
+| :----------- | :------------------ | :----------- |
+| `type_react` | `enum - type_react` | **Required** |
+| `comment_id` | `int`               | **Required** |
 
 ```javascript
 {
@@ -749,38 +721,42 @@ POST /api/comments/reacts
 }
 ```
 
+</details>
+
 #### Delete react comment
 
-```http
-Authorization: Bearer YOUR_TOKEN
-DELETE /api/comments/unreact/:comment_id
-```
+<details>
+<summary><code>DELETE /api/comments/unreact/:comment_id</code></summary>
+<br>
 
-| Path Variables | Type     | Description  |
-| :------------- | :------- | :----------- |
-| `comment_id`           | `int` | **Required** |
+#### Parameters
+
+| Path Variables | Type  | Description  |
+| :------------- | :---- | :----------- |
+| `comment_id`   | `int` | **Required** |
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-### Friend module (bạn bè)
+</details>
 
 #### Lấy tất cả lời mời kết bạn
 
-```http
-Authorization: Bearer YOUR_TOKEN
-GET /api/friends/request
-```
+<details>
+<summary><code>GET /api/friends/request</code></summary>
+<br>
+
+#### Parameters
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Path Variables | Type     | Description  |
-| :------------- | :------- | :----------- |
-| `page_index`           | `int` | **Optional** |
-| `page_size`           | `int` | **Optional** |
+| Path Variables | Type  | Description  |
+| :------------- | :---- | :----------- |
+| `page_index`   | `int` | **Optional** |
+| `page_size`    | `int` | **Optional** |
 
 ```javascript
 {
@@ -791,22 +767,25 @@ GET /api/friends/request
     },
 }
 ```
+
+</details>
 
 #### Lấy tất cả danh sách bạn đã chặn
 
-```http
-Authorization: Bearer YOUR_TOKEN
-GET /api/friends/block
-```
+<details>
+<summary><code>GET /api/friends/block</code></summary>
+<br>
+
+#### Parameters
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Path Variables | Type     | Description  |
-| :------------- | :------- | :----------- |
-| `page_index`           | `int` | **Optional** |
-| `page_size`           | `int` | **Optional** |
+| Path Variables | Type  | Description  |
+| :------------- | :---- | :----------- |
+| `page_index`   | `int` | **Optional** |
+| `page_size`    | `int` | **Optional** |
 
 ```javascript
 {
@@ -817,17 +796,21 @@ GET /api/friends/block
     },
 }
 ```
+
+</details>
 
 #### Lấy danh sách bạn bè của 1 người dùng
 
-```http
-GET /api/friends/:id
-```
+<details>
+<summary><code>GET /api/friends/:id</code></summary>
+<br>
 
-| Path Variables | Type     | Description  |
-| :------------- | :------- | :----------- |
-| `page_index`           | `int` | **Optional** |
-| `page_size`           | `int` | **Optional** |
+#### Parameters
+
+| Path Variables | Type  | Description  |
+| :------------- | :---- | :----------- |
+| `page_index`   | `int` | **Optional** |
+| `page_size`    | `int` | **Optional** |
 
 ```javascript
 {
@@ -838,22 +821,25 @@ GET /api/friends/:id
     },
 }
 ```
+
+</details>
 
 #### Lấy danh sách bạn bè của bản thân
 
-```http
-Authorization: Bearer YOUR_TOKEN
-GET /api/friends
-```
+<details>
+<summary><code>GET /api/friends</code></summary>
+<br>
+
+#### Parameters
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Path Variables | Type     | Description  |
-| :------------- | :------- | :----------- |
-| `page_index`           | `int` | **Optional** |
-| `page_size`           | `int` | **Optional** |
+| Path Variables | Type  | Description  |
+| :------------- | :---- | :----------- |
+| `page_index`   | `int` | **Optional** |
+| `page_size`    | `int` | **Optional** |
 
 ```javascript
 {
@@ -865,20 +851,23 @@ GET /api/friends
 }
 ```
 
+</details>
+
 #### Tạo lời mời kết bạn
 
-```http
-Authorization: Bearer YOUR_TOKEN
-POST /api/friends
-```
+<details>
+<summary><code>POST /api/friends</code></summary>
+<br>
+
+#### Parameters
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Path Variables | Type     | Description  |
-| :------------- | :------- | :----------- |
-| `receiver_id`           | `int` | **Required** id của người muốn gửi lời mời|
+| Path Variables | Type  | Description                                |
+| :------------- | :---- | :----------------------------------------- |
+| `receiver_id`  | `int` | **Required** id của người muốn gửi lời mời |
 
 ```javascript
 {
@@ -889,24 +878,27 @@ POST /api/friends
     },
 }
 ```
+
+</details>
 
 #### Cập nhật trạng thái kết bạn
+
+<details>
+<summary><code>PUT /api/friends</code></summary>
+<br>
 Chấp nhận lời mời, block, chuyển loại bạn bè (hẹn hò ?)
 
-```http
-Authorization: Bearer YOUR_TOKEN
-PUT /api/friends
-```
+#### Parameters
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Path Variables | Type     | Description  |
-| :------------- | :------- | :----------- |
-| `receiver_id`           | `int` | **Required** id của người muốn gửi lời mời|
-| `friend_status`           | `enum friend_status` | **Optional** trạng thái bạn bè|
-| `friend_type`           | `enum friend_type` | **Optional** loại bạn bè|
+| Path Variables  | Type                 | Description                                |
+| :-------------- | :------------------- | :----------------------------------------- |
+| `receiver_id`   | `int`                | **Required** id của người muốn gửi lời mời |
+| `friend_status` | `enum friend_status` | **Optional** trạng thái bạn bè             |
+| `friend_type`   | `enum friend_type`   | **Optional** loại bạn bè                   |
 
 ```javascript
 {
@@ -917,21 +909,24 @@ PUT /api/friends
     },
 }
 ```
+
+</details>
 
 #### Xóa lời mời kết bạn, hủy kết bạn
 
-```http
-Authorization: Bearer YOUR_TOKEN
-DELETE /api/friends
-```
+<details>
+<summary><code>DELETE /api/friends</code></summary>
+<br>
+
+#### Parameters
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Path Variables | Type     | Description  |
-| :------------- | :------- | :----------- |
-| `receiver_id`           | `int` | **Required** id của người muốn gửi lời mời|
+| Path Variables | Type  | Description                                |
+| :------------- | :---- | :----------------------------------------- |
+| `receiver_id`  | `int` | **Required** id của người muốn gửi lời mời |
 
 ```javascript
 {
@@ -943,69 +938,51 @@ DELETE /api/friends
 }
 ```
 
+</details>
 
-### Admin module
+</details>
+
+<details>
+<summary>Admin module</summary>
 
 #### Lấy tất cả bài viết, comment vi phạm
 
-```http
-Authorization: Bearer YOUR_TOKEN, role: admin
-GET /api/admins/reports/posts
-GET /api/admins/reports/comments
-```
+<details>
+<summary><code>GET /api/admins/reports/posts</code></summary>
+<br>
+
+#### Parameters
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Path Variables | Type     | Description  |
-| :------------- | :------- | :----------- |
-| `page_index`           | `int` | **Optional** |
-| `page_size`           | `int` | **Optional** |
+| Path Variables | Type  | Description  |
+| :------------- | :---- | :----------- |
+| `page_index`   | `int` | **Optional** |
+| `page_size`    | `int` | **Optional** |
+
+</details>
 
 #### Chuyển trạng thái vi phạm
 
-```http
-Authorization: Bearer YOUR_TOKEN, role: admin
-POST /api/admins/reports/posts/:id
-POST /api/admins/reports/comments/:id
-```
+<details>
+<summary><code>POST /api/admins/reports/posts/:id</code></summary>
+<br>
+
+#### Parameters
 
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Path Variables | Type     | Description  |
-| :------------- | :------- | :----------- |
-| `status`           | `int` | **Optional** |
-| `error_list`           | `json` | **Optional**, '[1,2,3]' |
+| Path Variables | Type   | Description             |
+| :------------- | :----- | :---------------------- |
+| `status`       | `int`  | **Optional**            |
+| `error_list`   | `json` | **Optional**, '[1,2,3]' |
 
-### Session module
-
-#### Ping
-
-Ping đến server sau mỗi 5p nếu trong 5p đó người dùng KHÔNG gọi api nào
-để cập nhật trạng thái hoạt động.
-
-```http
-Authorization: Bearer YOUR_TOKEN (không gửi thì chỉ check xem server có hoạt động hay ko)
-POST /api/sessions/ping
-```
-
-#### End
-
-Gọi khi người dùng tắt trình duyệt, logout
-Để cho server biết người dùng đã offline
-
-```http
-Authorization: Bearer YOUR_TOKEN
-POST /api/sessions/end
-```
-
-| Header          | Type     | Description                                   |
-| :-------------- | :------- | :-------------------------------------------- |
-| `Authorization` | `string` | **Required.** Bearer Token for authentication |
-
+</details>
+</details>
 
 ## Architecture Design
 
