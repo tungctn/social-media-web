@@ -94,6 +94,5 @@ jobs:
       - name: Deploy to server
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp tunggcp@${{ matrix.servers }} '
-          ls -a
-          cd social-media-web && ls -a && bash deploy-script.sh
+          cd social-media-web && bash deploy-script.sh
           '
