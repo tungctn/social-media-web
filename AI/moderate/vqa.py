@@ -15,5 +15,6 @@ def predict(url):
     result = vqa_pipeline(image, question, top_k=2)
     return result
 
+
 url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTu0gQ2u4YQPIh-xl0lewRNMkuHCBkGOzYcyHALieeu&s"
 print(predict(url));
