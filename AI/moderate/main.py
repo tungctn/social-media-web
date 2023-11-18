@@ -3,6 +3,7 @@ from flask_cors import CORS
 from moderation import detect_moderation_labels_from_url
 from vqa import predict
 from bert import is_animal_related, analyze_post
+from sa import comment_analysis
 
 app = Flask(__name__)
 CORS(app)
@@ -67,6 +68,24 @@ def predict_text_route():
         return jsonify({
             'success': False,
             'message': 'Không tìm thấy text',
+        })
+
+
+@app.route('/predict/comment', methods=['POST'])
+def predict_comment_route():
+    data = request.get_json()
+    if 'comment' in data:
+        comment = data['comment']
+        comment_analysis_eval = comment_analysis(comment)
+        return jsonify({
+            'success': True,
+            'message': comment_analysis_eval,
+            'comment': comment
+        })
+    else:
+        return jsonify({
+            'success': False,
+            'message': 'Không tìm thấy comment',
         })
 
 if __name__ == '__main__':
