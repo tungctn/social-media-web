@@ -5,10 +5,10 @@ torchvision
 Flask
 CORS
 pillow
-googletrans
+googletrans=4.0.0-rc1
 transformers
 flask_cors
-
+boto3
 
 
 
