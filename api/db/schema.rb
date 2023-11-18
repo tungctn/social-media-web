@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_18_143412) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_18_153918) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -74,6 +74,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_18_143412) do
     t.datetime "updated_at", null: false
     t.index ["image_id"], name: "index_images_posts_on_image_id"
     t.index ["post_id"], name: "index_images_posts_on_post_id"
+  end
+
+  create_table "login_histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.text "ip_address", comment: "Ip của client đăng nhập."
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_login_histories_on_user_id"
   end
 
   create_table "post_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -200,6 +208,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_18_143412) do
   add_foreign_key "images_post_comments", "post_comments"
   add_foreign_key "images_posts", "images", on_delete: :cascade
   add_foreign_key "images_posts", "posts", on_delete: :cascade
+  add_foreign_key "login_histories", "users"
   add_foreign_key "post_comments", "posts"
   add_foreign_key "post_comments", "users"
   add_foreign_key "post_saves", "posts"

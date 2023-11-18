@@ -5,6 +5,15 @@ class ApplicationController < ActionController::Base
   after_action :update_last_time_active
 
   protected
+  # thêm lịch sử đăng nhập
+  def add_login_history
+    if @current_user
+      login_history = LoginHistory.new
+      login_history.user_id = @current_user.id
+      login_history.ip_address = request.remote_ip
+      login_history.save
+    end
+  end
 
   # lấy user bằng id
   # ttanh - 04/10/2023
