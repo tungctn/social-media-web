@@ -5,6 +5,10 @@ Rails.application.routes.draw do
     post "/auth/login", to: "authentication#login"
     post "/auth/register", to: "users#register"
 
+    #session
+    post "/sessions/ping", to: "sessions#ping" #ping sau mỗi 5p để biết người dùng đang online
+    post "/sessions/end", to: "sessions#end" #người dùng đóng trình duyệt
+
     #thông tin người dùng
     get "/users", to: "user_infos#index"
     get "/users/:id", to: "user_infos#show"
