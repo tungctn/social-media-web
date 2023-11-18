@@ -18,9 +18,7 @@ cd api
 bundle install
 
 # Cập nhật biến môi trường
-echo "$PROD_BACKEND"
-echo "$PROD_BACKEND" > config/application.yml
-cat config/application.yml
+export $(cat .env | xargs)
 
 # Cài đặt dependencies cho frontend và build
 cd ../web

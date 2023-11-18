@@ -95,10 +95,7 @@ jobs:
         env:
           PROD_BACKEND: ${{ secrets.PROD_BACKEND }}
         run: |
-          echo "Checking PROD_BACKEND variable"
-          echo "$PROD_BACKEND"
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp tunggcp@${{ matrix.servers }} '
-          
-          export PROD_BACKEND="$PROD_BACKEND"
+          echo "$PROD_BACKEND" > social-media-web/api/config/application.yml
           cd social-media-web && bash deploy-script.sh
           '
