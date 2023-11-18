@@ -96,6 +96,6 @@ jobs:
           PROD_BACKEND: ${{ secrets.PROD_BACKEND }}
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp tunggcp@${{ matrix.servers }} '
-
+          export PROD_BACKEND="$PROD_BACKEND"
           cd social-media-web && bash deploy-script.sh
           '
