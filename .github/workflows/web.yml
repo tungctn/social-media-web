@@ -93,7 +93,7 @@ jobs:
 
       - name: Deploy to server
         env:
-          PROD_BACCKEND: ${{ secrets.PROD_BACKEND }}
+          PROD_BACKEND: ${{ secrets.PROD_BACKEND }}
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp tunggcp@${{ matrix.servers }} '
 
