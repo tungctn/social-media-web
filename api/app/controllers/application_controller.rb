@@ -203,6 +203,33 @@ class ApplicationController < ActionController::Base
     return comment
   end
 
+  # Lấy dữ liệu chi tiết của 1 comment
+  def get_comment_data_by_id(id)
+    comment = get_comment_by_id(id)
+
+    if !comment
+      return false
+    end
+
+    comment_data = image_get([comment])[0]
+
+    comment_data["type_react"] = nil
+
+    comment_data["user"] = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: comment.user_id)
+
+    if @current_user
+      react_comment = comment.reacts_post_comment.find_by(user_id: @current_user.id)
+
+      if !react_comment
+      else
+        react = React.find_by_id(react_comment.react_id)
+        comment_data["type_react"] = react.type_react
+      end
+    end
+
+    return comment_data
+  end
+
   # kiểm tra xem bài viết, bình luận có trống dữ liệu không
   def validate_null_content_image(model)
     if params[:content].strip == "" and model.images == []

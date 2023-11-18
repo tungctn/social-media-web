@@ -62,5 +62,12 @@ Rails.application.routes.draw do
     post "/friends", to: "friends#create" # gửi lời mời kết bạn
     put "/friends", to: "friends#update"  # chấp nhận lời mời, block, chuyển loại bạn bè
     delete "/friends", to: "friends#destroy" # xóa lời mời kết bạn, xóa bạn bè
+
+    #admin
+    get "/admins/reports/posts", to: "admins#get_post_report" # lấy danh sách bài viết vi phạm
+    post "/admins/reports/posts/:id", to: "admins#change_post_report" # chuyển trạng thái vi phạm
+
+    get "/admins/reports/comments", to: "admins#get_comment_report" # chuyển trạng thái vi phạm
+    post "/admins/reports/comments/:id", to: "admins#change_comment_report" # chuyển trạng thái vi phạm
   end
 end

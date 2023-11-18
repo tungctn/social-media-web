@@ -43,4 +43,21 @@ module Enums
     pending: 2, #bị báo cáo và đang chờ duyệt
     ban: 3 #bị báo cáo và bị chặn
   }
+
+  # loại lỗi của bài viết, comment
+  ERROR_TYPE = {
+    images_not_standards: 1, #Ảnh không phù hợp tiêu chuẩn
+    images_not_related: 2, #Ảnh không liên quan đến động vật
+    caption_not_standards: 3, #Caption không phù hợp tiêu chuẩn
+    caption_not_related: 4 #Caption không liên quan đến động vật
+  }
+
+  # label của bài viết, comment
+  LABEL_TYPE = {
+    education: 1, #giáo dục
+    share_experience: 2, #chia sẻ kinh nghiệm
+    evaluate: 3, #đánh giá
+    event: 4, #sự kiện
+    other: 5 #khác
+  }
 end

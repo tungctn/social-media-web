@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_16_142934) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_18_014344) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -87,6 +87,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_16_142934) do
     t.string "user_reply_name", comment: "Người dùng của bình luận cha"
     t.integer "user_reply_id", comment: "Id người dùng của bình luận cha"
     t.integer "status", comment: "Trạng thái comment"
+    t.integer "label", comment: "Label của comment"
+    t.json "error_list", comment: "Danh sách lỗi vi phạm comment"
     t.index ["post_id"], name: "index_post_comments_on_post_id"
     t.index ["user_id"], name: "index_post_comments_on_user_id"
   end
@@ -120,6 +122,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_16_142934) do
     t.integer "likes_count", default: 0, comment: "Số lượng biểu cảm"
     t.integer "shares_count", default: 0, comment: "Số lượng share"
     t.bigint "share_id", comment: "Chia sẻ bài viết"
+    t.integer "label", comment: "Label của post "
+    t.json "error_list", comment: "Danh sách lỗi vi phạm post "
     t.index ["sender_id"], name: "index_posts_on_sender_id"
     t.index ["share_id"], name: "index_posts_on_share_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
