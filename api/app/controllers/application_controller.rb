@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include JsonWebToken
   skip_before_action :verify_authenticity_token
   before_action :authenticate_request
+  after_action :update_last_time_active
 
   protected
 
@@ -267,6 +268,13 @@ class ApplicationController < ActionController::Base
       token = token.split(" ").last
       decoded = jwt_decode token
       @current_user = User.find_by_id(decoded[:user_id])
+    end
+  end
+
+  def update_last_time_active
+    if @current_user
+      @current_user.last_time_active = DateTime.now
+      @current_user.save
     end
   end
 end

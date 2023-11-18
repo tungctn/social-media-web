@@ -980,6 +980,32 @@ POST /api/admins/reports/comments/:id
 | `status`           | `int` | **Optional** |
 | `error_list`           | `json` | **Optional**, '[1,2,3]' |
 
+### Session module
+
+#### Ping
+
+Ping đến server sau mỗi 5p nếu trong 5p đó người dùng KHÔNG gọi api nào
+để cập nhật trạng thái hoạt động.
+
+```http
+Authorization: Bearer YOUR_TOKEN (không gửi thì chỉ check xem server có hoạt động hay ko)
+POST /api/sessions/ping
+```
+
+#### End
+
+Gọi khi người dùng tắt trình duyệt, logout
+Để cho server biết người dùng đã offline
+
+```http
+Authorization: Bearer YOUR_TOKEN
+POST /api/sessions/end
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
 
 ## Architecture Design
 
