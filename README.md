@@ -421,6 +421,9 @@ POST /api/posts
 | `user_id`   | `int`    | **Required** Đăng bài lên trang cá nhân của ông này |
 | `image_ids` | `Array`  | **Optional**                                        |
 | `share_id` | `int`  | id của bài viết muốn chia sẻ                                        |
+| `label` | `integer`  | **Optional** |
+| `status` | `integer`  | **Optional** |
+| `error_list` | `json`  | **Optional**, '[1,2,3]' |
 
 ```javascript
 {
@@ -609,6 +612,9 @@ POST /api/comments
 | `reply_comment` | `Array`  | **Optional** |
 | `user_reply_name` | `String`  | **Optional** |
 | `user_reply_id` | `integer`  | **Optional** |
+| `label` | `integer`  | **Optional** |
+| `status` | `integer`  | **Optional** |
+| `error_list` | `json`  | **Optional**, '[1,2,3]' |
 
 ```javascript
 {
@@ -936,6 +942,43 @@ DELETE /api/friends
     },
 }
 ```
+
+
+### Admin module
+
+#### Lấy tất cả bài viết, comment vi phạm
+
+```http
+Authorization: Bearer YOUR_TOKEN, role: admin
+GET /api/admins/reports/posts
+GET /api/admins/reports/comments
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `page_index`           | `int` | **Optional** |
+| `page_size`           | `int` | **Optional** |
+
+#### Chuyển trạng thái vi phạm
+
+```http
+Authorization: Bearer YOUR_TOKEN, role: admin
+POST /api/admins/reports/posts/:id
+POST /api/admins/reports/comments/:id
+```
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
+| `status`           | `int` | **Optional** |
+| `error_list`           | `json` | **Optional**, '[1,2,3]' |
 
 
 ## Architecture Design
