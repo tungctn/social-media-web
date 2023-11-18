@@ -39,3 +39,5 @@ config/environments/*.local.yml
 
 /test
 config/credentials.yml.enc
+
+/*.bat
