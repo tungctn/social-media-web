@@ -282,7 +282,7 @@ class ApplicationController < ActionController::Base
 
   def update_last_time_active
     if @current_user
-      @current_user.last_time_active = DateTime.now
+      @current_user.last_time_active = Time.zone.now
       @current_user.save
     end
   end
