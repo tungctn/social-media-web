@@ -42,3 +42,14 @@ export function unReactComment(id: number) {
 export function report(commentId: number) {
   return instance.post(`/api/comments/report/${commentId}`);
 }
+
+export function getReportedComments() {
+  return instance.get("/api/admins/reports/comments");
+}
+
+export function updateStatusReportedComment(
+  id: number,
+  data: { status: number; error_list?: string | null },
+) {
+  return instance.post(`/api/admins/reports/comments/${id}`, data);
+}

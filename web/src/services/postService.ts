@@ -49,13 +49,24 @@ export function report(postId: number) {
   return instance.post(`/api/posts/report/${postId}`);
 }
 
+export function getReportedPosts() {
+  return instance.get("/api/admins/reports/posts");
+}
+
+export function updateStatusReportedPost(
+  id: number,
+  data: { status: number; error_list?: string | null },
+) {
+  return instance.post(`/api/admins/reports/posts/${id}`, data);
+}
+
 export async function moderateContent(content: string) {
   return (
     await axios.post(
       `${process.env.NEXT_PUBLIC_API_MODERATE_URL}/predict/text`,
       {
         caption: content,
-      }
+      },
     )
   ).data;
 }

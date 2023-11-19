@@ -1,13 +1,20 @@
 import ImageReportCard from "@/components/ImageReportCard";
+import { ReportType } from "@/constants/Others";
 import { BREAKPOINTS } from "@/constants/WindowSizes";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { useEffect, useRef } from "react";
 
 type ImagesListProps = {
-  data: any
-}
+  data: any;
+  type: ReportType;
+  onChange?: Function;
+};
 
-export default function ImagesList({ data }: ImagesListProps) {
+export default function ImagesList({
+  data,
+  type,
+  onChange = () => {},
+}: ImagesListProps) {
   const { width } = useWindowDimensions();
   const ref = useRef<HTMLDivElement>(null);
 
@@ -31,11 +38,15 @@ export default function ImagesList({ data }: ImagesListProps) {
       {data?.map((item: any) => {
         return (
           <ImageReportCard
-            key={item.user.user_id}
+            key={item.id}
             user={item.user}
-            reportId={1}
+            id={item.id}
             images={item.images}
             reportedAt={new Date()}
+            type={type}
+            status={item.status}
+            errorList={item.error_list}
+            onChange={onChange}
           />
         );
       })}
