@@ -73,5 +73,12 @@ Rails.application.routes.draw do
 
     get "/admins/reports/comments", to: "admins#get_comment_report" # chuyển trạng thái vi phạm
     post "/admins/reports/comments/:id", to: "admins#change_comment_report" # chuyển trạng thái vi phạm
+
+    #dashboard
+    post "/dashboard/login-history", to: "dashboard#statistics_login_history"
+    post "/dashboard/number", to: "dashboard#statistics_number"
+    post "/dashboard/post-label", to: "dashboard#statistics_post_label"
+    post "/dashboard/post-negative", to: "dashboard#statistics_post_negative"
+    post "/dashboard/post-count", to: "dashboard#statistics_post_count"
   end
 end
