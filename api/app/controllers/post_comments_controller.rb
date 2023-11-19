@@ -170,6 +170,7 @@ class PostCommentsController < ApplicationController
     end
 
     comment.status = Enums::ACTIVE_STATUS[:pending]
+    comment.type_report = params[:type_report]
 
     if comment.save
       render json: { message: "Báo cáo thành công" }, status: :ok

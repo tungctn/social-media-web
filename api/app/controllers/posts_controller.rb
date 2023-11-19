@@ -151,6 +151,7 @@ class PostsController < ApplicationController
     end
 
     post.status = Enums::ACTIVE_STATUS[:pending]
+    post.type_report = params[:type_report]
 
     if post.save
       render json: { message: "Báo cáo thành công" }, status: :ok

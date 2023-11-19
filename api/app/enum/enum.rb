@@ -70,4 +70,10 @@ module Enums
     this_year: 5,
     last_year: 6
   }
+
+  #loại báo cáo của người dùng
+  TYPE_REPORT = {
+    content: 1,
+    image: 2
+  }
 end

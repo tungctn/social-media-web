@@ -531,6 +531,10 @@ Chỉ xóa được những ảnh mà user đang đăng nhập tạo
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
+| Parameter   | Type     | Description                                   |
+| :---------- | :------- | :-------------------------------------------- |
+| `type_report`   | `enum TYPE_REPORT` | **Optional**    loại báo cáo của người dùng (ảnh, bài viết) |
+
 </details>
 
 #### Get comment
@@ -644,6 +648,10 @@ Chỉ xóa được những ảnh mà user đang đăng nhập tạo
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Parameter   | Type     | Description                                   |
+| :---------- | :------- | :-------------------------------------------- |
+| `type_report`   | `enum TYPE_REPORT` | **Optional**    loại báo cáo của người dùng (ảnh, bài viết) |
 
 </details>
 
