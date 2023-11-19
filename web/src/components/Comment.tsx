@@ -32,9 +32,9 @@ export default function Comment({
   const [c, setC] = useState<any>(comment || null);
   const [showReplies, setShowReplies] = useState(false);
 
-  // useEffect(() => {
-  //   comment && setC(comment);
-  // }, [comment]);
+  useEffect(() => {
+    comment && setC(comment);
+  }, [comment]);
 
   const handleShowReplies = () => {
     setShowReplies(true);

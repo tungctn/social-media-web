@@ -16,6 +16,7 @@ type Post = {
   comments_count: number;
   shares_count: number;
   type_react?: ReactType;
+  share_post?: Post;
 };
 
 export const nearestPost: Post = {

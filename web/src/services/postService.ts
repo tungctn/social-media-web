@@ -25,6 +25,30 @@ export function unReactPost(id: number) {
   return instance.delete(`/api/posts/unreact/${id}`);
 }
 
+export function getPostsByUserId(userId: number) {
+  return instance.get(`/api/posts/user/${userId}`);
+}
+
+export function getSavedPostsOfAuthUser() {
+  return instance.get(`/api/posts/save`);
+}
+
+export function savePost(id: number) {
+  return instance.post(`/api/posts/save/${id}`);
+}
+
+export function unSavePost(id: number) {
+  return instance.post(`/api/posts/unsave/${id}`);
+}
+
+export function checkPostSaved(id: number) {
+  return instance.get(`/api/posts/save/${id}`);
+}
+
+export function report(postId: number) {
+  return instance.post(`/api/posts/report/${postId}`);
+}
+
 export async function moderateContent(content: string) {
   return (
     await axios.post(

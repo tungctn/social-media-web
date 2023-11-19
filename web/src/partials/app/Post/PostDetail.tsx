@@ -23,6 +23,7 @@ import useForceUpdate from "@/hooks/useForceUpdate";
 import { ReactType } from "@/constants/Others";
 import CustomCarousel from "@/components/CustomCarousel";
 import { reactPost } from "@/utils/post";
+import NoImg from "@/assets/imgs/no-image.jpg";
 
 type PostDetailProps = {
   open?: boolean;
@@ -69,7 +70,7 @@ export default function PostDetail({
     }
   };
 
-  const handleSendNewComment = (newComment: any, isExists?: boolean) => {  
+  const handleSendNewComment = (newComment: any, isExists?: boolean) => {
     setNewComment({
       ...newComment,
       user: auth.user,
@@ -95,7 +96,7 @@ export default function PostDetail({
           postId={post.id}
           onReply={handleReply}
           newComment={newComment}
-          onAction={handleAction}
+          onAction={handleActionComment}
         />
       );
     }
@@ -105,7 +106,7 @@ export default function PostDetail({
     setReplyComment(comment);
   };
 
-  const handleAction = (type: string, comment: any) => {
+  const handleActionComment = (type: string, comment: any) => {
     if (type === "delete") {
       const newPost: any = {
         ...post,
@@ -117,7 +118,6 @@ export default function PostDetail({
       });
       setPost(newPost);
     } else if (type === "edit") {
-      
       setNewComment(undefined);
       setEditingComment(comment);
     }
@@ -137,6 +137,13 @@ export default function PostDetail({
     setPost(newPost);
   };
 
+  const handleAction = (isActed: boolean) => {
+    onChange({
+      isAction: true,
+      isActed,
+    });
+  };
+
   return (
     <div className="fixed top-0 left-0 z-20">
       <div
@@ -146,7 +153,38 @@ export default function PostDetail({
       ></div>
       <div className="bg-white 3xl:h-[850px] h-[calc(850px/4*3)] 3xl:w-[1186px] w-[calc(1186px/4*3)] absolute z-30 top-[50vh] -translate-y-1/2 left-[50vw] -translate-x-1/2 rounded-[30px]">
         <div className="flex flex-row h-full w-full">
-          {post ? <CustomCarousel images={post.images} /> : <></>}
+          {post && post.images.length > 0 ? (
+            <CustomCarousel images={post.images} />
+          ) : (
+            <></>
+          )}
+          {post && post.share_post && (
+            <div className="flex flex-row h-full w-full relative">
+              <div className="absolute bottom-0 left-0 z-30 3xl:pl-10 pl-8 3xl:pr-[35px] pr-7 3xl:py-5 py-4 bg-black/40 w-full rounded-s-[30px] rounded-t-none">
+                <div className="flex flex-row gap-2.5">
+                  <Avatar size={50} src={post.share_post.user.avatar_url} />
+                  <div className="flex flex-col">
+                    <span className="3xl:text-xl text-base font-bold text-white">
+                      {post.share_post.user.full_name}
+                    </span>
+                    <span className="first-letter:uppercase text-xs text-spanish-gray">
+                      {dayjs(post.share_post.created_at).format(
+                        "dddd, HH:mm DD/MM/YYYY",
+                      )}
+                    </span>
+                  </div>
+                </div>
+                <p className="text-[14px] 3xl:mx-12 text-white mt-4">{post.share_post.content}</p>
+              </div>
+              <CustomCarousel
+                images={
+                  post.share_post.images.length > 0
+                    ? post.share_post.images
+                    : [{ url: NoImg }]
+                }
+              />
+            </div>
+          )}
           <div className="w-full flex flex-col">
             <div className="flex flex-col 3xl:gap-5 gap-4" ref={headerRef}>
               <div className="3xl:pl-10 pl-8 3xl:pr-[35px] pr-7 3xl:mt-5 mt-4 flex flex-row justify-between w-full">
@@ -161,7 +199,9 @@ export default function PostDetail({
                     </span>
                   </div>
                 </div>
-                <PostActions />
+                {post && (
+                  <PostActions onChange={handleAction} postId={post.id} />
+                )}
               </div>
               <div>
                 <div className="flex flex-col gap-[15px]">
@@ -183,6 +223,8 @@ export default function PostDetail({
                     postId={post?.id ?? 0}
                     reactType={post?.type_react}
                     onChange={handleChangeReact}
+                    content={post?.content}
+                    images={post?.images}
                   />
                 </div>
               </div>
