@@ -86,3 +86,12 @@ export function getReportErrorSpec(
     }
   }
 }
+
+export enum TimeStatistics {
+  today = 1,
+  yesterday = 2,
+  thisMonth = 3,
+  lastMonth = 4,
+  thisYear = 5,
+  lastYear = 6,
+}

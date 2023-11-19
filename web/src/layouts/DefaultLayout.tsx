@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import UnAuthenticatedError from "@/partials/app/Auth/404Error";
 import Loading from "@/components/Loading";
+import { Role } from "@/utils/fakeData/User";
 
 type DefaultLayoutProps = {
   children: ReactElement;
@@ -25,7 +26,9 @@ function DefaultLayout({ children }: DefaultLayoutProps) {
   }, [auth.isLogedIn]);
 
   const handleClickUser: MouseEventHandler<HTMLDivElement> = () => {
-    router.push(`/profile/${auth.user.user_id}`);
+    if (auth.user.role === Role.User) {
+      router.push(`/profile/${auth.user.user_id}`);
+    }
   };
 
   return (
@@ -48,11 +51,15 @@ function DefaultLayout({ children }: DefaultLayoutProps) {
                     {auth.user.email}
                   </span>
                 </div>
-                <div className="flex flex-row justify-between text-[14px] w-full">
-                  <div>0 Posts</div>
-                  <div>0 following</div>
-                  <div>0 Follower</div>
-                </div>
+                {auth.user.role === Role.Admin ? (
+                  <></>
+                ) : (
+                  <div className="flex flex-row justify-between text-[14px] w-full">
+                    <div>{auth.user.posts_count ?? 0} Posts</div>
+                    <div>{auth.user.following_count ?? 0} following</div>
+                    <div>{auth.user.followers_count ?? 0} Follower</div>
+                  </div>
+                )}
               </div>
               <Menu />
             </div>

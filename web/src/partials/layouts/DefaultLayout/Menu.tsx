@@ -32,7 +32,7 @@ export default function Menu() {
       <nav>
         <div className="flex flex-col 3xl:gap-5 gap-2">
           {DefaultMenu.map((menuItem: any) => {
-            if (auth.user?.role === Role.Admin && menuItem.onlyAdmin) {
+            if (auth.user.role == Role.Admin && menuItem.onlyAdmin) {
               return (
                 <MenuItem
                   key={menuItem.label}
@@ -42,7 +42,7 @@ export default function Menu() {
                   onClick={() => handleClickMenuItem(menuItem.href)}
                 />
               );
-            } else if (!menuItem.onlyAdmin) {
+            } else if (auth.user.role == Role.User && menuItem.onlyUser) {
               return (
                 <MenuItem
                   key={menuItem.label}
@@ -52,7 +52,19 @@ export default function Menu() {
                   onClick={() => handleClickMenuItem(menuItem.href)}
                 />
               );
-            }
+            } else if (
+              menuItem.onlyUser === undefined &&
+              menuItem.onlyAdmin === undefined
+            )
+              return (
+                <MenuItem
+                  key={menuItem.label}
+                  prefixIcon={<menuItem.PrefixIcon />}
+                  label={menuItem.label}
+                  isActive={menuItem.href === pathname}
+                  onClick={() => handleClickMenuItem(menuItem.href)}
+                />
+              );
           })}
         </div>
       </nav>
