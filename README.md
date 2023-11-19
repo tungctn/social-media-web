@@ -949,6 +949,7 @@ Chấp nhận lời mời, block, chuyển loại bạn bè (hẹn hò ?)
 
 <details>
 <summary><code>GET /api/admins/reports/posts</code></summary>
+<summary><code>GET /api/admins/reports/comments</code></summary>
 <br>
 
 #### Parameters
@@ -968,6 +969,7 @@ Chấp nhận lời mời, block, chuyển loại bạn bè (hẹn hò ?)
 
 <details>
 <summary><code>POST /api/admins/reports/posts/:id</code></summary>
+<summary><code>POST /api/admins/reports/comments/:id</code></summary>
 <br>
 
 #### Parameters
