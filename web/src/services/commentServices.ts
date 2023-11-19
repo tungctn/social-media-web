@@ -38,3 +38,7 @@ export function reactComment(data: {
 export function unReactComment(id: number) {
   return instance.delete(`/api/comments/unreact/${id}`);
 }
+
+export function report(commentId: number) {
+  return instance.post(`/api/comments/report/${commentId}`);
+}

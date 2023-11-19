@@ -1,17 +1,17 @@
 import { Image as ImageType } from "@/utils/fakeData/Image";
 import { Carousel } from "flowbite-react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { FaCircleChevronLeft, FaCircleChevronRight } from "react-icons/fa6";
 
 type CustomCarouselProps = {
-  images: ImageType[];
+  images: ImageType[] | { url: StaticImageData }[];
   customImgClassName?: string;
 };
 
 export default function CustomCarousel({
   images,
   customImgClassName = "",
-}: CustomCarouselProps) {
+}: CustomCarouselProps) {  
   return (
     <Carousel
       slide={false}
