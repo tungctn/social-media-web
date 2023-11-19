@@ -3,34 +3,34 @@
 import TabPanel from "@/components/TabPanel";
 import Tabs from "@/components/Tabs";
 import PostsList from "./PostsList";
-import { useMemo, useState } from "react";
-import { currentUser } from "@/utils/fakeData/User";
-import { postsByUser } from "@/utils/fakeData/Post";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
+import {
+  getPostsByUserId,
+  getSavedPostsOfAuthUser,
+} from "@/services/postService";
+
+enum PostTabEnum {
+  upload = 1,
+  share = 2,
+  save = 3,
+}
 
 const userTabs = [
   {
-    id: 1,
+    id: PostTabEnum.upload,
     label: "Uploaded Posts",
   },
   {
-    id: 2,
-    label: "Shared Posts",
-  },
-  {
-    id: 3,
+    id: PostTabEnum.save,
     label: "Saved Posts",
   },
 ];
 
 const anotherUserTabs = [
   {
-    id: 1,
+    id: PostTabEnum.upload,
     label: "Uploaded Posts",
-  },
-  {
-    id: 2,
-    label: "Shared Posts",
   },
 ];
 
@@ -40,22 +40,52 @@ type PostTabsProps = {
 
 export default function PostTabs({ id }: PostTabsProps) {
   const auth = useSelector((state: any) => state.auth);
-  const [currentTab, setCurrentTab] = useState(1);
-  const postsLists = useMemo(() => {
-    return auth.user.user_id === Number(id)
-      ? [postsByUser, postsByUser, postsByUser]
-      : [postsByUser, postsByUser];
-  }, [id]);
+  const [currentTab, setCurrentTab] = useState(PostTabEnum.upload);
+  const [postsLists, setPostsLists] = useState<any[]>([]);
+
+  useEffect(() => {
+    !postsLists[currentTab - 1] && id && getPostsList();
+  }, [currentTab, id]);
+
+  const getPostsList = async () => {
+    const newPostsLists = [...postsLists];
+    switch (currentTab) {
+      case PostTabEnum.upload:
+        const uploadedRes = await getPostsByUserId(id);
+        newPostsLists[PostTabEnum.upload - 1] = uploadedRes.data.posts;
+        break;
+      case PostTabEnum.save:
+        const savedRes = await getSavedPostsOfAuthUser();
+        newPostsLists[PostTabEnum.save - 1] = savedRes.data.posts;
+      case PostTabEnum.share:
+        const sharedRes = {
+          data: {
+            posts: []
+          }
+        }
+        newPostsLists[PostTabEnum.share - 1] = sharedRes.data.posts;
+      default:
+        break;
+    }
+
+    setPostsLists(newPostsLists);
+  };
 
   const tabs = useMemo(() => {
     return auth.user.user_id === Number(id)
       ? userTabs.map((userTab) => ({
           ...userTab,
-          label: userTab.label + `(${postsLists[userTab.id - 1].length})`,
+          label:
+            userTab.label +
+            (postsLists[userTab.id - 1]
+              ? `(${postsLists[userTab.id - 1]?.length ?? 0})`
+              : ""),
         }))
       : anotherUserTabs.map((userTab) => ({
           ...userTab,
-          label: userTab.label + `(${postsLists[userTab.id - 1].length})`,
+          label: userTab.label + (postsLists[userTab.id - 1]
+            ? `(${postsLists[userTab.id - 1]?.length ?? 0})`
+            : ""),
         }));
   }, [postsLists]);
 

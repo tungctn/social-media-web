@@ -60,4 +60,20 @@ module Enums
     event: 4, #sự kiện
     other: 5 #khác
   }
+
+  #Thời gian để thống kê
+  TIME_STATISTICS = {
+    today: 1,
+    yesterday: 2,
+    this_month: 3,
+    last_month: 4,
+    this_year: 5,
+    last_year: 6
+  }
+
+  #loại báo cáo của người dùng
+  TYPE_REPORT = {
+    content: 1,
+    image: 2
+  }
 end

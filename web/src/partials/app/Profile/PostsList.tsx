@@ -30,7 +30,7 @@ export default function PostsList({ posts }: PostsListProps) {
 
   return (
     <div ref={ref} className="w-full flex flex-row flex-wrap">
-      {posts.map((post) => {
+      {posts?.map((post) => {
         return <ShortPostCard key={post.id} post={post} />;
       })}
     </div>

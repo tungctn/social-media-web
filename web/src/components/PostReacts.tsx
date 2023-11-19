@@ -1,3 +1,5 @@
+"use client";
+
 import { FaRegMessage, FaRegShareFromSquare } from "react-icons/fa6";
 import { useState } from "react";
 import PostDetail from "@/partials/app/Post/PostDetail";
@@ -5,13 +7,17 @@ import ReactsBox from "./ReactsBox";
 import useComponentVisible from "@/hooks/useComponentVisible";
 import ReactIcon from "./ReactIcon";
 import { ReactType } from "@/constants/Others";
-import { reactPost, unReactPost } from "@/services/postService";
+import { createPost, reactPost, unReactPost } from "@/services/postService";
 import { toast } from "react-toastify";
+import { Image } from "@/utils/fakeData/Image";
+import { useSelector } from "react-redux";
 
 type PostReactsProps = {
   iconCustomClassName?: string;
   customClassName?: string;
   postId: number;
+  images?: Image[];
+  content?: string;
   onComment?: Function;
   reactType: ReactType | undefined;
   onChange: Function;
@@ -24,6 +30,8 @@ export default function PostReacts({
   onComment = () => {},
   reactType,
   onChange,
+  images,
+  content,
 }: PostReactsProps) {
   const [showDetail, setShowDetail] = useState(false);
   const {
@@ -35,6 +43,7 @@ export default function PostReacts({
     postId && setShowDetail(true);
     onComment();
   };
+  const auth = useSelector((state: any) => state.auth);  
 
   const handleHoverReactsBox = () => {
     setShowReactsBox(true);
@@ -56,6 +65,19 @@ export default function PostReacts({
       toast.error("Error!");
     }
     handleCloseReactsBox();
+  };
+
+  const handleShare = async () => {    
+    const res: any = await createPost({
+      share_id: postId,
+      user_id: auth.user.user_id,
+    });
+
+    if (res.success) {
+      toast.success("Shared!");
+    } else {
+      toast.success(res.message);
+    }
   };
   return (
     <>
@@ -94,7 +116,10 @@ export default function PostReacts({
           </div>
           Comment
         </div>
-        <div className="flex flex-row gap-[5px] items-center cursor-pointer leading-0">
+        <div
+          className="flex flex-row gap-[5px] items-center cursor-pointer leading-0"
+          onClick={handleShare}
+        >
           <div
             className={
               "transition-all ease-linear hover:text-deep-lilac hover:scale-105 hover:animate-shaking-like " +

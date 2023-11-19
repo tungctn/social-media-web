@@ -531,6 +531,10 @@ Chỉ xóa được những ảnh mà user đang đăng nhập tạo
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
+| Parameter   | Type     | Description                                   |
+| :---------- | :------- | :-------------------------------------------- |
+| `type_report`   | `enum TYPE_REPORT` | **Optional**    loại báo cáo của người dùng (ảnh, bài viết) |
+
 </details>
 
 #### Get comment
@@ -644,6 +648,10 @@ Chỉ xóa được những ảnh mà user đang đăng nhập tạo
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Parameter   | Type     | Description                                   |
+| :---------- | :------- | :-------------------------------------------- |
+| `type_report`   | `enum TYPE_REPORT` | **Optional**    loại báo cáo của người dùng (ảnh, bài viết) |
 
 </details>
 
@@ -949,6 +957,7 @@ Chấp nhận lời mời, block, chuyển loại bạn bè (hẹn hò ?)
 
 <details>
 <summary><code>GET /api/admins/reports/posts</code></summary>
+<summary><code>GET /api/admins/reports/comments</code></summary>
 <br>
 
 #### Parameters
@@ -968,6 +977,7 @@ Chấp nhận lời mời, block, chuyển loại bạn bè (hẹn hò ?)
 
 <details>
 <summary><code>POST /api/admins/reports/posts/:id</code></summary>
+<summary><code>POST /api/admins/reports/comments/:id</code></summary>
 <br>
 
 #### Parameters
@@ -980,6 +990,27 @@ Chấp nhận lời mời, block, chuyển loại bạn bè (hẹn hò ?)
 | :------------- | :----- | :---------------------- |
 | `status`       | `int`  | **Optional**            |
 | `error_list`   | `json` | **Optional**, '[1,2,3]' |
+
+</details>
+</details>
+
+<summary>Dashboard module</summary>
+
+#### Thống kê lịch sử đăng nhập
+
+<details>
+<summary><code>POST /api/dashboard/login-history</code></summary>
+<br>
+
+#### Parameters
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication, role = admin |
+
+| Path Variables | Type   | Description             |
+| :------------- | :----- | :---------------------- |
+| `time_statistics`       | `enum TIME_STATISTICS`  | **Optional**            |
 
 </details>
 </details>

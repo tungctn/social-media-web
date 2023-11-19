@@ -26,14 +26,13 @@ const PostModal = () => {
   const router = useRouter();
   const [isImageView, setIsImageView] = useState(false);
   const [content, setContent] = useState<string>("");
-  const postImages = postDetail?.images?.map((image: Image) => image.url);
   const [uploadedImages, setUploadedImages] = useState<any[]>([]);
   console.log({ isEdit, postDetail, content });
 
   useEffect(() => {
     if (isEdit) {
       setContent(postDetail?.content);
-      setUploadedImages(postImages);
+      setUploadedImages(postDetail?.images);
     } else {
       setContent("");
       setUploadedImages([]);
@@ -52,8 +51,8 @@ const PostModal = () => {
           //   toast.error(moderate.message);
           //   continue;
           // } else {
-            // toast.success(moderate.message);
-            uploadeds.push(response.data.image);
+          // toast.success(moderate.message);
+          uploadeds.push(response.data.image);
           // }
         } catch (error) {
           toast.error("Error uploading the image!");
@@ -98,7 +97,6 @@ const PostModal = () => {
         onClose();
         setUploadedImages([]);
         setContent("");
-        router.refresh();
       }
     } catch (error: any) {
       toast.error("Error creating post!");

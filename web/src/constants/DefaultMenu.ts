@@ -4,8 +4,9 @@ import NewPostForm from "@/partials/app/Post/NewPostForm";
 import ImagesList from "@/partials/app/Report/ImagesList";
 import TextList from "@/partials/app/Report/TextList";
 import { FaHome } from "react-icons/fa";
-import { FaMagnifyingGlass, FaRegSquarePlus } from "react-icons/fa6";
+import { FaChartBar, FaMagnifyingGlass, FaRegSquarePlus } from "react-icons/fa6";
 import { TbReportOff } from "react-icons/tb";
+import { ReportType } from "./Others";
 
 const DefaultMenu: any = [
   {
@@ -18,11 +19,19 @@ const DefaultMenu: any = [
     PrefixIcon: FaRegSquarePlus,
     href: null,
     Component: NewPostForm,
+    onlyUser: true,
   },
   {
     label: "Search",
     PrefixIcon: FaMagnifyingGlass,
     href: "/search/",
+    onlyUser: true,
+  },
+  {
+    label: "Post statistics",
+    PrefixIcon: FaChartBar,
+    href: "/post-statistics",
+    onlyAdmin: true,
   },
   {
     label: "Report",
@@ -66,15 +75,15 @@ export const FriendMenu: any = [
 ];
 
 export enum ReportMenuEnum {
-  ReportImage = 0,
-  ReportText = 1,
-  CommentImage = 2,
-  CommentText = 3,
+  ReportImage = 2,
+  ReportText = 3,
+  CommentImage = 0,
+  CommentText = 1,
 }
 
 export const ReportMenu: any = [
   {
-    id: "report-comment",
+    id: ReportType.comment,
     label: "Report comment",
     items: [
       {
@@ -90,7 +99,7 @@ export const ReportMenu: any = [
     ],
   },
   {
-    id: "report-post",
+    id: ReportType.post,
     label: "Report post",
     items: [
       {

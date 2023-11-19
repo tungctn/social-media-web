@@ -23,6 +23,7 @@ default: &default
 development:
   <<: *default
   database: social_media
+  timezone: UTC
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -30,6 +31,7 @@ development:
 test:
   <<: *default
   database: social_media
+  timezone: UTC
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -54,5 +56,6 @@ test:
 production:
   <<: *default
   database: social_media
+  timezone: UTC
   # username: social_media_app
   # password: <%= ENV["SOCIAL_MEDIA_APP_DATABASE_PASSWORD"] %>

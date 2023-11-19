@@ -51,3 +51,47 @@ export enum FriendStatus {
   block = 3,
   refuse = 4,
 }
+
+export enum ReportType {
+  post = "posts",
+  comment = "comments",
+}
+
+export enum ReportErrorType {
+  ImageNotStardard = 1,
+  ImageNotRelated = 2,
+  ContentNotStardard = 3,
+  ContentNotRelated = 4,
+}
+
+interface ReportErrorSpec {
+  label: string;
+}
+
+export function getReportErrorSpec(
+  reportErrorType: ReportErrorType | null,
+): ReportErrorSpec | undefined {
+  if (reportErrorType !== null) {
+    switch (reportErrorType) {
+      case ReportErrorType.ImageNotStardard:
+      case ReportErrorType.ImageNotRelated:
+        return {
+          label: "image",
+        };
+      case ReportErrorType.ContentNotStardard:
+      case ReportErrorType.ContentNotRelated:
+        return {
+          label: "content",
+        };
+    }
+  }
+}
+
+export enum TimeStatistics {
+  today = 1,
+  yesterday = 2,
+  thisMonth = 3,
+  lastMonth = 4,
+  thisYear = 5,
+  lastYear = 6,
+}

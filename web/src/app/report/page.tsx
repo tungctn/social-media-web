@@ -4,8 +4,11 @@ import Container from "@/components/Container";
 import { ReportMenu, ReportMenuEnum } from "@/constants/DefaultMenu";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import CheckAdmin from "@/middlewares/CheckAdmin";
+import { getReportedComments } from "@/services/commentServices";
+import { getReportedPosts } from "@/services/postService";
 import { postsByUser } from "@/utils/fakeData/Post";
 import { useCallback, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Report() {
   const [currentTabId, setCurrentTabId] = useState<number>(
@@ -19,7 +22,27 @@ export default function Report() {
 
   const getListsData = async () => {
     const newLists = [...lists];
-    newLists[Math.floor(currentTabId / 2)] = postsByUser;
+    switch (currentTabId) {
+      case ReportMenuEnum.ReportImage:
+      case ReportMenuEnum.ReportText:
+        const postsRes: any = await getReportedPosts();
+
+        if (postsRes.success) {
+          newLists[Math.floor(currentTabId / 2)] = postsRes.data.posts;
+        } else {
+          toast.error(postsRes.message);
+        }
+        break;
+
+      default:
+        const commentsRes: any = await getReportedComments();
+        if (commentsRes.success) {
+          newLists[Math.floor(currentTabId / 2)] = commentsRes.data.comments;
+        } else {
+          toast.error(commentsRes.message);
+        }
+        break;
+    }
     setLists(newLists);
   };
 
@@ -32,7 +55,13 @@ export default function Report() {
       ReportMenu[Math.floor(currentTabId / 2)].items[currentTabId % 2]
         .Component;
 
-    return <Component data={lists[Math.floor(currentTabId / 2)]} />;
+    return (
+      <Component
+        data={lists[Math.floor(currentTabId / 2)]}
+        type={ReportMenu[Math.floor(currentTabId / 2)].id}
+        onChange={getListsData}
+      />
+    );
   }, [currentTabId, lists]);
   return (
     <CheckAdmin>
