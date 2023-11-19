@@ -986,6 +986,27 @@ Chấp nhận lời mời, block, chuyển loại bạn bè (hẹn hò ?)
 </details>
 </details>
 
+<summary>Dashboard module</summary>
+
+#### Thống kê lịch sử đăng nhập
+
+<details>
+<summary><code>POST /api/dashboard/login-history</code></summary>
+<br>
+
+#### Parameters
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication, role = admin |
+
+| Path Variables | Type   | Description             |
+| :------------- | :----- | :---------------------- |
+| `time_statistics`       | `enum TIME_STATISTICS`  | **Optional**            |
+
+</details>
+</details>
+
 ## Architecture Design
 
 ### Database Design
