@@ -3,6 +3,84 @@ import Comment, { commentsByPostId } from "./Comment";
 import { Image, images } from "./Image";
 import User, { currentUser } from "./User";
 
+enum PostTopic {
+  education = 1,
+  share = 2,
+  evaluate = 3,
+  event = 4,
+  other = 5,
+}
+
+interface PostTopicData {
+  title: string;
+  value: number;
+  color: string;
+}
+
+export function getPostTopicData(
+  postTopic: PostTopic,
+  value: number,
+): PostTopicData {
+  switch (postTopic) {
+    case PostTopic.education:
+      return {
+        title: "Giáo dục",
+        value,
+        color: "#F15A3D",
+      };
+    case PostTopic.share:
+      return {
+        title: "Chia sẻ kinh nghiệm",
+        value,
+        color: "#FED34A",
+      };
+    case PostTopic.evaluate:
+      return {
+        title: "Đánh giá",
+        value,
+        color: "#8E6AAE",
+      };
+    case PostTopic.event:
+      return {
+        title: "Sự kiện",
+        value,
+        color: "#89C761",
+      };
+    default:
+      return {
+        title: "Khác",
+        value,
+        color: "#359CC9",
+      };
+  }
+}
+
+export const PostTopicDatas: any = {
+  total: 100,
+  data: [
+    {
+      label: PostTopic.education,
+      count: 20,
+    },
+    {
+      label: PostTopic.share,
+      count: 20,
+    },
+    {
+      label: PostTopic.evaluate,
+      count: 20,
+    },
+    {
+      label: PostTopic.event,
+      count: 20,
+    },
+    {
+      label: PostTopic.other,
+      count: 20,
+    },
+  ],
+};
+
 type Post = {
   id: number;
   userId?: number;
@@ -24,7 +102,7 @@ export const nearestPost: Post = {
   userId: currentUser.user_id,
   user: currentUser,
   content:
-      "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
+    "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
   created_at: new Date("2023-09-21 17:33"),
   images: [images[0], images[1]],
   likes_count: 1200,

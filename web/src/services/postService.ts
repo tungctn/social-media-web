@@ -45,8 +45,8 @@ export function checkPostSaved(id: number) {
   return instance.get(`/api/posts/save/${id}`);
 }
 
-export function report(postId: number) {
-  return instance.post(`/api/posts/report/${postId}`);
+export function report(postId: number, data: { type_report: 1 | 2 }) {
+  return instance.post(`/api/posts/report/${postId}`, data);
 }
 
 export function getReportedPosts() {

@@ -36,19 +36,21 @@ export default function ImagesList({
       className="mx-5 py-[54px] flex flex-row flex-wrap justify-center overflow-auto scrollbar-none 3xl:h-[calc(100vh-40px*2)] h-[calc(100vh-32px*2)]"
     >
       {data?.map((item: any) => {
-        return (
-          <ImageReportCard
-            key={item.id}
-            user={item.user}
-            id={item.id}
-            images={item.images}
-            reportedAt={new Date()}
-            type={type}
-            status={item.status}
-            errorList={item.error_list}
-            onChange={onChange}
-          />
-        );
+        if (item.type_report === 2) {
+          return (
+            <ImageReportCard
+              key={item.id}
+              user={item.user}
+              id={item.id}
+              images={item.images}
+              reportedAt={new Date()}
+              type={type}
+              status={item.status}
+              errorList={item.error_list}
+              onChange={onChange}
+            />
+          );
+        }
       })}
     </div>
   );
