@@ -4,13 +4,27 @@ import useComponentVisible from "@/hooks/useComponentVisible";
 import { MouseEventHandler } from "react";
 import { FaEllipsis, FaXmark } from "react-icons/fa6";
 import OptionsBox from "./OptionsBox";
+import { useSelector } from "react-redux";
+import usePostModal from "@/hooks/usePostModal";
+import Post from "@/utils/fakeData/Post";
+import { deletePost } from "@/services/postService";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
-export default function PostActions() {
+type PostActionsProps = {
+  user_id?: number;
+  postDetail?: Post;
+};
+
+export default function PostActions({ user_id, postDetail }: PostActionsProps) {
   const {
     ref: actionsRef,
     isComponentVisible,
     setIsComponentVisible,
   } = useComponentVisible(false);
+  const auth = useSelector((state: any) => state.auth);
+  const router = useRouter();
+  const postModal = usePostModal();
 
   const handleClickClose: any = () => {
     setIsComponentVisible(false);
@@ -34,10 +48,23 @@ export default function PostActions() {
         onClose={handleClickClose}
         options={[
           {
-            label: "Bookmark",
+            label: auth.user.user_id == user_id ? "Edit" : "Bookmark",
+            onClick: () => {
+              if (auth.user.user_id == user_id) {
+                postModal.onEdit(postDetail);
+              }
+            },
           },
           {
-            label: "Report",
+            label: auth.user.user_id == user_id ? "Delete" : "Report",
+            onClick: () => {
+              if (auth.user.user_id == user_id) {
+                deletePost(Number(postDetail?.id)).then((res) => {
+                  toast.success("Xóa bài viết thành công!");
+                  router.refresh();
+                });
+              }
+            },
             danger: true,
           },
         ]}

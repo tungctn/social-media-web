@@ -7,11 +7,23 @@ export function createPost(post: any) {
 }
 
 export function getAllPosts() {
-  return instance.get("/api/posts?page_index=1");
+  return instance.get("/api/posts");
 }
 
 export function getPostById(id: number) {
   return instance.get(`/api/posts/${id}`);
+}
+
+export function getMyPosts() {
+  return instance.get(`/api/posts/user`);
+}
+
+export function updatePost(postId: number, post: any) {
+  return instance.put(`/api/posts/${postId}`, post);
+}
+
+export function deletePost(id: number) {
+  return instance.delete(`/api/posts/${id}`);
 }
 
 export function reactPost(id: number, reactType: ReactType) {

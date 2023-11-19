@@ -60,12 +60,12 @@ export default function PostCard({ post }: PostCardProps) {
                 </Link>
                 <time className="first-letter:uppercase text-xs text-spanish-gray">
                   {dayjs(postDetail.created_at).format(
-                    "dddd, HH:mm DD/MM/YYYY",
+                    "dddd, HH:mm DD/MM/YYYY"
                   )}
                 </time>
               </div>
             </div>
-            <PostActions />
+            <PostActions user_id={postDetail.user_id} postDetail={postDetail} />
           </div>
           <p className="px-6 py-[18px]">{postDetail.content}</p>
           <div

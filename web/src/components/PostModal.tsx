@@ -8,18 +8,37 @@ import { FaRegSmile } from "react-icons/fa";
 import { BsFillTagsFill } from "react-icons/bs";
 import { moderateImage, uploadImage } from "@/services/imageServices";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./Button";
 import { IoClose } from "react-icons/io5";
 import { useSelector } from "react-redux";
-import { createPost, moderateContent } from "@/services/postService";
+import {
+  createPost,
+  moderateContent,
+  updatePost,
+} from "@/services/postService";
+import { Image } from "@/utils/fakeData/Image";
+import { useRouter } from "next/navigation";
 
 const PostModal = () => {
   const auth = useSelector((state: any) => state.auth);
-  const { isOpen, onClose } = usePostModal();
-  const [uploadedImages, setUploadedImages] = useState<any[]>([]);
+  const { isOpen, onClose, isEdit, postDetail } = usePostModal();
+  const router = useRouter();
   const [isImageView, setIsImageView] = useState(false);
   const [content, setContent] = useState<string>("");
+  const postImages = postDetail?.images?.map((image: Image) => image.url);
+  const [uploadedImages, setUploadedImages] = useState<any[]>([]);
+  console.log({ isEdit, postDetail, content });
+
+  useEffect(() => {
+    if (isEdit) {
+      setContent(postDetail?.content);
+      setUploadedImages(postImages);
+    } else {
+      setContent("");
+      setUploadedImages([]);
+    }
+  }, [isEdit]);
 
   const handleImageChange = async (e: any) => {
     const files = Array.from(e.target.files);
@@ -28,14 +47,14 @@ const PostModal = () => {
       if (file) {
         try {
           const response = await uploadImage(file as File);
-          const moderate = await moderateImage(response.data.image.url);
-          if (!moderate.success) {
-            toast.error(moderate.message);
-            continue;
-          } else {
-            toast.success(moderate.message);
+          // const moderate = await moderateImage(response.data.image.url);
+          // if (!moderate.success) {
+          //   toast.error(moderate.message);
+          //   continue;
+          // } else {
+            // toast.success(moderate.message);
             uploadeds.push(response.data.image);
-          }
+          // }
         } catch (error) {
           toast.error("Error uploading the image!");
         }
@@ -66,17 +85,20 @@ const PostModal = () => {
         image_ids: imageIds,
         user_id: auth.user.user_id,
       };
-      const moderate = await moderateContent(content.replace(/\n/g, " "));
-      if (!moderate.success) {
-        toast.error(moderate.message);
-        return;
-      }
-      const response = await createPost(postInfo);
+      // const moderate = await moderateContent(content.replace(/\n/g, " "));
+      // if (!moderate.success) {
+      //   toast.error(moderate.message);
+      //   return;
+      // }
+      const response = isEdit
+        ? await updatePost(postDetail?.id, postInfo)
+        : await createPost(postInfo);
       if (response.data) {
         toast.success("Create post successfully!");
         onClose();
         setUploadedImages([]);
         setContent("");
+        router.refresh();
       }
     } catch (error: any) {
       toast.error("Error creating post!");
@@ -113,7 +135,7 @@ const PostModal = () => {
                 <span className="text-spanish-gray text-xs"></span>
               </div>
             </div>
-            <div className="flex flex-row items-center gap-2">  
+            <div className="flex flex-row items-center gap-2">
               <FaRegClock size={15} color="#9551BA" />
               <span className="text-spanish-gray text-xs">2</span>
             </div>
@@ -224,7 +246,7 @@ const PostModal = () => {
       onClose={onClose}
       body={bodyContent}
       title={isImageView ? "Images" : "Create a new Post"}
-      actionLabel="Post"
+      actionLabel={isEdit ? "Update" : "Post"}
       isOpen={isOpen}
       header={isImageView ? headerContent : undefined}
       isButtonClose={isImageView}
