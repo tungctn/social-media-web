@@ -21,6 +21,7 @@ import Button from "./Button";
 
 type PostActionsProps = {
   postDetail?: Post;
+  onChange?: Function;
 };
 export default function PostActions({ postDetail }: PostActionsProps) {
   const {

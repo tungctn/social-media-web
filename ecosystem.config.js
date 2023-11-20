@@ -9,13 +9,6 @@ module.exports = {
       ignore_watch: ["node_modules"],
     },
     {
-      name: "flask-app",
-      script: "python3",
-      args: "main.py",
-      cwd: "./AI/detect-image/",
-      watch: true,
-    },
-    {
       name: "rails-app",
       script: "start-rails.sh",
       interpreter: "bash",
