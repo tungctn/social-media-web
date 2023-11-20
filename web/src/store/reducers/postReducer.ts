@@ -1,15 +1,18 @@
-import { ADD_POST } from "../constants/postType";
+import {
+  GET_POSTS,
+} from "../constants/postType";
 
-const initialPostState = {};
+const initialPostState = {
+  posts: [],
+};
 
 export default function postReducer(state = initialPostState, action: any) {
   switch (action.type) {
-    case ADD_POST:
+    case GET_POSTS:
       return {
         ...state,
-        posts: action.posts,
+        posts: action.payload,
       };
-
     default:
       return state;
   }

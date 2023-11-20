@@ -7,7 +7,7 @@ export function createPost(post: any) {
 }
 
 export function getAllPosts() {
-  return instance.get("/api/posts");
+  return instance.get("/api/posts/?page_size=7&page_index=1");
 }
 
 export function getPostById(id: number) {
@@ -67,7 +67,7 @@ export function getReportedPosts() {
 
 export function updateStatusReportedPost(
   id: number,
-  data: { status: number; error_list?: string | null },
+  data: { status: number; error_list?: string | null }
 ) {
   return instance.post(`/api/admins/reports/posts/${id}`, data);
 }
@@ -78,7 +78,7 @@ export async function moderateContent(content: string) {
       `${process.env.NEXT_PUBLIC_API_MODERATE_URL}/predict/text`,
       {
         caption: content,
-      },
+      }
     )
   ).data;
 }

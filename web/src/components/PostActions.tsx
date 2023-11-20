@@ -4,12 +4,11 @@ import useComponentVisible from "@/hooks/useComponentVisible";
 import { MouseEventHandler, useEffect, useState } from "react";
 import { FaEllipsis } from "react-icons/fa6";
 import OptionsBox from "./OptionsBox";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import usePostModal from "@/hooks/usePostModal";
 import Post from "@/utils/fakeData/Post";
 import { deletePost } from "@/services/postService";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 import {
   checkPostSaved,
   report,
@@ -18,6 +17,7 @@ import {
 } from "@/services/postService";
 import { CustomFlowbiteTheme, Modal, Radio } from "flowbite-react";
 import Button from "./Button";
+import { getPosts } from "@/store/actions/postActions";
 
 type PostActionsProps = {
   postDetail?: Post;
@@ -33,7 +33,7 @@ export default function PostActions({ postDetail }: PostActionsProps) {
   const [showReportSelect, setShowReportSelect] = useState<boolean>(false);
   const auth = useSelector((state: any) => state.auth);
   const postModal = usePostModal();
-  const router = useRouter();
+  const dispatch = useDispatch();
   useEffect(() => {
     postDetail?.id && getDefautlSavedOrNot();
   }, [postDetail]);
@@ -94,7 +94,7 @@ export default function PostActions({ postDetail }: PostActionsProps) {
 
   const handleEdit = () => {
     postModal.onEdit(postDetail);
-    // router.refresh();
+    dispatch(getPosts() as any);
   };
 
   const handleDelete = async () => {
@@ -102,7 +102,7 @@ export default function PostActions({ postDetail }: PostActionsProps) {
       await deletePost(Number(postDetail?.id));
       toast.success("Deleted!");
       postModal.onClose();
-      router.refresh();
+      dispatch(getPosts() as any);
     } catch (error) {
       toast.error("Error!");
     }

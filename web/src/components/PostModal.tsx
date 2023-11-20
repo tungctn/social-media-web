@@ -11,23 +11,23 @@ import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import Button from "./Button";
 import { IoClose } from "react-icons/io5";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   createPost,
   moderateContent,
   updatePost,
 } from "@/services/postService";
-import { Image } from "@/utils/fakeData/Image";
-import { useRouter } from "next/navigation";
+import { get } from "cypress/types/lodash";
+import { GET_POSTS } from "@/store/constants/postType";
+import { getPosts } from "@/store/actions/postActions";
 
 const PostModal = () => {
   const auth = useSelector((state: any) => state.auth);
   const { isOpen, onClose, isEdit, postDetail } = usePostModal();
-  const router = useRouter();
   const [isImageView, setIsImageView] = useState(false);
   const [content, setContent] = useState<string>("");
   const [uploadedImages, setUploadedImages] = useState<any[]>([]);
-  console.log({ isEdit, postDetail, content });
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isEdit) {
@@ -97,6 +97,7 @@ const PostModal = () => {
         onClose();
         setUploadedImages([]);
         setContent("");
+        dispatch(getPosts() as any);
       }
     } catch (error: any) {
       toast.error("Error creating post!");
