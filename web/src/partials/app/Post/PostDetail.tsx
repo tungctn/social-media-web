@@ -169,12 +169,14 @@ export default function PostDetail({
                     </span>
                     <span className="first-letter:uppercase text-xs text-spanish-gray">
                       {dayjs(post.share_post.created_at).format(
-                        "dddd, HH:mm DD/MM/YYYY",
+                        "dddd, HH:mm DD/MM/YYYY"
                       )}
                     </span>
                   </div>
                 </div>
-                <p className="text-[14px] 3xl:mx-12 text-white mt-4">{post.share_post.content}</p>
+                <p className="text-[14px] 3xl:mx-12 text-white mt-4">
+                  {post.share_post.content}
+                </p>
               </div>
               <CustomCarousel
                 images={
@@ -200,7 +202,7 @@ export default function PostDetail({
                   </div>
                 </div>
                 {post && (
-                  <PostActions onChange={handleAction} postId={post.id} />
+                  <PostActions onChange={handleAction} postDetail={post} />
                 )}
               </div>
               <div>
