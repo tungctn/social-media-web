@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-  skip_before_action :authenticate_request, only: [:ping]
   skip_after_action :update_last_time_active, only: [:end]
 
   def ping
