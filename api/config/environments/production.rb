@@ -96,5 +96,5 @@ Rails.application.configure do
 
   #timezone
   config.time_zone = 'Asia/Bangkok'
-  config.active_record.default_timezone = :utc
+  config.active_record.default_timezone = :local
 end

@@ -33,7 +33,22 @@ class DashboardController < AdminsController
   end
   
   def statistics_number
+    today_create_query = data_build_query_time_statistics(Enums::TIME_STATISTICS[:today])
+    report_query = "time_report >= '#{Date.today.beginning_of_day}' AND time_report <= '#{Date.today.end_of_day}'"
+    online_query = "last_time_active >= '#{Time.zone.now - 6.minutes}'"
+    
+    data_result = {
+      online: 0,
+      user: 0,
+      post: 0,
+      report: 0
+    }
 
+    data_result["online"] = User.where(online_query).count
+    data_result["user"] = User.all.count
+    data_result["post"] = Post.where(today_create_query["query_time"]).count
+    data_result["report"] = PostComment.where(report_query).count + Post.where(report_query).count
+    render json: { data: data_result }, status: :ok
   end
   
   def statistics_post_label
