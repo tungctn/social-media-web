@@ -33,11 +33,59 @@ class DashboardController < AdminsController
   end
   
   def statistics_number
+    today_create_query = data_build_query_time_statistics(Enums::TIME_STATISTICS[:today])
+    report_query = "time_report >= '#{Date.today.beginning_of_day}' AND time_report <= '#{Date.today.end_of_day}'"
+    online_query = "last_time_active >= '#{Time.zone.now - 6.minutes}'"
+    
+    data_result = {
+      online: 0,
+      user: 0,
+      post: 0,
+      report: 0
+    }
 
+    data_result["online"] = User.where(online_query).count
+    data_result["user"] = User.all.count
+    data_result["post"] = Post.where(today_create_query["query_time"]).count
+    data_result["report"] = PostComment.where(report_query).count + Post.where(report_query).count
+    render json: { data: data_result }, status: :ok
   end
   
   def statistics_post_label
+    total_post = {
+      "total": 0,
+      "education": 0,
+      "share_experience": 0,
+      "evaluate": 0,
+      "event": 0,
+      "other": 0
+    }
+    error_post = {
+      "total": 0,
+      "education": 0,
+      "share_experience": 0,
+      "evaluate": 0,
+      "event": 0,
+      "other": 0
+    }
 
+    #total post
+    total_post["total"] = Post.all.count ||= 0
+    total_post["education"] = Post.where("label = #{Enums::LABEL_TYPE[:education]}").group("label").count.values[0] ||= 0
+    total_post["share_experience"] = Post.where("label = #{Enums::LABEL_TYPE[:share_experience]}").group("label").count.values[0] ||= 0
+    total_post["evaluate"] = Post.where("label = #{Enums::LABEL_TYPE[:evaluate]}").group("label").count.values[0] ||= 0
+    total_post["event"] = Post.where("label = #{Enums::LABEL_TYPE[:event]}").group("label").count.values[0] ||= 0
+    total_post["other"] = Post.where("label = #{Enums::LABEL_TYPE[:other]}").group("label").count.values[0] ||= 0
+
+    #error post
+    error_post["total"] = Post.where("status = #{Enums::ACTIVE_STATUS[:ban]}").count ||= 0
+    error_post["education"] = Post.where("status = #{Enums::ACTIVE_STATUS[:ban]} AND label = #{Enums::LABEL_TYPE[:education]}").group("label").count.values[0] ||= 0
+    error_post["share_experience"] = Post.where("status = #{Enums::ACTIVE_STATUS[:ban]} AND label = #{Enums::LABEL_TYPE[:share_experience]}").group("label").count.values[0] ||= 0 
+    error_post["evaluate"] = Post.where("status = #{Enums::ACTIVE_STATUS[:ban]} AND label = #{Enums::LABEL_TYPE[:evaluate]}").group("label").count.values[0] ||= 0
+    error_post["event"] = Post.where("status = #{Enums::ACTIVE_STATUS[:ban]} AND label = #{Enums::LABEL_TYPE[:event]}").group("label").count.values[0] ||= 0
+    error_post["other"] = Post.where("status = #{Enums::ACTIVE_STATUS[:ban]} AND label = #{Enums::LABEL_TYPE[:other]}").group("label").count.values[0] ||= 0
+
+    render json: { total_post: total_post, error_post: error_post }, status: :ok
   end
   
   def statistics_post_negative

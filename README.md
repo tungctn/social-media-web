@@ -993,7 +993,7 @@ Chấp nhận lời mời, block, chuyển loại bạn bè (hẹn hò ?)
 
 </details>
 </details>
-
+<details>
 <summary>Dashboard module</summary>
 
 #### Thống kê lịch sử đăng nhập
@@ -1013,6 +1013,31 @@ Chấp nhận lời mời, block, chuyển loại bạn bè (hẹn hò ?)
 | `time_statistics`       | `enum TIME_STATISTICS`  | **Optional**            |
 
 </details>
+
+<details>
+<summary><code>POST /api/dashboard/number</code></summary>
+<br>
+
+#### Parameters
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication, role = admin |
+
+</details>
+
+<details>
+<summary><code>POST /api/dashboard/post-label</code></summary>
+<br>
+
+#### Parameters
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication, role = admin |
+
+</details>
+
 </details>
 
 ## Architecture Design

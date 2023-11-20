@@ -16,6 +16,7 @@ module SocialMediaApp
     #timezone
     config.time_zone = 'Asia/Bangkok'
     config.active_record.default_timezone = :local
+    config.active_record.time_zone_aware_attributes = false
 
     # Configuration for the application, engines, and railties goes here.
     #
