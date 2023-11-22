@@ -7,7 +7,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 
 type CommentActionsProps = {
-  authorId: number;
+  authorId?: number;
   commentId: number;
   onChange: Function;
 };
@@ -38,7 +38,7 @@ export default function CommentActions({
       case "delete":
         handleOpenAlert();
         break;
-      case "edit":        
+      case "edit":
         onChange("edit");
         break;
       default:
@@ -69,7 +69,7 @@ export default function CommentActions({
           }}
           ref={ref}
         >
-          {auth.user.user_id === authorId ? (
+          {auth.user?.user_id === authorId ? (
             <>
               <button
                 onClick={() => handleClickItem("edit")}

@@ -108,6 +108,11 @@ export default function PostActions({ postDetail }: PostActionsProps) {
     }
   };
 
+  const isCurrentUser =
+    postDetail && auth?.user
+      ? postDetail?.user_id == auth.user?.user_id
+      : false;
+
   return (
     <>
       <div className="relative">
@@ -125,22 +130,15 @@ export default function PostActions({ postDetail }: PostActionsProps) {
             {
               label: isSaved
                 ? "Bookmarked"
-                : postDetail?.user_id == auth.user.user_id
+                : isCurrentUser
                 ? "Edit"
                 : "Bookmark",
-              onClick:
-                postDetail?.user_id == auth.user.user_id
-                  ? handleEdit
-                  : handleBookmark,
+              onClick: isCurrentUser ? handleEdit : handleBookmark,
             },
             {
-              label:
-                postDetail?.user_id == auth.user.user_id ? "Delete" : "Report",
+              label: isCurrentUser ? "Delete" : "Report",
               danger: true,
-              onClick:
-                postDetail?.user_id == auth.user.user_id
-                  ? handleDelete
-                  : handleReport,
+              onClick: isCurrentUser ? handleDelete : handleReport,
             },
           ]}
         />

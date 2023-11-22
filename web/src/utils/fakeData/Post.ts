@@ -94,7 +94,7 @@ export const nearestPost: Post = {
 export const posts: Post[] = [
   {
     id: 1,
-    userId: currentUser.user_id,
+    user_id: currentUser.user_id,
     user: currentUser,
     content: "content",
     created_at: new Date("2023-09-21 17:33"),

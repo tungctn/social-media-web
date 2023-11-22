@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 
 type AvatarProps = {
-  size: number;
+  size?: number;
   src?: string;
   hasBorder?: boolean;
 };
