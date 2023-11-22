@@ -1,3 +1,5 @@
+"use client";
+
 import User from "@/utils/fakeData/User";
 import Avatar from "./Avatar";
 import Button from "./Button";
@@ -7,6 +9,7 @@ import {
 } from "@/services/friendServices";
 import { FriendStatus } from "@/constants/Others";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 type FriendRequireCardProps = {
   friend: User;
@@ -17,6 +20,7 @@ export default function FriendRequireCard({
   friend,
   onChange,
 }: FriendRequireCardProps) {
+  const router = useRouter();
   const handleAccept = async () => {
     const res: any = await updateFriendState({
       receiver_id: friend.user_id,
@@ -39,9 +43,16 @@ export default function FriendRequireCard({
       onChange(friend, FriendStatus.refuse);
     }
   };
+
+  const handleSeeProfile = () => {
+    router.push(`/profile/${friend.user_id}`);
+  };
   return (
     <div className="bg-white flex flex-col justify-between 3xl:py-8 py-6 3xl:px-[46px] px-8 rounded-[20px] shadow-custom 3xl:w-[266px] 3xl:h-[328px] w-[calc(266px/6*5)] h-[calc(328px/6*5)]">
-      <div className="flex flex-col gap-1 items-center">
+      <div
+        onClick={handleSeeProfile}
+        className="flex flex-col gap-1 items-center"
+      >
         <Avatar size={126} src={friend.avatar_url} hasBorder={true} />
         <div className="flex flex-col items-center">
           <span className="text-deep-lilac 3xl:text-2xl text-xl">

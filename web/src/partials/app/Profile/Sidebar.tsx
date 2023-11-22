@@ -29,7 +29,7 @@ export default function Sidebar({ user }: SidebarProps) {
         <span>0 Followers</span>
       </div>
       <div className="px-10 3xl:mt-6 mt-3">
-        <UserActions userId={user.user_id} />
+        <UserActions friend={user.friend} userId={user.user_id} />
         {user.bio && (
           <div className="3xl:mt-[55px] mt-[calc(55px/6*5)]">
             <p>{user.bio}</p>

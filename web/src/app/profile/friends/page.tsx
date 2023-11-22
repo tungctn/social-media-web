@@ -44,7 +44,7 @@ export default function Friends() {
 
   const handleChangeList = (friend: User, status: FriendStatus) => {
     const newLists = [...friendsLists];
-    
+
     switch (status) {
       case FriendStatus.accept:
         newLists[FriendMenuEnum.Require] = newLists[
@@ -58,6 +58,11 @@ export default function Friends() {
       case FriendStatus.refuse:
         newLists[FriendMenuEnum.Require] = newLists[
           FriendMenuEnum.Require
+        ].filter((item: any) => item.user_id !== friend.user_id);
+        break;
+      case FriendStatus.remove:
+        newLists[FriendMenuEnum.Friend] = newLists[
+          FriendMenuEnum.Friend
         ].filter((item: any) => item.user_id !== friend.user_id);
         break;
       default:

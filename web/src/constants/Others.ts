@@ -50,6 +50,7 @@ export enum FriendStatus {
   accept = 2,
   block = 3,
   refuse = 4,
+  remove = 5,
 }
 
 export enum ReportType {

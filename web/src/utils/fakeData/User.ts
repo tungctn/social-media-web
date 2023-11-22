@@ -19,6 +19,7 @@ type User = {
   posts_count?: number;
   following_count?: number;
   followers_count?: number;
+  friend?: any;
 };
 
 export const currentUser: User = {
