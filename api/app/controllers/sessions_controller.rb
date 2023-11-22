@@ -2,7 +2,15 @@ class SessionsController < ApplicationController
   skip_after_action :update_last_time_active, only: [:end]
 
   def ping
-    render json: { message: "Server đang hoạt động." }, status: :ok
+    time = {
+      "1": Time.current,
+      "2": Time.zone.now,
+      "3": DateTime.now,
+      "4": Time.now,
+      "5": DateTime.current
+    }
+
+    render json: { message: "Server đang hoạt động.", server_time: time }, status: :ok
   end
 
   def end
