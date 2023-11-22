@@ -16,11 +16,8 @@ export default function CheckAuth({ children }: CheckAuthProps) {
 
   useEffect(() => {
     checkUserLogedIn();
-  }, [auth.isLogedIn]);
-
-  useEffect(() => {
     loadAllPosts();
-  }, [postState.posts.length]);
+  }, [auth.isLogedIn, postState.posts.length]);
 
   const checkUserLogedIn = () => {
     dispatch(checkLogedInAction() as any);
