@@ -1,6 +1,4 @@
 class UserInfosController < ApplicationController
-  skip_before_action :authenticate_request, only: [:show]
-
   #region Thông tin người dùng
 
   #lấy thông tin người dùng qua token
@@ -12,13 +10,7 @@ class UserInfosController < ApplicationController
   # lấy thông tin người dùng bất kì
   # created by: ttanh (24/09/2023)
   def show
-    get_current_user()
-
     user = get_user_by_id(params[:id])
-
-    if !user
-      return
-    end
 
     user_info = user.user_info
 
@@ -26,22 +18,20 @@ class UserInfosController < ApplicationController
       friend_status: nil,
       is_sender: nil
     }
-    
-    if @current_user
-      friend_request = nil
-      friend_request = Friend.find_by(receiver_id: @current_user.id, sender_id: user.id)
 
-      if !friend_request
-        friend_request = Friend.find_by(sender_id: @current_user.id, receiver_id: user.id)
+    friend_request = nil
+    friend_request = Friend.find_by(receiver_id: @current_user.id, sender_id: user.id)
 
-        if friend_request
-          friend["friend_status"] = friend_request.friend_status
-          friend["is_sender"] = true
-        end
-      else
+    if !friend_request
+      friend_request = Friend.find_by(sender_id: @current_user.id, receiver_id: user.id)
+
+      if friend_request
         friend["friend_status"] = friend_request.friend_status
-        friend["is_sender"] = false
+        friend["is_sender"] = true
       end
+    else
+      friend["friend_status"] = friend_request.friend_status
+      friend["is_sender"] = false
     end
 
     render json: { user_info: user_info, email: user.email, user_id: user.id, friend: friend }, status: :ok
@@ -77,12 +67,11 @@ class UserInfosController < ApplicationController
     user_info.save
     render json: { message: "Thành công!" }, status: :ok
   end
-
   #endregion
 
   private
   def user_info_params
-    params.permit(:first_name, :last_name, 
+    params.permit(:first_name, :last_name,
       :full_name, :phone_number,
       :date_of_birth, :gender, :avatar,
       :join_date, :last_login, :bio,

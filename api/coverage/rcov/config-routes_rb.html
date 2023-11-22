@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <title>config/routes.rb</title>
+    <link href="./assets/0.3.3/screen.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="./assets/0.3.3/print.css" media="print" rel="stylesheet" type="text/css" />
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <script type="text/javascript" src="./assets/0.3.3/rcov.js"></script>
+  </head>
+  <body>
+    <h1>Api C0 Coverage Information - Simploco - RCov</h1>
+    <h2>config/routes.rb</h2>
+
+    <div class="report_table_wrapper">
+      <table class='report' id='report_table'>
+        <thead>
+          <tr>
+            <th class="left_align">Name</th>
+            <th class="right_align">Total Lines</th>
+            <th class="right_align">Lines of Code</th>
+            <th class="left_align">Total Coverage</th>
+            <th class="left_align">Code Coverage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="left_align"><a href="config-routes_rb.html">config/routes.rb</a></td>
+            <td class='right_align'><tt>84</tt></td>
+            <td class='right_align'><tt>51</tt></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>100.00%</tt></div>
+      <div class="percent_graph">
+        <div class="covered" style="width:100px"></div>
+        <div class="uncovered" style="width:0px"></div>
+      </div></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>100.00%</tt></div>
+      <div class="percent_graph">
+        <div class="covered" style="width:100px"></div>
+        <div class="uncovered" style="width:0px"></div>
+      </div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Key</h3>
+
+    <div class="key"><pre><span class='marked'>Code reported as executed by Ruby looks like this...</span><span class='marked1'>and this: this line is also marked as covered.</span><span class='inferred'>Lines considered as run by rcov, but not reported by Ruby, look like this,</span><span class='inferred1'>and this: these lines were inferred by rcov (using simple heuristics).</span><span class='uncovered'>Finally, here's a line marked as not executed.</span></pre></div>
+
+    <h3>Coverage Details</h3>
+
+    <table class="details">
+      <tbody>
+        <tr class="marked">
+          <td><pre><a name="line2">2</a> Rails.application.routes.draw do</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line3">3</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line4">4</a>   # thêm prefix</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line5">5</a>   scope &#39;api&#39; do</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line6">6</a>     post &quot;/auth/login&quot;, to: &quot;authentication#login&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line7">7</a>     post &quot;/auth/register&quot;, to: &quot;users#register&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line8">8</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line9">9</a>     #session</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line10">10</a>     post &quot;/sessions/ping&quot;, to: &quot;sessions#ping&quot; #ping sau mỗi 5p để biết người dùng đang online</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line11">11</a>     post &quot;/sessions/end&quot;, to: &quot;sessions#end&quot; #người dùng đóng trình duyệt</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line12">12</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line13">13</a>     #thông tin người dùng</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line14">14</a>     get &quot;/users&quot;, to: &quot;user_infos#index&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line15">15</a>     get &quot;/users/:id&quot;, to: &quot;user_infos#show&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line16">16</a>     put &quot;/users&quot;, to: &quot;user_infos#update&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line17">17</a>     put &quot;/users/password&quot;, to: &quot;users#update_password&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line18">18</a>     delete &quot;/users/avatar&quot;, to: &quot;user_infos#delete_avatar&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line19">19</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line20">20</a>     #upload ảnh</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line21">21</a>     get &quot;/images/:id&quot;, to: &quot;images#show&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line22">22</a>     post &quot;/images&quot;, to: &quot;images#create&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line23">23</a>     delete &quot;/images&quot;, to: &quot;images#deletes&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line24">24</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line25">25</a>     #bài viết</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line26">26</a>     #báo cáo bài viết</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line27">27</a>     post &quot;/posts/report/:id&quot;, to: &quot;posts#report&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line28">28</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line29">29</a>     #lưu bài viết</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line30">30</a>     get &quot;/posts/save&quot;, to: &quot;post_saves#index&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line31">31</a>     get &quot;/posts/save/:id&quot;, to: &quot;post_saves#check_save&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line32">32</a>     post &quot;/posts/save/:id&quot;, to: &quot;post_saves#create&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line33">33</a>     delete &quot;/posts/save/:id&quot;, to: &quot;post_saves#destroy&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line34">34</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line35">35</a>     # tương tác chính</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line36">36</a>     get &quot;/posts/user/:id&quot;, to: &quot;posts#show_user_post&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line37">37</a>     get &quot;/posts/user&quot;, to: &quot;posts#my_post&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line38">38</a>     get &quot;/posts/:id&quot;, to: &quot;posts#show&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line39">39</a>     get &quot;/posts&quot;, to: &quot;posts#index&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line40">40</a>     post &quot;/posts&quot;, to: &quot;posts#create&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line41">41</a>     put &quot;/posts/:id&quot;, to: &quot;posts#update&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line42">42</a>     delete &quot;/posts/:id&quot;, to: &quot;posts#destroy&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line43">43</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line44">44</a>     #comment</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line45">45</a>     post &quot;/comments/report/:id&quot;, to: &quot;post_comments#report&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line46">46</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line47">47</a>     get &quot;/comments/:post_id&quot;, to: &quot;post_comments#show&quot; #lấy comment cho 1 bài viết</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line48">48</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line49">49</a>     #biểu cảm với bình luận</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line50">50</a>     post &quot;/comments/reacts&quot;, to: &quot;reacts_post_comments#create&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line51">51</a>     delete &quot;/comments/unreact/:comment_id&quot;, to: &quot;reacts_post_comments#destroy&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line52">52</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line53">53</a>     #tạo bình luận</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line54">54</a>     post &quot;/comments&quot;, to: &quot;post_comments#create&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line55">55</a>     put &quot;/comments/:id&quot;, to: &quot;post_comments#update&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line56">56</a>     delete &quot;/comments/:id&quot;, to: &quot;post_comments#destroy&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line57">57</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line58">58</a>     #react</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line59">59</a>     post &quot;/posts/reacts&quot;, to: &quot;reacts_posts#create&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line60">60</a>     delete &quot;/posts/unreact/:post_id&quot;, to: &quot;reacts_posts#destroy&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line61">61</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line62">62</a>     #Bạn bè</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line63">63</a>     get &quot;/friends/request&quot;, to: &quot;friends#get_request&quot; # lấy ra tất cả danh sách lời mời kết bạn</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line64">64</a>     get &quot;/friends/block&quot;, to: &quot;friends#get_block&quot; # lấy ra tất cả danh sách đã chặn</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line65">65</a>     get &quot;/friends/:id&quot;, to: &quot;friends#show&quot; # lấy ra tất cả danh sách bạn bè của user_id = id</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line66">66</a>     get &quot;/friends&quot;, to: &quot;friends#index&quot; # lấy ra tất cả danh sách bạn bè của bản thân</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line67">67</a>     post &quot;/friends&quot;, to: &quot;friends#create&quot; # gửi lời mời kết bạn</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line68">68</a>     put &quot;/friends&quot;, to: &quot;friends#update&quot;  # chấp nhận lời mời, block, chuyển loại bạn bè</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line69">69</a>     delete &quot;/friends&quot;, to: &quot;friends#destroy&quot; # xóa lời mời kết bạn, xóa bạn bè</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line70">70</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line71">71</a>     #admin</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line72">72</a>     get &quot;/admins/reports/posts&quot;, to: &quot;admins#get_post_report&quot; # lấy danh sách bài viết vi phạm</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line73">73</a>     post &quot;/admins/reports/posts/:id&quot;, to: &quot;admins#change_post_report&quot; # chuyển trạng thái vi phạm</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line74">74</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line75">75</a>     get &quot;/admins/reports/comments&quot;, to: &quot;admins#get_comment_report&quot; # chuyển trạng thái vi phạm</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line76">76</a>     post &quot;/admins/reports/comments/:id&quot;, to: &quot;admins#change_comment_report&quot; # chuyển trạng thái vi phạm</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line77">77</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line78">78</a>     #dashboard</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line79">79</a>     post &quot;/dashboard/login-history&quot;, to: &quot;dashboard#statistics_login_history&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line80">80</a>     post &quot;/dashboard/number&quot;, to: &quot;dashboard#statistics_number&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line81">81</a>     post &quot;/dashboard/post-label&quot;, to: &quot;dashboard#statistics_post_label&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line82">82</a>     post &quot;/dashboard/post-negative&quot;, to: &quot;dashboard#statistics_post_negative&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line83">83</a>     post &quot;/dashboard/post-count&quot;, to: &quot;dashboard#statistics_post_count&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line84">84</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line85">85</a> end</pre></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Generated on 2023-11-26 10:38:25 +0700 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.3</a></p>
+
+  </body>
+</html>

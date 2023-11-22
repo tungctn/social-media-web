@@ -25,9 +25,9 @@
         <tbody>
           <tr>
             <td class="left_align"><a href="app-controllers-authentication_controller_rb.html">app/controllers/authentication_controller.rb</a></td>
+            <td class='right_align'><tt>15</tt></td>
             <td class='right_align'><tt>14</tt></td>
-            <td class='right_align'><tt>13</tt></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>7.14%</tt></div>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>6.67%</tt></div>
       <div class="percent_graph">
         <div class="covered" style="width:7px"></div>
         <div class="uncovered" style="width:93px"></div>
@@ -63,39 +63,42 @@
           <td><pre><a name="line5">5</a>   def login</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line6">6</a>     @user = User.find_by_email(params[:email])</pre></td>
+          <td><pre><a name="line6">6</a>     @current_user = User.find_by_email(params[:email])</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line7">7</a>     if @user&amp;.authenticate(params[:password])</pre></td>
+          <td><pre><a name="line7">7</a>     if @current_user&amp;.authenticate(params[:password])</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line8">8</a>       token = jwt_encode({user_id: @user.id})</pre></td>
+          <td><pre><a name="line8">8</a>       token = jwt_encode({user_id: @current_user.id})</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line9">9</a>       render json: { user: @user, token: token }, status: :ok</pre></td>
+          <td><pre><a name="line9">9</a>       add_login_history()</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line10">10</a>     else</pre></td>
+          <td><pre><a name="line10">10</a>       render json: { user: @current_user, token: token }, status: :ok</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line11">11</a>       render json: { errors: &quot;unauthorized&quot; },</pre></td>
+          <td><pre><a name="line11">11</a>     else</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line12">12</a>              status: :unauthorized</pre></td>
+          <td><pre><a name="line12">12</a>       render json: { errors: &quot;unauthorized&quot; },</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line13">13</a>     end</pre></td>
+          <td><pre><a name="line13">13</a>              status: :unauthorized</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line14">14</a>   end</pre></td>
+          <td><pre><a name="line14">14</a>     end</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line15">15</a> end</pre></td>
+          <td><pre><a name="line15">15</a>   end</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line16">16</a> end</pre></td>
         </tr>
       </tbody>
     </table>
 
-    <p>Generated on 2023-11-04 11:43:19 +0700 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.3</a></p>
+    <p>Generated on 2023-11-26 15:58:44 +0700 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.3</a></p>
 
   </body>
 </html>
