@@ -30,13 +30,15 @@ type PostDetailProps = {
   onClose?: MouseEventHandler<HTMLDivElement>;
   id: number;
   onChange?: Function;
+  negativeCommentsPercent?: number;
 };
 
 export default function PostDetail({
   open = false,
   onClose,
   id,
-  onChange = () => {},
+  onChange,
+  negativeCommentsPercent,
 }: PostDetailProps) {
   const [post, setPost] = useState<Post | undefined>();
   const headerRef = useRef<HTMLDivElement>(null);
@@ -82,9 +84,10 @@ export default function PostDetail({
         comments_count: (post?.comments_count ?? 0) + 1,
       };
 
-      onChange({
-        comments_count: (post?.comments_count ?? 0) + 1,
-      });
+      onChange &&
+        onChange({
+          comments_count: (post?.comments_count ?? 0) + 1,
+        });
       setPost(newPost);
     }
   };
@@ -113,9 +116,10 @@ export default function PostDetail({
         comments_count: (post?.comments_count ?? 0) - 1,
       };
 
-      onChange({
-        comments_count: (post?.comments_count ?? 0) - 1,
-      });
+      onChange &&
+        onChange({
+          comments_count: (post?.comments_count ?? 0) - 1,
+        });
       setPost(newPost);
     } else if (type === "edit") {
       setNewComment(undefined);
@@ -130,18 +134,20 @@ export default function PostDetail({
   const handleChangeReact = (reactType: ReactType) => {
     const newPost: any = post && reactPost(post, reactType);
 
-    onChange({
-      likes_count: newPost.likes_count,
-      type_react: newPost.type_react,
-    });
+    onChange &&
+      onChange({
+        likes_count: newPost.likes_count,
+        type_react: newPost.type_react,
+      });
     setPost(newPost);
   };
 
   const handleAction = (isActed: boolean) => {
-    onChange({
-      isAction: true,
-      isActed,
-    });
+    onChange &&
+      onChange({
+        isAction: true,
+        isActed,
+      });
   };
 
   return (
@@ -169,7 +175,7 @@ export default function PostDetail({
                     </span>
                     <span className="first-letter:uppercase text-xs text-spanish-gray">
                       {dayjs(post.share_post.created_at).format(
-                        "dddd, HH:mm DD/MM/YYYY"
+                        "dddd, HH:mm DD/MM/YYYY",
                       )}
                     </span>
                   </div>
@@ -201,7 +207,7 @@ export default function PostDetail({
                     </span>
                   </div>
                 </div>
-                {post && (
+                {post && onChange && (
                   <PostActions onChange={handleAction} postDetail={post} />
                 )}
               </div>
@@ -218,16 +224,30 @@ export default function PostDetail({
                     />
                   </div>
                 </div>
-                <div className="pt-[9px] pb-[8px] border border-l-0 border-r-0 border-deep-lilac">
-                  <PostReacts
-                    customClassName="text-xs leading-[12px]"
-                    iconCustomClassName="3xl:text-2xl text-xl"
-                    postId={post?.id ?? 0}
-                    reactType={post?.type_react}
-                    onChange={handleChangeReact}
-                    content={post?.content}
-                    images={post?.images}
-                  />
+                <div
+                  className={
+                    "pt-[9px] pb-[8px] border border-l-0 border-r-0 border-deep-lilac"
+                  }
+                >
+                  {post && negativeCommentsPercent !== undefined && (
+                    <span className="3xl:pl-10 pl-8 3xl:pr-[35px] pr-7">
+                      Bình luận tiêu cực:{" "}
+                      <span className="3xl:text-[32px] text-[calc(32px*0.75)] text-deep-lilac font-semibold leading-none">
+                        {negativeCommentsPercent}%
+                      </span>
+                    </span>
+                  )}
+                  {post && onChange && (
+                    <PostReacts
+                      customClassName="text-xs leading-[12px]"
+                      iconCustomClassName="3xl:text-2xl text-xl"
+                      postId={post?.id ?? 0}
+                      reactType={post?.type_react}
+                      onChange={handleChangeReact}
+                      content={post?.content}
+                      images={post?.images}
+                    />
+                  )}
                 </div>
               </div>
             </div>
@@ -253,6 +273,7 @@ export default function PostDetail({
                   onSend={handleSendNewComment}
                   reply={replyComment}
                   defaultComment={editingComment}
+                  disabled={Boolean(negativeCommentsPercent)}
                 />
               </div>
             </div>

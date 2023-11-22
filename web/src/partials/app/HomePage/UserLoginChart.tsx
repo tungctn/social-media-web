@@ -20,5 +20,9 @@ export default function UserLoginChart() {
       setData(res.data.data);
     }
   };
-  return <ColumnChart title="User Login" data={data} />;
+
+  const handleChangeTime = (time: any) => {
+    setOption(time);
+  }
+  return <ColumnChart title="User Login" data={data} onChangeTime={handleChangeTime} />;
 }

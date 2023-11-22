@@ -4,15 +4,16 @@ import { Image, images } from "./Image";
 import User, { currentUser } from "./User";
 
 enum PostTopic {
-  education = 1,
-  share = 2,
-  evaluate = 3,
-  event = 4,
-  other = 5,
+  education = "education",
+  share = "share_experience",
+  evaluate = "evaluate",
+  event = "event",
+  other = "other",
 }
 
 interface PostTopicData {
   title: string;
+  alias: string;
   value: number;
   color: string;
 }
@@ -27,59 +28,38 @@ export function getPostTopicData(
         title: "Giáo dục",
         value,
         color: "#F15A3D",
+        alias: "education",
       };
     case PostTopic.share:
       return {
         title: "Chia sẻ kinh nghiệm",
         value,
         color: "#FED34A",
+        alias: "share_experience",
       };
     case PostTopic.evaluate:
       return {
         title: "Đánh giá",
         value,
         color: "#8E6AAE",
+        alias: "evaluate",
       };
     case PostTopic.event:
       return {
         title: "Sự kiện",
         value,
         color: "#89C761",
+        alias: "event",
       };
     default:
       return {
         title: "Khác",
         value,
         color: "#359CC9",
+        alias: "other",
       };
   }
 }
-
-export const PostTopicDatas: any = {
-  total: 100,
-  data: [
-    {
-      label: PostTopic.education,
-      count: 20,
-    },
-    {
-      label: PostTopic.share,
-      count: 20,
-    },
-    {
-      label: PostTopic.evaluate,
-      count: 20,
-    },
-    {
-      label: PostTopic.event,
-      count: 20,
-    },
-    {
-      label: PostTopic.other,
-      count: 20,
-    },
-  ],
-};
 
 type Post = {
   id: number;
@@ -310,5 +290,27 @@ export const posts: Post[] = [
 ];
 
 export const postsByUser: Post[] = posts;
+
+export const statisticalPosts: any = posts.map((post) => {
+  return {
+    id: post.id,
+    images: post.images,
+    reactAmount: post.likes_count,
+    negativeCommentsPercent: 60,
+  };
+});
+
+export const postsAnalysis: any = {
+  1: 2,
+  2: 3,
+  3: 4,
+  5: 10,
+  6: 30,
+  7: 44,
+  9: 12,
+  10: 4,
+  11: 5,
+  12: 24,
+};
 
 export default Post;

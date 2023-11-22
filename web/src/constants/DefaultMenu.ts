@@ -4,9 +4,13 @@ import NewPostForm from "@/partials/app/Post/NewPostForm";
 import ImagesList from "@/partials/app/Report/ImagesList";
 import TextList from "@/partials/app/Report/TextList";
 import { FaHome } from "react-icons/fa";
-import { FaChartBar, FaMagnifyingGlass, FaRegSquarePlus } from "react-icons/fa6";
+import {
+  FaChartBar,
+  FaMagnifyingGlass,
+  FaRegSquarePlus,
+} from "react-icons/fa6";
 import { TbReportOff } from "react-icons/tb";
-import { ReportType } from "./Others";
+import { ReportType, TimeStatistics } from "./Others";
 
 const DefaultMenu: any = [
   {
@@ -30,7 +34,7 @@ const DefaultMenu: any = [
   {
     label: "Post statistics",
     PrefixIcon: FaChartBar,
-    href: "/post-statistics",
+    href: "/post-statistics/",
     onlyAdmin: true,
   },
   {
@@ -113,6 +117,33 @@ export const ReportMenu: any = [
         Component: TextList,
       },
     ],
+  },
+];
+
+export const ChartSelectMenu: any = [
+  {
+    label: "Yesterday",
+    value: TimeStatistics.yesterday,
+  },
+  {
+    label: "Today",
+    value: TimeStatistics.today,
+  },
+  {
+    label: "Last month",
+    value: TimeStatistics.lastMonth,
+  },
+  {
+    label: "This month",
+    value: TimeStatistics.thisMonth,
+  },
+  {
+    label: "Last year",
+    value: TimeStatistics.lastYear,
+  },
+  {
+    label: "This year",
+    value: TimeStatistics.thisYear,
   },
 ];
 

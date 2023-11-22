@@ -43,6 +43,7 @@ export default function PostCard({ post }: PostCardProps) {
 
     setPostDetail(newPost);
   };
+  
   return (
     <>
       {postDetail && (
@@ -60,7 +61,7 @@ export default function PostCard({ post }: PostCardProps) {
                 </Link>
                 <time className="first-letter:uppercase text-xs text-spanish-gray">
                   {dayjs(postDetail.created_at).format(
-                    "dddd, HH:mm DD/MM/YYYY"
+                    "dddd, HH:mm DD/MM/YYYY",
                   )}
                 </time>
               </div>
@@ -76,20 +77,21 @@ export default function PostCard({ post }: PostCardProps) {
             className="flex flex-row w-full cursor-pointer"
             onClick={handleShowDetail}
           >
-            {postDetail.images.length > 0 && (
-              <Image
-                src={postDetail.images[0].url}
-                alt=""
-                className={
-                  "h-[500px] object-cover " +
-                  (postDetail.images.length > 1 ? "w-[50%]" : "w-full")
-                }
-                width={800}
-                height={500}
-                data-src={postDetail.images[0].url}
-                data-testid="post-image-1"
-              />
-            )}
+            {!postDetail.share_post &&
+              postDetail.images.length > 0 && (
+                <Image
+                  src={postDetail.images[0].url}
+                  alt=""
+                  className={
+                    "h-[500px] object-cover " +
+                    (postDetail.images.length > 1 ? "w-[50%]" : "w-full")
+                  }
+                  width={800}
+                  height={500}
+                  data-src={postDetail.images[0].url}
+                  data-testid="post-image-1"
+                />
+              )}
 
             {postDetail.images.length > 0 && postDetail.images[1] && (
               <div
@@ -151,7 +153,7 @@ export default function PostCard({ post }: PostCardProps) {
                         </Link>
                         <time className="first-letter:uppercase text-xs text-white/40">
                           {dayjs(postDetail.share_post.created_at).format(
-                            "dddd, HH:mm DD/MM/YYYY"
+                            "dddd, HH:mm DD/MM/YYYY",
                           )}
                         </time>
                       </div>
