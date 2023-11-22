@@ -16,7 +16,7 @@ export default function CheckAdmin({ children }: CheckAdminProps) {
   const render = useCallback(() => {
     if (auth.user === undefined) {
       return <Loading />;
-    } else if (auth.user.role === Role.Admin) {
+    } else if (auth.user?.role === Role.Admin) {
       return null;
     } else {
       return <UnauthorizedError />;

@@ -25,6 +25,7 @@ export default function Menu() {
     localStorage.removeItem("token");
     toast.success("Signed out!");
     dispatch(checkLogedInAction() as any);
+    router.push('/sign-in')
   };
 
   return (

@@ -5,6 +5,7 @@ type ContainerProps = {
   contentChildren?: ReactNode;
   children?: ReactNode;
   fixedHeight?: boolean;
+  fullScreen?: boolean;
 };
 
 export default function Container({
@@ -12,14 +13,16 @@ export default function Container({
   contentChildren,
   children,
   fixedHeight = true,
+  fullScreen = false,
 }: ContainerProps) {
   return (
     <div
       className={
-        "flex flex-row 3xl:my-10 my-8 bg-cultured rounded-[30px] 3xl:mr-10 mr-8" +
+        "flex flex-row bg-cultured rounded-[30px] " +
         (fixedHeight
-          ? " 3xl:h-[calc(100vh-40px*2)] h-[calc(100vh-32px*2)]"
-          : "")
+          ? "3xl:h-[calc(100vh-40px*2)] h-[calc(100vh-32px*2)]"
+          : "") +
+        (fullScreen ? "" : "3xl:my-10 my-8 3xl:mr-10 mr-8 !rounded-e-none")
       }
     >
       {sidebarChildren && (
