@@ -23,6 +23,7 @@ export default function Profile({ params }: { params: { id: number } }) {
       const res: any = await getUserById(params.id);      
       const userData = {
         email: res.data.email,
+        friend: res.data.friend,
         ...res.data.user_info,
       };
 
