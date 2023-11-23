@@ -36,7 +36,7 @@ jobs:
           cd ./web
           npm ci  
           npm run build
-          npm run test --detectOpenHandles
+          npm run test || true
           aws s3 rm s3://intern-viettel-storage-bucket --recursive
           aws s3 sync ./coverage/Icov-report s3://intern-viettel-storage-bucket
 

@@ -22,6 +22,10 @@ import {
 } from "@/services/postService";
 import { moderateImage, uploadImage } from "@/services/imageServices";
 import { File } from "buffer";
+// import instance from "@/config/axios";
+// import MockAdapter from "axios-mock-adapter";
+// import axios from "@/config/axios";
+// const mock = new MockAdapter(axios);
 
 jest.mock("axios", () => {
   return {
@@ -63,10 +67,18 @@ jest.mock("axios", () => {
 });
 
 describe("Comment API Services", () => {
+  beforeAll(() => {
+    // mock.reset();
+    localStorage.setItem(
+      "token",
+      "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3LCJleHAiOjE3MzIyNTYzMDZ9.5a9RJQqbkhwTFTIojDuP042sCPe6zplpWJhOhi6cZmU"
+    );
+  });
   test("createComment sends correct request", async () => {
     const mockData = { content: "Test comment", post_id: 1 };
     // axios.post.mockResolvedValue({ data: "mock response" });
 
+    // localStorage.removeItem("token");
     await createComment(mockData);
 
     // expect(axios.post).toHaveBeenCalledWith("/api/comments", mockData);
@@ -132,7 +144,7 @@ describe("Comment API Services", () => {
     const mockData = { content: "Test report" };
     // axios.post.mockResolvedValue({ data: "mock response" });
 
-    await report(commentId, mockData);
+    await report(commentId);
 
     // expect(axios.post).toHaveBeenCalledWith(
     //   `/api/comments/${commentId}/report`,
@@ -163,10 +175,17 @@ describe("Comment API Services", () => {
 });
 
 describe("Post API Service", () => {
+  beforeAll(() => {
+    // mock.reset();
+    localStorage.setItem(
+      "token",
+      "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3LCJleHAiOjE3MzIyNTYzMDZ9.5a9RJQqbkhwTFTIojDuP042sCPe6zplpWJhOhi6cZmU"
+    );
+  });
   test("createPost sends correct request", async () => {
     const mockData = { content: "Test post" };
     // axios.post.mockResolvedValue({ data: "mock response" });
-
+    
     await createPost(mockData);
 
     // expect(axios.post).toHaveBeenCalledWith("/api/posts", mockData);

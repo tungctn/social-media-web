@@ -62,6 +62,10 @@ describe("React post function", () => {
   });
 
   test("get post function", () => {
+    localStorage.setItem(
+      "token",
+      "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3LCJleHAiOjE3MzIyNTYzMDZ9.5a9RJQqbkhwTFTIojDuP042sCPe6zplpWJhOhi6cZmU"
+    );
     store.dispatch(getPosts());
   });
 });
