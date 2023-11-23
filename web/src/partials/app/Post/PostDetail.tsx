@@ -175,7 +175,7 @@ export default function PostDetail({
                     </span>
                     <span className="first-letter:uppercase text-xs text-spanish-gray">
                       {dayjs(post.share_post.created_at).format(
-                        "dddd, HH:mm DD/MM/YYYY",
+                        "dddd, HH:mm DD/MM/YYYY"
                       )}
                     </span>
                   </div>
@@ -242,7 +242,7 @@ export default function PostDetail({
                       customClassName="text-xs leading-[12px]"
                       iconCustomClassName="3xl:text-2xl text-xl"
                       postId={post?.id ?? 0}
-                      reactType={post?.type_react}
+                      reactType={post?.type_react!}
                       onChange={handleChangeReact}
                       content={post?.content}
                       images={post?.images}
