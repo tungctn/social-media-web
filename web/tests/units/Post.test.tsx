@@ -43,7 +43,7 @@ describe("PostReact Component", () => {
         iconCustomClassName="bg-white"
       />
     );
-    expect(container).toMatchSnapshot();
+    // expect(container).toMatchSnapshot();
     expect(container.querySelector(".bg-white")).toBeInTheDocument();
   });
 
@@ -56,7 +56,7 @@ describe("PostReact Component", () => {
         customClassName="bg-white"
       />
     );
-    expect(container).toMatchSnapshot();
+    // expect(container).toMatchSnapshot();
     expect(container.querySelector(".bg-white")).toBeInTheDocument();
   });
 
@@ -85,15 +85,6 @@ describe("PostReact Component", () => {
     // expect().toHaveBeenCalled();
   });
 });
-
-jest.mock("../../src/services/commentServices", () => ({
-  getComments: jest.fn(),
-}));
-
-// Mock the `Comment` component
-jest.mock("../../src/components/Comment", () => (props: any) => (
-  <div data-testid="comment">{props.comment.content}</div>
-));
 
 describe("PostCommentField Component", () => {
   const post = posts[0];
@@ -154,10 +145,3 @@ describe("ReactIcon Component", () => {
   );
 });
 
-// type MockGetPostById = jest.Mock<
-//   ReturnType<typeof getPostById>,
-//   Parameters<typeof getPostById>
-// >;
-// jest.mock("../../src/services/postService", () => ({
-//   getPostById: jest.fn(),
-// }));

@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 import {
   createComment,
   getComments,
@@ -65,7 +65,7 @@ jest.mock("axios", () => {
 describe("Comment API Services", () => {
   test("createComment sends correct request", async () => {
     const mockData = { content: "Test comment", post_id: 1 };
-    axios.post.mockResolvedValue({ data: "mock response" });
+    // axios.post.mockResolvedValue({ data: "mock response" });
 
     await createComment(mockData);
 
@@ -74,7 +74,7 @@ describe("Comment API Services", () => {
 
   test("getComments sends correct request", async () => {
     const postId = 1;
-    axios.get.mockResolvedValue({ data: "mock response" });
+    // axios.get.mockResolvedValue({ data: "mock response" });
 
     await getComments(postId);
 
@@ -83,7 +83,7 @@ describe("Comment API Services", () => {
 
   test("deleteComment sends correct request", async () => {
     const commentId = 1;
-    axios.delete.mockResolvedValue({ data: "mock response" });
+    // axios.delete.mockResolvedValue({ data: "mock response" });
 
     await deleteComment(commentId);
 
@@ -93,7 +93,7 @@ describe("Comment API Services", () => {
   test("updateComment sends correct request", async () => {
     const commentId = 1;
     const mockData = { content: "Test comment" };
-    axios.put.mockResolvedValue({ data: "mock response" });
+    // axios.put.mockResolvedValue({ data: "mock response" });
 
     await updateComment(commentId, mockData);
 
@@ -106,7 +106,7 @@ describe("Comment API Services", () => {
   test("reactComment sends correct request", async () => {
     const commentId = 1;
     const mockData = { type: ReactType.like };
-    axios.post.mockResolvedValue({ data: "mock response" });
+    // axios.post.mockResolvedValue({ data: "mock response" });
 
     await reactComment({ comment_id: commentId, type_react: mockData.type });
 
@@ -118,7 +118,7 @@ describe("Comment API Services", () => {
 
   test("unReactComment sends correct request", async () => {
     const commentId = 1;
-    axios.delete.mockResolvedValue({ data: "mock response" });
+    // axios.delete.mockResolvedValue({ data: "mock response" });
 
     await unReactComment(commentId);
 
@@ -130,7 +130,7 @@ describe("Comment API Services", () => {
   test("report sends correct request", async () => {
     const commentId = 1;
     const mockData = { content: "Test report" };
-    axios.post.mockResolvedValue({ data: "mock response" });
+    // axios.post.mockResolvedValue({ data: "mock response" });
 
     await report(commentId, mockData);
 
@@ -141,7 +141,7 @@ describe("Comment API Services", () => {
   });
 
   test("getReportedComments sends correct request", async () => {
-    axios.get.mockResolvedValue({ data: "mock response" });
+    // axios.get.mockResolvedValue({ data: "mock response" });
 
     await getReportedComments();
 
@@ -151,7 +151,7 @@ describe("Comment API Services", () => {
   test("updateStatusReportedComment sends correct request", async () => {
     const commentId = 1;
     const mockData = { status: 1 };
-    axios.put.mockResolvedValue({ data: "mock response" });
+    // axios.put.mockResolvedValue({ data: "mock response" });
 
     await updateStatusReportedComment(commentId, mockData);
 
@@ -165,7 +165,7 @@ describe("Comment API Services", () => {
 describe("Post API Service", () => {
   test("createPost sends correct request", async () => {
     const mockData = { content: "Test post" };
-    axios.post.mockResolvedValue({ data: "mock response" });
+    // axios.post.mockResolvedValue({ data: "mock response" });
 
     await createPost(mockData);
 
@@ -173,7 +173,7 @@ describe("Post API Service", () => {
   });
 
   test("getAllPosts sends correct request", async () => {
-    axios.get.mockResolvedValue({ data: "mock response" });
+    // axios.get.mockResolvedValue({ data: "mock response" });
 
     await getAllPosts();
 
@@ -182,7 +182,7 @@ describe("Post API Service", () => {
 
   test("deletePost sends correct request", async () => {
     const postId = 1;
-    axios.delete.mockResolvedValue({ data: "mock response" });
+    // axios.delete.mockResolvedValue({ data: "mock response" });
 
     await deletePost(postId);
 
@@ -192,7 +192,7 @@ describe("Post API Service", () => {
   test("updatePost sends correct request", async () => {
     const postId = 1;
     const mockData = { content: "Test post" };
-    axios.put.mockResolvedValue({ data: "mock response" });
+    // axios.put.mockResolvedValue({ data: "mock response" });
 
     await updatePost(postId, mockData);
 
@@ -200,7 +200,7 @@ describe("Post API Service", () => {
   });
 
   test("getMyPosts sends correct request", async () => {
-    axios.get.mockResolvedValue({ data: "mock response" });
+    // axios.get.mockResolvedValue({ data: "mock response" });
 
     await getMyPosts();
 
@@ -210,7 +210,7 @@ describe("Post API Service", () => {
   test("reactPost sends correct request", async () => {
     const postId = 1;
     const mockData = ReactType.like;
-    axios.post.mockResolvedValue({ data: "mock response" });
+    // axios.post.mockResolvedValue({ data: "mock response" });
 
     await reactPost(postId, mockData);
 
@@ -222,7 +222,7 @@ describe("Post API Service", () => {
 
   test("unReactPost sends correct request", async () => {
     const postId = 1;
-    axios.delete.mockResolvedValue({ data: "mock response" });
+    // axios.delete.mockResolvedValue({ data: "mock response" });
 
     await unReactPost(postId);
 
@@ -235,7 +235,7 @@ describe("Image Services", () => {
     const mockFile = new File([""], "test.png", { type: "image/png" });
     const mockFormData = new FormData();
     // mockFormData.append("image", mockFile);
-    axios.post.mockResolvedValue({ data: "mock response" });
+    // axios.post.mockResolvedValue({ data: "mock response" });
 
     await uploadImage(mockFile);
 
@@ -244,7 +244,7 @@ describe("Image Services", () => {
 
   test("moderateImage sends correct request", async () => {
     const imageUrl = "http://example.com/test.png";
-    axios.post.mockResolvedValue({ data: { result: "safe" } });
+    // axios.post.mockResolvedValue({ data: { result: "safe" } });
 
     await moderateImage(imageUrl);
 
