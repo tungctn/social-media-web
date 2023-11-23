@@ -37,8 +37,8 @@ jobs:
           npm ci  
           npm run build
           npm run test 
-          aws s3 rm s3://intern-viettel-storage-bucket --recursive
-          aws s3 sync ./coverage/lcov-report s3://intern-viettel-storage-bucket
+          aws s3 rm s3://intern-viettel-storage-bucket/frontend --recursive
+          aws s3 sync ./coverage/lcov-report s3://intern-viettel-storage-bucket/frontend
 
   # Deployment
   CD:
