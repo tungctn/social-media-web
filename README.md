@@ -1025,6 +1025,18 @@ Chấp nhận lời mời, block, chuyển loại bạn bè (hẹn hò ?)
 
 </details>
 
+<details>
+<summary><code>POST /api/dashboard/post-count</code></summary>
+<br>
+
+#### Parameters
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication, role = admin |
+
+</details>
+
 </details>
 
 ## Architecture Design
