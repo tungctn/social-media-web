@@ -37,43 +37,44 @@ jobs:
           npm ci  
           npm run build
           npm run test || true
+          ls -a
           aws s3 rm s3://intern-viettel-storage-bucket --recursive
           aws s3 sync ./coverage/Icov-report s3://intern-viettel-storage-bucket
 
   # Deployment
-  CD:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        servers: ["34.142.196.144"]
-    steps:
-      - name: Create SSH key
-        run: |
-          mkdir -p ~/.ssh
-          touch ~/.ssh/tunggcp
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/tunggcp
-          chmod 600 ~/.ssh/tunggcp
+  # CD:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       servers: ["34.142.196.144"]
+  #   steps:
+  #     - name: Create SSH key
+  #       run: |
+  #         mkdir -p ~/.ssh
+  #         touch ~/.ssh/tunggcp
+  #         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/tunggcp
+  #         chmod 600 ~/.ssh/tunggcp
 
-      - name: Deploy backend to server
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp tunggcp@${{ matrix.servers }} '
-          echo "${{ secrets.PROD_BACKEND }}" > social-media-web/api/config/application.yml
-          cd social-media-web && bash backend-script.sh
-          '
-      - name: Set up AWS credentials
-        run: |
-          sudo apt-get install awscli
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set default.region ap-southeast-1
-          aws configure set default.output json
+  #     - name: Deploy backend to server
+  #       run: |
+  #         ssh -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp tunggcp@${{ matrix.servers }} '
+  #         echo "${{ secrets.PROD_BACKEND }}" > social-media-web/api/config/application.yml
+  #         cd social-media-web && bash backend-script.sh
+  #         '
+  #     - name: Set up AWS credentials
+  #       run: |
+  #         sudo apt-get install awscli
+  #         aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws configure set default.region ap-southeast-1
+  #         aws configure set default.output json
 
-      - uses: actions/checkout@v3
-      - name: Use Node.js18
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-      - name: Deploy frontend to S3
-        run: |
-          bash frontend-script.sh
+  #     - uses: actions/checkout@v3
+  #     - name: Use Node.js18
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 18.x
+  #     - name: Deploy frontend to S3
+  #       run: |
+  #         bash frontend-script.sh
