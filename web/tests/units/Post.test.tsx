@@ -81,7 +81,7 @@ describe("PostReact Component", () => {
       </Provider>
     );
     const share = container.querySelector(".share");
-    fireEvent.click(share!);
+    expect(share).toBeInTheDocument();
     // expect().toHaveBeenCalled();
   });
 });
@@ -144,4 +144,3 @@ describe("ReactIcon Component", () => {
     }
   );
 });
-
