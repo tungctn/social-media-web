@@ -9,7 +9,7 @@ import EmojiCryImg from "@/assets/imgs/emojicry 1.png";
 import EmojiAngryImg from "@/assets/imgs/emojiangry 1.png";
 
 type ReactIconProps = {
-  reactType: ReactType | undefined;
+  reactType?: ReactType | null;
 };
 
 export default function ReactIcon({ reactType }: ReactIconProps) {
