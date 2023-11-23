@@ -12,22 +12,18 @@ export default function PostReactCounts({
   likes,
   comments,
   shares,
-  iconCustomClassName = "",
-  customClassName = "",
+  iconCustomClassName,
+  customClassName,
 }: PostReactCountsProps) {
   return (
     <div
-      className={
-        "flex flex-row items-center justify-between text-spanish-gray " +
-        customClassName
-      }
+      className={`flex flex-row items-center justify-between text-spanish-gray 
+        ${customClassName && customClassName}`}
     >
       <div className="flex flex-row gap-[5px] items-end cursor-pointer">
         <div
-          className={
-            "text-lenurple transition-all ease-linear hover:animate-shaking-like hover:scale-105 " +
-            iconCustomClassName
-          }
+          className={`text-lenurple transition-all ease-linear hover:animate-shaking-like hover:scale-105 
+            ${iconCustomClassName && iconCustomClassName}`}
         >
           <FaThumbsUp />
         </div>

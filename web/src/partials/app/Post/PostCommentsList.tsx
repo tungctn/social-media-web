@@ -21,17 +21,23 @@ export default function PostCommentsList({
   useEffect(() => {
     postId && getCommentsData();
   }, [postId, newComment]);
-  
 
   const getCommentsData = async () => {
     const res = await getComments(postId);
     setComments(res.data.comments);
-  };  
+  };
 
   return (
-    <div className="3xl:my-5 my-4 flex flex-col 3xl:gap-5 gap-4">
+    <div className="3xl:my-5 my-4 flex flex-col 3xl:gap-5 gap-4 comments">
       {comments?.map((comment: CommentType) => {
-        return <Comment onReply={onReply} comment={comment} key={comment.id} onAction={onAction} />;
+        return (
+          <Comment
+            onReply={onReply}
+            comment={comment}
+            key={comment.id}
+            onAction={onAction}
+          />
+        );
       })}
     </div>
   );

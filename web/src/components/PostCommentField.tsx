@@ -32,7 +32,7 @@ function PostCommentField(
     defaultComment,
     disabled = false,
   }: PostCommentFieldProps,
-  ref: any,
+  ref: any
 ) {
   const { setIsLoading } = useContext(LoadingContext);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -85,7 +85,7 @@ function PostCommentField(
   const handleSendComment = async (event: any) => {
     event.preventDefault();
     setIsLoading(true);
-    const content = event.target.content.value;
+    const content = event.target.content?.value;
     if (content || img.current.url) {
       let image_ids = [];
       try {
@@ -152,7 +152,7 @@ function PostCommentField(
                   ]
                 : [],
           },
-          Boolean(defaultComment),
+          Boolean(defaultComment)
         );
         img.current = {
           url: "",
@@ -295,7 +295,7 @@ function PostCommentField(
               <button
                 title="submit"
                 type="submit"
-                className="3xl:text-[24px] text-[calc(24px/6*5)] 3xl:mt-4 mt-3"
+                className="3xl:text-[24px] text-[calc(24px/6*5)] 3xl:mt-4 mt-3 on-submit"
                 ref={submitRef}
               >
                 <FaRegPaperPlane />

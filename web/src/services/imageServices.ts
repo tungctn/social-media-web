@@ -1,7 +1,7 @@
 import instance from "@/config/axios";
 import axios from "axios";
 
-export function uploadImage(file: File) {
+export function uploadImage(file: any) {
   const formData = new FormData();
   formData.append("image", file);
   return instance.post("/api/images", formData, {

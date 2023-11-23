@@ -20,7 +20,7 @@ interface PostTopicData {
 
 export function getPostTopicData(
   postTopic: PostTopic,
-  value: number,
+  value: number
 ): PostTopicData {
   switch (postTopic) {
     case PostTopic.education:
@@ -73,7 +73,7 @@ type Post = {
   comments: Comment[];
   comments_count: number;
   shares_count: number;
-  type_react?: ReactType;
+  type_react?: ReactType | null;
   share_post?: Post;
 };
 

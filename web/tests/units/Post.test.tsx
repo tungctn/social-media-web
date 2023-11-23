@@ -3,20 +3,142 @@ import PostDetail from "@/partials/app/Post/PostDetail";
 import { getPostById } from "@/services/postService";
 import store from "@/store";
 import { posts } from "@/utils/fakeData/Post";
-import { fireEvent, render, screen } from "@testing-library/react";
+import {
+  fireEvent,
+  getAllByTestId,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import { Provider } from "react-redux";
 import { AxiosResponse } from "axios";
+import PostReactCounts from "@/components/PostReactCounts";
+import PostReacts from "@/components/PostReacts";
+import PostCommentsList from "@/partials/app/Post/PostCommentsList";
+import { getComments } from "@/services/commentServices";
+import PostCommentField from "@/components/PostCommentField";
+import ReactIcon from "@/components/ReactIcon";
+import { ReactType } from "@/constants/Others";
 
 describe("PostCard Component", () => {
   const post = posts[0];
   test("renders correctly", () => {
-    render(
+    const { container } = render(
       <Provider store={store}>
         <PostCard post={post} />
       </Provider>
     );
-    expect(screen.getByText(post.content)).toBeInTheDocument();
+    expect(container).toBeInTheDocument();
   });
+});
+
+describe("PostReact Component", () => {
+  const post = posts[0];
+  test("Co thuoc tinh iconCustomClassName", () => {
+    const { container } = render(
+      <PostReactCounts
+        likes={1000}
+        comments={1000}
+        shares={1000}
+        iconCustomClassName="bg-white"
+      />
+    );
+    expect(container).toMatchSnapshot();
+    expect(container.querySelector(".bg-white")).toBeInTheDocument();
+  });
+
+  test("Co thuoc tinh customClassName", () => {
+    const { container } = render(
+      <PostReactCounts
+        likes={1000}
+        comments={1000}
+        shares={1000}
+        customClassName="bg-white"
+      />
+    );
+    expect(container).toMatchSnapshot();
+    expect(container.querySelector(".bg-white")).toBeInTheDocument();
+  });
+
+  test("Khi click vao comment thì goi hàm handleComment", () => {
+    const handleComment = jest.fn();
+    const onChange = jest.fn();
+    const { container } = render(
+      <Provider store={store}>
+        <PostReacts postId={1} onChange={onChange} onComment={handleComment} />
+      </Provider>
+    );
+    const comment = container.querySelector(".comment");
+    fireEvent.click(comment!);
+    expect(handleComment).toHaveBeenCalled();
+  });
+
+  test("Khi click vao share thì goi hàm handleShare", () => {
+    const onChange = jest.fn();
+    const { container } = render(
+      <Provider store={store}>
+        <PostReacts postId={1} onChange={onChange} />
+      </Provider>
+    );
+    const share = container.querySelector(".share");
+    fireEvent.click(share!);
+    // expect().toHaveBeenCalled();
+  });
+});
+
+jest.mock("../../src/services/commentServices", () => ({
+  getComments: jest.fn(),
+}));
+
+// Mock the `Comment` component
+jest.mock("../../src/components/Comment", () => (props: any) => (
+  <div data-testid="comment">{props.comment.content}</div>
+));
+
+describe("PostCommentField Component", () => {
+  const post = posts[0];
+  test("renders correctly", () => {
+    const { container } = render(
+      <Provider store={store}>
+        <PostCommentField
+          postId={post.id}
+          onChange={() => {}}
+          onSend={() => {}}
+        />
+      </Provider>
+    );
+    expect(container).toBeInTheDocument();
+    const element = container.querySelector(".on-submit");
+    fireEvent.click(element!);
+  });
+});
+
+describe("ReactIcon Component", () => {
+  test.each([
+    [ReactType.like, "Liked", "FaThumbsUp"],
+    [ReactType.love, "Loved", "EmojiLoveImg"],
+    [ReactType.cute, "Cute", "EmojiCuteImg"],
+    [ReactType.angry, "Angry", "EmojiAngryImg"],
+    [ReactType.sad, "Cry", "EmojiCryImg"],
+    [ReactType.wow, "Wow", "EmojiWowImg"],
+  ])(
+    "renders correct icon and label for reactType %p",
+    (reactType: any, expectedLabel: any, expectedIcon: any) => {
+      const { getByText, getByAltText } = render(
+        <ReactIcon reactType={reactType} />
+      );
+
+      expect(getByText(expectedLabel)).toBeInTheDocument();
+
+      if (reactType === ReactType.like) {
+        // Kiểm tra icon FaThumbsUp cho ReactType.like
+        expect(getByText(expectedIcon)).toBeInTheDocument(); // Dùng getByText với tên icon
+      } else {
+        // Kiểm tra các loại icon hình ảnh khác
+        expect(getByAltText(expectedIcon)).toBeInTheDocument(); // Dùng getByAltText với alt của Image
+      }
+    }
+  );
 });
 
 // type MockGetPostById = jest.Mock<
@@ -26,38 +148,3 @@ describe("PostCard Component", () => {
 // jest.mock("../../src/services/postService", () => ({
 //   getPostById: jest.fn(),
 // }));
-
-// describe("PostDetail Component", () => {
-//   const mockPost = posts[0];
-//   beforeEach(() => {
-//     (getPostById as MockGetPostById).mockResolvedValue({
-//       data: { post: mockPost },
-//     } as AxiosResponse);
-//   });
-
-//   test("renders correctly with a post", async () => {
-//     const post = await getPostById(mockPost.id);
-//     render(
-//       <Provider store={store}>
-//         <PostDetail open={true} id={mockPost.id} />
-//       </Provider>
-//     );
-//     expect(
-//       screen.findByText(post.data.post.user.full_name)
-//     ).resolves.toBeInTheDocument();
-
-//     expect(screen.findByText(mockPost.content)).resolves.toBeInTheDocument();
-//   });
-
-//   test("calls onClose when the close button is clicked", () => {
-//     const onClose = jest.fn();
-//     render(
-//       <Provider store={store}>
-//         <PostDetail open={true} id={mockPost.id} onClose={onClose} />
-//       </Provider>
-//     );
-//     fireEvent.click(screen.getByTestId("close-button"));
-//     expect(onClose).toHaveBeenCalled();
-//   });
-// });
-

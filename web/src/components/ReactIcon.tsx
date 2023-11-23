@@ -78,7 +78,7 @@ export default function ReactIcon({ reactType }: ReactIconProps) {
     }
   }, [reactType]);
 
-  const renderLabel = useCallback(() => {
+  const renderLabel = () => {
     switch (reactType) {
       case ReactType.like:
         return "Liked";
@@ -95,7 +95,7 @@ export default function ReactIcon({ reactType }: ReactIconProps) {
       default:
         return "Like";
     }
-  }, [reactType]);
+  };
 
   return (
     <div

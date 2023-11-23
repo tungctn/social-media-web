@@ -19,13 +19,13 @@ type PostReactsProps = {
   images?: Image[];
   content?: string;
   onComment?: Function;
-  reactType: ReactType | undefined;
+  reactType?: ReactType | undefined;
   onChange: Function;
 };
 
 export default function PostReacts({
-  iconCustomClassName = "",
-  customClassName = "",
+  iconCustomClassName,
+  customClassName,
   postId,
   onComment = () => {},
   reactType,
@@ -43,7 +43,7 @@ export default function PostReacts({
     postId && setShowDetail(true);
     onComment();
   };
-  const auth = useSelector((state: any) => state.auth);  
+  const auth = useSelector((state: any) => state.auth);
 
   const handleHoverReactsBox = () => {
     setShowReactsBox(true);
@@ -67,10 +67,10 @@ export default function PostReacts({
     handleCloseReactsBox();
   };
 
-  const handleShare = async () => {    
+  const handleShare = async () => {
     const res: any = await createPost({
       share_id: postId,
-      user_id: auth.user.user_id,
+      user_id: auth.user?.user_id,
     });
 
     if (res.success) {
@@ -82,10 +82,8 @@ export default function PostReacts({
   return (
     <>
       <div
-        className={
-          "flex flex-row items-center justify-around text-spanish-gray " +
-          customClassName
-        }
+        className={`flex flex-row items-center justify-around text-spanish-gray 
+          ${customClassName && customClassName}`}
       >
         <div
           className="cursor-pointer leading-0 relative"
@@ -93,7 +91,7 @@ export default function PostReacts({
         >
           <div
             className={
-              "absolute -left-[11px] -translate-y-full " +
+              "absolute -left-[11px] -translate-y-full react-box" +
               (showReactsBox ? "" : "hidden")
             }
             ref={ref}
@@ -103,28 +101,24 @@ export default function PostReacts({
           <ReactIcon reactType={reactType} />
         </div>
         <div
-          className="flex flex-row gap-[5px] items-center cursor-pointer leading-0"
+          className="flex flex-row gap-[5px] items-center cursor-pointer leading-0 comment"
           onClick={handleComment}
         >
           <div
-            className={
-              "transition-all ease-linear hover:text-deep-lilac hover:scale-105 hover:animate-shaking-like " +
-              iconCustomClassName
-            }
+            className={`transition-all ease-linear hover:text-deep-lilac hover:scale-105 hover:animate-shaking-like 
+              ${iconCustomClassName && iconCustomClassName}`}
           >
             <FaRegMessage />
           </div>
           Comment
         </div>
         <div
-          className="flex flex-row gap-[5px] items-center cursor-pointer leading-0"
+          className="flex flex-row gap-[5px] items-center cursor-pointer leading-0 share "
           onClick={handleShare}
         >
           <div
-            className={
-              "transition-all ease-linear hover:text-deep-lilac hover:scale-105 hover:animate-shaking-like " +
-              iconCustomClassName
-            }
+            className={`transition-all ease-linear hover:text-deep-lilac hover:scale-105 hover:animate-shaking-like 
+              ${iconCustomClassName && iconCustomClassName}`}
           >
             <FaRegShareFromSquare />
           </div>

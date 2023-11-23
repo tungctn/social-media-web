@@ -14,69 +14,34 @@ permissions:
   id-token: write
 
 jobs:
-  # test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Use Node.js18
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 18.x
-  #     - name: Install dependencies
-  #       run: |
-  #         cd ./web
-  #         npm ci
-  #     - name: Test build for frontend
-  #       run: |
-  #         cd ./web
-  #         npm run build
-  #     - name: Test unit for frontend
-  #       run: |
-  #         cd ./web
-  #         npm run test:unit
-  #     - name: Test integration for frontend
-  #       run: |
-  #         cd ./web
-  #         npm run test:integrate
-  #     - name: Test e2e for frontend
-  #       run: |
-  #         cd ./web
-  #         npm ci
-  #         touch .env
-  #         echo "${{ secrets.PROD_FRONTEND }}" > .env
-  #         npm run test:e2e:ci
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
 
-  # build:
-  #   runs-on: self-hosted
-  #   # needs: test
-  #   # strategy:
-  #   #   matrix:
-  #   #     component: ["frontend", "backend"]
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Use Node.js18
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 18.x
-  #     - name: Set up Ruby 3.0.2
-  #       uses: ruby/setup-ruby@v1
-  #       with:
-  #         ruby-version: 3.0.2
-  #     - name: Setup for frontend
-  #       run: |
-  #         cd ./web
-  #         npm ci
-  #         npm run build
-  #     - name: Setup for backend
-  #       run: |
-  #         cd ./api
-  #         gem install bundler
-  #         bundle install
-  #         touch config/application.yml
-  #         echo "${{ secrets.PROD_BACKEND }}" > config/application.yml
+      - name: Set up AWS credentials
+        run: |
+          sudo apt-get install awscli
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set default.region ap-southeast-1
+          aws configure set default.output json
+
+      - name: Install dependencies, run tests and upload test coverage result to S3
+        run: |
+          cd ./web
+          npm ci  
+          npm run build
+          npm run test
+          aws s3 rm s3://intern-viettel-storage-bucket --recursive
+          aws s3 sync ./coverage/Icov-report s3://intern-viettel-storage-bucket
 
   # Deployment
-  deploy:
+  CD:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -112,4 +77,3 @@ jobs:
       - name: Deploy frontend to S3
         run: |
           bash frontend-script.sh
-          

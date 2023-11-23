@@ -5,7 +5,7 @@ export function reactPost(post: Post, reactType: ReactType) {
   const newPost: any = {
     ...post,
   };
-  if (post?.type_react === null) {
+  if (post?.type_react == null) {
     newPost.likes_count += 1;
     newPost.type_react = reactType;
   } else if (post?.type_react === reactType) {
