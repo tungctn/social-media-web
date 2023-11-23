@@ -10,7 +10,6 @@ class DashboardController < AdminsController
     end
 
     data_result = nil
-
     
     if params[:time_statistics].to_i == Enums::TIME_STATISTICS[:this_month] || params[:time_statistics].to_i == Enums::TIME_STATISTICS[:last_month]
       all_dates = generate_dates_range(data_query["start_date"], data_query["end_date"])
@@ -28,7 +27,7 @@ class DashboardController < AdminsController
         all_months = generate_months_range(data_query["start_date"], data_query["end_date"])
         
         # Thực hiện truy vấn
-        data = LoginHistory .where(data_query["query_time"]).group("MONTH(created_at)").count
+        data = LoginHistory.where(data_query["query_time"]).group("MONTH(created_at)").count
         
       # Điền giá trị 0 cho những ngày không có bản ghi
       data_result = all_months.map { |month| [month, data[month] || 0] }.to_h
@@ -98,7 +97,57 @@ class DashboardController < AdminsController
   end
   
   def statistics_post_count
+    data_query = data_build_query_time_statistics(params[:time_statistics])
 
+    if !data_query["query_time"]
+      render json: { errors: "Truy vấn truyền vào không đúng." }, status: :bad_request
+      return
+    end
+
+    data_result = nil
+
+    if params[:time_statistics].to_i == Enums::TIME_STATISTICS[:this_month] || params[:time_statistics].to_i == Enums::TIME_STATISTICS[:last_month]
+      all_dates = generate_dates_range(data_query["start_date"], data_query["end_date"])
+      # Thực hiện truy vấn
+      data = Post.where(data_query["query_time"]).group("DATE(created_at)").count
+
+        # Điền giá trị 0 cho những ngày không có bản ghi
+        data_result = all_dates.map { |date| [date, data[date] || 0] }.to_h
+      
+      elsif params[:time_statistics].to_i == Enums::TIME_STATISTICS[:today] || params[:time_statistics].to_i == Enums::TIME_STATISTICS[:yesterday]
+        data = Post.where(data_query["query_time"])
+        data_result = count_by_hours(data, "created_at")
+
+      else
+        all_months = generate_months_range(data_query["start_date"], data_query["end_date"])
+        
+        # Thực hiện truy vấn
+        data = Post.where(data_query["query_time"]).group("MONTH(created_at)").count
+        
+      # Điền giá trị 0 cho những ngày không có bản ghi
+      data_result = all_months.map { |month| [month, data[month] || 0] }.to_h
+    end
+
+    render json: { data: data_result, data_query: data_query }, status: :ok
+  end
+  
+  def statistics_number
+    today_create_query = data_build_query_time_statistics(Enums::TIME_STATISTICS[:today])
+    report_query = "time_report >= '#{Date.today.beginning_of_day - 7.hours}' AND time_report <= '#{Date.today.end_of_day - 7.hours}'"
+    online_query = "last_time_active >= '#{Time.current - 6.minutes}'"
+    
+    data_result = {
+      online: 0,
+      user: 0,
+      post: 0,
+      report: 0
+    }
+
+    data_result["online"] = User.where(online_query).count
+    data_result["user"] = User.all.count
+    data_result["post"] = Post.where(today_create_query["query_time"]).count
+    data_result["report"] = PostComment.where(report_query).count + Post.where(report_query).count
+    render json: { data: data_result }, status: :ok
   end
 
   private
