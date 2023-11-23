@@ -10,8 +10,7 @@ import { ReactType } from "@/constants/Others";
 import { createPost, reactPost, unReactPost } from "@/services/postService";
 import { toast } from "react-toastify";
 import { Image } from "@/utils/fakeData/Image";
-import { useDispatch, useSelector } from "react-redux";
-import { getPosts } from "@/store/actions/postActions";
+import { useSelector } from "react-redux";
 
 type PostReactsProps = {
   iconCustomClassName?: string;
@@ -20,17 +19,19 @@ type PostReactsProps = {
   images?: Image[];
   content?: string;
   onComment?: Function;
-  reactType?: ReactType | undefined;
+  reactType?: ReactType | null;
   onChange: Function;
+  onChangeDetail?: Function;
 };
 
 export default function PostReacts({
-  iconCustomClassName,
-  customClassName,
+  iconCustomClassName = "",
+  customClassName = "",
   postId,
   onComment = () => {},
   reactType,
   onChange,
+  onChangeDetail = () => {},
   images,
   content,
 }: PostReactsProps) {
@@ -40,7 +41,6 @@ export default function PostReacts({
     isComponentVisible: showReactsBox,
     setIsComponentVisible: setShowReactsBox,
   } = useComponentVisible(false, "mouseout");
-  const dispatch = useDispatch();
   const handleComment = () => {
     postId && setShowDetail(true);
     onComment();
@@ -72,31 +72,33 @@ export default function PostReacts({
   const handleShare = async () => {
     const res: any = await createPost({
       share_id: postId,
-      user_id: auth.user?.user_id,
+      user_id: auth.user.user_id,
     });
 
     if (res.success) {
       toast.success("Shared!");
-      dispatch(getPosts() as any);
-      handleCloseReactsBox();
     } else {
       toast.success(res.message);
     }
   };
+
   return (
     <>
       <div
-        className={`flex flex-row items-center justify-around text-spanish-gray 
-          ${customClassName && customClassName}`}
+        className={
+          "flex flex-row items-center justify-around text-spanish-gray " +
+          customClassName
+        }
       >
         <div
           className="cursor-pointer leading-0 relative"
           onMouseOver={handleHoverReactsBox}
         >
           <div
-            className={`absolute -left-[11px] -translate-y-full react-box ${
-              showReactsBox ? "" : "hidden"
-            } `}
+            className={
+              "absolute -left-[11px] -translate-y-full " +
+              (showReactsBox ? "" : "hidden")
+            }
             ref={ref}
           >
             <ReactsBox onReact={handleReact} />
@@ -104,24 +106,28 @@ export default function PostReacts({
           <ReactIcon reactType={reactType} />
         </div>
         <div
-          className="flex flex-row gap-[5px] items-center cursor-pointer leading-0 comment"
+          className="flex flex-row gap-[5px] items-center cursor-pointer leading-0"
           onClick={handleComment}
         >
           <div
-            className={`transition-all ease-linear hover:text-deep-lilac hover:scale-105 hover:animate-shaking-like 
-              ${iconCustomClassName && iconCustomClassName}`}
+            className={
+              "transition-all ease-linear hover:text-deep-lilac hover:scale-105 hover:animate-shaking-like " +
+              iconCustomClassName
+            }
           >
             <FaRegMessage />
           </div>
           Comment
         </div>
         <div
-          className="flex flex-row gap-[5px] items-center cursor-pointer leading-0 share "
+          className="flex flex-row gap-[5px] items-center cursor-pointer leading-0"
           onClick={handleShare}
         >
           <div
-            className={`transition-all ease-linear hover:text-deep-lilac hover:scale-105 hover:animate-shaking-like 
-              ${iconCustomClassName && iconCustomClassName}`}
+            className={
+              "transition-all ease-linear hover:text-deep-lilac hover:scale-105 hover:animate-shaking-like " +
+              iconCustomClassName
+            }
           >
             <FaRegShareFromSquare />
           </div>
@@ -132,7 +138,8 @@ export default function PostReacts({
         <PostDetail
           open={showDetail}
           onClose={() => setShowDetail(false)}
-          id={0}
+          id={postId}
+          onChange={onChangeDetail}
         />
       )}
     </>
