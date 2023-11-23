@@ -17,9 +17,7 @@ class User < ApplicationRecord
 
   #thêm các phụ thuộc
   has_one :user_info
-
-  self.skip_time_zone_conversion_for_attributes = [:last_time_active]
-
+  
   private
 
   def downcase_email

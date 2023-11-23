@@ -4,10 +4,7 @@ class SessionsController < ApplicationController
   def ping
     time = {
       "1": Time.current,
-      "2": Time.zone.now,
-      "3": DateTime.now,
-      "4": Time.now,
-      "5": DateTime.current
+      "2": Time.zone.now
     }
 
     render json: { message: "Server đang hoạt động.", server_time: time }, status: :ok

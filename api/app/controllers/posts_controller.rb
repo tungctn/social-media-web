@@ -152,7 +152,7 @@ class PostsController < ApplicationController
 
     post.status = Enums::ACTIVE_STATUS[:pending]
     post.type_report = params[:type_report]
-    post.time_report = Time.zone.now
+    post.time_report = Time.current
 
     if post.save
       render json: { message: "Báo cáo thành công" }, status: :ok
