@@ -3,14 +3,14 @@ import LoadingProvider from "@/providers/LoadingProvider";
 import { render } from "@testing-library/react";
 
 describe("Loading Component", () => {
-  it("render component", () => {
+  test("render component", () => {
     const { container } = render(<Loading />);
     expect(container).toBeInTheDocument();
   });
 });
 
 describe("LoadingProvider Component", () => {
-  it("render component", () => {
+  test("render component", () => {
     const { container } = render(
       <LoadingProvider>
         <div>Loading</div>
