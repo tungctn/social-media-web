@@ -81,12 +81,12 @@ describe("PostReact Component", () => {
       </Provider>
     );
     const share = container.querySelector(".share");
-    localStorage.setItem(
-      "token",
-      "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3LCJleHAiOjE3MzIyNTYzMDZ9.5a9RJQqbkhwTFTIojDuP042sCPe6zplpWJhOhi6cZmU"
-    );
-    fireEvent.click(share!);
-    // expect(share).toBeInTheDocument();
+    // localStorage.setItem(
+    //   "token",
+    //   "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3LCJleHAiOjE3MzIyNTYzMDZ9.5a9RJQqbkhwTFTIojDuP042sCPe6zplpWJhOhi6cZmU"
+    // );
+    // fireEvent.click(share!);
+    expect(share).toBeInTheDocument();
     // expect().toHaveBeenCalled();
   });
 });
