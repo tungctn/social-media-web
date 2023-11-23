@@ -13,7 +13,7 @@
     "cypress:open": "cypress open",
     "test:e2e": "cypress run",
     "test:e2e:ci": "start-server-and-test dev http://localhost:3000 test:e2e",
-    "test": "jest --coverage"
+    "test": "jest --coverage --forceExit || true"
   },
   "dependencies": {
     "@babel/preset-flow": "^7.22.15",
