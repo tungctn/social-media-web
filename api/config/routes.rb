@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     delete "/posts/save/:id", to: "post_saves#destroy"
 
     # tương tác chính
+    get "/posts/user/newest-post", to: "posts#newest_post"
     get "/posts/user/:id", to: "posts#show_user_post"
     get "/posts/user", to: "posts#my_post"
     get "/posts/:id", to: "posts#show"

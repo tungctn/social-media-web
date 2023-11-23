@@ -23,6 +23,18 @@ class PostsController < ApplicationController
     render json: { posts: posts_data }, status: :ok
   end
 
+  def newest_post
+    newest_post = Post.where("status <> #{Enums::ACTIVE_STATUS[:ban]} AND user_id = #{@current_user.id}").order(created_at: :desc).first
+    
+    if newest_post
+      newest_post_data = get_post_data_by_id(newest_post.id)
+    else
+      newest_post_data = nil
+    end
+
+    render json: { posts: newest_post_data }, status: :ok
+  end
+
   def create
     post = Post.new(create_post_params)
     post.sender_id = @current_user.id

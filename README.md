@@ -370,6 +370,17 @@ Chỉ xóa được những ảnh mà user đang đăng nhập tạo
 
 </details>
 
+#### Get user new post
+lấy bài viết mới nhất của người dùng hiện tại
+<details>
+<summary><code>GET /api/posts/user/newest-post</code></summary>
+<br>
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+</details>
+
 #### Get user post
 
 <details>
@@ -397,6 +408,10 @@ Chỉ xóa được những ảnh mà user đang đăng nhập tạo
 | :------------- | :---- | :----------- |
 | `page_index`   | `int` | **Optional** |
 | `page_size`    | `int` | **Optional** |
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
 </details>
 
