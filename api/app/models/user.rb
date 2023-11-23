@@ -17,7 +17,7 @@ class User < ApplicationRecord
 
   #thêm các phụ thuộc
   has_one :user_info
-
+  
   private
 
   def downcase_email

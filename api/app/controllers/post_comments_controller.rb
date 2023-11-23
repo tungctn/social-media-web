@@ -171,7 +171,7 @@ class PostCommentsController < ApplicationController
 
     comment.status = Enums::ACTIVE_STATUS[:pending]
     comment.type_report = params[:type_report]
-    comment.time_report = Time.zone.now
+    comment.time_report = Time.current
 
     if comment.save
       render json: { message: "Báo cáo thành công" }, status: :ok
