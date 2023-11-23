@@ -12,13 +12,18 @@ class DashboardController < AdminsController
     data_result = nil
 
     
-    if params[:time_statistics].to_i == Enums::TIME_STATISTICS[:today] || params[:time_statistics].to_i == Enums::TIME_STATISTICS[:yesterday] || params[:time_statistics].to_i == Enums::TIME_STATISTICS[:this_month] || params[:time_statistics].to_i == Enums::TIME_STATISTICS[:last_month]
+    if params[:time_statistics].to_i == Enums::TIME_STATISTICS[:this_month] || params[:time_statistics].to_i == Enums::TIME_STATISTICS[:last_month]
       all_dates = generate_dates_range(data_query["start_date"], data_query["end_date"])
       # Thực hiện truy vấn
       data = LoginHistory.where(data_query["query_time"]).group("DATE(created_at)").count
 
         # Điền giá trị 0 cho những ngày không có bản ghi
         data_result = all_dates.map { |date| [date, data[date] || 0] }.to_h
+      
+      elsif params[:time_statistics].to_i == Enums::TIME_STATISTICS[:today] || params[:time_statistics].to_i == Enums::TIME_STATISTICS[:yesterday]
+        data = LoginHistory.where(data_query["query_time"])
+        data_result = count_by_hours(data, "created_at")
+
       else
         all_months = generate_months_range(data_query["start_date"], data_query["end_date"])
         
@@ -110,9 +115,9 @@ class DashboardController < AdminsController
       data_return["end_date"] = Date.today
       data_return["query_time"] = "created_at >= '#{Date.today.beginning_of_day - 7.hours}' AND created_at <= '#{Date.today.end_of_day - 7.hours}'"
     when Enums::TIME_STATISTICS[:yesterday]
-      data_return["start_date"] = Date.yesterday
-      data_return["end_date"] = Date.yesterday
-      data_return["query_time"] = "created_at >= '#{Date.yesterday.beginning_of_day - 7.hours}' AND created_at <= '#{Date.yesterday.end_of_day - 7.hours}'"
+      data_return["start_date"] = Date.today - 1.day
+      data_return["end_date"] = Date.today - 1.day
+      data_return["query_time"] = "created_at >= '#{(Date.today - 1.day).beginning_of_day - 7.hours}' AND created_at <= '#{(Date.today - 1.day).end_of_day - 7.hours}'"
     when Enums::TIME_STATISTICS[:this_month]
       data_return["start_date"] = Date.today.beginning_of_month
       data_return["end_date"] = Date.today.end_of_month
@@ -153,5 +158,55 @@ class DashboardController < AdminsController
     end
 
     months_range
+  end
+
+  def count_by_hours(datas, column)
+    data_result = {
+      "0-2": 0,
+      "2-4": 0,
+      "4-6": 0,
+      "6-8": 0,
+      "8-10": 0,
+      "10-12": 0,
+      "12-14": 0,
+      "14-16": 0,
+      "16-18": 0,
+      "18-20": 0,
+      "20-22": 0,
+      "22-0": 0
+    }
+
+    datas.each do |data|
+      data_time_zone = data[column] + 7.hours
+      hour = data_time_zone.hour
+
+      if hour >= 0 && hour < 2
+        data_result[:"0-2"] = data_result[:"0-2"] + 1
+      elsif hour >= 2 && hour < 4
+        data_result[:"2-4"] = data_result[:"2-4"] + 1
+      elsif hour >= 4 && hour < 6
+        data_result[:"4-6"] = data_result[:"4-6"] + 1
+      elsif hour >= 6 && hour < 8
+        data_result[:"6-8"] = data_result[:"6-8"] + 1
+      elsif hour >= 8 && hour < 10
+        data_result[:"8-10"] = data_result[:"8-10"] + 1
+      elsif hour >= 10 && hour < 12
+        data_result[:"10-12"] = data_result[:"10-12"] + 1
+      elsif hour >= 12 && hour < 14
+        data_result[:"12-14"] = data_result[:"12-14"] + 1
+      elsif hour >= 14 && hour < 16
+        data_result[:"14-16"] = data_result[:"14-16"] + 1
+      elsif hour >= 16 && hour < 18
+        data_result[:"16-18"] = data_result[:"16-18"] + 1
+      elsif hour >= 18 && hour < 20
+        data_result[:"18-20"] = data_result[:"18-20"] + 1
+      elsif hour >= 20 && hour < 22
+        data_result[:"20-22"] = data_result[:"20-22"] + 1
+      elsif hour >= 22
+        data_result[:"22-0"] = data_result[:"22-0"] + 1
+      end
+    end
+
+    data_result
   end
 end
