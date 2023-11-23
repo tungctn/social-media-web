@@ -10,11 +10,11 @@ trap cleanup INT
 
 # Khởi động frontend và backend server
 echo "Starting the frontend server"
-cd web && npm run dev &
+cd web && npm i && npm run dev &
 pid_frontend=$!
 
 echo "Starting the backend server"
-cd api && rails server -p 4000 &
+cd api && bundle install && rails server -p 4000 &
 pid_backend=$!
 
 wait

@@ -10,7 +10,8 @@ import { ReactType } from "@/constants/Others";
 import { createPost, reactPost, unReactPost } from "@/services/postService";
 import { toast } from "react-toastify";
 import { Image } from "@/utils/fakeData/Image";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getPosts } from "@/store/actions/postActions";
 
 type PostReactsProps = {
   iconCustomClassName?: string;
@@ -39,6 +40,7 @@ export default function PostReacts({
     isComponentVisible: showReactsBox,
     setIsComponentVisible: setShowReactsBox,
   } = useComponentVisible(false, "mouseout");
+  const dispatch = useDispatch();
   const handleComment = () => {
     postId && setShowDetail(true);
     onComment();
@@ -75,6 +77,8 @@ export default function PostReacts({
 
     if (res.success) {
       toast.success("Shared!");
+      dispatch(getPosts() as any);
+      handleCloseReactsBox();
     } else {
       toast.success(res.message);
     }

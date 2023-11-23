@@ -1,28 +1,15 @@
-## Team members
+## Link 
 
-## Tech stack
+Web dev: http://pet-relive.online.s3-website-ap-southeast-1.amazonaws.com
 
-- Frontend: Next.js
-- Backend: Ruby on Rails
-- Database: MySQL
-- Deployment: Cloud Server
-- CI/CD: Github Actions
-- Version Control: Git
+Web prod: https://pet-relive.online (Bật chế độ kết nối không an toàn để sử dụng)
 
-## Runtime Environment
+Unit test frontend: http://intern-viettel-storage-bucket.s3-website-ap-southeast-1.amazonaws.com/frontend
 
-- Node.js 18.16.1
-- NPM 9.5.1
-- Ruby 3.0.2
-- Rails 7.0.7.2
+Unit test backend: http://intern-viettel-storage-bucket.s3-website-ap-southeast-1.amazonaws.com/backend
 
-## Install dependencies
 
-```bash
-bash deploy-script.sh
-```
-
-## How to run
+## Install dependencies and run
 
 ```bash
 bash run-script.sh
