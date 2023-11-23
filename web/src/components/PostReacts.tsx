@@ -94,10 +94,9 @@ export default function PostReacts({
           onMouseOver={handleHoverReactsBox}
         >
           <div
-            className={
-              "absolute -left-[11px] -translate-y-full react-box" +
-              (showReactsBox ? "" : "hidden")
-            }
+            className={`absolute -left-[11px] -translate-y-full react-box ${
+              showReactsBox ? "" : "hidden"
+            } `}
             ref={ref}
           >
             <ReactsBox onReact={handleReact} />

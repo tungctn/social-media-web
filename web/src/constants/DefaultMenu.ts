@@ -147,4 +147,27 @@ export const ChartSelectMenu: any = [
   },
 ];
 
+export const PostTypeMenu: any = [
+  {
+    label: "Giáo dục",
+    value: 1,
+  },
+  {
+    label: "Chia sẻ kinh nghiệm",
+    value: 2,
+  },
+  {
+    label: "Đánh giá",
+    value: 3,
+  },
+  {
+    label: "Sự kiện",
+    value: 4,
+  },
+  {
+    label: "Khác",
+    value: 5,
+  },
+];
+
 export default DefaultMenu;

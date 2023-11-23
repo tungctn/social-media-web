@@ -20,6 +20,7 @@ import {
 import { get } from "cypress/types/lodash";
 import { GET_POSTS } from "@/store/constants/postType";
 import { getPosts } from "@/store/actions/postActions";
+import PostTypeSelect from "./PostSelectType";
 
 const PostModal = () => {
   const auth = useSelector((state: any) => state.auth);
@@ -27,6 +28,7 @@ const PostModal = () => {
   const [isImageView, setIsImageView] = useState(false);
   const [content, setContent] = useState<string>("");
   const [uploadedImages, setUploadedImages] = useState<any[]>([]);
+  const [postType, setPostType] = useState<any>(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -83,6 +85,7 @@ const PostModal = () => {
         content,
         image_ids: imageIds,
         user_id: auth.user.user_id,
+        label: postType,
       };
       // const moderate = await moderateContent(content.replace(/\n/g, " "));
       // if (!moderate.success) {
@@ -135,8 +138,11 @@ const PostModal = () => {
               </div>
             </div>
             <div className="flex flex-row items-center gap-2">
-              <FaRegClock size={15} color="#9551BA" />
-              <span className="text-spanish-gray text-xs">2</span>
+              <PostTypeSelect
+                onChange={(postType: any) => {
+                  setPostType(postType);
+                }}
+              />
             </div>
           </div>
           <div className="mt-3">
