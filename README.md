@@ -1050,6 +1050,28 @@ Chấp nhận lời mời, block, chuyển loại bạn bè (hẹn hò ?)
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication, role = admin |
 
+| Path Variables | Type   | Description             |
+| :------------- | :----- | :---------------------- |
+| `time_statistics`       | `enum TIME_STATISTICS`  | **Optional**            |
+
+</details>
+
+<details>
+<summary><code>POST /api/dashboard/post-negative</code></summary>
+<br>
+
+#### Parameters
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication, role = admin |
+
+| Path Variables | Type   | Description             |
+| :------------- | :----- | :---------------------- |
+| `time_statistics`       | `enum TIME_STATISTICS`  | **Optional**            |
+| `page_index`       | `int`  | **Optional**            |
+| `page_size`       | `int`  | **Optional**            |
+
 </details>
 
 </details>
