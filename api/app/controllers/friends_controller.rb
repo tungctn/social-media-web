@@ -1,7 +1,51 @@
 require_relative "../enum/enum.rb"
 
 class FriendsController < ApplicationController
-  skip_before_action :authenticate_request, only: [:show]
+  skip_before_action :authenticate_request, only: [:show, :search]
+
+  def search
+    get_current_user() # gán current_user nếu có token truyền lên
+
+    atrs_search = ["first_name", "full_name", "last_name", "phone_number"]
+    query_where = build_where_text_search(atrs_search, params[:text_search])
+
+    users = nil
+
+    if !params[:page_index] || !params[:page_size]
+      users = UserInfo.where(query_where).order(created_at: :desc)
+    else
+      skip = params[:page_size].to_i * (params[:page_index].to_i - 1)
+      users = UserInfo.limit(params[:page_size].to_i).offset(skip).where(query_where).order(created_at: :desc)
+    end
+    
+    users_data = []
+
+    users.each do |user|
+      user_data = {}.merge(user.attributes)
+      user_data["friend_status"] = nil
+      
+      if @current_user
+        friend = Friend.where("sender_id = #{@current_user.id} AND receiver_id = #{user.user_id}").first
+    
+        if friend
+          user_data["friend_status"] = friend.friend_status
+        else
+          friend = Friend.where("receiver_id = #{@current_user.id} AND sender_id = #{user.user_id}").first
+          if friend
+            user_data["friend_status"] = friend.friend_status
+
+            if friend.friend_status == Enums::FRIEND_STATUS[:block]
+              next
+            end
+          end
+        end
+      end
+    
+      users_data.push(user_data)
+    end
+
+    render json: { data_search: users_data }, status: :ok
+  end
 
   #lấy ra bạn bè của bản thân
   def index
