@@ -31,7 +31,7 @@ export default function ChartSelect({ onChange = () => {} }: ChartSelectProps) {
         </span>
       </div>
       <div
-        className="absolute w-fit"
+        className="absolute w-fit z-10"
         ref={ref}
         style={{ display: isComponentVisible ? "block" : "none" }}
       >

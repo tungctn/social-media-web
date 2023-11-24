@@ -31,6 +31,7 @@ export default function Pagination({
     while (t <= total) {
       items.push(
         <PaginationItem
+          key={t}
           number={t}
           active={currentItem === t}
           onClick={handleClickItem}
