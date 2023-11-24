@@ -1,6 +1,6 @@
 ## Link 
 
-Web dev: http://pet-relive.online.s3-website-ap-southeast-1.amazonaws.com
+Web dev: http://103.107.183.43:3000
 
 Web prod: https://pet-relive.online (Bật chế độ kết nối không an toàn để sử dụng)
 
