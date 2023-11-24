@@ -259,7 +259,7 @@ class DashboardController < AdminsController
       "16-18": 0,
       "18-20": 0,
       "20-22": 0,
-      "22-0": 0
+      "22-24": 0
     }
 
     datas.each do |data|
@@ -289,7 +289,7 @@ class DashboardController < AdminsController
       elsif hour >= 20 && hour < 22
         data_result[:"20-22"] = data_result[:"20-22"] + 1
       elsif hour >= 22
-        data_result[:"22-0"] = data_result[:"22-0"] + 1
+        data_result[:"22-24"] = data_result[:"22-24"] + 1
       end
     end
 

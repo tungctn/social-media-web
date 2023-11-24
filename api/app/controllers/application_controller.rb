@@ -5,6 +5,22 @@ class ApplicationController < ActionController::Base
   after_action :update_last_time_active
 
   protected
+  def build_where_text_search(atrs, text_search)
+    where_text_search = ""
+
+    atrs.each_with_index do |atr, index|
+      query = atr + " LIKE " + "'%" + text_search + "%'"
+    
+      if index < atrs.length - 1
+        where_text_search = where_text_search + query + " OR "
+      else
+        where_text_search = where_text_search + query
+      end
+    end
+    
+    where_text_search
+  end
+
   # thêm lịch sử đăng nhập
   def add_login_history
     if @current_user

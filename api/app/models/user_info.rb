@@ -14,6 +14,10 @@ class UserInfo < ApplicationRecord
   belongs_to :user
   has_one_attached :avatar
 
+  def self.ransackable_attributes(auth_object = nil)
+    
+  end
+
   private
   def date_must_be_valid
     if date_of_birth.present? && date_of_birth > Date.today

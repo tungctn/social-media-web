@@ -60,6 +60,7 @@ Rails.application.routes.draw do
     delete "/posts/unreact/:post_id", to: "reacts_posts#destroy"
 
     #Bạn bè
+    get "/friends/search", to: "friends#search" # lấy ra tất cả danh sách lời mời kết bạn
     get "/friends/request", to: "friends#get_request" # lấy ra tất cả danh sách lời mời kết bạn
     get "/friends/block", to: "friends#get_block" # lấy ra tất cả danh sách đã chặn
     get "/friends/:id", to: "friends#show" # lấy ra tất cả danh sách bạn bè của user_id = id
