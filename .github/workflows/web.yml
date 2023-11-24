@@ -46,34 +46,29 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        servers: ["34.142.196.144"]
+        servers-backend: ["34.142.196.144"]
+        servers-frontend: ["103.107.183.43"]
     steps:
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
       - name: Create SSH key
         run: |
           mkdir -p ~/.ssh
           touch ~/.ssh/tunggcp
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/tunggcp
           chmod 600 ~/.ssh/tunggcp
+          touch ~/.ssh/backend.pem
+          echo "${{ secrets.SSH_PRIVATE_KEY_BACKEND }}" > ~/.ssh/backend.pem
+          chmod 400 ~/.ssh/backend.pem
 
       - name: Deploy backend to server
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp tunggcp@${{ matrix.servers }} '
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/tunggcp tunggcp@${{ matrix.servers-backend }} '
           echo "${{ secrets.PROD_BACKEND }}" > social-media-web/api/config/application.yml
           cd social-media-web && bash backend-script.sh
           '
-      - name: Set up AWS credentials
+      - name: Deploy frontend to server
         run: |
-          sudo apt-get install awscli
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set default.region ap-southeast-1
-          aws configure set default.output json
-
-      - uses: actions/checkout@v3
-      - name: Use Node.js18
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-      - name: Deploy frontend to S3
-        run: |
-          bash frontend-script.sh
+          sshpass -p ${{ secrets.SUDO_PASSWORD }} ssh -o StrictHostKeyChecking=no -i ~/.ssh/backend.pem runner@${{ matrix.servers-frontend }} '
+          cd social-media-web && bash frontend-script.sh
+          '

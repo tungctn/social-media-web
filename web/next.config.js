@@ -28,16 +28,16 @@ const nextConfig = {
     unoptimized: true,
   },
   trailingSlash: true,
-  output: "export",
+  // output: "export",
 
-  // async rewrites() {
-  //   return [
-  //     {
-  //       source: '/api/:path*',
-  //       destination: `${process.env.NEXT_PUBLIC_API_URL}/api/:path*` // Proxy to Backend
-  //     }
-  //   ]
-  // }
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: `${process.env.NEXT_PUBLIC_API_URL}/api/:path*` // Proxy to Backend
+      }
+    ]
+  }
 };
 
 module.exports = nextConfig;
