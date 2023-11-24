@@ -15,8 +15,8 @@ export function getPortsNumberWithTopic() {
 
 export function getPostsWithNegativeComments(data: {
   time_statistics: TimeStatistics;
-  page_index: number;
-  page_size: number;
+  page_index?: number;
+  page_size?: number;
 }) {
   return instance.post("/api/dashboard/post-negative", data);
 }

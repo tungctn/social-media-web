@@ -3,8 +3,10 @@
 import ChartSelect from "@/components/ChartSelect";
 import Pagination from "@/components/Pagination";
 import StatisticalPostCard from "@/components/StatisticalPostCard";
+import { TimeStatistics } from "@/constants/Others";
 import { BREAKPOINTS } from "@/constants/WindowSizes";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
+import { getPostsWithNegativeComments } from "@/services/adminServices";
 import { statisticalPosts } from "@/utils/fakeData/Post";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FaCircleChevronLeft, FaCircleChevronRight } from "react-icons/fa6";
@@ -12,6 +14,7 @@ import { FaCircleChevronLeft, FaCircleChevronRight } from "react-icons/fa6";
 export default function PostsBox() {
   const { width } = useWindowDimensions();
   const [posts, setPosts] = useState<any>();
+  const [time, setTime] = useState<number>(TimeStatistics.thisYear);
   const [pagesTotal, setPagesTotal] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const listsViewRef = useRef<HTMLDivElement>(null);
@@ -36,7 +39,7 @@ export default function PostsBox() {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [time]);
 
   useEffect(() => {
     if (listsViewRef.current) {
@@ -50,9 +53,17 @@ export default function PostsBox() {
   }, [currentPage]);
 
   const getData = async () => {
-    const t = Math.ceil(statisticalPosts.length / 4);
-    setPosts(statisticalPosts);
+    const postsRes = await getPostsWithNegativeComments({
+      time_statistics: time,
+    });
+    
+    const t = Math.ceil(postsRes.data.data.length / 4);
+    setPosts(postsRes.data.data);
     setPagesTotal(t);
+  };
+
+  const handleChangeTime = (t: TimeStatistics) => {
+    setTime(t);
   };
 
   const handleChangePage = (page: number) => {
@@ -73,9 +84,9 @@ export default function PostsBox() {
         <h1 className="3xl:text-2xl text-lg font-bold text-white 3xl:-ml-[25px] -ml-[calc(25px*0.75)] leading-none">
           Post
         </h1>
-        <ChartSelect />
+        <ChartSelect onChange={handleChangeTime} />
       </div>
-      {currentPage !== 1 && (
+      {pagesTotal > 1 && currentPage !== 1 && (
         <button
           onClick={handlePreviousPage}
           title="previous"
@@ -84,7 +95,7 @@ export default function PostsBox() {
           <FaCircleChevronLeft />
         </button>
       )}
-      {currentPage !== pagesTotal && (
+      {pagesTotal > 1 && currentPage !== pagesTotal && (
         <button
           onClick={handleNextPage}
           title="next"
@@ -98,13 +109,18 @@ export default function PostsBox() {
         style={{ gap }}
         ref={listsViewRef}
       >
+        {pagesTotal <= 1 && posts?.length === 0 && <span className="text-white italic">No post</span>}
         {posts?.map((post: any) => {
           return (
             <StatisticalPostCard
               key={post.id}
               postId={post.id}
-              reactAmount={post.reactAmount}
-              negativeCommentsPercent={post.negativeCommentsPercent}
+              reactAmount={post.likes_count}
+              negativeCommentsPercent={
+                post.comments_count
+                  ? Math.round(post.comments_negative_count / post.comments_count * 100)
+                  : 0
+              }
               images={post.images}
             />
           );
