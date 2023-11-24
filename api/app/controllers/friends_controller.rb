@@ -4,6 +4,11 @@ class FriendsController < ApplicationController
   skip_before_action :authenticate_request, only: [:show, :search]
 
   def search
+    if params[:text_search].length == 0
+      render json: { data_search: [] }, status: :ok
+      return
+    end
+
     get_current_user() # gán current_user nếu có token truyền lên
 
     atrs_search = ["first_name", "full_name", "last_name", "phone_number"]
