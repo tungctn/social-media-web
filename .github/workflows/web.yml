@@ -70,5 +70,6 @@ jobs:
       - name: Deploy frontend to server
         run: |
           sshpass -p ${{ secrets.SUDO_PASSWORD }} ssh -o StrictHostKeyChecking=no -i ~/.ssh/backend.pem runner@${{ matrix.servers-frontend }} '
-          cd social-media-web && bash frontend-script.sh
+          ls -a
+          cd social-media-web && git pull origin main
           '
