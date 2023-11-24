@@ -16,8 +16,7 @@ git pull origin main
 cd ./web
 npm install && npm run build
 
-cd ..
-pm2 start ecosystem.config.js
+pm2 start nextjs-app
 
 # Đẩy file build lên S3 và cập nhật file index.html
 # aws s3 rm s3://pet-relive.online --recursive

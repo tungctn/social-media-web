@@ -27,5 +27,4 @@ bundle install
 # aws s3 sync ./out s3://pet-relive.online
 
 # Restart services
-cd ..
-pm2 start ecosystem.config.js
+pm2 start rails-app
