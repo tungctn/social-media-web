@@ -950,6 +950,56 @@ Chấp nhận lời mời, block, chuyển loại bạn bè (hẹn hò ?)
 
 </details>
 
+#### Tìm kiếm bạn bè
+
+<details>
+<summary><code>POST /api/friends/search</code></summary>
+<br>
+
+#### Parameters
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Path Variables | Type  | Description                                |
+| :------------- | :---- | :----------------------------------------- |
+| `text_search`  | `string` | **Required** |
+| `page_index`  | `int` | **Required** |
+| `page_size`  | `int` | **Required** |
+
+```javascript
+{
+    "success": true,
+    "message": "ok",
+    "data": {
+        "data_search": [
+            {
+                "id": 1,
+                "user_id": 6,
+                "first_name": "theanh",
+                "last_name": "Thế Em",
+                "full_name": "Trần Thế Em",
+                "phone_number": null,
+                "date_of_birth": null,
+                "gender": 1,
+                "join_date": null,
+                "last_login": null,
+                "address": null,
+                "bio": null,
+                "relationship_status": null,
+                "created_at": "2023-09-24T06:58:09.340Z",
+                "updated_at": "2023-10-12T22:45:38.124Z",
+                "avatar_url": "https://s3-ap-southeast-1.amazonaws.com/social-media-image/a164rfp4ncpxsg11e8mrpdudtzi6",
+                "friend_status": 2
+            }
+        ]
+    },
+}
+```
+
+</details>
+
 </details>
 
 <details>
