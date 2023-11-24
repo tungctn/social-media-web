@@ -101,6 +101,7 @@ class DashboardController < AdminsController
     end
 
     posts = nil
+    total_post = Post.where(data_query["query_time"]).count
 
     if !params[:page_index] || !params[:page_size]
       posts = Post.where(data_query["query_time"]).order(created_at: :desc)
@@ -130,7 +131,7 @@ class DashboardController < AdminsController
       end
     end
 
-    render json: { data: posts_data, data_query: data_query }, status: :ok
+    render json: { total_post: total_post, data: posts_data, data_query: data_query }, status: :ok
   end
   
   def statistics_post_count
