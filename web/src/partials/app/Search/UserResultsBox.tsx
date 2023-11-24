@@ -25,7 +25,7 @@ export default function UserResultsBox({ users }: UserResultsBoxProps) {
       </h2>
       <div className="bg-white rounded-[30px] py-[30px] px-8">
         <div className="flex flex-col 3xl:gap-4 gap-[calc(16px/6*5)]">
-          {users.slice(0, 3).map((user) => {
+          {users && users.slice(0, 3).map((user) => {
             return (
               <div
                 key={user.user_id}

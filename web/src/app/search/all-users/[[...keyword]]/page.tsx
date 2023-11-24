@@ -1,9 +1,26 @@
+"use client";
+
 import Container from "@/components/Container";
 import SearchUserCard from "@/components/SearchUserCard";
 import DefaultLayout from "@/layouts/DefaultLayout";
+import { searchUser } from "@/services/userServices";
 import { users } from "@/utils/fakeData/User";
+import { useEffect, useState } from "react";
 
-export default function AllUsersResult() {
+export default function AllUsersResult({
+  params,
+}: {
+  params: { keyword: string };
+}) {
+  const [data, setData] = useState<any>();
+  useEffect(() => {
+    getData();
+  }, [params.keyword]);
+
+  const getData = async () => {
+    const userResults: any = await searchUser({ text_search: params.keyword });
+    setData(userResults.data.data_search);
+  };
   return (
     <DefaultLayout>
       <Container fixedHeight={false}>
@@ -12,9 +29,10 @@ export default function AllUsersResult() {
             Search
           </h1>
           <div className="mt-5 mx-auto 3xl:w-[794px] w-[calc(794px/6*5)] px-[11px] flex flex-col gap-5">
-            {users.map((user) => {
-              return <SearchUserCard key={user.user_id} user={user} />;
-            })}
+            {data &&
+              data.map((user: any) => {
+                return <SearchUserCard key={user.user_id} user={user} />;
+              })}
           </div>
         </div>
       </Container>

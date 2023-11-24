@@ -20,9 +20,9 @@ export default function Container({
       className={
         "flex flex-row bg-cultured rounded-[30px] " +
         (fixedHeight
-          ? "3xl:h-[calc(100vh-40px*2)] h-[calc(100vh-32px*2)]"
+          ? "3xl:h-[calc(100vh-40px*2)] h-[calc(100vh-32px*2)] "
           : "") +
-        (fullScreen ? "" : "3xl:my-10 my-8 3xl:mr-10 mr-8 !rounded-e-none")
+        (fullScreen ? "!rounded-e-none" : "3xl:my-10 my-8 3xl:mr-10 mr-8")
       }
     >
       {sidebarChildren && (
