@@ -149,6 +149,7 @@ export default function PostDetail({
         isActed,
       });
   };
+  
 
   return (
     <div className="fixed top-0 left-0 z-20">
@@ -159,7 +160,7 @@ export default function PostDetail({
       ></div>
       <div className="bg-white 3xl:h-[850px] h-[calc(850px/4*3)] 3xl:w-[1186px] w-[calc(1186px/4*3)] absolute z-30 top-[50vh] -translate-y-1/2 left-[50vw] -translate-x-1/2 rounded-[30px]">
         <div className="flex flex-row h-full w-full">
-          {post && post.images.length > 0 ? (
+          {post && post.images.length > 0 && !post.share_post ? (
             <CustomCarousel images={post.images} />
           ) : (
             <></>
@@ -175,7 +176,7 @@ export default function PostDetail({
                     </span>
                     <span className="first-letter:uppercase text-xs text-spanish-gray">
                       {dayjs(post.share_post.created_at).format(
-                        "dddd, HH:mm DD/MM/YYYY"
+                        "dddd, HH:mm DD/MM/YYYY",
                       )}
                     </span>
                   </div>
@@ -242,7 +243,7 @@ export default function PostDetail({
                       customClassName="text-xs leading-[12px]"
                       iconCustomClassName="3xl:text-2xl text-xl"
                       postId={post?.id ?? 0}
-                      reactType={post?.type_react!}
+                      reactType={post?.type_react}
                       onChange={handleChangeReact}
                       content={post?.content}
                       images={post?.images}
