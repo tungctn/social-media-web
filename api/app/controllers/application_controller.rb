@@ -179,6 +179,12 @@ class ApplicationController < ActionController::Base
       post_data["type_react"] = nil
       post_data["user"] = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: posts[index].user_id)
 
+      if post_data["share_id"]
+        post_data["share_post"] = get_post_data_by_id(post_data["share_id"])
+      else
+        post_data["share_post"] = nil
+      end
+
       #react
       if !@current_user
         next
@@ -190,12 +196,6 @@ class ApplicationController < ActionController::Base
       else
         react = React.find_by_id(react_post.react_id)
         post_data["type_react"] = react.type_react
-      end
-
-      if post_data["share_id"]
-        post_data["share_post"] = get_post_data_by_id(post_data["share_id"])
-      else
-        post_data["share_post"] = nil
       end
     end
 

@@ -93,7 +93,44 @@ class DashboardController < AdminsController
   end
   
   def statistics_post_negative
+    data_query = data_build_query_time_statistics(params[:time_statistics])
 
+    if !data_query["query_time"]
+      render json: { errors: "Truy vấn truyền vào không đúng." }, status: :bad_request
+      return
+    end
+
+    posts = nil
+
+    if !params[:page_index] || !params[:page_size]
+      posts = Post.where(data_query["query_time"]).order(created_at: :desc)
+    else
+      skip = params[:page_size].to_i * (params[:page_index].to_i - 1)
+      posts = Post.limit(params[:page_size].to_i).offset(skip).where(data_query["query_time"]).order(created_at: :desc)
+    end
+
+    posts_data = image_get(posts)
+
+    posts_data.each_with_index do |post_data, index|
+      if posts[index].comments_count <= 0
+        count_comment = posts[index].post_comments.size
+        posts[index].comments_count = count_comment
+        posts[index].save
+        post_data["comments_count"] = count_comment
+      end
+
+      post_data["comments_negative_count"] = PostComment.where("post_id = #{posts[index].id} AND status = #{Enums::ACTIVE_STATUS[:ban]}").count
+
+      post_data["user"] = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: posts[index].user_id)
+
+      if post_data["share_id"]
+        post_data["share_post"] = get_post_data_by_id(post_data["share_id"])
+      else
+        post_data["share_post"] = nil
+      end
+    end
+
+    render json: { data: posts_data, data_query: data_query }, status: :ok
   end
   
   def statistics_post_count
