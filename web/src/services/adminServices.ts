@@ -12,3 +12,15 @@ export function getStatisticalNumber() {
 export function getPortsNumberWithTopic() {
   return instance.post("/api/dashboard/post-label");
 }
+
+export function getPostsWithNegativeComments(data: {
+  time_statistics: TimeStatistics;
+  page_index: number;
+  page_size: number;
+}) {
+  return instance.post("/api/dashboard/post-negative", data);
+}
+
+export function getPostsAnalysis(data: { time_statistics: TimeStatistics }) {
+  return instance.post("/api/dashboard/post-count", data);
+}
