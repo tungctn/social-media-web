@@ -40,3 +40,7 @@ export function updatePassword(data: {
 }) {
   return instance.put("/api/users/password", data);
 }
+
+export function searchUser(data: { text_search: string }) {
+  return instance.post("/api/friends/search", data);
+}

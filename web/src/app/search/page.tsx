@@ -6,10 +6,11 @@ import PostResultsList from "@/partials/app/Search/PostResultsList";
 import SearchBox from "@/partials/app/Search/SearchBox";
 import UserResultsBox from "@/partials/app/Search/UserResultsBox";
 import Post, { posts } from "@/utils/fakeData/Post";
-import User, { users } from "@/utils/fakeData/User";
+import User from "@/utils/fakeData/User";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import NotFoundImg from "@/assets/imgs/404.png";
+import { searchUser } from "@/services/userServices";
 
 export default function Search() {
   const [results, setResults] = useState<{
@@ -23,8 +24,11 @@ export default function Search() {
   }, [searchKey]);
 
   const getResults = async () => {
+    const userResults: any = await searchUser({ text_search: searchKey });
+    console.log(userResults);
+    
     setResults({
-      users,
+      users: userResults.data.data_search,
       posts,
     });
   };
