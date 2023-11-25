@@ -7,7 +7,14 @@ class FriendsController < ApplicationController
     get_current_user() # gán current_user nếu có token truyền lên
 
     atrs_search = ["first_name", "full_name", "last_name", "phone_number"]
-    query_where = build_where_text_search(atrs_search, params[:text_search])
+
+    query_where = nil
+
+    if params[:text_search].length == 0
+      query_where = ""
+    else
+      query_where = build_where_text_search(atrs_search, params[:text_search])
+    end
 
     users = nil
 
