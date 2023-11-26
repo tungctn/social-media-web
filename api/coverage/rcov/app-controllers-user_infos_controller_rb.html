@@ -26,16 +26,16 @@
           <tr>
             <td class="left_align"><a href="app-controllers-user_infos_controller_rb.html">app/controllers/user_infos_controller.rb</a></td>
             <td class='right_align'><tt>80</tt></td>
-            <td class='right_align'><tt>37</tt></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>100.00%</tt></div>
+            <td class='right_align'><tt>57</tt></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>28.75%</tt></div>
       <div class="percent_graph">
-        <div class="covered" style="width:100px"></div>
-        <div class="uncovered" style="width:0px"></div>
+        <div class="covered" style="width:29px"></div>
+        <div class="uncovered" style="width:71px"></div>
       </div></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>100.00%</tt></div>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>0.00%</tt></div>
       <div class="percent_graph">
-        <div class="covered" style="width:100px"></div>
-        <div class="uncovered" style="width:0px"></div>
+        <div class="covered" style="width:0px"></div>
+        <div class="uncovered" style="width:100px"></div>
       </div></td>
           </tr>
         </tbody>
@@ -50,7 +50,7 @@
 
     <table class="details">
       <tbody>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line2">2</a> class UserInfosController &lt; ApplicationController</pre></td>
         </tr>
         <tr class="inferred">
@@ -65,13 +65,13 @@
         <tr class="inferred">
           <td><pre><a name="line6">6</a>   #created by: ttanh (02/10/2023)</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line7">7</a>   def index</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line8">8</a>     render json: { user_info: @current_user.user_info, email: @current_user.email, user_id: @current_user.id, role: @current_user.role }, status: :ok</pre></td>
         </tr>
-        <tr class="inferred">
+        <tr class="uncovered">
           <td><pre><a name="line9">9</a>   end</pre></td>
         </tr>
         <tr class="inferred">
@@ -83,85 +83,85 @@
         <tr class="inferred">
           <td><pre><a name="line12">12</a>   # created by: ttanh (24/09/2023)</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line13">13</a>   def show</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line14">14</a>     user = get_user_by_id(params[:id])</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line15">15</a> </pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line16">16</a>     user_info = user.user_info</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line17">17</a> </pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line18">18</a>     friend = {</pre></td>
         </tr>
-        <tr class="inferred">
+        <tr class="uncovered">
           <td><pre><a name="line19">19</a>       friend_status: nil,</pre></td>
         </tr>
-        <tr class="inferred">
+        <tr class="uncovered">
           <td><pre><a name="line20">20</a>       is_sender: nil</pre></td>
         </tr>
-        <tr class="inferred">
+        <tr class="uncovered">
           <td><pre><a name="line21">21</a>     }</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line22">22</a> </pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line23">23</a>     friend_request = nil</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line24">24</a>     friend_request = Friend.find_by(receiver_id: @current_user.id, sender_id: user.id)</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line25">25</a> </pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line26">26</a>     if !friend_request</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line27">27</a>       friend_request = Friend.find_by(sender_id: @current_user.id, receiver_id: user.id)</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line28">28</a> </pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line29">29</a>       if friend_request</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line30">30</a>         friend[&quot;friend_status&quot;] = friend_request.friend_status</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line31">31</a>         friend[&quot;is_sender&quot;] = true</pre></td>
         </tr>
-        <tr class="inferred">
+        <tr class="uncovered">
           <td><pre><a name="line32">32</a>       end</pre></td>
         </tr>
-        <tr class="inferred">
+        <tr class="uncovered">
           <td><pre><a name="line33">33</a>     else</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line34">34</a>       friend[&quot;friend_status&quot;] = friend_request.friend_status</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line35">35</a>       friend[&quot;is_sender&quot;] = false</pre></td>
         </tr>
-        <tr class="inferred">
+        <tr class="uncovered">
           <td><pre><a name="line36">36</a>     end</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line37">37</a> </pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line38">38</a>     render json: { user_info: user_info, email: user.email, user_id: user.id, friend: friend }, status: :ok</pre></td>
         </tr>
-        <tr class="inferred">
+        <tr class="uncovered">
           <td><pre><a name="line39">39</a>   end</pre></td>
         </tr>
         <tr class="inferred">
@@ -173,40 +173,40 @@
         <tr class="inferred">
           <td><pre><a name="line42">42</a>   # created by: ttanh (24/09/2023)</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line43">43</a>   def update</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line44">44</a>     user_info = @current_user.user_info</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line45">45</a>     if user_info.update(user_info_params)</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line46">46</a>       render json: { message: &quot;Thành công!&quot; }, status: :ok</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line47">47</a>       key = user_info.avatar.key if user_info.avatar.attached?</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line48">48</a>       user_info.avatar_url = &quot;https://s3-ap-southeast-1.amazonaws.com/social-media-image/#{key}&quot; if user_info.avatar.attached?</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line49">49</a>       user_info.save</pre></td>
         </tr>
-        <tr class="inferred">
+        <tr class="uncovered">
           <td><pre><a name="line50">50</a>     else</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line51">51</a>       render json: { errors: user_info.errors.full_messages },</pre></td>
         </tr>
-        <tr class="inferred">
+        <tr class="uncovered">
           <td><pre><a name="line52">52</a>             status: :bad_request</pre></td>
         </tr>
-        <tr class="inferred">
+        <tr class="uncovered">
           <td><pre><a name="line53">53</a>     end</pre></td>
         </tr>
-        <tr class="inferred">
+        <tr class="uncovered">
           <td><pre><a name="line54">54</a>   end</pre></td>
         </tr>
         <tr class="inferred">
@@ -218,43 +218,43 @@
         <tr class="inferred">
           <td><pre><a name="line57">57</a>   # created by: ttanh (26/09/2023)</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line58">58</a>   def delete_avatar</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line59">59</a>     user_info = @current_user.user_info</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line60">60</a> </pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line61">61</a>     if !user_info.avatar.attached?</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line62">62</a>       render json: { errors: &quot;Người dùng chưa cài avatar&quot; }, status: :bad_request</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line63">63</a>       return</pre></td>
         </tr>
-        <tr class="inferred">
+        <tr class="uncovered">
           <td><pre><a name="line64">64</a>     end</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line65">65</a> </pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line66">66</a>     user_info.avatar.purge</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line67">67</a>     user_info.avatar_url = nil</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line68">68</a>     user_info.save</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line69">69</a>     render json: { message: &quot;Thành công!&quot; }, status: :ok</pre></td>
         </tr>
-        <tr class="inferred">
+        <tr class="uncovered">
           <td><pre><a name="line70">70</a>   end</pre></td>
         </tr>
         <tr class="inferred">
@@ -263,37 +263,37 @@
         <tr class="inferred">
           <td><pre><a name="line72">72</a> </pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line73">73</a>   private</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line74">74</a>   def user_info_params</pre></td>
         </tr>
-        <tr class="marked">
+        <tr class="uncovered">
           <td><pre><a name="line75">75</a>     params.permit(:first_name, :last_name,</pre></td>
         </tr>
-        <tr class="inferred">
+        <tr class="uncovered">
           <td><pre><a name="line76">76</a>       :full_name, :phone_number,</pre></td>
         </tr>
-        <tr class="inferred">
+        <tr class="uncovered">
           <td><pre><a name="line77">77</a>       :date_of_birth, :gender, :avatar,</pre></td>
         </tr>
-        <tr class="inferred">
+        <tr class="uncovered">
           <td><pre><a name="line78">78</a>       :join_date, :last_login, :bio,</pre></td>
         </tr>
-        <tr class="inferred">
+        <tr class="uncovered">
           <td><pre><a name="line79">79</a>       :address, :relationship_status)</pre></td>
         </tr>
-        <tr class="inferred">
+        <tr class="uncovered">
           <td><pre><a name="line80">80</a>   end</pre></td>
         </tr>
-        <tr class="inferred">
+        <tr class="uncovered">
           <td><pre><a name="line81">81</a> end</pre></td>
         </tr>
       </tbody>
     </table>
 
-    <p>Generated on 2023-11-26 15:58:44 +0700 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.3</a></p>
+    <p>Generated on 2023-11-26 16:28:06 +0700 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.3</a></p>
 
   </body>
 </html>

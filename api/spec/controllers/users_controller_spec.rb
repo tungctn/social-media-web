@@ -4,9 +4,21 @@ include JsonWebToken
 
 RSpec.describe UsersController, type: :controller do
   describe "POST register" do
-    let(:user_params) {attributes_for :user}
+    context "success create a user when user have avatar" do
+      let(:user_params) {attributes_for :user, :with_avatar}
+      before do
+        post :register, params: user_params
+      end
 
-    context "success create a user" do
+      include_examples "should return the correct status code", 201
+
+      it "database has a new user" do
+        expect(User.exists?(email: user_params[:email])).to be true
+      end
+    end
+
+    context "success create a user when user don't have avatar" do
+      let(:user_params) {attributes_for :user}
       before do
         post :register, params: user_params
       end

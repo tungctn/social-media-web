@@ -30,7 +30,7 @@ class UsersController < ApplicationController
   # cập nhật password
   # ttanh (11/10/2023)
   def update_password
-    if !@current_user&.authenticate(params[:old_password])
+    if !@current_user.authenticate(params[:old_password])
       render json: { errors: "Mật khẩu cũ chưa đúng." },
             status: :bad_request
       return
