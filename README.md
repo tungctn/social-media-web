@@ -293,6 +293,36 @@ Chỉ xóa được những ảnh mà user đang đăng nhập tạo
 
 </details>
 
+#### Tìm kiếm bài viết
+
+<details>
+<summary><code>POST /api/posts/search</code></summary>
+<br>
+
+#### Parameters
+
+| Header          | Type     | Description                                   |
+| :-------------- | :------- | :-------------------------------------------- |
+| `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
+| Path Variables | Type  | Description                                |
+| :------------- | :---- | :----------------------------------------- |
+| `text_search`  | `string` | **Required** |
+| `page_index`  | `int` | **Required** |
+| `page_size`  | `int` | **Required** |
+
+```javascript
+{
+    "success": true,
+    "message": "ok",
+    "data": {
+        "data_search": []
+    },
+}
+```
+
+</details>
+
 #### Create post
 
 <details>
