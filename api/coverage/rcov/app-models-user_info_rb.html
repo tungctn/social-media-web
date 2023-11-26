@@ -25,17 +25,17 @@
         <tbody>
           <tr>
             <td class="left_align"><a href="app-models-user_info_rb.html">app/models/user_info.rb</a></td>
-            <td class='right_align'><tt>23</tt></td>
-            <td class='right_align'><tt>11</tt></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>95.65%</tt></div>
+            <td class='right_align'><tt>27</tt></td>
+            <td class='right_align'><tt>12</tt></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>96.30%</tt></div>
       <div class="percent_graph">
         <div class="covered" style="width:96px"></div>
         <div class="uncovered" style="width:4px"></div>
       </div></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>90.91%</tt></div>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>91.67%</tt></div>
       <div class="percent_graph">
-        <div class="covered" style="width:91px"></div>
-        <div class="uncovered" style="width:9px"></div>
+        <div class="covered" style="width:92px"></div>
+        <div class="uncovered" style="width:8px"></div>
       </div></td>
           </tr>
         </tbody>
@@ -99,30 +99,42 @@
           <td><pre><a name="line17">17</a> </pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line18">18</a>   private</pre></td>
+          <td><pre><a name="line18">18</a>   def self.ransackable_attributes(auth_object = nil)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line19">19</a>     </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line20">20</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line21">21</a> </pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line19">19</a>   def date_must_be_valid</pre></td>
+          <td><pre><a name="line22">22</a>   private</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line20">20</a>     if date_of_birth.present? &amp;&amp; date_of_birth &gt; Date.today</pre></td>
+          <td><pre><a name="line23">23</a>   def date_must_be_valid</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line24">24</a>     if date_of_birth.present? &amp;&amp; date_of_birth &gt; Date.today</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line21">21</a>       errors.add(:date_of_birth, &quot;không được lớn hơn hiện tại.&quot;)</pre></td>
+          <td><pre><a name="line25">25</a>       errors.add(:date_of_birth, &quot;không được lớn hơn hiện tại.&quot;)</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line22">22</a>     end</pre></td>
+          <td><pre><a name="line26">26</a>     end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line23">23</a>   end</pre></td>
+          <td><pre><a name="line27">27</a>   end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line24">24</a> end</pre></td>
+          <td><pre><a name="line28">28</a> end</pre></td>
         </tr>
       </tbody>
     </table>
 
-    <p>Generated on 2023-11-26 15:58:44 +0700 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.3</a></p>
+    <p>Generated on 2023-11-26 16:28:06 +0700 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.3</a></p>
 
   </body>
 </html>

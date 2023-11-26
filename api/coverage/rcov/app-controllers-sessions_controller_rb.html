@@ -25,12 +25,12 @@
         <tbody>
           <tr>
             <td class="left_align"><a href="app-controllers-sessions_controller_rb.html">app/controllers/sessions_controller.rb</a></td>
-            <td class='right_align'><tt>24</tt></td>
-            <td class='right_align'><tt>20</tt></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>16.67%</tt></div>
+            <td class='right_align'><tt>21</tt></td>
+            <td class='right_align'><tt>17</tt></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>19.05%</tt></div>
       <div class="percent_graph">
-        <div class="covered" style="width:17px"></div>
-        <div class="uncovered" style="width:83px"></div>
+        <div class="covered" style="width:19px"></div>
+        <div class="uncovered" style="width:81px"></div>
       </div></td>
             <td class="left_align"><div class="percent_graph_legend"><tt class=''>0.00%</tt></div>
       <div class="percent_graph">
@@ -69,63 +69,54 @@
           <td><pre><a name="line7">7</a>       &quot;1&quot;: Time.current,</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line8">8</a>       &quot;2&quot;: Time.zone.now,</pre></td>
+          <td><pre><a name="line8">8</a>       &quot;2&quot;: Time.zone.now</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line9">9</a>       &quot;3&quot;: DateTime.now,</pre></td>
+          <td><pre><a name="line9">9</a>     }</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line10">10</a> </pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line10">10</a>       &quot;4&quot;: Time.now,</pre></td>
+          <td><pre><a name="line11">11</a>     render json: { message: &quot;Server đang hoạt động.&quot;, server_time: time }, status: :ok</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line11">11</a>       &quot;5&quot;: DateTime.current</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line12">12</a>     }</pre></td>
+          <td><pre><a name="line12">12</a>   end</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line13">13</a> </pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line14">14</a>     render json: { message: &quot;Server đang hoạt động.&quot;, server_time: time }, status: :ok</pre></td>
+          <td><pre><a name="line14">14</a>   def end</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line15">15</a>   end</pre></td>
+          <td><pre><a name="line15">15</a>     if @current_user</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line16">16</a>       @current_user.last_time_active = nil</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line17">17</a>       @current_user.save</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line18">18</a>     end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line16">16</a> </pre></td>
+          <td><pre><a name="line19">19</a> </pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line17">17</a>   def end</pre></td>
+          <td><pre><a name="line20">20</a>     render json: { message: &quot;Thành công.&quot; }, status: :ok</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line18">18</a>     if @current_user</pre></td>
+          <td><pre><a name="line21">21</a>   end</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line19">19</a>       @current_user.last_time_active = nil</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line20">20</a>       @current_user.save</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line21">21</a>     end</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line22">22</a> </pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line23">23</a>     render json: { message: &quot;Thành công.&quot; }, status: :ok</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line24">24</a>   end</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line25">25</a> end</pre></td>
+          <td><pre><a name="line22">22</a> end</pre></td>
         </tr>
       </tbody>
     </table>
 
-    <p>Generated on 2023-11-26 15:58:44 +0700 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.3</a></p>
+    <p>Generated on 2023-11-26 16:28:06 +0700 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.3</a></p>
 
   </body>
 </html>
