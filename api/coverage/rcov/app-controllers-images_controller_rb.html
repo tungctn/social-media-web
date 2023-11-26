@@ -25,17 +25,17 @@
         <tbody>
           <tr>
             <td class="left_align"><a href="app-controllers-images_controller_rb.html">app/controllers/images_controller.rb</a></td>
-            <td class='right_align'><tt>52</tt></td>
-            <td class='right_align'><tt>40</tt></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>23.08%</tt></div>
+            <td class='right_align'><tt>26</tt></td>
+            <td class='right_align'><tt>14</tt></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>100.00%</tt></div>
       <div class="percent_graph">
-        <div class="covered" style="width:23px"></div>
-        <div class="uncovered" style="width:77px"></div>
+        <div class="covered" style="width:100px"></div>
+        <div class="uncovered" style="width:0px"></div>
       </div></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>0.00%</tt></div>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>100.00%</tt></div>
       <div class="percent_graph">
-        <div class="covered" style="width:0px"></div>
-        <div class="uncovered" style="width:100px"></div>
+        <div class="covered" style="width:100px"></div>
+        <div class="uncovered" style="width:0px"></div>
       </div></td>
           </tr>
         </tbody>
@@ -50,10 +50,10 @@
 
     <table class="details">
       <tbody>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line2">2</a> class ImagesController &lt; ApplicationController</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line3">3</a>   skip_before_action :authenticate_request, only: [:show]</pre></td>
         </tr>
         <tr class="inferred">
@@ -65,151 +65,73 @@
         <tr class="inferred">
           <td><pre><a name="line6">6</a>   #created by: ttanh (02/10/2023)</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line7">7</a>   def create</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line8">8</a>     image = Image.new(image_params)</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line9">9</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line10">10</a>     if image.save</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line11">11</a>       key = image.image.key</pre></td>
         </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line12">12</a>       image.url = &quot;https://d2n33bp2yovvw9.cloudfront.net/#{key}&quot; if image.image.attached?</pre></td>
+        <tr class="marked">
+          <td><pre><a name="line12">12</a>       image.url = &quot;https://d2n33bp2yovvw9.cloudfront.net/#{key}&quot;</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line13">13</a>       image.user_id = @current_user.id</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line14">14</a>       image.save</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line15">15</a>       render json: { image: image }, status: :ok</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="inferred">
           <td><pre><a name="line16">16</a>     else</pre></td>
         </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line17">17</a>       render json: { errors: &quot;Lỗi đường truyền vui lòng thử lại sau.&quot; }, status: :internal_server_error</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line18">18</a>     end</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line19">19</a>   end</pre></td>
+        <tr class="marked">
+          <td><pre><a name="line17">17</a>       render json: { errors: image.errors.full_messages },</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line20">20</a> </pre></td>
+          <td><pre><a name="line18">18</a>              status: :unprocessable_entity</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line21">21</a>   #lấy ảnh bằng id</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line22">22</a>   def show</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line23">23</a>     image = Image.find_by_id(params[:id])</pre></td>
+          <td><pre><a name="line19">19</a>     end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line24">24</a> </pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line25">25</a>     if image </pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line26">26</a>       render json: { image: image }, status: :ok</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line27">27</a>     else</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line28">28</a>       render json: { errors: &quot;Không tìm thấy ảnh.&quot; }, status: :bad_request</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line29">29</a>     end</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line30">30</a>   end</pre></td>
+          <td><pre><a name="line20">20</a>   end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line31">31</a> </pre></td>
+          <td><pre><a name="line21">21</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line22">22</a>   private</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line32">32</a>   #xóa ảnh</pre></td>
+          <td><pre><a name="line23">23</a> </pre></td>
         </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line33">33</a>   def deletes</pre></td>
+        <tr class="marked">
+          <td><pre><a name="line24">24</a>   def image_params</pre></td>
         </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line34">34</a>     ids = params[:ids]</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line35">35</a> </pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line36">36</a>     for id in ids do</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line37">37</a>       image = Image.find_by_id(id)</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line38">38</a>       if image</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line39">39</a>         if image.user_id == @current_user.id</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line40">40</a>           image.image.purge</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line41">41</a>           image.destroy</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line42">42</a>         end</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line43">43</a>       end</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line44">44</a>     end</pre></td>
+        <tr class="marked">
+          <td><pre><a name="line25">25</a>     params.permit(:image)</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line45">45</a> </pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line46">46</a>     render json: { message: &quot;Thành công&quot; }, status: :ok</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line47">47</a>   end</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line48">48</a>   private</pre></td>
+          <td><pre><a name="line26">26</a>   end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line49">49</a> </pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line50">50</a>   def image_params</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line51">51</a>     params.permit(:image)</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line52">52</a>   end</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line53">53</a> end</pre></td>
+          <td><pre><a name="line27">27</a> end</pre></td>
         </tr>
       </tbody>
     </table>
 
-    <p>Generated on 2023-11-26 16:28:06 +0700 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.3</a></p>
+    <p>Generated on 2023-11-26 18:55:59 +0700 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.3</a></p>
 
   </body>
 </html>
