@@ -25,17 +25,17 @@
         <tbody>
           <tr>
             <td class="left_align"><a href="app-controllers-application_controller_rb.html">app/controllers/application_controller.rb</a></td>
-            <td class='right_align'><tt>104</tt></td>
-            <td class='right_align'><tt>52</tt></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>67.31%</tt></div>
+            <td class='right_align'><tt>289</tt></td>
+            <td class='right_align'><tt>149</tt></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>60.21%</tt></div>
       <div class="percent_graph">
-        <div class="covered" style="width:67px"></div>
-        <div class="uncovered" style="width:33px"></div>
+        <div class="covered" style="width:60px"></div>
+        <div class="uncovered" style="width:40px"></div>
       </div></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>34.62%</tt></div>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>22.82%</tt></div>
       <div class="percent_graph">
-        <div class="covered" style="width:35px"></div>
-        <div class="uncovered" style="width:65px"></div>
+        <div class="covered" style="width:23px"></div>
+        <div class="uncovered" style="width:77px"></div>
       </div></td>
           </tr>
         </tbody>
@@ -62,310 +62,865 @@
         <tr class="marked">
           <td><pre><a name="line5">5</a>   before_action :authenticate_request</pre></td>
         </tr>
+        <tr class="marked">
+          <td><pre><a name="line6">6</a>   after_action :update_last_time_active</pre></td>
+        </tr>
         <tr class="inferred">
-          <td><pre><a name="line6">6</a> </pre></td>
+          <td><pre><a name="line7">7</a> </pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line7">7</a>   protected</pre></td>
+          <td><pre><a name="line8">8</a>   protected</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line8">8</a> </pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line9">9</a>   # lấy user bằng id</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line10">10</a>   # ttanh - 04/10/2023</pre></td>
+          <td><pre><a name="line9">9</a>   # thêm lịch sử đăng nhập</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line11">11</a>   def get_user_by_id(id)</pre></td>
+          <td><pre><a name="line10">10</a>   def add_login_history</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line12">12</a>     user = User.find_by_id(id)</pre></td>
+          <td><pre><a name="line11">11</a>     if @current_user</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line13">13</a>     if !user</pre></td>
+          <td><pre><a name="line12">12</a>       login_history = LoginHistory.new</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line14">14</a>       render json: { errors: &quot;Không tìm thấy người dùng với id: #{id}&quot; }, status: :bad_request</pre></td>
+          <td><pre><a name="line13">13</a>       login_history.user_id = @current_user.id</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line15">15</a>       return false</pre></td>
+          <td><pre><a name="line14">14</a>       login_history.ip_address = request.remote_ip</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line15">15</a>       login_history.save</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line16">16</a>     end</pre></td>
         </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line17">17</a>     return user</pre></td>
+        <tr class="inferred">
+          <td><pre><a name="line17">17</a>   end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line18">18</a>   end</pre></td>
+          <td><pre><a name="line18">18</a> </pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line19">19</a> </pre></td>
+          <td><pre><a name="line19">19</a>   # lấy user bằng id</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line20">20</a>   # check quyền sửa, xóa với người dùng hiện tại</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line21">21</a>   # param &lt;id&gt;: id cần kiểm tra xem có trùng không</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line22">22</a>   # ttanh - 04/10/2023</pre></td>
+          <td><pre><a name="line20">20</a>   # ttanh - 04/10/2023</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line23">23</a>   def check_permisson_update_delete(id)</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line24">24</a>     if @current_user.id != id</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line25">25</a>       render json: { errors: &quot;Không có quyền.&quot; }, status: :forbidden</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line26">26</a>       return false</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line27">27</a>     end</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line28">28</a>     return true</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line29">29</a>   end</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line30">30</a> </pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line31">31</a>   # gán ảnh bằng id của ảnh cho các model có quan hệ với bảng images là n-n</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line32">32</a>   # param: &lt;model&gt; - model muốn gán</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line33">33</a>   #        &lt;image_ids&gt; - id của các ảnh</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line34">34</a>   # ttanh - 04/10/2023</pre></td>
+          <td><pre><a name="line21">21</a>   def get_user_by_id(id)</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line35">35</a>   def image_add(model, image_ids)</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line36">36</a>     if !image_ids</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line37">37</a>       return</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line38">38</a>     end</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line39">39</a> </pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line40">40</a>     image_ids.each do |image_id|</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line41">41</a>       image = Image.find_by_id(image_id)</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line42">42</a>       if image</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line43">43</a>         model.images &lt;&lt; image</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line44">44</a>       end</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line45">45</a>     end</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line46">46</a>   end</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line47">47</a> </pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line48">48</a>   # xóa model và xóa ảnh</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line49">49</a>   # param: &lt;model&gt; - model muốn xóa</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line50">50</a>   # ttanh - 04/10/2023</pre></td>
+          <td><pre><a name="line22">22</a>     user = User.find_by_id(id)</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line51">51</a>   def image_delete(model)</pre></td>
+          <td><pre><a name="line23">23</a>     if !user</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line52">52</a>     images = model.images</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line53">53</a>     </pre></td>
+          <td><pre><a name="line24">24</a>       render json: { errors: &quot;Không tìm thấy người dùng với id: #{id}&quot; }, status: :bad_request</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line54">54</a>     images.each do |image|</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line55">55</a>       image.image.purge</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line56">56</a>       image.destroy</pre></td>
+          <td><pre><a name="line25">25</a>       return false</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line57">57</a>     end</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line58">58</a>   end</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line59">59</a> </pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line60">60</a>   # lấy model và ảnh</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line61">61</a>   # param: &lt;models&gt; - mảng model muốn lấy ảnh</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line62">62</a>   # ttanh - 04/10/2023</pre></td>
+          <td><pre><a name="line26">26</a>     end</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line63">63</a>   def image_get(models)</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line64">64</a>     models_with_images = []</pre></td>
+          <td><pre><a name="line27">27</a>     return user</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line65">65</a> </pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line66">66</a>     for model in models do</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line67">67</a>       model_data = {}</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line68">68</a>       model_data_merge = model_data.merge(model.attributes)</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line69">69</a>       model_data_merge[&quot;images&quot;] = []</pre></td>
+          <td><pre><a name="line28">28</a>   end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line70">70</a> </pre></td>
+          <td><pre><a name="line29">29</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line30">30</a>   # check quyền sửa, xóa với người dùng hiện tại</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line31">31</a>   # param &lt;id&gt;: id cần kiểm tra xem có trùng không</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line32">32</a>   # ttanh - 04/10/2023</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line33">33</a>   def check_permisson_update_delete(id)</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line71">71</a>       model.images.select(:id, :url).each do |image|</pre></td>
+          <td><pre><a name="line34">34</a>     if @current_user.id != id</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line72">72</a>         model_data_merge[&quot;images&quot;].push(image.attributes) # Kết hợp thuộc tính của mỗi đối tượng hình ảnh vào model_data</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line73">73</a>       end</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line74">74</a> </pre></td>
+          <td><pre><a name="line35">35</a>       render json: { errors: &quot;Không có quyền.&quot; }, status: :forbidden</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line75">75</a>       models_with_images.push(model_data_merge)</pre></td>
+          <td><pre><a name="line36">36</a>       return false</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line76">76</a>     end</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line77">77</a> </pre></td>
+          <td><pre><a name="line37">37</a>     end</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line78">78</a>     return models_with_images</pre></td>
+          <td><pre><a name="line38">38</a>     return true</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line79">79</a>   end</pre></td>
+          <td><pre><a name="line39">39</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line40">40</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line41">41</a>   # gán ảnh bằng id của ảnh cho các model có quan hệ với bảng images là n-n</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line42">42</a>   # param: &lt;model&gt; - model muốn gán</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line43">43</a>   #        &lt;image_ids&gt; - id của các ảnh</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line44">44</a>   # ttanh - 04/10/2023</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line45">45</a>   def image_add(model, image_ids)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line46">46</a>     if !image_ids</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line47">47</a>       return</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line48">48</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line49">49</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line50">50</a>     image_ids.each do |image_id|</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line51">51</a>       image = Image.find_by_id(image_id)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line52">52</a>       if image</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line53">53</a>         model.images &lt;&lt; image</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line54">54</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line55">55</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line56">56</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line57">57</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line58">58</a>   # xóa model và xóa ảnh</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line59">59</a>   # param: &lt;model&gt; - model muốn xóa</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line60">60</a>   # ttanh - 04/10/2023</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line61">61</a>   def image_delete(model)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line62">62</a>     images = model.images</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line63">63</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line64">64</a>     images.each do |image|</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line65">65</a>       image.image.purge</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line66">66</a>       image.destroy</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line67">67</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line68">68</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line69">69</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line70">70</a>   # lấy model và ảnh</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line71">71</a>   # param: &lt;models&gt; - mảng model muốn lấy ảnh</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line72">72</a>   # ttanh - 04/10/2023</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line73">73</a>   def image_get(models)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line74">74</a>     models_with_images = []</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line75">75</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line76">76</a>     for model in models do</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line77">77</a>       model_data = {}</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line78">78</a>       model_data_merge = model_data.merge(model.attributes)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line79">79</a>       model_data_merge[&quot;images&quot;] = []</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line80">80</a> </pre></td>
         </tr>
-        <tr class="marked">
-          <td><pre><a name="line81">81</a>   private</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line82">82</a>   </pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line83">83</a>   # updated by - ttanh (23/09/23) Thêm xử lý cho việc người dùng không gửi token</pre></td>
-        </tr>
-        <tr class="marked">
-          <td><pre><a name="line84">84</a>   def authenticate_request</pre></td>
-        </tr>
-        <tr class="marked">
-          <td><pre><a name="line85">85</a>     token = request.headers[&quot;Authorization&quot;]</pre></td>
-        </tr>
-        <tr class="marked">
-          <td><pre><a name="line86">86</a>     if token</pre></td>
-        </tr>
-        <tr class="marked">
-          <td><pre><a name="line87">87</a>       token = token.split(&quot; &quot;).last</pre></td>
-        </tr>
-        <tr class="marked">
-          <td><pre><a name="line88">88</a>       decoded = jwt_decode token</pre></td>
-        </tr>
-        <tr class="marked">
-          <td><pre><a name="line89">89</a>       @current_user = User.find(decoded[:user_id])</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line90">90</a>     else</pre></td>
+        <tr class="uncovered">
+          <td><pre><a name="line81">81</a>       model.images.select(:id, :url).each do |image|</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line91">91</a>       render json: { errors: &quot;Bạn cần gửi token&quot; },</pre></td>
+          <td><pre><a name="line82">82</a>         model_data_merge[&quot;images&quot;].push(image.attributes) # Kết hợp thuộc tính của mỗi đối tượng hình ảnh vào model_data</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line92">92</a>              status: :unauthorized</pre></td>
+          <td><pre><a name="line83">83</a>       end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line93">93</a>     end</pre></td>
+          <td><pre><a name="line84">84</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line85">85</a>       models_with_images.push(model_data_merge)</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line94">94</a>   end</pre></td>
+          <td><pre><a name="line86">86</a>     end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line95">95</a> </pre></td>
+          <td><pre><a name="line87">87</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line88">88</a>     return models_with_images</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line96">96</a>   # lấy người dùng với những request không bắt buộc phải gửi</pre></td>
+          <td><pre><a name="line89">89</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line90">90</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line91">91</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line92">92</a>   # check react tồn tại</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line93">93</a>   # ttanh - 17/10/2023</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line97">97</a>   def get_current_user</pre></td>
+          <td><pre><a name="line94">94</a>   def get_react_by_type(type)</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line98">98</a>     token = request.headers[&quot;Authorization&quot;]</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line99">99</a>     if token</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line100">100</a>       token = token.split(&quot; &quot;).last</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line101">101</a>       decoded = jwt_decode token</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line102">102</a>       @current_user = User.find_by_id(decoded[:user_id])</pre></td>
+          <td><pre><a name="line95">95</a>     react = React.where([&quot;type_react = :t&quot;, { t: type }]).first</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line103">103</a>     end</pre></td>
+          <td><pre><a name="line96">96</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line97">97</a>     if react == nil</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line98">98</a>       render json: { errors: &quot;Truyền sai react type&quot; }, status: :bad_request</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line99">99</a>       return false</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line104">104</a>   end</pre></td>
+          <td><pre><a name="line100">100</a>     end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line105">105</a> end</pre></td>
+          <td><pre><a name="line101">101</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line102">102</a>     return react</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line103">103</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line104">104</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line105">105</a>   # check bài viết tồn tại</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line106">106</a>   # ttanh - 04/10/2023</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line107">107</a>   def get_post_by_id(id)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line108">108</a>     post = Post.find_by_id(id)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line109">109</a>     if !post</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line110">110</a>       render json: { errors: &quot;Không tìm thấy bài viết với id: #{id}&quot; }, status: :bad_request</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line111">111</a>       return false</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line112">112</a>     end</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line113">113</a>     return post</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line114">114</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line115">115</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line116">116</a>   # Lấy dữ liệu chi tiết của 1 bài viết</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line117">117</a>   def get_post_data_by_id(id)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line118">118</a>     post = get_post_by_id(id)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line119">119</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line120">120</a>     if !post</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line121">121</a>       return false</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line122">122</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line123">123</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line124">124</a>     post_data = image_get([post])[0]</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line125">125</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line126">126</a>     post_data[&quot;type_react&quot;] = nil</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line127">127</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line128">128</a>     post_data[&quot;user&quot;] = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: post.user_id)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line129">129</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line130">130</a>     if post.comments_count &lt;= 0</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line131">131</a>       count_comment = post.post_comments.size</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line132">132</a>       post.comments_count = count_comment</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line133">133</a>       post.save</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line134">134</a>       post_data[&quot;comments_count&quot;] = count_comment</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line135">135</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line136">136</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line137">137</a>     if @current_user</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line138">138</a>       react_post = post.reacts_post.find_by(user_id: @current_user.id)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line139">139</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line140">140</a>       if !react_post</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line141">141</a>       else</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line142">142</a>         react = React.find_by_id(react_post.react_id)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line143">143</a>         post_data[&quot;type_react&quot;] = react.type_react</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line144">144</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line145">145</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line146">146</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line147">147</a>     return post_data</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line148">148</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line149">149</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line150">150</a>   # Lấy dữ liệu chi tiết của nhiều bài viết</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line151">151</a>   def get_list_post_data_by_filter(user_id)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line152">152</a>     posts = nil</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line153">153</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line154">154</a>     if !params[:page_index] || !params[:page_size]</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line155">155</a>       if user_id</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line156">156</a>         posts = Post.where([&quot;user_id = :user_id&quot;, { user_id: user_id }]).order(&quot;created_at desc&quot;)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line157">157</a>       else</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line158">158</a>         posts = Post.all.order(&quot;created_at desc&quot;)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line159">159</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line160">160</a>     else</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line161">161</a>       skip = params[:page_size].to_i * (params[:page_index].to_i - 1)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line162">162</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line163">163</a>       if user_id</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line164">164</a>         posts = Post.where([&quot;user_id = :user_id&quot;, { user_id: user_id }]).limit(params[:page_size].to_i).offset(skip).order(&quot;created_at desc&quot;)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line165">165</a>       else</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line166">166</a>         posts = Post.limit(params[:page_size].to_i).offset(skip).order(&quot;created_at desc&quot;)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line167">167</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line168">168</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line169">169</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line170">170</a>     posts_data = image_get(posts)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line171">171</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line172">172</a>     posts_data.each_with_index do |post_data, index|</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line173">173</a>       if posts[index].comments_count &lt;= 0</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line174">174</a>         count_comment = posts[index].post_comments.size</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line175">175</a>         posts[index].comments_count = count_comment</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line176">176</a>         posts[index].save</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line177">177</a>         post_data[&quot;comments_count&quot;] = count_comment</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line178">178</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line179">179</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line180">180</a>       post_data[&quot;type_react&quot;] = nil</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line181">181</a>       post_data[&quot;user&quot;] = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: posts[index].user_id)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line182">182</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line183">183</a>       #react</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line184">184</a>       if !@current_user</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line185">185</a>         next</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line186">186</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line187">187</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line188">188</a>       react_post = posts[index].reacts_post.find_by(user_id: @current_user.id)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line189">189</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line190">190</a>       if !react_post</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line191">191</a>       else</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line192">192</a>         react = React.find_by_id(react_post.react_id)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line193">193</a>         post_data[&quot;type_react&quot;] = react.type_react</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line194">194</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line195">195</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line196">196</a>       if post_data[&quot;share_id&quot;]</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line197">197</a>         post_data[&quot;share_post&quot;] = get_post_data_by_id(post_data[&quot;share_id&quot;])</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line198">198</a>       else</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line199">199</a>         post_data[&quot;share_post&quot;] = nil</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line200">200</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line201">201</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line202">202</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line203">203</a>     return posts_data</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line204">204</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line205">205</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line206">206</a>   # check comment tồn tại</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line207">207</a>   # ttanh - 04/10/2023</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line208">208</a>   def get_comment_by_id(id)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line209">209</a>     comment = PostComment.find_by_id(id)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line210">210</a>     if !comment</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line211">211</a>       render json: { errors: &quot;Không tìm thấy comment với id: #{id}&quot; }, status: :bad_request</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line212">212</a>       return false</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line213">213</a>     end</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line214">214</a>     return comment</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line215">215</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line216">216</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line217">217</a>   # Lấy dữ liệu chi tiết của 1 comment</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line218">218</a>   def get_comment_data_by_id(id)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line219">219</a>     comment = get_comment_by_id(id)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line220">220</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line221">221</a>     if !comment</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line222">222</a>       return false</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line223">223</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line224">224</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line225">225</a>     comment_data = image_get([comment])[0]</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line226">226</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line227">227</a>     comment_data[&quot;type_react&quot;] = nil</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line228">228</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line229">229</a>     comment_data[&quot;user&quot;] = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: comment.user_id)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line230">230</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line231">231</a>     if @current_user</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line232">232</a>       react_comment = comment.reacts_post_comment.find_by(user_id: @current_user.id)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line233">233</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line234">234</a>       if !react_comment</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line235">235</a>       else</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line236">236</a>         react = React.find_by_id(react_comment.react_id)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line237">237</a>         comment_data[&quot;type_react&quot;] = react.type_react</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line238">238</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line239">239</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line240">240</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line241">241</a>     return comment_data</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line242">242</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line243">243</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line244">244</a>   # kiểm tra xem bài viết, bình luận có trống dữ liệu không</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line245">245</a>   def validate_null_content_image(model)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line246">246</a>     if params[:content].strip == &quot;&quot; and model.images == []</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line247">247</a>       render json: { errors: &quot;Nội dung không được để trống&quot; }, status: :bad_request</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line248">248</a>       return false</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line249">249</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line250">250</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line251">251</a>     if params[:content].strip == nil and model.images == []</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line252">252</a>       render json: { errors: &quot;Nội dung không được để trống&quot; }, status: :bad_request</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line253">253</a>       return false</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line254">254</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line255">255</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line256">256</a>     return true</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line257">257</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line258">258</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line259">259</a>   private</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line260">260</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line261">261</a>   # updated by - ttanh (23/09/23) Thêm xử lý cho việc người dùng không gửi token</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line262">262</a>   def authenticate_request</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line263">263</a>     token = request.headers[&quot;Authorization&quot;]</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line264">264</a>     if token</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line265">265</a>       token = token.split(&quot; &quot;).last</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line266">266</a>       decoded = jwt_decode token</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line267">267</a>       @current_user = User.find(decoded[:user_id])</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line268">268</a>     else</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line269">269</a>       render json: { errors: &quot;Bạn cần gửi token&quot; },</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line270">270</a>              status: :unauthorized</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line271">271</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line272">272</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line273">273</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line274">274</a>   # lấy người dùng với những request không bắt buộc phải gửi</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line275">275</a>   def get_current_user</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line276">276</a>     token = request.headers[&quot;Authorization&quot;]</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line277">277</a>     if token</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line278">278</a>       token = token.split(&quot; &quot;).last</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line279">279</a>       decoded = jwt_decode token</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line280">280</a>       @current_user = User.find_by_id(decoded[:user_id])</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line281">281</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line282">282</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line283">283</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line284">284</a>   def update_last_time_active</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line285">285</a>     if @current_user</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line286">286</a>       @current_user.last_time_active = Time.current</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line287">287</a>       @current_user.save</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line288">288</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line289">289</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line290">290</a> end</pre></td>
         </tr>
       </tbody>
     </table>
 
-    <p>Generated on 2023-11-04 11:43:19 +0700 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.3</a></p>
+    <p>Generated on 2023-11-26 15:58:44 +0700 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.3</a></p>
 
   </body>
 </html>

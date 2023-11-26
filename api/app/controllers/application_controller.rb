@@ -75,7 +75,7 @@ class ApplicationController < ActionController::Base
   # ttanh - 04/10/2023
   def image_delete(model)
     images = model.images
-    
+
     images.each do |image|
       image.image.purge
       image.destroy
@@ -103,7 +103,7 @@ class ApplicationController < ActionController::Base
     return models_with_images
   end
 
-  
+
   # check react tồn tại
   # ttanh - 17/10/2023
   def get_react_by_type(type)
@@ -319,7 +319,7 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  
+
   # updated by - ttanh (23/09/23) Thêm xử lý cho việc người dùng không gửi token
   def authenticate_request
     token = request.headers["Authorization"]
