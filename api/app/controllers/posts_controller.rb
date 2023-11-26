@@ -3,6 +3,24 @@ require_relative "../enum/enum.rb"
 class PostsController < ApplicationController
   skip_before_action :authenticate_request, only: [:index, :show, :show_user_post]
 
+  def search
+    get_current_user() # gán current_user nếu có token truyền lên
+
+    atrs_search = ["content"]
+
+    query_where = nil
+
+    if params[:text_search].length == 0
+      query_where = "status <> #{Enums::ACTIVE_STATUS[:ban]}"
+    else
+      query_where = build_where_text_search(atrs_search, params[:text_search]) + " AND " + "status <> #{Enums::ACTIVE_STATUS[:ban]}"
+    end
+
+    posts_data = get_list_post_data_by_where_query(query_where)
+
+    render json: { data_search: posts_data }, status: :ok
+  end
+
   def show_user_post
     get_current_user() # gán current_user nếu có token truyền lên
 
