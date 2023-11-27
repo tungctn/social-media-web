@@ -40,7 +40,6 @@ const friendStateLabel = {
 export default function UserActions({ userId, friend }: UserActionsProps) {
   const auth = useSelector((state: any) => state.auth);
   const [friendState, setFriendState] = useState(FriendState.NotFriendYet);
-  console.log(friend);
   
   const {
     ref: responsesRef,
@@ -107,7 +106,7 @@ export default function UserActions({ userId, friend }: UserActionsProps) {
     <div className="flex flex-row 3xl:gap-5 2xl:gap-4">
       {Number(userId) !== auth.user.user_id ? (
         <>
-          <FollowingButton />
+          {/* <FollowingButton /> */}
           <div className="w-full">
             <Tooltip
               content={friendState === FriendState.IsFriend && "Hủy kết bạn"}

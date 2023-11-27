@@ -67,7 +67,7 @@ export function getReportedPosts() {
 
 export function updateStatusReportedPost(
   id: number,
-  data: { status: number; error_list?: string | null }
+  data: { status: number; error_list?: string | null },
 ) {
   return instance.post(`/api/admins/reports/posts/${id}`, data);
 }
@@ -78,7 +78,17 @@ export async function moderateContent(content: string) {
       `${process.env.NEXT_PUBLIC_API_MODERATE_URL}/predict/text`,
       {
         caption: content,
-      }
+      },
     )
   ).data;
+}
+
+export function getNewestPost() {
+  return instance.get("/api/posts/user/newest-post");
+}
+
+export function searchPosts(data: { text_search: string }) {
+  return instance.get("/api/posts/search", {
+    params: data,
+  });
 }

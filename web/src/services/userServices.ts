@@ -42,5 +42,7 @@ export function updatePassword(data: {
 }
 
 export function searchUser(data: { text_search: string }) {
-  return instance.post("/api/friends/search", data);
+  return instance.get("/api/friends/search", {
+    params: data,
+  });
 }

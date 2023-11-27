@@ -5,6 +5,7 @@ import { ReactNode, createContext, useState } from "react";
 
 export const LoadingContext = createContext({
   setIsLoading: Function as any,
+  isLoading: false,
 });
 
 type LoadingProviderProps = {
@@ -15,7 +16,7 @@ export default function LoadingProvider({ children }: LoadingProviderProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   return (
-    <LoadingContext.Provider value={{ setIsLoading }}>
+    <LoadingContext.Provider value={{ setIsLoading, isLoading }}>
       {children}
       {isLoading && <Loading />}
     </LoadingContext.Provider>

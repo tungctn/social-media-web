@@ -12,6 +12,7 @@ import PostDetail from "@/partials/app/Post/PostDetail";
 import { useEffect, useState } from "react";
 import { ReactType } from "@/constants/Others";
 import { reactPost } from "@/utils/post";
+import PostContent from "./PostContent";
 
 type PostCardProps = {
   post: Post;
@@ -72,7 +73,9 @@ export default function PostCard({ post }: PostCardProps) {
               postDetail={postDetail}
             />
           </div>
-          <p className="px-6 py-[18px]">{postDetail.content}</p>
+          <p className="px-6 py-[18px]">
+            <PostContent text={postDetail.content} />
+          </p>
           <div
             className="flex flex-row w-full cursor-pointer"
             onClick={handleShowDetail}

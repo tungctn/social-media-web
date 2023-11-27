@@ -46,6 +46,7 @@ export function getReactTypeSpec(reactType: ReactType): ReactTypeSpec {
 }
 
 export enum FriendStatus {
+  make = -1,
   pending = 1,
   accept = 2,
   block = 3,
