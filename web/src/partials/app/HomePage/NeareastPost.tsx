@@ -31,6 +31,8 @@ export default function NeareastPost() {
 
   const handleEdit = () => {};
 
+  const handleAdd = () => {};
+
   return (
     <>
       <div className="bg-white rounded-[30px] pt-[30px] pb-[17px] px-[30px] max-w-full">
@@ -101,7 +103,10 @@ export default function NeareastPost() {
                 <span className="font-bold text-spanish-gray 3xl:text-xl text-[calc(20px/6*5)]">
                   Do not have any post yet
                 </span>
-                <Button customClassName="3xl:!text-[12px] !text-[calc(12px/6*5)] 3xl:!h-[32px] !h-[calc(32px/6*5)] !rounded-[10px]">
+                <Button
+                  onClick={handleAdd}
+                  customClassName="3xl:!text-[12px] !text-[calc(12px/6*5)] 3xl:!h-[32px] !h-[calc(32px/6*5)] !rounded-[10px]"
+                >
                   Add the first post
                 </Button>
               </div>
