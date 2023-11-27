@@ -16,9 +16,11 @@ type User = {
   date_of_birth: Date;
   address?: string;
   role?: Role;
-  posts_count?: number;
-  following_count?: number;
-  followers_count?: number;
+  // posts_count?: number;
+  friends_count?: number;
+  manual_friends_count?: number;
+  // following_count?: number;
+  // followers_count?: number;
   friend?: any;
 };
 

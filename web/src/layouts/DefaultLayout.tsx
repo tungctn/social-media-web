@@ -51,7 +51,7 @@ function DefaultLayout({ children }: DefaultLayoutProps) {
                     {auth.user.email}
                   </span>
                 </div>
-                {auth.user.role === Role.Admin ? (
+                {/* {auth.user.role === Role.Admin ? (
                   <></>
                 ) : (
                   <div className="flex flex-row justify-between text-[14px] w-full">
@@ -59,7 +59,7 @@ function DefaultLayout({ children }: DefaultLayoutProps) {
                     <div>{auth.user.following_count ?? 0} following</div>
                     <div>{auth.user.followers_count ?? 0} Follower</div>
                   </div>
-                )}
+                )} */}
               </div>
               <Menu />
             </div>

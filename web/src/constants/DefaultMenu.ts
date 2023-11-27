@@ -64,18 +64,18 @@ export const FriendMenu: any = [
     Component: FriendsList,
     title: "All friends",
   },
-  {
-    id: FriendMenuEnum.Follower,
-    label: "Follower list",
-    Component: FriendsList,
-    title: "All followers",
-  },
-  {
-    id: FriendMenuEnum.Following,
-    label: "Following list",
-    Component: FriendsList,
-    title: "Following",
-  },
+  // {
+  //   id: FriendMenuEnum.Follower,
+  //   label: "Follower list",
+  //   Component: FriendsList,
+  //   title: "All followers",
+  // },
+  // {
+  //   id: FriendMenuEnum.Following,
+  //   label: "Following list",
+  //   Component: FriendsList,
+  //   title: "Following",
+  // },
 ];
 
 export enum ReportMenuEnum {

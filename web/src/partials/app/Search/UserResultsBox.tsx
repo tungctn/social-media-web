@@ -7,12 +7,13 @@ import { useRouter } from "next/navigation";
 
 type UserResultsBoxProps = {
   users: User[];
+  keyword: string;
 };
 
-export default function UserResultsBox({ users }: UserResultsBoxProps) {
+export default function UserResultsBox({ users, keyword }: UserResultsBoxProps) {
   const router = useRouter();
   const handleSeeAll = () => {
-    router.push(`/search/all-users/`);
+    router.push(`/search/all-users/${keyword}`);
   };
 
   const handleClickUser = (userId: number) => {

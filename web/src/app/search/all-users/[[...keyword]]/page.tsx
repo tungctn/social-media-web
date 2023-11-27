@@ -3,22 +3,28 @@
 import Container from "@/components/Container";
 import SearchUserCard from "@/components/SearchUserCard";
 import DefaultLayout from "@/layouts/DefaultLayout";
+import { LoadingContext } from "@/providers/LoadingProvider";
 import { searchUser } from "@/services/userServices";
 import { users } from "@/utils/fakeData/User";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export default function AllUsersResult({
   params,
 }: {
-  params: { keyword: string };
+  params: { keyword: string[] };
 }) {
   const [data, setData] = useState<any>();
+  const { setIsLoading } = useContext(LoadingContext);
   useEffect(() => {
     getData();
   }, [params.keyword]);
 
   const getData = async () => {
-    const userResults: any = await searchUser({ text_search: params.keyword });
+    setIsLoading(true);
+    const userResults: any = await searchUser({
+      text_search: params.keyword ? params.keyword[0] : "",
+    });
+    setIsLoading(false);
     setData(userResults.data.data_search);
   };
   return (
