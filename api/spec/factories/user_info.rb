@@ -7,7 +7,7 @@ FactoryBot.define do
 
     trait :with_avatar do
       transient do
-        avatar_file { Rails.root.join("spec", "fixtures", "avatar_image.jpeg") }
+        avatar_file { Rails.root.join("spec", "fixtures", "image.jpeg") }
       end
 
       after :build do |user_info, evaluator|

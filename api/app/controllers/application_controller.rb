@@ -10,14 +10,14 @@ class ApplicationController < ActionController::Base
 
     atrs.each_with_index do |atr, index|
       query = atr + " LIKE " + "'%" + text_search + "%'"
-    
+
       if index < atrs.length - 1
         where_text_search = where_text_search + query + " OR "
       else
         where_text_search = where_text_search + query
       end
     end
-    
+
     where_text_search
   end
 
@@ -301,21 +301,6 @@ class ApplicationController < ActionController::Base
     end
 
     return comment_data
-  end
-
-  # kiểm tra xem bài viết, bình luận có trống dữ liệu không
-  def validate_null_content_image(model)
-    if params[:content].strip == "" and model.images == []
-      render json: { errors: "Nội dung không được để trống" }, status: :bad_request
-      return false
-    end
-
-    if params[:content].strip == nil and model.images == []
-      render json: { errors: "Nội dung không được để trống" }, status: :bad_request
-      return false
-    end
-
-    return true
   end
 
   private

@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     delete "/images", to: "images#deletes"
 
     #bài viết
-    post "/posts/search", to: "posts#search" # tìm kiếm bài viết (bao gồm cả tag)
+    get "/posts/search", to: "posts#search" # tìm kiếm bài viết (bao gồm cả tag)
     #báo cáo bài viết
     post "/posts/report/:id", to: "posts#report"
 
@@ -61,7 +61,7 @@ Rails.application.routes.draw do
     delete "/posts/unreact/:post_id", to: "reacts_posts#destroy"
 
     #Bạn bè
-    post "/friends/search", to: "friends#search" # tìm kiếm bạn bè
+    get "/friends/search", to: "friends#search" # tìm kiếm bạn bè
     get "/friends/request", to: "friends#get_request" # lấy ra tất cả danh sách lời mời kết bạn
     get "/friends/block", to: "friends#get_block" # lấy ra tất cả danh sách đã chặn
     get "/friends/:id", to: "friends#show" # lấy ra tất cả danh sách bạn bè của user_id = id

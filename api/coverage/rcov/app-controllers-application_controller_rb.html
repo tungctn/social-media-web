@@ -25,17 +25,17 @@
         <tbody>
           <tr>
             <td class="left_align"><a href="app-controllers-application_controller_rb.html">app/controllers/application_controller.rb</a></td>
-            <td class='right_align'><tt>352</tt></td>
-            <td class='right_align'><tt>182</tt></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>57.67%</tt></div>
+            <td class='right_align'><tt>337</tt></td>
+            <td class='right_align'><tt>174</tt></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>86.05%</tt></div>
       <div class="percent_graph">
-        <div class="covered" style="width:58px"></div>
-        <div class="uncovered" style="width:42px"></div>
+        <div class="covered" style="width:86px"></div>
+        <div class="uncovered" style="width:14px"></div>
       </div></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>18.13%</tt></div>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>72.99%</tt></div>
       <div class="percent_graph">
-        <div class="covered" style="width:18px"></div>
-        <div class="uncovered" style="width:82px"></div>
+        <div class="covered" style="width:73px"></div>
+        <div class="uncovered" style="width:27px"></div>
       </div></td>
           </tr>
         </tbody>
@@ -74,22 +74,22 @@
         <tr class="marked">
           <td><pre><a name="line9">9</a>   def build_where_text_search(atrs, text_search)</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line10">10</a>     where_text_search = &quot;&quot;</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line11">11</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line12">12</a>     atrs.each_with_index do |atr, index|</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line13">13</a>       query = atr + &quot; LIKE &quot; + &quot;&#39;%&quot; + text_search + &quot;%&#39;&quot;</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line14">14</a>     </pre></td>
+          <td><pre><a name="line14">14</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line15">15</a>       if index &lt; atrs.length - 1</pre></td>
         </tr>
         <tr class="uncovered">
@@ -98,7 +98,7 @@
         <tr class="inferred">
           <td><pre><a name="line17">17</a>       else</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line18">18</a>         where_text_search = where_text_search + query</pre></td>
         </tr>
         <tr class="inferred">
@@ -108,9 +108,9 @@
           <td><pre><a name="line20">20</a>     end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line21">21</a>     </pre></td>
+          <td><pre><a name="line21">21</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line22">22</a>     where_text_search</pre></td>
         </tr>
         <tr class="inferred">
@@ -158,22 +158,22 @@
         <tr class="marked">
           <td><pre><a name="line37">37</a>   def get_user_by_id(id)</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line38">38</a>     user = User.find_by_id(id)</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line39">39</a>     if !user</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line40">40</a>       render json: { errors: &quot;Không tìm thấy người dùng với id: #{id}&quot; }, status: :bad_request</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line41">41</a>       return false</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line42">42</a>     end</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line43">43</a>     return user</pre></td>
         </tr>
         <tr class="inferred">
@@ -194,19 +194,19 @@
         <tr class="marked">
           <td><pre><a name="line49">49</a>   def check_permisson_update_delete(id)</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line50">50</a>     if @current_user.id != id</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line51">51</a>       render json: { errors: &quot;Không có quyền.&quot; }, status: :forbidden</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line52">52</a>       return false</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line53">53</a>     end</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line54">54</a>     return true</pre></td>
         </tr>
         <tr class="inferred">
@@ -230,10 +230,10 @@
         <tr class="marked">
           <td><pre><a name="line61">61</a>   def image_add(model, image_ids)</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line62">62</a>     if !image_ids</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line63">63</a>       return</pre></td>
         </tr>
         <tr class="inferred">
@@ -242,16 +242,16 @@
         <tr class="inferred">
           <td><pre><a name="line65">65</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line66">66</a>     image_ids.each do |image_id|</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line67">67</a>       image = Image.find_by_id(image_id)</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line68">68</a>       if image</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line69">69</a>         model.images &lt;&lt; image</pre></td>
         </tr>
         <tr class="inferred">
@@ -278,13 +278,13 @@
         <tr class="marked">
           <td><pre><a name="line77">77</a>   def image_delete(model)</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line78">78</a>     images = model.images</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line79">79</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line80">80</a>     images.each do |image|</pre></td>
         </tr>
         <tr class="uncovered">
@@ -314,31 +314,31 @@
         <tr class="marked">
           <td><pre><a name="line89">89</a>   def image_get(models)</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line90">90</a>     models_with_images = []</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line91">91</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line92">92</a>     for model in models do</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line93">93</a>       model_data = {}</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line94">94</a>       model_data_merge = model_data.merge(model.attributes)</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line95">95</a>       model_data_merge[&quot;images&quot;] = []</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line96">96</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line97">97</a>       model.images.select(:id, :url).each do |image|</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line98">98</a>         model_data_merge[&quot;images&quot;].push(image.attributes) # Kết hợp thuộc tính của mỗi đối tượng hình ảnh vào model_data</pre></td>
         </tr>
         <tr class="inferred">
@@ -347,7 +347,7 @@
         <tr class="inferred">
           <td><pre><a name="line100">100</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line101">101</a>       models_with_images.push(model_data_merge)</pre></td>
         </tr>
         <tr class="inferred">
@@ -356,7 +356,7 @@
         <tr class="inferred">
           <td><pre><a name="line103">103</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line104">104</a>     return models_with_images</pre></td>
         </tr>
         <tr class="inferred">
@@ -416,22 +416,22 @@
         <tr class="marked">
           <td><pre><a name="line123">123</a>   def get_post_by_id(id)</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line124">124</a>     post = Post.find_by_id(id)</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line125">125</a>     if !post</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line126">126</a>       render json: { errors: &quot;Không tìm thấy bài viết với id: #{id}&quot; }, status: :bad_request</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line127">127</a>       return false</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line128">128</a>     end</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line129">129</a>     return post</pre></td>
         </tr>
         <tr class="inferred">
@@ -446,16 +446,16 @@
         <tr class="marked">
           <td><pre><a name="line133">133</a>   def get_post_data_by_id(id)</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line134">134</a>     post = get_post_by_id(id)</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line135">135</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line136">136</a>     if !post</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line137">137</a>       return false</pre></td>
         </tr>
         <tr class="inferred">
@@ -464,37 +464,37 @@
         <tr class="inferred">
           <td><pre><a name="line139">139</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line140">140</a>     post_data = image_get([post])[0]</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line141">141</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line142">142</a>     post_data[&quot;type_react&quot;] = nil</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line143">143</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line144">144</a>     post_data[&quot;user&quot;] = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: post.user_id)</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line145">145</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line146">146</a>     if post.comments_count &lt;= 0</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line147">147</a>       count_comment = post.post_comments.size</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line148">148</a>       post.comments_count = count_comment</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line149">149</a>       post.save</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line150">150</a>       post_data[&quot;comments_count&quot;] = count_comment</pre></td>
         </tr>
         <tr class="inferred">
@@ -503,16 +503,16 @@
         <tr class="inferred">
           <td><pre><a name="line152">152</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line153">153</a>     if @current_user</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line154">154</a>       react_post = post.reacts_post.find_by(user_id: @current_user.id)</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line155">155</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line156">156</a>       if !react_post</pre></td>
         </tr>
         <tr class="inferred">
@@ -533,7 +533,7 @@
         <tr class="inferred">
           <td><pre><a name="line162">162</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line163">163</a>     return post_data</pre></td>
         </tr>
         <tr class="inferred">
@@ -548,25 +548,25 @@
         <tr class="marked">
           <td><pre><a name="line167">167</a>   def get_list_post_data_by_filter(user_id)</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line168">168</a>     posts = nil</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line169">169</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line170">170</a>     if !params[:page_index] || !params[:page_size]</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line171">171</a>       if user_id</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line172">172</a>         posts = Post.where([&quot;user_id = :user_id&quot;, { user_id: user_id }]).order(&quot;created_at desc&quot;)</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line173">173</a>       else</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line174">174</a>         posts = Post.all.order(&quot;created_at desc&quot;)</pre></td>
         </tr>
         <tr class="inferred">
@@ -575,13 +575,13 @@
         <tr class="inferred">
           <td><pre><a name="line176">176</a>     else</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line177">177</a>       skip = params[:page_size].to_i * (params[:page_index].to_i - 1)</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line178">178</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line179">179</a>       if user_id</pre></td>
         </tr>
         <tr class="uncovered">
@@ -590,7 +590,7 @@
         <tr class="inferred">
           <td><pre><a name="line181">181</a>       else</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line182">182</a>         posts = Post.limit(params[:page_size].to_i).offset(skip).order(&quot;created_at desc&quot;)</pre></td>
         </tr>
         <tr class="inferred">
@@ -602,28 +602,28 @@
         <tr class="inferred">
           <td><pre><a name="line185">185</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line186">186</a>     posts_data = image_get(posts)</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line187">187</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line188">188</a>     posts_data.each_with_index do |post_data, index|</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line189">189</a>       if posts[index].comments_count &lt;= 0</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line190">190</a>         count_comment = posts[index].post_comments.size</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line191">191</a>         posts[index].comments_count = count_comment</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line192">192</a>         posts[index].save</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line193">193</a>         post_data[&quot;comments_count&quot;] = count_comment</pre></td>
         </tr>
         <tr class="inferred">
@@ -632,25 +632,25 @@
         <tr class="inferred">
           <td><pre><a name="line195">195</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line196">196</a>       post_data[&quot;type_react&quot;] = nil</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line197">197</a>       post_data[&quot;user&quot;] = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: posts[index].user_id)</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line198">198</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line199">199</a>       if post_data[&quot;share_id&quot;]</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line200">200</a>         post_data[&quot;share_post&quot;] = get_post_data_by_id(post_data[&quot;share_id&quot;])</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line201">201</a>       else</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line202">202</a>         post_data[&quot;share_post&quot;] = nil</pre></td>
         </tr>
         <tr class="inferred">
@@ -662,7 +662,7 @@
         <tr class="inferred">
           <td><pre><a name="line205">205</a>       #react</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line206">206</a>       if !@current_user</pre></td>
         </tr>
         <tr class="uncovered">
@@ -674,13 +674,13 @@
         <tr class="inferred">
           <td><pre><a name="line209">209</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line210">210</a>       react_post = posts[index].reacts_post.find_by(user_id: @current_user.id)</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line211">211</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line212">212</a>       if !react_post</pre></td>
         </tr>
         <tr class="inferred">
@@ -701,7 +701,7 @@
         <tr class="inferred">
           <td><pre><a name="line218">218</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line219">219</a>     return posts_data</pre></td>
         </tr>
         <tr class="inferred">
@@ -716,16 +716,16 @@
         <tr class="marked">
           <td><pre><a name="line223">223</a>   def get_list_post_data_by_where_query(where_query = &quot;&quot;)</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line224">224</a>     posts = nil</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line225">225</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line226">226</a>     if !params[:page_index] || !params[:page_size]</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line227">227</a>       posts = Post.where(where_query).order(created_at: :desc)</pre></td>
         </tr>
         <tr class="inferred">
@@ -743,28 +743,28 @@
         <tr class="inferred">
           <td><pre><a name="line232">232</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line233">233</a>     posts_data = image_get(posts)</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line234">234</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line235">235</a>     posts_data.each_with_index do |post_data, index|</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line236">236</a>       if posts[index].comments_count &lt;= 0</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line237">237</a>         count_comment = posts[index].post_comments.size</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line238">238</a>         posts[index].comments_count = count_comment</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line239">239</a>         posts[index].save</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line240">240</a>         post_data[&quot;comments_count&quot;] = count_comment</pre></td>
         </tr>
         <tr class="inferred">
@@ -773,25 +773,25 @@
         <tr class="inferred">
           <td><pre><a name="line242">242</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line243">243</a>       post_data[&quot;type_react&quot;] = nil</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line244">244</a>       post_data[&quot;user&quot;] = UserInfo.select(:full_name, :avatar_url, :id).find_by(user_id: posts[index].user_id)</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line245">245</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line246">246</a>       if post_data[&quot;share_id&quot;]</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line247">247</a>         post_data[&quot;share_post&quot;] = get_post_data_by_id(post_data[&quot;share_id&quot;])</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line248">248</a>       else</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line249">249</a>         post_data[&quot;share_post&quot;] = nil</pre></td>
         </tr>
         <tr class="inferred">
@@ -803,7 +803,7 @@
         <tr class="inferred">
           <td><pre><a name="line252">252</a>       #react</pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line253">253</a>       if !@current_user</pre></td>
         </tr>
         <tr class="uncovered">
@@ -815,13 +815,13 @@
         <tr class="inferred">
           <td><pre><a name="line256">256</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line257">257</a>       react_post = posts[index].reacts_post.find_by(user_id: @current_user.id)</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line258">258</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line259">259</a>       if !react_post</pre></td>
         </tr>
         <tr class="inferred">
@@ -842,7 +842,7 @@
         <tr class="inferred">
           <td><pre><a name="line265">265</a> </pre></td>
         </tr>
-        <tr class="uncovered">
+        <tr class="marked">
           <td><pre><a name="line266">266</a>     return posts_data</pre></td>
         </tr>
         <tr class="inferred">
@@ -965,44 +965,44 @@
         <tr class="inferred">
           <td><pre><a name="line306">306</a> </pre></td>
         </tr>
+        <tr class="marked">
+          <td><pre><a name="line307">307</a>   private</pre></td>
+        </tr>
         <tr class="inferred">
-          <td><pre><a name="line307">307</a>   # kiểm tra xem bài viết, bình luận có trống dữ liệu không</pre></td>
+          <td><pre><a name="line308">308</a> </pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line309">309</a>   # updated by - ttanh (23/09/23) Thêm xử lý cho việc người dùng không gửi token</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line308">308</a>   def validate_null_content_image(model)</pre></td>
+          <td><pre><a name="line310">310</a>   def authenticate_request</pre></td>
         </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line309">309</a>     if params[:content].strip == &quot;&quot; and model.images == []</pre></td>
+        <tr class="marked">
+          <td><pre><a name="line311">311</a>     token = request.headers[&quot;Authorization&quot;]</pre></td>
         </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line310">310</a>       render json: { errors: &quot;Nội dung không được để trống&quot; }, status: :bad_request</pre></td>
+        <tr class="marked">
+          <td><pre><a name="line312">312</a>     if token</pre></td>
         </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line311">311</a>       return false</pre></td>
+        <tr class="marked">
+          <td><pre><a name="line313">313</a>       token = token.split(&quot; &quot;).last</pre></td>
         </tr>
-        <tr class="inferred">
-          <td><pre><a name="line312">312</a>     end</pre></td>
+        <tr class="marked">
+          <td><pre><a name="line314">314</a>       decoded = jwt_decode token</pre></td>
         </tr>
-        <tr class="inferred">
-          <td><pre><a name="line313">313</a> </pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line314">314</a>     if params[:content].strip == nil and model.images == []</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line315">315</a>       render json: { errors: &quot;Nội dung không được để trống&quot; }, status: :bad_request</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line316">316</a>       return false</pre></td>
+        <tr class="marked">
+          <td><pre><a name="line315">315</a>       @current_user = User.find(decoded[:user_id])</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line317">317</a>     end</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line318">318</a> </pre></td>
+          <td><pre><a name="line316">316</a>     else</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line319">319</a>     return true</pre></td>
+          <td><pre><a name="line317">317</a>       render json: { errors: &quot;Bạn cần gửi token&quot; },</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line318">318</a>              status: :unauthorized</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line319">319</a>     end</pre></td>
         </tr>
         <tr class="inferred">
           <td><pre><a name="line320">320</a>   end</pre></td>
@@ -1010,106 +1010,61 @@
         <tr class="inferred">
           <td><pre><a name="line321">321</a> </pre></td>
         </tr>
-        <tr class="marked">
-          <td><pre><a name="line322">322</a>   private</pre></td>
-        </tr>
         <tr class="inferred">
-          <td><pre><a name="line323">323</a> </pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line324">324</a>   # updated by - ttanh (23/09/23) Thêm xử lý cho việc người dùng không gửi token</pre></td>
+          <td><pre><a name="line322">322</a>   # lấy người dùng với những request không bắt buộc phải gửi</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line325">325</a>   def authenticate_request</pre></td>
-        </tr>
-        <tr class="marked">
-          <td><pre><a name="line326">326</a>     token = request.headers[&quot;Authorization&quot;]</pre></td>
-        </tr>
-        <tr class="marked">
-          <td><pre><a name="line327">327</a>     if token</pre></td>
-        </tr>
-        <tr class="marked">
-          <td><pre><a name="line328">328</a>       token = token.split(&quot; &quot;).last</pre></td>
-        </tr>
-        <tr class="marked">
-          <td><pre><a name="line329">329</a>       decoded = jwt_decode token</pre></td>
-        </tr>
-        <tr class="marked">
-          <td><pre><a name="line330">330</a>       @current_user = User.find(decoded[:user_id])</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line331">331</a>     else</pre></td>
+          <td><pre><a name="line323">323</a>   def get_current_user</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line332">332</a>       render json: { errors: &quot;Bạn cần gửi token&quot; },</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line333">333</a>              status: :unauthorized</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line334">334</a>     end</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line335">335</a>   end</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line336">336</a> </pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line337">337</a>   # lấy người dùng với những request không bắt buộc phải gửi</pre></td>
-        </tr>
-        <tr class="marked">
-          <td><pre><a name="line338">338</a>   def get_current_user</pre></td>
+          <td><pre><a name="line324">324</a>     token = request.headers[&quot;Authorization&quot;]</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line339">339</a>     token = request.headers[&quot;Authorization&quot;]</pre></td>
+          <td><pre><a name="line325">325</a>     if token</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line340">340</a>     if token</pre></td>
+          <td><pre><a name="line326">326</a>       token = token.split(&quot; &quot;).last</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line341">341</a>       token = token.split(&quot; &quot;).last</pre></td>
+          <td><pre><a name="line327">327</a>       decoded = jwt_decode token</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line342">342</a>       decoded = jwt_decode token</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line343">343</a>       @current_user = User.find_by_id(decoded[:user_id])</pre></td>
+          <td><pre><a name="line328">328</a>       @current_user = User.find_by_id(decoded[:user_id])</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line344">344</a>     end</pre></td>
+          <td><pre><a name="line329">329</a>     end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line345">345</a>   end</pre></td>
+          <td><pre><a name="line330">330</a>   end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line346">346</a> </pre></td>
+          <td><pre><a name="line331">331</a> </pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line347">347</a>   def update_last_time_active</pre></td>
+          <td><pre><a name="line332">332</a>   def update_last_time_active</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line348">348</a>     if @current_user</pre></td>
+          <td><pre><a name="line333">333</a>     if @current_user</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line349">349</a>       @current_user.last_time_active = Time.current</pre></td>
+          <td><pre><a name="line334">334</a>       @current_user.last_time_active = Time.current</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line350">350</a>       @current_user.save</pre></td>
+          <td><pre><a name="line335">335</a>       @current_user.save</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line351">351</a>     end</pre></td>
+          <td><pre><a name="line336">336</a>     end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line352">352</a>   end</pre></td>
+          <td><pre><a name="line337">337</a>   end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line353">353</a> end</pre></td>
+          <td><pre><a name="line338">338</a> end</pre></td>
         </tr>
       </tbody>
     </table>
 
-    <p>Generated on 2023-11-26 18:55:59 +0700 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.3</a></p>
+    <p>Generated on 2023-11-27 12:40:12 +0700 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.3</a></p>
 
   </body>
 </html>
