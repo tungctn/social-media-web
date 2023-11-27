@@ -296,7 +296,7 @@ Chỉ xóa được những ảnh mà user đang đăng nhập tạo
 #### Tìm kiếm bài viết
 
 <details>
-<summary><code>POST /api/posts/search</code></summary>
+<summary><code>GET /api/posts/search</code></summary>
 <br>
 
 #### Parameters
@@ -983,7 +983,7 @@ Chấp nhận lời mời, block, chuyển loại bạn bè (hẹn hò ?)
 #### Tìm kiếm bạn bè
 
 <details>
-<summary><code>POST /api/friends/search</code></summary>
+<summary><code>GET /api/friends/search</code></summary>
 <br>
 
 #### Parameters

@@ -70,6 +70,10 @@ class PostsController < ApplicationController
       image_add(post, params[:image_ids])
     end
 
+    if post.status == nil    
+      post.status = Enums::ACTIVE_STATUS[:active]
+    end
+
     if post.save
       render json: { post: post, images: post.images }, status: :ok
     else
