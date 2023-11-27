@@ -30,16 +30,19 @@ class FriendsController < ApplicationController
     users.each do |user|
       user_data = {}.merge(user.attributes)
       user_data["friend_status"] = nil
+      user_data["is_sender"] = nil
       
       if @current_user
         friend = Friend.where("sender_id = #{@current_user.id} AND receiver_id = #{user.user_id}").first
     
         if friend
           user_data["friend_status"] = friend.friend_status
+          user_data["is_sender"] = true
         else
           friend = Friend.where("receiver_id = #{@current_user.id} AND sender_id = #{user.user_id}").first
           if friend
             user_data["friend_status"] = friend.friend_status
+            user_data["is_sender"] = false
 
             if friend.friend_status == Enums::FRIEND_STATUS[:block]
               next
