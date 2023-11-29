@@ -10,11 +10,12 @@ import NoImg from "@/assets/imgs/no-image.jpg";
 import NoPost from "@/assets/imgs/no-nearest-post.png";
 import PostDetail from "../Post/PostDetail";
 import PostContent from "@/components/PostContent";
+import usePostModal from "@/hooks/usePostModal";
 
 export default function NeareastPost() {
   const [nearestPost, setNearestPost] = useState<any>();
   const [showDetail, setShowDetail] = useState(false);
-
+  const postModal = usePostModal();
   useEffect(() => {
     getData();
   }, []);
@@ -31,7 +32,9 @@ export default function NeareastPost() {
 
   const handleEdit = () => {};
 
-  const handleAdd = () => {};
+  const handleAdd = () => {
+    postModal.onOpen();
+  };
 
   return (
     <>

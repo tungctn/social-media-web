@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const path = require('path');
+const path = require("path");
 const nextConfig = {
   webpack(config) {
     config.module.rules.push({
@@ -30,14 +30,14 @@ const nextConfig = {
   trailingSlash: true,
   // output: "export",
 
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_URL}/api/:path*` // Proxy to Backend
-      }
-    ]
-  }
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: '/api/:path*',
+  //       destination: `${process.env.NEXT_PUBLIC_API_URL}/api/:path*` // Proxy to Backend
+  //     }
+  //   ]
+  // }
 };
 
 module.exports = nextConfig;
