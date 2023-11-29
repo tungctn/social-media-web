@@ -1,10 +1,13 @@
+require_relative "../enum/enum.rb"
+
 class UserInfosController < ApplicationController
   #region Thông tin người dùng
 
   #lấy thông tin người dùng qua token
   #created by: ttanh (02/10/2023)
   def index
-    render json: { user_info: @current_user.user_info, email: @current_user.email, user_id: @current_user.id, role: @current_user.role }, status: :ok
+    friends_count = Friend.where("(sender_id = #{@current_user.id} OR receiver_id = #{@current_user.id}) AND friend_status = #{Enums::FRIEND_STATUS[:accept]}").count;
+    render json: { user_info: @current_user.user_info, email: @current_user.email, user_id: @current_user.id, role: @current_user.role, friends_count: friends_count }, status: :ok
   end
 
   # lấy thông tin người dùng bất kì
@@ -34,7 +37,37 @@ class UserInfosController < ApplicationController
       friend["is_sender"] = false
     end
 
-    render json: { user_info: user_info, email: user.email, user_id: user.id, friend: friend }, status: :ok
+    # danh sách bạn bè của nguời dùng đang muốn xem
+    user_friends = Friend.where("(sender_id = #{user.id} OR receiver_id = #{user.id}) AND friend_status = #{Enums::FRIEND_STATUS[:accept]}");
+    user_friend_ids = [];
+
+    user_friends.each do |user_friend|
+      if user_friend.sender_id != @current_user.id && user_friend.sender_id != user.id
+        user_friend_ids.push(user_friend.sender_id)
+      end
+
+      if user_friend.receiver_id != @current_user.id && user_friend.receiver_id != user.id
+        user_friend_ids.push(user_friend.receiver_id)
+      end
+    end
+
+    # danh sách của người dùng đang đăng nhập để kiểm tra bạn chung
+    my_friends = Friend.where("(sender_id = #{@current_user.id} OR receiver_id = #{@current_user.id}) AND friend_status = #{Enums::FRIEND_STATUS[:accept]}");
+    my_friend_ids = [];
+
+    my_friends.each do |my_friend|
+      if my_friend.sender_id != @current_user.id && my_friend.sender_id != user.id
+        my_friend_ids.push(my_friend.sender_id)
+      end
+
+      if my_friend.receiver_id != @current_user.id && my_friend.receiver_id != user.id
+        my_friend_ids.push(my_friend.receiver_id)
+      end
+    end
+
+    manual_friends_count = my_friend_ids & user_friend_ids
+
+    render json: { user_info: user_info, email: user.email, user_id: user.id, friend: friend, manual_friends_count: manual_friends_count.length, friends_count: user_friends.length}, status: :ok
   end
 
   # cập nhật thông tin người dùng hiện tại
