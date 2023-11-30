@@ -37,7 +37,7 @@ export default function ShortPostCard({ post }: ShortPostCardProps) {
     <>
       {p && (
         <div className="relative cursor-pointer" onClick={handleClick}>
-          <div className="3xl:w-[267px] w-[calc(267px/6*5)] 3xl:h-[267px] h-[calc(267px/6*5)]">
+          <div className="3xl:w-[267px] 2xl:w-[calc(267px/6*5)] xl:w-[calc(267px/4*3)] w-[calc(267px/3*2)] 3xl:h-[267px] 2xl:h-[calc(267px/6*5)] xl:h-[calc(267px/4*3)] h-[calc(267px/3*2)]">
             <Image
               src={
                 p.images.length > 0

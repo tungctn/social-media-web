@@ -22,7 +22,7 @@ export default function ImagesList({
     if (ref.current) {
       let gap = 16;
       const containerW = ref.current.offsetWidth;
-      if (width >= BREAKPOINTS.extraLarge) {
+      if (width >= BREAKPOINTS.xl3) {
       } else {
         gap = (containerW - 240 * 0.75 * 4) / 3;
       }

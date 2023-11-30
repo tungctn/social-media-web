@@ -17,7 +17,7 @@ export default function SquareAvatar({ src, size = 120 }: SquareAvatarProps) {
   const [currenSize, setCurrentSize] = useState(size);
 
   useEffect(() => {
-    if (width >= BREAKPOINTS.extraLarge) {
+    if (width >= BREAKPOINTS.xl3) {
     } else {
       setCurrentSize((size / 6) * 5);
     }
