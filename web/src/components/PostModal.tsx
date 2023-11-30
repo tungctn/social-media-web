@@ -8,7 +8,7 @@ import { FaRegSmile } from "react-icons/fa";
 import { BsFillTagsFill } from "react-icons/bs";
 import { moderateImage, uploadImage } from "@/services/imageServices";
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "./Button";
 import { IoClose } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +21,7 @@ import { get } from "cypress/types/lodash";
 import { GET_POSTS } from "@/store/constants/postType";
 import { getPosts } from "@/store/actions/postActions";
 import PostTypeSelect from "./PostSelectType";
+import EmojiPicker from "emoji-picker-react";
 
 const PostModal = () => {
   const auth = useSelector((state: any) => state.auth);
@@ -29,6 +30,7 @@ const PostModal = () => {
   const [content, setContent] = useState<string>("");
   const [uploadedImages, setUploadedImages] = useState<any[]>([]);
   const [postType, setPostType] = useState<any>(null);
+  const [isEmojiPicker, setIsEmojiPicker] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -73,6 +75,10 @@ const PostModal = () => {
       (_, index) => index !== indexToDelete
     );
     setUploadedImages(newImages);
+  };
+
+  const handleClickEmoji = (emoji: any) => {
+    setContent(content + emoji.emoji);
   };
 
   const handleSubmit = async () => {
@@ -148,7 +154,9 @@ const PostModal = () => {
           <div className="mt-3">
             <textarea
               value={content}
-              onChange={(e) => setContent(e.target.value)}
+              onChange={(e) => {
+                setContent(e.target.value);
+              }}
               placeholder="Write your caption"
               className={`
           w-full
@@ -207,7 +215,19 @@ const PostModal = () => {
               color="#F4CE0C"
               size={40}
               className="mr-10 cursor-pointer"
+              onClick={() => {
+                setIsEmojiPicker(!isEmojiPicker);
+              }}
             />
+            <div
+              className="absolute bottom-[100px] animate-slip-to-top"
+              style={{
+                display: isEmojiPicker ? "block" : "none",
+              }}
+            >
+              <EmojiPicker onEmojiClick={handleClickEmoji} />
+            </div>
+
             <BsFillTagsFill
               color="#9551BA"
               size={40}
