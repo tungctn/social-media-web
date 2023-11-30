@@ -136,12 +136,12 @@ export default function SignUp() {
             </div>
           </div>
         </form>
-        <div className="3xl:mt-[22px] mt-5"></div>
+        {/* <div className="3xl:mt-[22px] mt-5"></div>
         <Divider>Or</Divider>
         <div className="3xl:mb-[23px] mt-5"></div>
         <div className="flex flex-row gap-3">
           <SocialMediaButtons hasFacebookLabel={false} />
-        </div>
+        </div> */}
       </div>
     </AuthLayout>
   );

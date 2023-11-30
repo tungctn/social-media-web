@@ -43,7 +43,7 @@ function AuthLayout({ children, img }: AuthLayoutProps) {
               <Image
                 src={img}
                 alt="female-cat"
-                className="3xl:min-w-[307px] min-w-[calc(307px/6*5)] h-auto float-bottom object-contain 3xl:translate-x-[calc(-40px-76px)] translate-x-[calc(-40px/6*5-76px/6*5)]"
+                className="3xl:min-w-[280px] min-w-[calc(280px/6*5)] h-auto float-bottom object-contain 3xl:translate-x-[calc(-40px-76px)] translate-x-[calc(-40px/6*5-76px/6*5)]"
               />
             </div>
             {children}

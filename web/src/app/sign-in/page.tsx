@@ -51,7 +51,7 @@ export default function SignIn() {
     <AuthLayout img={femaleCatImg}>
       <div className="w-full 3xl:py-[71px] py-14">
         <form
-          className="flex flex-col 3xl:gap-[30px] gap-[25px]"
+          className="flex flex-col 3xl:gap-20 gap-16"
           onSubmit={handleSubmit(handleSubmitForm, handleErrorForm)}
           noValidate
         >
@@ -67,8 +67,8 @@ export default function SignIn() {
               </Link>
             </span>
           </div>
-          <div className="flex flex-col 3xl:gap-[38px] gap-5">
-            <div className="flex flex-col 3xl:gap-5 gap-4">
+          <div className="flex flex-col 3xl:gap-[38px] gap-8">
+            <div className="flex flex-col 3xl:gap-8 gap-6">
               <Input
                 register={register}
                 name="email"
@@ -100,12 +100,12 @@ export default function SignIn() {
             </div>
           </div>
         </form>
-        <div className="3xl:mt-[48px] mt-7"></div>
+        {/* <div className="3xl:mt-[48px] mt-7"></div>
         <Divider>Or sign in with</Divider>
         <div className="3xl:mb-[30px] mb-7"></div>
         <div className="flex flex-col 3xl:gap-[30px] gap-4">
           <SocialMediaButtons />
-        </div>
+        </div> */}
       </div>
     </AuthLayout>
   );
