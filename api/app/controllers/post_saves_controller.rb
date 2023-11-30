@@ -19,6 +19,12 @@ class PostSavesController < ApplicationController
   end
 
   def check_save
+    post = get_post_by_id(params[:id])
+
+    if !post
+      return
+    end
+
     render json: { is_save_post: !!get_post_save_by_post_id(params[:id]) }, status: :ok
   end
 
@@ -30,28 +36,24 @@ class PostSavesController < ApplicationController
     end
 
     is_save_post = get_post_save_by_post_id(post.id)
-    
+
     if is_save_post
       render json: { message: "Đã lưu bài viết này" }, status: :ok
       return
     end
-    
+
     post_save = PostSave.new()
     post_save.post_id = post.id
     post_save.user_id = @current_user.id
+    post_save.save
 
-    if post_save.save
-      render json: { message: "Lưu bài viết thành công" }, status: :ok
-    else
-      render json: { errors: post_save.errors.full_messages }, status: :bad_request
-    end
+    render json: { message: "Lưu bài viết thành công" }, status: :ok
   end
 
   def destroy
     post_save = get_post_save_by_post_id(params[:id])
-    
     if !post_save
-      render json: { message: "Chưa lưu bài viết này" }, status: :ok
+      render json: { message: "Chưa lưu bài viết này" }, status: :bad_request
       return
     end
 
