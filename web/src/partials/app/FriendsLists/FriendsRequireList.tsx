@@ -28,7 +28,7 @@ export default function FriendsRequireList({
     if (ref.current) {
       let gap = 40;
       const containerW = ref.current.offsetWidth;
-      if (width >= BREAKPOINTS.extraLarge) {
+      if (width >= BREAKPOINTS.xl3) {
       } else {
         gap = (containerW - (266 / 6) * 5 * 3) / 2 - 0.5;
       }

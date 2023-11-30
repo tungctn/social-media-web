@@ -22,7 +22,7 @@ export default function PostsBox() {
     let containerW = (1125 / 6) * 5;
     let paddingW = 92 * 0.75;
     let itemW = 240 * 0.75;
-    if (width > BREAKPOINTS.extraLarge) {
+    if (width > BREAKPOINTS.xl3) {
       containerW = (containerW / 5) * 6;
       paddingW /= 0.75;
       itemW /= 0.75;

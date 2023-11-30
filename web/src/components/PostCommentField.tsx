@@ -13,6 +13,8 @@ import {
 } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import EmojiPicker from "emoji-picker-react";
+import useComponentVisible from "@/hooks/useComponentVisible";
 
 type PostCommentFieldProps = {
   postId: number;
@@ -32,7 +34,7 @@ function PostCommentField(
     defaultComment,
     disabled = false,
   }: PostCommentFieldProps,
-  ref: any
+  ref: any,
 ) {
   const { setIsLoading } = useContext(LoadingContext);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -46,6 +48,11 @@ function PostCommentField(
     defaultComment: null,
   });
   const auth = useSelector((state: any) => state.auth);
+  const {
+    isComponentVisible: showEmojisBox,
+    setIsComponentVisible: setShowEmojisBox,
+    ref: emojisBoxRef,
+  } = useComponentVisible(false);
 
   useEffect(() => {
     setDefaultState({
@@ -152,7 +159,7 @@ function PostCommentField(
                   ]
                 : [],
           },
-          Boolean(defaultComment)
+          Boolean(defaultComment),
         );
         img.current = {
           url: "",
@@ -214,6 +221,16 @@ function PostCommentField(
     onChange("");
   };
 
+  const handleClickEmoji = (emoji: any) => {
+    if (textareaRef.current) {
+      textareaRef.current.value += emoji.emoji;
+    }
+  };
+
+  const handleOpenEmojisBox = () => {
+    setShowEmojisBox(true);
+  };
+
   return (
     <div
       ref={ref}
@@ -225,9 +242,19 @@ function PostCommentField(
             <button
               title="icon"
               type="button"
-              className="3xl:text-[30px] text-[calc(30px/6*5)]"
+              className="3xl:text-[30px] text-[calc(30px/6*5)] relative"
+              onClick={handleOpenEmojisBox}
             >
               <FaRegFaceSmile />
+              <div
+                ref={emojisBoxRef}
+                className="absolute bottom-[32px] animate-slip-to-top"
+                style={{
+                  display: showEmojisBox ? "block" : "none",
+                }}
+              >
+                <EmojiPicker onEmojiClick={handleClickEmoji} />
+              </div>
             </button>
             <label className="3xl:text-[30px] text-[calc(30px/6*5)] h-fit relative">
               <input

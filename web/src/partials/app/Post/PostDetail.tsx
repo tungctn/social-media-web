@@ -57,7 +57,7 @@ export default function PostDetail({
 
   useEffect(() => {
     if (headerRef.current && commentsListRef.current && inputRef.current) {
-      if (width >= BREAKPOINTS.extraLarge) {
+      if (width >= BREAKPOINTS.xl3) {
         commentsListRef.current.style.height = `calc(850px - ${headerRef.current.offsetHeight}px - ${inputRef.current.offsetHeight}px)`;
       } else {
         commentsListRef.current.style.height = `calc(850px / 4 * 3 - ${headerRef.current.offsetHeight}px - ${inputRef.current.offsetHeight}px)`;

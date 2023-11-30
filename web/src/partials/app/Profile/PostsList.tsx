@@ -16,13 +16,21 @@ export default function PostsList({ posts }: PostsListProps) {
 
   useEffect(() => {
     if (ref.current) {
-      if (width >= BREAKPOINTS.extraLarge) {
+      if (width >= BREAKPOINTS.xl3) {
         ref.current.style.gap = `${
           (ref.current.offsetWidth - 267 * 3) / 2 - 0.5
         }px`;
-      } else {
+      } else if (width >= BREAKPOINTS.xl2) {
         ref.current.style.gap = `${
           (ref.current.offsetWidth - (267 / 6) * 5 * 3) / 2 - 0.5
+        }px`;
+      } else if (width >= BREAKPOINTS.xl) {
+        ref.current.style.gap = `${
+          (ref.current.offsetWidth - (267 / 4) * 3 * 3) / 2 - 0.5
+        }px`;
+      } else {
+        ref.current.style.gap = `${
+          (ref.current.offsetWidth - (267 / 3) * 2 * 3) / 2 - 0.5
         }px`;
       }
     }

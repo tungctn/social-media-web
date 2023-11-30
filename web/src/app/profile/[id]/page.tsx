@@ -38,7 +38,7 @@ export default function Profile({ params }: { params: { id: number } }) {
           sidebarChildren={<Sidebar user={user} />}
           contentChildren={
             <>
-              <div className="3xl:w-[882px] w-[735px] overflow-hidden py-[30px] 3xl:h-[calc(100vh-40px*2)] h-[calc(100vh-32px*2)] mx-auto">
+              <div className="3xl:w-[882px] 2xl:w-[735px] xl:w-[640px] w-[560px] overflow-hidden py-[30px] 3xl:h-[calc(100vh-40px*2)] h-[calc(100vh-32px*2)] mx-auto">
                 <PostTabs id={params.id} />
               </div>
             </>

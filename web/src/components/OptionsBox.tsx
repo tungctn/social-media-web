@@ -24,7 +24,7 @@ export default function OptionsBox({
       ref={actionsRef}
       tabIndex={-1}
       onBlur={onClose}
-      className={`absolute  bg-white rounded-[10px] shadow-[0px_4px_10px_4px_rgba(149,81,186,.24)] -right-[7px] min-w-[169px]${
+      className={`absolute z-40 bg-white rounded-[10px] shadow-[0px_4px_10px_4px_rgba(149,81,186,.24)] -right-[7px] min-w-[169px]${
         !open ? " hidden" : ""
       } ${topClassName}`}
     >
