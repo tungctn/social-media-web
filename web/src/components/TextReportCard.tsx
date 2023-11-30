@@ -113,7 +113,7 @@ export default function TextReportCard({
             {user.full_name}
           </span>
           <p className="3xl:text-xs text-[calc(12px/6*5)] py-[10px] 3xl:pl-4 px-3 rounded-[10px] bg-lavender w-full leading-none">
-            {text.length > 160 ? (
+            {text?.length > 160 ? (
               <>
                 <span className="line-clamp-2">{text}</span>
                 <span
