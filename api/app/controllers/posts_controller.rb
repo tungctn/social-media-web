@@ -68,6 +68,9 @@ class PostsController < ApplicationController
     else
       #link ảnh vào bài viết
       image_add(post, params[:image_ids])
+      if (!validate_null_content_image(post))
+        return
+      end
     end
 
     if post.status == nil    
@@ -120,6 +123,10 @@ class PostsController < ApplicationController
       #xóa liên kết với ảnh cũ để tạo lại hết
       post.images.destroy_all
       image_add(post, params[:image_ids])
+    end
+
+    if (!validate_null_content_image(post))
+      return
     end
 
     if post.update(update_post_params)
