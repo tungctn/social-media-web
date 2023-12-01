@@ -44,7 +44,9 @@ jobs:
       - name: Run test unit backend and upload test coverage result to S3
         run: |
           cd ./api
+          bundle exec rspec
           aws s3 rm s3://intern-viettel-storage-bucket/backend --recursive
+          aws s3 sync ./coverage s3://intern-viettel-storage-bucket/backend
 
   # Deployment
   CD:
