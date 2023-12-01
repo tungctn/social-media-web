@@ -47,7 +47,7 @@ jobs:
       fail-fast: false
       matrix:
         servers-backend: ["34.142.196.144"]
-        servers-frontend: ["103.107.183.43"]
+        servers-frontend: ["116.103.227.16"]
     steps:
       - name: Install sshpass
         run: sudo apt-get install -y sshpass
@@ -55,11 +55,11 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           touch ~/.ssh/tunggcp
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/tunggcp
+          echo "${{ secrets.SSH_PRIVATE_KEY_BACKEND }}" > ~/.ssh/tunggcp
           chmod 600 ~/.ssh/tunggcp
-          touch ~/.ssh/backend.pem
-          echo "${{ secrets.SSH_PRIVATE_KEY_BACKEND }}" > ~/.ssh/backend.pem
-          chmod 400 ~/.ssh/backend.pem
+          touch ~/.ssh/frontend.pem
+          echo "${{ secrets.SSH_PRIVATE_KEY_FRONTEND }}" > ~/.ssh/frontend.pem
+          chmod 400 ~/.ssh/frontend.pem
 
       - name: Deploy backend to server
         run: |
@@ -68,8 +68,10 @@ jobs:
           cd social-media-web && bash backend-script.sh
           '
       - name: Deploy frontend to server
-        run: |
-          sshpass -p ${{ secrets.SUDO_PASSWORD }} ssh -o StrictHostKeyChecking=no -i ~/.ssh/backend.pem runner@${{ matrix.servers-frontend }} '
+        run: | 
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/frontend.pem root@${{ matrix.servers-frontend }} '
           ls -a
           cd social-media-web && bash frontend-script.sh
           '
+        
+# sshpass -p ${{ secrets.SUDO_PASSWORD }} 

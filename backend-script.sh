@@ -1,9 +1,6 @@
 #!/bin/bash
 
 # Khởi tạo package manager nvm và rbenv
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
@@ -27,4 +24,4 @@ bundle install
 # aws s3 sync ./out s3://pet-relive.online
 
 # Restart services
-pm2 start rails-app
+pm2 restart rails-app
