@@ -8,16 +8,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { checkLogedInAction } from "@/store/actions/authActions";
 import { toast } from "react-toastify";
 import { Role } from "@/utils/fakeData/User";
+import usePostModal from "@/hooks/usePostModal";
 
 export default function Menu() {
   const pathname = usePathname();
   const router = useRouter();
   const dispatch = useDispatch();
   const auth = useSelector((state: any) => state.auth);
+  const postModal = usePostModal();
 
   const handleClickMenuItem = (href: string) => {
     if (href) {
       router.push(href);
+    } else {
+      postModal.onOpen();
     }
   };
 
