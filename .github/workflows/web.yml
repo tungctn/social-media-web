@@ -54,6 +54,7 @@ jobs:
       matrix:
         servers-backend: ["34.142.196.144"]
         servers-frontend: ["116.103.227.16"]
+        
     steps:
       - name: Install sshpass
         run: sudo apt-get install -y sshpass
