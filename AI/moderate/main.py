@@ -71,22 +71,22 @@ def predict_text_route():
         })
 
 
-@app.route('/predict/comment', methods=['POST'])
-def predict_comment_route():
-    data = request.get_json()
-    if 'comment' in data:
-        comment = data['comment']
-        comment_analysis_eval = comment_analysis(comment)
-        return jsonify({
-            'success': True,
-            'message': comment_analysis_eval,
-            'comment': comment
-        })
-    else:
-        return jsonify({
-            'success': False,
-            'message': 'Không tìm thấy comment',
-        })
+# @app.route('/predict/comment', methods=['POST'])
+# def predict_comment_route():
+#     data = request.get_json()
+#     if 'comment' in data:
+#         comment = data['comment']
+#         comment_analysis_eval = comment_analysis(comment)
+#         return jsonify({
+#             'success': True,
+#             'message': comment_analysis_eval,
+#             'comment': comment
+#         })
+#     else:
+#         return jsonify({
+#             'success': False,
+#             'message': 'Không tìm thấy comment',
+#         })
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000, host='0.0.0.0')
