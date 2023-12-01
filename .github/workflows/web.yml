@@ -83,7 +83,6 @@ jobs:
       - name: Deploy frontend to server
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/frontend.pem root@${{ matrix.servers-frontend }} '
-          ls -a
           cd social-media-web && bash frontend-script.sh
           '
 
