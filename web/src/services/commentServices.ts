@@ -24,7 +24,7 @@ export function updateComment(
   data: {
     content: string;
     image_ids?: number[];
-  }
+  },
 ) {
   return instance.put(`/api/comments/${id}`, data);
 }
@@ -40,8 +40,8 @@ export function unReactComment(id: number) {
   return instance.delete(`/api/comments/unreact/${id}`);
 }
 
-export function report(commentId: number) {
-  return instance.post(`/api/comments/report/${commentId}`);
+export function report(commentId: number, data: { type_report: 1 | 2 }) {
+  return instance.post(`/api/comments/report/${commentId}`, data);
 }
 
 export function getReportedComments() {
@@ -50,7 +50,7 @@ export function getReportedComments() {
 
 export function updateStatusReportedComment(
   id: number,
-  data: { status: number; error_list?: string | null }
+  data: { status: number; error_list?: string | null },
 ) {
   return instance.post(`/api/admins/reports/comments/${id}`, data);
 }

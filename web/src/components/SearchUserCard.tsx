@@ -10,6 +10,7 @@ import {
   refuseFriendRequest,
   updateFriendState,
 } from "@/services/friendServices";
+import { useRouter } from "next/navigation";
 
 type SearchUserCardProps = {
   user: any;
@@ -31,6 +32,8 @@ export default function SearchUserCard({ user }: SearchUserCardProps) {
       ? Number(user?.friend_status)
       : -1,
   );
+  const router = useRouter();
+  
 
   const hanldeFollow = async () => {
     switch (friendStatus) {
@@ -64,10 +67,17 @@ export default function SearchUserCard({ user }: SearchUserCardProps) {
         break;
     }
   };
+
+  const handleSeeProfile = () => {
+    router.push(`/profile/${user.user_id}`);
+  };
   return (
     <div className="bg-white rounded-[30px] shadow-custom flex flex-row">
-      <div className="3xl:pt-[30px] pt-[calc(30px/6*5)] 3xl:pb-[44px] pb-[calc(44px/6*5)] 3xl:px-10 px-[calc(40px/6*5)] flex flex-row 3xl:gap-4 gap-3 w-full">
-        <Avatar size={60} />
+      <div
+        onClick={handleSeeProfile}
+        className="3xl:pt-[30px] pt-[calc(30px/6*5)] 3xl:pb-[44px] pb-[calc(44px/6*5)] 3xl:px-10 px-[calc(40px/6*5)] cursor-pointer flex flex-row 3xl:gap-4 gap-3 w-full"
+      >
+        <Avatar size={60} src={user.avatar_url} />
         <div className="pt-[7px] flex flex-col gap-[7px]">
           <span className="font-bold 3xl:text-xl text-[calc(20px/6*5)] leading-[1]">
             {user.full_name}

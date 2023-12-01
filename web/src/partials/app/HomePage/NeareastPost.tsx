@@ -30,7 +30,9 @@ export default function NeareastPost() {
     nearestPost && setShowDetail(true);
   };
 
-  const handleEdit = () => {};
+  const handleEdit = () => {
+    postModal.onEdit(nearestPost);
+  };
 
   const handleAdd = () => {
     postModal.onOpen();

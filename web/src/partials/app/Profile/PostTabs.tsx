@@ -3,18 +3,24 @@
 import TabPanel from "@/components/TabPanel";
 import Tabs from "@/components/Tabs";
 import PostsList from "./PostsList";
-import { useEffect, useMemo, useState } from "react";
+import { createContext, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   getPostsByUserId,
   getSavedPostsOfAuthUser,
 } from "@/services/postService";
 
-enum PostTabEnum {
+export enum PostTabEnum {
   upload = 1,
   share = 2,
   save = 3,
 }
+
+export const PostTabsContext = createContext({
+  postsLists: [] as any[],
+  setPostsLists: Function as any,
+  currentTab: PostTabEnum.upload,
+});
 
 const userTabs = [
   {
@@ -60,9 +66,9 @@ export default function PostTabs({ id }: PostTabsProps) {
       case PostTabEnum.share:
         const sharedRes = {
           data: {
-            posts: []
-          }
-        }
+            posts: [],
+          },
+        };
         newPostsLists[PostTabEnum.share - 1] = sharedRes.data.posts;
       default:
         break;
@@ -83,9 +89,11 @@ export default function PostTabs({ id }: PostTabsProps) {
         }))
       : anotherUserTabs.map((userTab) => ({
           ...userTab,
-          label: userTab.label + (postsLists[userTab.id - 1]
-            ? `(${postsLists[userTab.id - 1]?.length ?? 0})`
-            : ""),
+          label:
+            userTab.label +
+            (postsLists[userTab.id - 1]
+              ? `(${postsLists[userTab.id - 1]?.length ?? 0})`
+              : ""),
         }));
   }, [postsLists]);
 
@@ -93,7 +101,7 @@ export default function PostTabs({ id }: PostTabsProps) {
     setCurrentTab(tabId);
   };
   return (
-    <>
+    <PostTabsContext.Provider value={{ postsLists, setPostsLists, currentTab }}>
       <Tabs onChange={handleChangeTab} tabItems={tabs} />
       <div>
         {tabs.map((tab) => {
@@ -104,6 +112,6 @@ export default function PostTabs({ id }: PostTabsProps) {
           );
         })}
       </div>
-    </>
+    </PostTabsContext.Provider>
   );
 }

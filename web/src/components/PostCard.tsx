@@ -73,9 +73,9 @@ export default function PostCard({ post }: PostCardProps) {
               postDetail={postDetail}
             />
           </div>
-          <p className="px-6 py-[18px]">
+          <div className="px-6 py-[18px]">
             <PostContent text={postDetail.content} />
-          </p>
+          </div>
           <div
             className="flex flex-row w-full cursor-pointer"
             onClick={handleShowDetail}

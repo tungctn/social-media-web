@@ -15,15 +15,17 @@ import {
   savePost,
   unSavePost,
 } from "@/services/postService";
-import { CustomFlowbiteTheme, Modal, Radio } from "flowbite-react";
-import Button from "./Button";
 import { getPosts } from "@/store/actions/postActions";
+import ReportFormModal from "./ReportFormModal";
 
 type PostActionsProps = {
   postDetail?: Post;
   onChange?: Function;
 };
-export default function PostActions({ postDetail }: PostActionsProps) {
+export default function PostActions({
+  postDetail,
+  onChange = () => {},
+}: PostActionsProps) {
   const {
     ref: actionsRef,
     isComponentVisible,
@@ -55,8 +57,9 @@ export default function PostActions({ postDetail }: PostActionsProps) {
     try {
       let isSuccess = false;
       if (isSaved) {
-        const res: any = await savePost(Number(postDetail?.id));
+        const res: any = await unSavePost(Number(postDetail?.id));
         isSuccess = res.success;
+        onChange(false);
         toast.success("Removed bookmark!");
       } else {
         const res: any = await savePost(Number(postDetail?.id));
@@ -100,6 +103,7 @@ export default function PostActions({ postDetail }: PostActionsProps) {
   const handleDelete = async () => {
     try {
       await deletePost(Number(postDetail?.id));
+      onChange(false);
       toast.success("Deleted!");
       postModal.onClose();
       dispatch(getPosts() as any);
@@ -143,40 +147,11 @@ export default function PostActions({ postDetail }: PostActionsProps) {
           ]}
         />
       </div>
-      <Modal
+      <ReportFormModal
         show={showReportSelect}
         onClose={() => setShowReportSelect(false)}
-        dismissible={true}
-      >
-        <Modal.Header>
-          Select type of violation
-          <p className="text-base font-normal">
-            Please select a type of violation. If the article violates both,
-            please choose the one that violates the most.
-          </p>
-        </Modal.Header>
-        <Modal.Body>
-          <form onSubmit={handleSubmitReport}>
-            <div className="flex flex-col gap-5 mb-4">
-              <label className="flex flex-row gap-2 items-center">
-                <Radio value={1} name="type_report" theme={customRadioTheme} />
-                Content
-              </label>
-              <label className="flex flex-row gap-2 items-center">
-                <Radio value={2} name="type_report" theme={customRadioTheme} />
-                Image
-              </label>
-            </div>
-            <Button type="submit">Report</Button>
-          </form>
-        </Modal.Body>
-      </Modal>
+        onSubmit={handleSubmitReport}
+      />
     </>
   );
 }
-
-const customRadioTheme: CustomFlowbiteTheme["radio"] = {
-  root: {
-    base: "h-4 w-4 border border-gray-300 focus:ring-2 focus:ring-deep-lilac dark:border-gray-600 dark:bg-gray-700 dark:focus:bg-deep-lilac dark:focus:ring-deep-lilac text-deep-lilac",
-  },
-};
