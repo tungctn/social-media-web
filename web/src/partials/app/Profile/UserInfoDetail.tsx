@@ -48,7 +48,10 @@ export default function UserInfoDetail({ onClose, id }: UserInfoDetailProps) {
                 <span>Gender: {Gender[user.gender]}</span>
               )}
               <span>
-                Date of birth: {dayjs(user.date_of_birth).format("DD/MM/YYYY")}
+                Date of birth:{" "}
+                {user.date_of_birth
+                  ? dayjs(user.date_of_birth).format("DD/MM/YYYY")
+                  : "NA"}
               </span>
               {user.address && <span>Address: {user.address}</span>}
             </div>

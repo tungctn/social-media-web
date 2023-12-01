@@ -33,7 +33,7 @@ export default function UserResultsBox({ users, keyword }: UserResultsBoxProps) 
                 className="flex flex-row 3xl:gap-4 gap-3 items-center cursor-pointer"
                 onClick={() => handleClickUser(user.user_id)}
               >
-                <Avatar size={60} />
+                <Avatar size={60} src={user.avatar_url} />
                 <div className="flex flex-col 3xl:gap-[7px] gap-[calc(7px/6*5)]">
                   <span className="font-bold 3xl:text-xl text-[calc(20px/6*5)] leading-[1]">
                     {user.full_name}

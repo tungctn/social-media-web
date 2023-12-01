@@ -3,9 +3,10 @@
 import PostDetail from "@/partials/app/Post/PostDetail";
 import Post from "@/utils/fakeData/Post";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaRegMessage, FaRegThumbsUp } from "react-icons/fa6";
 import NoImg from "@/assets/imgs/no-image.jpg";
+import { PostTabsContext } from "@/partials/app/Profile/PostTabs";
 
 type ShortPostCardProps = {
   post: Post;
@@ -14,6 +15,7 @@ type ShortPostCardProps = {
 export default function ShortPostCard({ post }: ShortPostCardProps) {
   const [p, setP] = useState<any>(post);
   const [showDetail, setShowDetail] = useState(false);
+  const { setPostsLists, currentTab } = useContext(PostTabsContext);
 
   useEffect(() => {
     setP(post);
@@ -26,7 +28,13 @@ export default function ShortPostCard({ post }: ShortPostCardProps) {
   const handleChangeDetail = (changedField: any) => {
     if (changedField.isAction) {
       if (!changedField.isActed) {
-        setP(null);
+        setPostsLists((prev: any) => {
+          const newPostsLists = [...prev];
+          newPostsLists[currentTab - 1] = newPostsLists[currentTab - 1].filter(
+            (item: any) => item.id !== p.id,
+          );
+          return newPostsLists;
+        });
       }
     } else {
       const newPost = { ...p, ...changedField };
