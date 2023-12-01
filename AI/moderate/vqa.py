@@ -17,4 +17,4 @@ def predict(url):
 
 
 url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTu0gQ2u4YQPIh-xl0lewRNMkuHCBkGOzYcyHALieeu&s"
-print(predict(url));
+# print(predict(url));

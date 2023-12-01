@@ -1,92 +1,48 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from moderation import detect_moderation_labels_from_url
 from vqa import predict
 from bert import is_animal_related, analyze_post
 from sa import comment_analysis
 
-app = Flask(__name__)
-CORS(app)
+app = FastAPI()
 
-@app.route('/predict', methods=['POST'])
-def predict_route():
-    data = request.get_json()
-
+@app.post('/predict')
+async def predict_route(request: Request):
+    data = await request.json()
     if 'url' in data:
         url = data['url']
         moderation_labels = detect_moderation_labels_from_url(url)
         if len(moderation_labels) > 0:
-            return jsonify({
-                'success': False,
-                'message': 'Ảnh không phù hợp tiêu chuẩn',
-                'url': url,
-            })
+            return JSONResponse(content={'success': False, 'message': 'Ảnh không phù hợp tiêu chuẩn', 'url': url}, status_code=400)
         vqa_prediction = predict(url)
         if vqa_prediction[0]['score'] < 0.8 or vqa_prediction[0]['answer'] == 'no':
-            return jsonify({
-                'success': False,
-                'message': 'Ảnh không liên quan đến động vật',
-                'url': url,
-            })
-        return jsonify({
-            'success': True,
-            'message': 'Ảnh phù hợp tiêu chuẩn',
-            'url': url
-        })
+            return JSONResponse(content={'success': False, 'message': 'Ảnh không liên quan đến động vật', 'url': url}, status_code=400)
+        return {'success': True, 'message': 'Ảnh phù hợp tiêu chuẩn', 'url': url}
     else:
-        return jsonify({
-            'success': False,
-            'message': 'Không tìm thấy url',
-        })
-        
-@app.route("/predict/text", methods=['POST'])
-def predict_text_route():
-    data = request.get_json()
-    print(data['caption'])
+        return JSONResponse(content={'success': False, 'message': 'Không tìm thấy url'}, status_code=400)
+
+@app.post("/predict/text")
+async def predict_text_route(request: Request):
+    data = await request.json()
     if 'caption' in data:
         caption = data['caption']
-        print(caption)
         analyze_post_eval = analyze_post(caption)
         if analyze_post_eval['label'] == 'toxic':
-            return jsonify({
-                'success': False,
-                'message': 'Caption không phù hợp tiêu chuẩn',
-                'caption': caption,
-            })
-        if is_animal_related(caption) == False:
-            return jsonify({
-                'success': False,
-                'message': 'Caption không liên quan đến động vật',
-                'caption': caption,
-            })
-        return jsonify({
-            'success': True,
-            'message': 'Caption phù hợp tiêu chuẩn',
-            'caption': caption
-        })
+            return JSONResponse(content={'success': False, 'message': 'Caption không phù hợp tiêu chuẩn', 'caption': caption}, status_code=400)
+        if not is_animal_related(caption):
+            return JSONResponse(content={'success': False, 'message': 'Caption không liên quan đến động vật', 'caption': caption}, status_code=400)
+        return {'success': True, 'message': 'Caption phù hợp tiêu chuẩn', 'caption': caption}
     else:
-        return jsonify({
-            'success': False,
-            'message': 'Không tìm thấy text',
-        })
+        return JSONResponse(content={'success': False, 'message': 'Không tìm thấy text'}, status_code=400)
 
 
-@app.route('/predict/comment', methods=['POST'])
-def predict_comment_route():
-    data = request.get_json()
+@app.post('/predict/comment')   
+async def predict_comment_route(request: Request):
+    data = await request.json()
     if 'comment' in data:
         comment = data['comment']
         comment_analysis_eval = comment_analysis(comment)
-        return jsonify({
-            'success': True,
-            'message': comment_analysis_eval,
-            'comment': comment
-        })
+        return {'success': True, 'message': comment_analysis_eval, 'comment': comment}
     else:
-        return jsonify({
-            'success': False,
-            'message': 'Không tìm thấy comment',
-        })
-
-if __name__ == '__main__':
-    app.run(debug=True, port=8000, host='0.0.0.0')
+        return JSONResponse(content={'success': False, 'message': 'Không tìm thấy comment'}, status_code=400)
