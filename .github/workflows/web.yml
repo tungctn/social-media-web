@@ -17,6 +17,7 @@ jobs:
   CI:
     runs-on: ubuntu-latest
     steps:
+
       - uses: actions/checkout@v3
       - name: Use Node.js18
         uses: actions/setup-node@v3
@@ -31,7 +32,7 @@ jobs:
           aws configure set default.region ap-southeast-1
           aws configure set default.output json
 
-      - name: Install dependencies, run tests and upload test coverage result to S3
+      - name: Run test unit frontend and upload test coverage result to S3
         run: |
           cd ./web
           npm ci  
@@ -39,6 +40,11 @@ jobs:
           npm run test 
           aws s3 rm s3://intern-viettel-storage-bucket/frontend --recursive
           aws s3 sync ./coverage/lcov-report s3://intern-viettel-storage-bucket/frontend
+
+      - name: Run test unit backend and upload test coverage result to S3
+        run: |
+          cd ./api
+          aws s3 rm s3://intern-viettel-storage-bucket/backend --recursive
 
   # Deployment
   CD:
@@ -68,10 +74,10 @@ jobs:
           cd social-media-web && bash backend-script.sh
           '
       - name: Deploy frontend to server
-        run: | 
+        run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/frontend.pem root@${{ matrix.servers-frontend }} '
           ls -a
           cd social-media-web && bash frontend-script.sh
           '
-        
-# sshpass -p ${{ secrets.SUDO_PASSWORD }} 
+
+# sshpass -p ${{ secrets.SUDO_PASSWORD }}
