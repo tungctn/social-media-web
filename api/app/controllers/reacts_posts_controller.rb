@@ -41,15 +41,17 @@ class ReactsPostsController < ApplicationController
     react_post = post.reacts_post.find_by(user_id: @current_user.id)
 
     if react_post
-      react_post.destroy
-
-      if post.likes_count <= 0
-        post.likes_count = 0
+      if react_post.destroy
+        if post.likes_count <= 0
+          post.likes_count = 0
+        else
+          post.likes_count = post.likes_count - 1
+        end
+        post.save
       else
-        post.likes_count = post.likes_count - 1
+        render json: { errors: "lỗi" }, status: :bad_request
+        return
       end
-      post.save
-
       render json: { message: "Thành công" }, status: :ok
     else
       render json: { errors: "Người dùng chưa tương tác với bài viết." }, status: :ok
