@@ -4,8 +4,18 @@ from moderation import detect_moderation_labels_from_url
 from vqa import predict
 from bert import is_animal_related, analyze_post
 from sa import comment_analysis
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  
+    allow_credentials=True,
+    allow_methods=["*"], 
+    allow_headers=["*"],
+)
+
 
 @app.post('/predict')
 async def predict_route(request: Request):
