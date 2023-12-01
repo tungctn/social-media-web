@@ -50,14 +50,14 @@ const PostModal = () => {
       if (file) {
         try {
           const response = await uploadImage(file as File);
-          // const moderate = await moderateImage(response.data.image.url);
-          // if (!moderate.success) {
-          //   toast.error(moderate.message);
-          //   continue;
-          // } else {
-          // toast.success(moderate.message);
-          uploadeds.push(response.data.image);
-          // }
+          const moderate = await moderateImage(response.data.image.url);
+          if (!moderate.success) {
+            toast.error(moderate.message);
+            continue;
+          } else {
+            toast.success(moderate.message);
+            uploadeds.push(response.data.image);
+          }
         } catch (error) {
           toast.error("Error uploading the image!");
         }
@@ -93,11 +93,11 @@ const PostModal = () => {
         user_id: auth.user.user_id,
         label: postType,
       };
-      // const moderate = await moderateContent(content.replace(/\n/g, " "));
-      // if (!moderate.success) {
-      //   toast.error(moderate.message);
-      //   return;
-      // }
+      const moderate = await moderateContent(content.replace(/\n/g, " "));
+      if (!moderate.success) {
+        toast.error(moderate.message);
+        return;
+      }
       const response = isEdit
         ? await updatePost(postDetail?.id, postInfo)
         : await createPost(postInfo);
