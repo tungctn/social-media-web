@@ -13,6 +13,7 @@ git pull origin main
 # Cài đặt dependencies cho backend
 cd api
 bundle install
+pm2 restart rails-app
 
 # Cài đặt dependencies cho frontend và build
 # cd ../web
@@ -24,4 +25,3 @@ bundle install
 # aws s3 sync ./out s3://pet-relive.online
 
 # Restart services
-pm2 restart rails-app
