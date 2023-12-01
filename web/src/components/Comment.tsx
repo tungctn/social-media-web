@@ -48,7 +48,6 @@ export default function CommentComponent({
   const handleAction = (type: string) => {
     switch (type) {
       case "delete":
-        setC(null);
         onAction(type, comment);
         break;
       case "edit":

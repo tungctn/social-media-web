@@ -50,7 +50,7 @@ export function savePost(id: number) {
 }
 
 export function unSavePost(id: number) {
-  return instance.post(`/api/posts/unsave/${id}`);
+  return instance.delete(`/api/posts/save/${id}`);
 }
 
 export function checkPostSaved(id: number) {

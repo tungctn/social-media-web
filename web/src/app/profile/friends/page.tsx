@@ -23,18 +23,11 @@ export default function Friends() {
 
   const getFriendsListsData = async () => {
     const newFriendsLists = [...friendsLists];
-    switch (currentTabId) {
-      case FriendMenuEnum.Require:
-        const requestRes = await getFriendRequests();
-        newFriendsLists[currentTabId] = requestRes.data.friends;
-        break;
-      case FriendMenuEnum.Friend:
-        const friendRes = await getAuthFriendsList();
-        newFriendsLists[currentTabId] = friendRes.data.friends;
-        break;
-      default:
-        break;
-    }
+    const requestRes = await getFriendRequests();
+    newFriendsLists[FriendMenuEnum.Require] = requestRes.data.friends;
+    const friendRes = await getAuthFriendsList();
+    newFriendsLists[FriendMenuEnum.Friend] = friendRes.data.friends;
+
     setFriendsLists(newFriendsLists);
   };
 

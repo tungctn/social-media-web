@@ -36,6 +36,7 @@ export default function UserActionsButton({ userId }: UserActionsButtonProps) {
 
   const handleOpenDetail = () => {
     setShowDetail(true);
+    setIsComponentVisible(false);
   };
 
   const handleCloseDetail = () => {
@@ -58,10 +59,10 @@ export default function UserActionsButton({ userId }: UserActionsButtonProps) {
               label: "Edit password",
               onClick: handleEditPassword,
             },
-            {
-              label: "Delete account",
-              danger: true,
-            },
+            // {
+            //   label: "Delete account",
+            //   danger: true,
+            // },
           ]}
           topClassName="top-[28px]"
         />
@@ -75,10 +76,10 @@ export default function UserActionsButton({ userId }: UserActionsButtonProps) {
               label: "Introduce user",
               onClick: handleOpenDetail,
             },
-            {
-              label: "Report",
-              danger: true,
-            },
+            // {
+            //   label: "Report",
+            //   danger: true,
+            // },
           ]}
           topClassName="top-[28px]"
         />

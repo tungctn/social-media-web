@@ -138,7 +138,7 @@ export default function UserActions({ userId, friend }: UserActionsProps) {
                   </button>
                   <button
                     title={friendStateLabel[FriendState.Refuse]}
-                    key={"accept"}
+                    key={"refuse"}
                     type="button"
                     className={`block py-1 border-lavender border-b-[1px] last:border-b-0 border-solid w-full text-left transition hover:opacity-80`}
                     onClick={() => handleCloseResponses(FriendState.Refuse)}

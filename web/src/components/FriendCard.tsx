@@ -55,7 +55,7 @@ export default function FriendCard({ friend, onChange = () => {} }: FriendCardPr
               <span className="3xl:text-2xl text-xl font-bold">
                 {friend.full_name}
               </span>
-              <span className="text-spanish-gray">0 mutual friends</span>
+              <span className="text-spanish-gray">{friend.manual_friends_count ?? 0} manual friends</span>
             </div>
           </div>
           <div className="relative">
