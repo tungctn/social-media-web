@@ -1,13 +1,9 @@
 require_relative "../enum/enum.rb"
 
 class PostCommentsController < ApplicationController
-  skip_before_action :authenticate_request, only: [:show]
-  #comment
-  
+
   #lấy bình luận của một bài viết
   def show
-    get_current_user() # gán current_user nếu có token truyền lên
-    
     post = get_post_by_id(params[:post_id])
 
     if !post
@@ -24,15 +20,13 @@ class PostCommentsController < ApplicationController
     end
 
     comments.each_with_index do |comment, index|
-      if @current_user
-        react_comment = comment.reacts_post_comment.find_by(user_id: @current_user.id)
+      react_comment = comment.reacts_post_comment.find_by(user_id: @current_user.id)
 
-        if !react_comment
-          comments_data[index]["type_react"] = nil
-        else
-          react = React.find_by_id(react_comment.react_id)
-          comments_data[index]["type_react"] = react.type_react
-        end
+      if !react_comment
+        comments_data[index]["type_react"] = nil
+      else
+        react = React.find_by_id(react_comment.react_id)
+        comments_data[index]["type_react"] = react.type_react
       end
     end
 
@@ -94,14 +88,10 @@ class PostCommentsController < ApplicationController
     if (!validate_null_content_image(comment))
       return
     end
-
-    if comment.save
-      post.comments_count = post.comments_count + 1
-      post.save
-      render json: { comment: comment, images: comment.images }, status: :ok
-    else
-      render json: { errors: comment.errors.full_messages }, status: :bad_request
-    end
+    comment.save
+    post.comments_count = post.comments_count + 1
+    post.save
+    render json: { comment: comment, images: comment.images }, status: :ok
   end
 
   def update
@@ -119,18 +109,15 @@ class PostCommentsController < ApplicationController
       #link ảnh vào bình luận
       #xóa liên kết với ảnh cũ để tạo lại hết
       comment.images.destroy_all
-      image_add(comment, params[:image_ids])  
+      image_add(comment, params[:image_ids])
     end
 
     if (!validate_null_content_image(comment))
       return
     end
 
-    if comment.update(update_comment_params)
-      render json: { comment: comment, images: comment.images }, status: :ok
-    else
-      render json: { errors: comment.errors.full_messages }, status: :bad_request
-    end
+    comment.update(update_comment_params)
+    render json: { comment: comment, images: comment.images }, status: :ok
   end
 
   def destroy
@@ -141,10 +128,6 @@ class PostCommentsController < ApplicationController
     end
 
     post = get_post_by_id(comment.post_id)
-
-    if !post
-      return
-    end
 
     if !check_permisson_update_delete(comment.user_id)
       return
@@ -161,7 +144,7 @@ class PostCommentsController < ApplicationController
       render json: { errors: "lỗi" }, status: :bad_request
     end
   end
-  
+
   def report
     comment = get_comment_by_id(params[:id])
 
@@ -173,11 +156,8 @@ class PostCommentsController < ApplicationController
     comment.type_report = params[:type_report]
     comment.time_report = Time.current
 
-    if comment.save
-      render json: { message: "Báo cáo thành công" }, status: :ok
-    else
-      render json: { errors: "Bị lỗi" }, status: :bad_request
-    end
+    comment.save
+    render json: { message: "Báo cáo thành công" }, status: :ok
   end
 
   private
