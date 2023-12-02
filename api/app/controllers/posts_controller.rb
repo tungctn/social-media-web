@@ -73,7 +73,7 @@ class PostsController < ApplicationController
       end
     end
 
-    if post.status == nil    
+    if post.status == nil
       post.status = Enums::ACTIVE_STATUS[:active]
     end
 
