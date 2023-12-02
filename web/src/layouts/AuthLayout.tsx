@@ -38,7 +38,7 @@ function AuthLayout({ children, img }: AuthLayoutProps) {
           <div className="flex flex-row 3xl:gap-10 gap-8">
             <div className="w-fit flex flex-col justify-between items-center">
               <div className="3xl:mt-[49px] mt-[30px]">
-                <Logo inPage={false} inAuth={true} />
+                {/* <Logo inPage={false} inAuth={true} /> */}
               </div>
               <Image
                 src={img}
