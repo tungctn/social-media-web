@@ -120,6 +120,7 @@ function PostCommentField(
       const moderateCmt = await moderateComment(content);
 
       const newComment: any = {
+        status_positive: moderateCmt.message,
         content: content,
         comment_reply: defaultSate.reply ? defaultSate.reply.id : null,
         post_id: postId,

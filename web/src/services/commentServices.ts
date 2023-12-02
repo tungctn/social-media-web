@@ -24,7 +24,7 @@ export function updateComment(
   data: {
     content: string;
     image_ids?: number[];
-  },
+  }
 ) {
   return instance.put(`/api/comments/${id}`, data);
 }
@@ -50,14 +50,16 @@ export function getReportedComments() {
 
 export function updateStatusReportedComment(
   id: number,
-  data: { status: number; error_list?: string | null },
+  data: { status: number; error_list?: string | null }
 ) {
   return instance.post(`/api/admins/reports/comments/${id}`, data);
 }
 
 export async function moderateComment(comment: string) {
-  return await axios.post(
-    `${process.env.NEXT_PUBLIC_API_MODERATE_URL}/predict/comment`,
-    { comment: comment }
-  );
+  return (
+    await axios.post(
+      `${process.env.NEXT_PUBLIC_API_MODERATE_URL}/predict/comment`,
+      { comment: comment }
+    )
+  ).data;
 }
