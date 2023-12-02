@@ -7,7 +7,7 @@ export function createPost(post: any) {
 }
 
 export function getAllPosts() {
-  return instance.get("/api/posts/?page_size=7&page_index=1");
+  return instance.get("/api/posts");
 }
 
 export function getPostById(id: number) {
