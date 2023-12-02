@@ -37,7 +37,7 @@ function DefaultLayout({ children }: DefaultLayoutProps) {
         <>
           <header className="3xl:min-w-[367px] min-w-[300px] 3xl:pl-[60px] pl-[40px] bg-white fixed top-0">
             <div className="relative min-h-screen">
-              <div className="pt-8">
+              <div className="pt-8 pl-8">
                 <Logo />
               </div>
               <div

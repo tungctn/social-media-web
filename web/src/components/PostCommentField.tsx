@@ -1,7 +1,11 @@
 "use client";
 
 import { LoadingContext } from "@/providers/LoadingProvider";
-import { createComment, updateComment } from "@/services/commentServices";
+import {
+  createComment,
+  moderateComment,
+  updateComment,
+} from "@/services/commentServices";
 import { moderateImage, uploadImage } from "@/services/imageServices";
 import Image from "next/image";
 import { forwardRef, useContext, useEffect, useRef, useState } from "react";
@@ -34,7 +38,7 @@ function PostCommentField(
     defaultComment,
     disabled = false,
   }: PostCommentFieldProps,
-  ref: any,
+  ref: any
 ) {
   const { setIsLoading } = useContext(LoadingContext);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -113,6 +117,8 @@ function PostCommentField(
         (img.current.url = ""), (img.current.file = null);
       }
 
+      const moderateCmt = await moderateComment(content);
+
       const newComment: any = {
         content: content,
         comment_reply: defaultSate.reply ? defaultSate.reply.id : null,
@@ -159,7 +165,7 @@ function PostCommentField(
                   ]
                 : [],
           },
-          Boolean(defaultComment),
+          Boolean(defaultComment)
         );
         img.current = {
           url: "",
