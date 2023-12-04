@@ -5,10 +5,4 @@ class PostComment < ApplicationRecord
   has_many :reacts, through: :reacts_post_comments
 
   belongs_to :post
-
-  validates :user_id,
-            presence: true
-
-  validates :post_id,
-            presence: true
 end

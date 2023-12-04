@@ -19,10 +19,10 @@ class FriendsController < ApplicationController
     users = nil
 
     if !params[:page_index] || !params[:page_size]
-      users = UserInfo.where("(#{query_where}) AND user_id <> #{@current_user.id}").order(created_at: :desc)
+      users = UserInfo.where(query_where).order(created_at: :desc)
     else
       skip = params[:page_size].to_i * (params[:page_index].to_i - 1)
-      users = UserInfo.limit(params[:page_size].to_i).offset(skip).where("(#{query_where}) AND user_id <> #{@current_user.id}").order(created_at: :desc)
+      users = UserInfo.limit(params[:page_size].to_i).offset(skip).where(query_where).order(created_at: :desc)
     end
     
     users_data = []
