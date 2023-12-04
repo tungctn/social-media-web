@@ -21,4 +21,3 @@ bundle install
 # Khởi động lại server
 
 pm2 restart rails-app
-pm2 restart rails-app-1

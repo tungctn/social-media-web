@@ -23,10 +23,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-      - name: Use Ruby 3.0.2
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.0.2
 
       - name: Set up AWS credentials
         run: |
@@ -48,10 +44,7 @@ jobs:
       - name: Run test unit backend and upload test coverage result to S3
         run: |
           cd ./api
-          bundle install
-          bundle exec rspec
           aws s3 rm s3://intern-viettel-storage-bucket/backend --recursive
-          aws s3 sync ./coverage s3://intern-viettel-storage-bucket/backend
 
   # Deployment
   CD:
@@ -83,6 +76,7 @@ jobs:
       - name: Deploy frontend to server
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/frontend.pem root@${{ matrix.servers-frontend }} '
+          ls -a
           cd social-media-web && bash frontend-script.sh
           '
 

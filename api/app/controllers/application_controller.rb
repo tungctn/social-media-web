@@ -1,5 +1,3 @@
-require_relative "../enum/enum.rb"
-
 class ApplicationController < ActionController::Base
   include JsonWebToken
   skip_before_action :verify_authenticity_token
@@ -170,17 +168,17 @@ class ApplicationController < ActionController::Base
 
     if !params[:page_index] || !params[:page_size]
       if user_id
-        posts = Post.where("user_id = #{user_id} AND status <> #{Enums::ACTIVE_STATUS[:ban]}").order("created_at desc")
+        posts = Post.where(["user_id = :user_id", { user_id: user_id }]).order("created_at desc")
       else
-        posts = Post.where("status <> #{Enums::ACTIVE_STATUS[:ban]}").order("created_at desc")
+        posts = Post.all.order("created_at desc")
       end
     else
       skip = params[:page_size].to_i * (params[:page_index].to_i - 1)
 
       if user_id
-        posts = Post.where("user_id = #{user_id} AND status <> #{Enums::ACTIVE_STATUS[:ban]}").limit(params[:page_size].to_i).offset(skip).order("created_at desc")
+        posts = Post.where(["user_id = :user_id", { user_id: user_id }]).limit(params[:page_size].to_i).offset(skip).order("created_at desc")
       else
-        posts = Post.where("status <> #{Enums::ACTIVE_STATUS[:ban]}").limit(params[:page_size].to_i).offset(skip).order("created_at desc")
+        posts = Post.limit(params[:page_size].to_i).offset(skip).order("created_at desc")
       end
     end
 
