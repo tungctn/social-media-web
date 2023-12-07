@@ -12,7 +12,7 @@ FactoryBot.define do
     end
 
     trait :with_avatar do
-      avatar {Rack::Test::UploadedFile.new("#{Rails.root}/spec/fixtures/avatar_image.jpeg", 'images/jpeg')}
+      avatar {Rack::Test::UploadedFile.new("#{Rails.root}/spec/fixtures/image.jpeg", 'images/jpeg')}
     end
   end
 end
