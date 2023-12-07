@@ -91,11 +91,11 @@ export default function SignIn() {
               />
             </div>
             <div className="flex flex-col 3xl:gap-3 gap-2">
-              <div className="ml-2">
+              {/* <div className="ml-2">
                 <Link href="/forgot-password" className="text-azure">
                   Forgot password?
                 </Link>
-              </div>
+              </div> */}
               <Button type="submit">Sign in</Button>
             </div>
           </div>
