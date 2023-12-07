@@ -41,15 +41,17 @@ class ReactsPostCommentsController < ApplicationController
     react_comment = comment.reacts_post_comment.find_by(user_id: @current_user.id)
 
     if react_comment
-      react_comment.destroy
-
-      if comment.likes_count <= 0
-        comment.likes_count = 0
+      if react_comment.destroy
+        if comment.likes_count <= 0
+          comment.likes_count = 0
+        else
+          comment.likes_count = comment.likes_count - 1
+        end
+        comment.save
       else
-        comment.likes_count = comment.likes_count - 1
+        render json: { errors: "lỗi" }, status: :bad_request
+        return
       end
-      comment.save
-
       render json: { message: "Thành công" }, status: :ok
     else
       render json: { errors: "Người dùng chưa tương tác với bài viết." }, status: :ok
