@@ -97,7 +97,7 @@ RSpec.describe PostsController, type: :controller do
 
   describe "GET index" do
     let(:user) {create :user}
-    let!(:listPost) {create_list :post, 10, user_id: user.id}
+    let!(:listPost) {create_list :post, 10, :active, user_id: user.id}
     context "success show all post" do
       before do
         token_new = jwt_encode({user_id: user.id, exp: Time.now.to_i + 4 * 3600})
@@ -168,7 +168,7 @@ RSpec.describe PostsController, type: :controller do
 
   describe "GET myPost" do
     let(:user) {create :user}
-    let!(:listPost) {create_list :post, 10, user_id: user.id}
+    let!(:listPost) {create_list :post, 10, :active, user_id: user.id}
     context "success show my post" do
       before do
         token_new = jwt_encode({user_id: user.id, exp: Time.now.to_i + 4 * 3600})
@@ -312,7 +312,7 @@ RSpec.describe PostsController, type: :controller do
   describe "GET show_user_post" do
     let(:user) {create :user}
     let(:user_other) {create :user}
-    let!(:listPost) {create_list :post, 10, user_id: user_other.id}
+    let!(:listPost) {create_list :post, 10, :active, user_id: user_other.id}
     context "success show_user_post" do
       before do
         token_new = jwt_encode({user_id: user.id, exp: Time.now.to_i + 4 * 3600})
