@@ -289,7 +289,7 @@ RSpec.describe PostsController, type: :controller do
         allow_any_instance_of(Post).to receive(:destroy).and_return(false)
         delete :destroy, params: {id: post1.id}
       end
-      it "should not delete the football pitch" do
+      it "should not delete the post" do
         expect(Post.where(id: post1.id)).to exist
       end
 
