@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import petImg from "@/assets/imgs/pet3.png";
+import logo from "@/assets/imgs/logo.png";
 
 type LogoProps = {
   inPage?: boolean;
@@ -19,7 +19,7 @@ export default function Logo({ inPage = true, inAuth }: LogoProps) {
           : ""
       }`}
     >
-      <Image src={petImg} alt="logo" width={150} height={150} className="" />
+      <Image src={logo} alt="logo" width={150} height={150} className="" />
     </Link>
   );
 }

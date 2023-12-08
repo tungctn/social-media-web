@@ -1,4 +1,5 @@
 import CommentComponent from "@/components/Comment";
+import CommentActions from "@/components/CommentActions";
 import CommentReacts from "@/components/CommentReacts";
 import ReactsBox from "@/components/ReactsBox";
 import store from "@/store";
@@ -108,5 +109,22 @@ describe("Goi hàm", () => {
       fireEvent.click(img);
       expect(onReact).toHaveBeenCalled();
     });
+  });
+});
+
+describe("Test Comment Component Action", () => {
+  test("Gọi hàm onAction", () => {
+    const comment = commentsByPostId[0];
+    const onAction = jest.fn();
+    const onChange = jest.fn();
+    
+    render(
+      <Provider store={store}>
+        <CommentActions authorId={7} commentId={1} onChange={onChange} />
+      </Provider>
+    );
+    const element = screen.getByText("Edit");
+    fireEvent.click(element);
+    expect(onAction).toHaveBeenCalled();
   });
 });
