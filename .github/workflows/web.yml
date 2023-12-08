@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "web/**"
+      - "!web/test/**"
       - "api/**"
       - ".github/workflows/web.yml"
     branches: ["main"]
@@ -17,16 +18,11 @@ jobs:
   CI:
     runs-on: ubuntu-latest
     steps:
-
       - uses: actions/checkout@v3
       - name: Use Node.js18
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-      - name: Use Ruby 3.0.2
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.0.2
 
       - name: Set up AWS credentials
         run: |
@@ -36,22 +32,11 @@ jobs:
           aws configure set default.region ap-southeast-1
           aws configure set default.output json
 
-      - name: Run test unit frontend and upload test coverage result to S3
+      - name: Run test e2e
         run: |
           cd ./web
-          npm ci  
-          npm run build
-          npm run test 
-          aws s3 rm s3://intern-viettel-storage-bucket/frontend --recursive
-          aws s3 sync ./coverage/lcov-report s3://intern-viettel-storage-bucket/frontend
-
-      - name: Run test unit backend and upload test coverage result to S3
-        run: |
-          cd ./api
-          bundle install
-          bundle exec rspec
-          aws s3 rm s3://intern-viettel-storage-bucket/backend --recursive
-          aws s3 sync ./coverage s3://intern-viettel-storage-bucket/backend
+          npm ci
+          npm test:e2e:ci
 
   # Deployment
   CD:
