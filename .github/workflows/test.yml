@@ -1,0 +1,55 @@
+name: Test frontend and backend
+
+on:
+  push:
+    paths:
+      - "web/tests/**"
+      - "api/spec/**"
+      - ".github/workflows/test.yml"
+    branches: ["main"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  Test-frontend-and-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: Use Ruby 3.0.2
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.2
+
+      - name: Set up AWS credentials
+        run: |
+          sudo apt-get install awscli
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set default.region ap-southeast-1
+          aws configure set default.output json
+
+      - name: Run test unit frontend and upload test coverage result to S3
+        run: |
+          cd ./web
+          npm ci  
+          npm run build
+          npm run test 
+          aws s3 rm s3://intern-viettel-storage-bucket/frontend --recursive
+          aws s3 sync ./coverage/lcov-report s3://intern-viettel-storage-bucket/frontend
+
+      - name: Run test unit backend and upload test coverage result to S3
+        run: |
+          cd ./api
+          bundle install
+          bundle exec rspec
+          aws s3 rm s3://intern-viettel-storage-bucket/backend --recursive
+          aws s3 sync ./coverage s3://intern-viettel-storage-bucket/backend
+
+# sshpass -p ${{ secrets.SUDO_PASSWORD }}
