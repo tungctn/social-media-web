@@ -70,4 +70,7 @@ Rails.application.configure do
 
   #chấp nhận tất cả các host
   config.hosts.clear
+
+  #config web console
+  config.web_console.permissions = '0.0.0.0/0'
 end
