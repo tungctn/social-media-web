@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getComments } from "@/services/commentServices";
 
 type PostCommentsListProps = {
-  postId: number;
+  postId?: number;
   onReply: Function;
   newComment?: any;
   onAction: Function;
@@ -23,7 +23,7 @@ export default function PostCommentsList({
   }, [postId, newComment, onAction]);
 
   const getCommentsData = async () => {
-    const res = await getComments(postId);
+    const res = await getComments(postId!);
     setComments(res.data.comments);
   };
 
