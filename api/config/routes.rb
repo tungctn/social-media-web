@@ -63,7 +63,6 @@ Rails.application.routes.draw do
     #Bạn bè
     get "/friends/search", to: "friends#search" # tìm kiếm bạn bè
     get "/friends/request", to: "friends#get_request" # lấy ra tất cả danh sách lời mời kết bạn x
-    get "/friends/block", to: "friends#get_block" # lấy ra tất cả danh sách đã chặn
     get "/friends/:id", to: "friends#show" # lấy ra tất cả danh sách bạn bè của user_id = id x
     get "/friends", to: "friends#index" # lấy ra tất cả danh sách bạn bè của bản thân x
     post "/friends", to: "friends#create" # gửi lời mời kết bạn x
@@ -71,11 +70,11 @@ Rails.application.routes.draw do
     delete "/friends", to: "friends#destroy" # xóa lời mời kết bạn, xóa bạn bè x
 
     #admin
-    get "/admins/reports/posts", to: "admins#get_post_report" # lấy danh sách bài viết vi phạm
-    post "/admins/reports/posts/:id", to: "admins#change_post_report" # chuyển trạng thái vi phạm
+    get "/admins/reports/posts", to: "admins#get_post_report" # lấy danh sách bài viết vi phạm x
+    post "/admins/reports/posts/:id", to: "admins#change_post_report" # chuyển trạng thái vi phạm x
 
-    get "/admins/reports/comments", to: "admins#get_comment_report" # chuyển trạng thái vi phạm
-    post "/admins/reports/comments/:id", to: "admins#change_comment_report" # chuyển trạng thái vi phạm
+    get "/admins/reports/comments", to: "admins#get_comment_report" # chuyển trạng thái vi phạm x
+    post "/admins/reports/comments/:id", to: "admins#change_comment_report" # chuyển trạng thái vi phạm x
 
     #dashboard
     post "/dashboard/login-history", to: "dashboard#statistics_login_history"
