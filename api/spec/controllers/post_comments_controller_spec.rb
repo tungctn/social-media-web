@@ -131,8 +131,9 @@ RSpec.describe PostCommentsController, type: :controller do
     end
 
     context "success show comment a post when have reacts post comment" do
+      let!(:like) {create :react, :like}
       let!(:post_comment) {create :post_comment, user_id: user.id, post_id: post1.id}
-      let!(:reacts_post_comment) {create :reacts_post_comment, user_id: user.id, post_comment_id: post_comment.id}
+      let!(:reacts_post_comment) {create :reacts_post_comment, react: like, user_id: user.id, post_comment_id: post_comment.id}
       before do
         token_new = jwt_encode({user_id: user.id, exp: Time.now.to_i + 4 * 3600})
         request.headers["Authorization"] = "Bearer #{token_new}"

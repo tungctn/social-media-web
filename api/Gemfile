@@ -21,6 +21,14 @@ gem "aws-sdk-s3", require: false
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem "rspec-rails", "~> 6.0.0"
+  gem "capybara"
+  gem "selenium-webdriver"
+  gem "webdrivers"
+  gem "simplecov"
+  gem "simplecov-rcov"
+  gem "factory_bot_rails"
+  gem "faker", ">= 3.2.0"
+  gem "airborne", "~> 0.2.7"
 end
 
 group :development do
