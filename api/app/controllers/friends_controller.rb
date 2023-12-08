@@ -1,7 +1,6 @@
 require_relative "../enum/enum.rb"
 
 class FriendsController < ApplicationController
-  skip_before_action :authenticate_request, only: [:show, :search]
 
   def search
     get_current_user() # gán current_user nếu có token truyền lên
@@ -17,24 +16,23 @@ class FriendsController < ApplicationController
     end
 
     users = nil
-
     if !params[:page_index] || !params[:page_size]
       users = UserInfo.where("(#{query_where}) AND user_id <> #{@current_user.id}").order(created_at: :desc)
     else
       skip = params[:page_size].to_i * (params[:page_index].to_i - 1)
       users = UserInfo.limit(params[:page_size].to_i).offset(skip).where("(#{query_where}) AND user_id <> #{@current_user.id}").order(created_at: :desc)
     end
-    
+
     users_data = []
 
     users.each do |user|
       user_data = {}.merge(user.attributes)
       user_data["friend_status"] = nil
       user_data["is_sender"] = nil
-      
+
       if @current_user
         friend = Friend.where("sender_id = #{@current_user.id} AND receiver_id = #{user.user_id}").first
-    
+
         if friend
           user_data["friend_status"] = friend.friend_status
           user_data["is_sender"] = true
@@ -50,7 +48,7 @@ class FriendsController < ApplicationController
           end
         end
       end
-    
+
       users_data.push(user_data)
     end
 
@@ -67,8 +65,8 @@ class FriendsController < ApplicationController
   def show
     user_id = params[:id]
 
-    if !user_id
-      render json: { errors: "Chưa có thông tin người dùng." }, status: :ok
+    if !User.find_by_id(user_id)
+      render json: { errors: "Chưa có thông tin người dùng." }, status: :bad_request
       return
     end
 
@@ -80,13 +78,6 @@ class FriendsController < ApplicationController
   # lấy ra tất cả lời mời kết bạn
   def get_request
     friend_datas = get_friends_request(@current_user.id)
-
-    render json: { friends: friend_datas }, status: :ok
-  end
-
-  # lấy ra tất cả người dùng bị chặn
-  def get_block
-    friend_datas = get_friends(@current_user.id, Enums::FRIEND_STATUS[:block])
 
     render json: { friends: friend_datas }, status: :ok
   end
@@ -116,11 +107,8 @@ class FriendsController < ApplicationController
     friend_request.friend_status = Enums::FRIEND_STATUS[:pending]
     friend_request.friend_type = Enums::FRIEND_TYPE[:none]
 
-    if friend_request.save
-      render json: { message: "Thành công." }, status: :ok
-    else
-      render json: { errors: friend_request.errors.full_messages }, status: :bad_request
-    end
+    friend_request.save
+    render json: { message: "Thành công.", friend: friend_request }, status: :ok
   end
 
   # cập nhật tình trạng bạn bè
@@ -134,9 +122,7 @@ class FriendsController < ApplicationController
 
     friend_request = nil
 
-    if friend_request_exist(current_user_id, receiver_id)
-      friend_request = get_friend_request(current_user_id, receiver_id)
-    elsif friend_request_exist(receiver_id, current_user_id)
+    if friend_request_exist(receiver_id, current_user_id)
       friend_request = get_friend_request(receiver_id, current_user_id)
     else
       render json: { errors: "Không tìm thấy để cập nhật." }, status: :bad_request
@@ -146,19 +132,11 @@ class FriendsController < ApplicationController
     friend_status = params[:friend_status]
     friend_type = params[:friend_type]
 
-    if friend_status
-      friend_request.friend_status = friend_status
-    end
+    friend_request.friend_status = friend_status
+    friend_request.friend_type = friend_type
 
-    if friend_type
-      friend_request.friend_type = friend_type
-    end
-
-    if friend_request.save
-      render json: { message: "Thành công." }, status: :ok
-    else
-      render json: { errors: friend_request.errors.full_messages }, status: :bad_request
-    end
+    friend_request.save
+    render json: { message: "Thành công." }, status: :ok
   end
 
   # xóa lời mời kết bạn, hủy kết bạn
@@ -200,7 +178,7 @@ class FriendsController < ApplicationController
     end
 
     # check xem id người nhận có trùng với id của người dùng đăng nhập không
-    if receiver_id == @current_user.id
+    if (receiver_id.to_i == @current_user.id.to_i)
       render json: { errors: "Không thể gửi lời mời cho chính mình." }, status: :bad_request
       return false
     end
@@ -284,7 +262,6 @@ class FriendsController < ApplicationController
 
     friends.each do |friend|
       friend_info = UserInfo.select(:full_name, :avatar_url, :user_id).find_by(user_id: friend.sender_id)
-
       friend_datas.push(friend_info)
     end
 
