@@ -162,10 +162,10 @@ class PostCommentsController < ApplicationController
 
   private
   def create_comment_params
-    params.permit(:image_ids, :content, :post_id, :user_reply_name, :user_reply_id, :status, :label, :error_list)
+    params.permit(:image_ids, :content, :post_id, :user_reply_name, :user_reply_id, :status, :label, :error_list, :status_positive)
   end
 
   def update_comment_params
-    params.permit(:content, :user_reply_name, :user_reply_id)
+    params.permit(:content, :user_reply_name, :user_reply_id, :status_positive)
   end
 end
