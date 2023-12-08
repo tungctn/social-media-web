@@ -4,6 +4,8 @@ require "json"
 include JsonWebToken
 
 RSpec.describe ReactsPostCommentsController, type: :controller do
+  let!(:like) {create :react, :like}
+  let!(:love) {create :react, :love}
   describe "POST create" do
     let(:user) {create :user}
     let!(:post1) {create :post, user_id: user.id}
@@ -20,12 +22,12 @@ RSpec.describe ReactsPostCommentsController, type: :controller do
 
       it "database has a new react post comment" do
         data = JSON.parse(response.body)
-        expect(ReactsPostComment.exists?(user_id: user.id, post_comment_id: post_comment.id, react_id: 1)).to be true
+        expect(ReactsPostComment.exists?(user_id: user.id, post_comment_id: post_comment.id, react_id: like.id)).to be true
       end
     end
 
     context "success create a react post comment" do
-      let!(:reacts_post_comment) {create :reacts_post_comment, user_id: user.id, post_comment_id: post_comment.id}
+      let!(:reacts_post_comment) {create :reacts_post_comment, user_id: user.id, react: like, post_comment_id: post_comment.id}
       before do
         token_new = jwt_encode({user_id: user.id, exp: Time.now.to_i + 4 * 3600})
         request.headers["Authorization"] = "Bearer #{token_new}"
@@ -36,7 +38,7 @@ RSpec.describe ReactsPostCommentsController, type: :controller do
 
       it "database has a new post" do
         data = JSON.parse(response.body)
-        expect(ReactsPostComment.exists?(user_id: user.id, post_comment_id: post_comment.id, react_id: 2)).to be true
+        expect(ReactsPostComment.exists?(user_id: user.id, post_comment_id: post_comment.id, react_id: love.id)).to be true
       end
     end
 
@@ -68,7 +70,7 @@ RSpec.describe ReactsPostCommentsController, type: :controller do
     let!(:post1) {create :post, user_id: user.id}
     let!(:post_comment) {create :post_comment, user_id: user.id, post_id: post1.id}
     context "success destroy a react post comment and post like = 0" do
-      let!(:reacts_post_comment) {create :reacts_post_comment, user_id: user.id, post_comment_id: post_comment.id}
+      let!(:reacts_post_comment) {create :reacts_post_comment, react: like, user_id: user.id, post_comment_id: post_comment.id}
       before do
         token_new = jwt_encode({user_id: user.id, exp: Time.now.to_i + 4 * 3600})
         request.headers["Authorization"] = "Bearer #{token_new}"
@@ -95,7 +97,7 @@ RSpec.describe ReactsPostCommentsController, type: :controller do
     end
 
     context "fail with comment not found" do
-      let!(:reacts_post_comment) {create :reacts_post_comment, user_id: user.id, post_comment_id: post_comment.id}
+      let!(:reacts_post_comment) {create :reacts_post_comment, react: like, user_id: user.id, post_comment_id: post_comment.id}
       before do
         token_new = jwt_encode({user_id: user.id, exp: Time.now.to_i + 4 * 3600})
         request.headers["Authorization"] = "Bearer #{token_new}"
@@ -120,7 +122,7 @@ RSpec.describe ReactsPostCommentsController, type: :controller do
     end
 
     context "fail when destroy fail" do
-      let!(:reacts_post_comment) {create :reacts_post_comment, user_id: user.id, post_comment_id: post_comment.id}
+      let!(:reacts_post_comment) {create :reacts_post_comment, react: like, user_id: user.id, post_comment_id: post_comment.id}
       before do
         token_new = jwt_encode({user_id: user.id, exp: Time.now.to_i + 4 * 3600})
         request.headers["Authorization"] = "Bearer #{token_new}"
