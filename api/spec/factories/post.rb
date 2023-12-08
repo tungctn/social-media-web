@@ -11,6 +11,14 @@ FactoryBot.define do
       status { 1 }
     end
 
+    trait :pending do
+      status { 2 }
+    end
+
+    trait :report_content do
+      type_report { 1 }
+    end
+
     trait :with_images do
       transient do
         avatar_file { Rails.root.join("spec", "fixtures", "image.jpeg") }

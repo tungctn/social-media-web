@@ -57,11 +57,8 @@ class AdminsController < ApplicationController
       return
     end
 
-    if post.update(update_report_params)
-      render json: { message: "Thành công" }, status: :ok
-    else
-      render json: { errors: post.errors.full_messages }, status: :bad_request
-    end
+    post.update(update_report_params)
+    render json: { message: "Thành công" }, status: :ok
   end
 
   def change_comment_report
@@ -71,11 +68,8 @@ class AdminsController < ApplicationController
       return
     end
 
-    if comment.update(update_report_params)
-      render json: { message: "Thành công" }, status: :ok
-    else
-      render json: { errors: post.errors.full_messages }, status: :bad_request
-    end
+    comment.update(update_report_params)
+    render json: { message: "Thành công" }, status: :ok
   end
 
   private
