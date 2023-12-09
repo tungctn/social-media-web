@@ -19,6 +19,10 @@
 -- Table structure for table `active_storage_attachments`
 --
 
+DROP DATABASE IF EXISTS `social_media`;
+CREATE DATABASE `social_media`
+ /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
+
 DROP TABLE IF EXISTS `active_storage_attachments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
