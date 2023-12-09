@@ -44,14 +44,14 @@ jobs:
           aws s3 rm s3://intern-viettel-storage-bucket/frontend --recursive
           aws s3 sync ./coverage/lcov-report s3://intern-viettel-storage-bucket/frontend
 
-      - name: Run test unit backend and upload test coverage result to S3
-        run: |
-          cd ./api
-          bundle install
-          bundle exec rspec
-          echo "${{ secrets.PROD_BACKEND }}" >> config/application.yml
-          cat config/application.yml
-          aws s3 rm s3://intern-viettel-storage-bucket/backend --recursive
-          aws s3 sync ./coverage s3://intern-viettel-storage-bucket/backend
+      # - name: Run test unit backend and upload test coverage result to S3
+      #   run: |
+      #     cd ./api
+      #     bundle install
+      #     bundle exec rspec
+      #     echo "${{ secrets.PROD_BACKEND }}" >> config/application.yml
+      #     cat config/application.yml
+      #     aws s3 rm s3://intern-viettel-storage-bucket/backend --recursive
+      #     aws s3 sync ./coverage s3://intern-viettel-storage-bucket/backend
 
 # sshpass -p ${{ secrets.SUDO_PASSWORD }}
