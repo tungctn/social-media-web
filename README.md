@@ -1,19 +1,21 @@
-## Link 
+## Tech Stack
 
-Web dev: http://103.107.183.43:3000
+- [Node.js](https://nodejs.org/en/blog/release/v18.16.1) (v18.16.1)
+- [Ruby](https://www.ruby-lang.org/en/news/2021/07/07/ruby-3-0-2-released/) (v3.0.2)
+- [Python](https://www.python.org/downloads/release/python-3112/) (v3.11.2)
+- [MySQL](https://dev.mysql.com/doc/relnotes/mysql/8.0/en/news-8-0-27.html) (v8.0.27)
+- [AWS S3](https://aws.amazon.com/s3/), [AWS Cloudfront](https://aws.amazon.com/cloudfront/), [AWS EC2](https://aws.amazon.com/ec2/)
+- [HAProxy](https://www.haproxy.org/), [Nginx](https://nginx.org/en/), [ModSecurity](https://modsecurity.org/), [Fail2ban](https://www.fail2ban.org/wiki/index.php/Main_Page)
 
-Web prod: https://pet-relive.online (Bật chế độ kết nối không an toàn để sử dụng)
+## Architecture Design
 
-Unit test frontend: http://intern-viettel-storage-bucket.s3-website-ap-southeast-1.amazonaws.com/frontend
+### Infrastructure Design (Single-Server Architecture: Web + API)
 
-Unit test backend: http://intern-viettel-storage-bucket.s3-website-ap-southeast-1.amazonaws.com/backend
+![Infrastructure Design](./architecture/architecture.png)
 
+### CI/CD Design
 
-## Install dependencies and run
-
-```bash
-bash run-script.sh
-```
+![CI/CD Design](./architecture/cicd.png)
 
 ## API Reference
 
@@ -305,11 +307,11 @@ Chỉ xóa được những ảnh mà user đang đăng nhập tạo
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Path Variables | Type  | Description                                |
-| :------------- | :---- | :----------------------------------------- |
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
 | `text_search`  | `string` | **Required** |
-| `page_index`  | `int` | **Required** |
-| `page_size`  | `int` | **Required** |
+| `page_index`   | `int`    | **Required** |
+| `page_size`    | `int`    | **Required** |
 
 ```javascript
 {
@@ -401,7 +403,9 @@ Chỉ xóa được những ảnh mà user đang đăng nhập tạo
 </details>
 
 #### Get user new post
+
 lấy bài viết mới nhất của người dùng hiện tại
+
 <details>
 <summary><code>GET /api/posts/user/newest-post</code></summary>
 <br>
@@ -409,6 +413,7 @@ lấy bài viết mới nhất của người dùng hiện tại
 | Header          | Type     | Description                                   |
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
+
 </details>
 
 #### Get user post
@@ -563,9 +568,9 @@ lấy bài viết mới nhất của người dùng hiện tại
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Parameter   | Type     | Description                                   |
-| :---------- | :------- | :-------------------------------------------- |
-| `type_report`   | `enum TYPE_REPORT` | **Optional**    loại báo cáo của người dùng (ảnh, bài viết) |
+| Parameter     | Type               | Description                                              |
+| :------------ | :----------------- | :------------------------------------------------------- |
+| `type_report` | `enum TYPE_REPORT` | **Optional** loại báo cáo của người dùng (ảnh, bài viết) |
 
 </details>
 
@@ -681,9 +686,9 @@ lấy bài viết mới nhất của người dùng hiện tại
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Parameter   | Type     | Description                                   |
-| :---------- | :------- | :-------------------------------------------- |
-| `type_report`   | `enum TYPE_REPORT` | **Optional**    loại báo cáo của người dùng (ảnh, bài viết) |
+| Parameter     | Type               | Description                                              |
+| :------------ | :----------------- | :------------------------------------------------------- |
+| `type_report` | `enum TYPE_REPORT` | **Optional** loại báo cáo của người dùng (ảnh, bài viết) |
 
 </details>
 
@@ -992,11 +997,11 @@ Chấp nhận lời mời, block, chuyển loại bạn bè (hẹn hò ?)
 | :-------------- | :------- | :-------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication |
 
-| Path Variables | Type  | Description                                |
-| :------------- | :---- | :----------------------------------------- |
+| Path Variables | Type     | Description  |
+| :------------- | :------- | :----------- |
 | `text_search`  | `string` | **Required** |
-| `page_index`  | `int` | **Required** |
-| `page_size`  | `int` | **Required** |
+| `page_index`   | `int`    | **Required** |
+| `page_size`    | `int`    | **Required** |
 
 ```javascript
 {
@@ -1086,13 +1091,13 @@ Chấp nhận lời mời, block, chuyển loại bạn bè (hẹn hò ?)
 
 #### Parameters
 
-| Header          | Type     | Description                                   |
-| :-------------- | :------- | :-------------------------------------------- |
+| Header          | Type     | Description                                                 |
+| :-------------- | :------- | :---------------------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication, role = admin |
 
-| Path Variables | Type   | Description             |
-| :------------- | :----- | :---------------------- |
-| `time_statistics`       | `enum TIME_STATISTICS`  | **Optional**            |
+| Path Variables    | Type                   | Description  |
+| :---------------- | :--------------------- | :----------- |
+| `time_statistics` | `enum TIME_STATISTICS` | **Optional** |
 
 </details>
 
@@ -1102,8 +1107,8 @@ Chấp nhận lời mời, block, chuyển loại bạn bè (hẹn hò ?)
 
 #### Parameters
 
-| Header          | Type     | Description                                   |
-| :-------------- | :------- | :-------------------------------------------- |
+| Header          | Type     | Description                                                 |
+| :-------------- | :------- | :---------------------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication, role = admin |
 
 </details>
@@ -1114,8 +1119,8 @@ Chấp nhận lời mời, block, chuyển loại bạn bè (hẹn hò ?)
 
 #### Parameters
 
-| Header          | Type     | Description                                   |
-| :-------------- | :------- | :-------------------------------------------- |
+| Header          | Type     | Description                                                 |
+| :-------------- | :------- | :---------------------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication, role = admin |
 
 </details>
@@ -1126,13 +1131,13 @@ Chấp nhận lời mời, block, chuyển loại bạn bè (hẹn hò ?)
 
 #### Parameters
 
-| Header          | Type     | Description                                   |
-| :-------------- | :------- | :-------------------------------------------- |
+| Header          | Type     | Description                                                 |
+| :-------------- | :------- | :---------------------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication, role = admin |
 
-| Path Variables | Type   | Description             |
-| :------------- | :----- | :---------------------- |
-| `time_statistics`       | `enum TIME_STATISTICS`  | **Optional**            |
+| Path Variables    | Type                   | Description  |
+| :---------------- | :--------------------- | :----------- |
+| `time_statistics` | `enum TIME_STATISTICS` | **Optional** |
 
 </details>
 
@@ -1142,30 +1147,20 @@ Chấp nhận lời mời, block, chuyển loại bạn bè (hẹn hò ?)
 
 #### Parameters
 
-| Header          | Type     | Description                                   |
-| :-------------- | :------- | :-------------------------------------------- |
+| Header          | Type     | Description                                                 |
+| :-------------- | :------- | :---------------------------------------------------------- |
 | `Authorization` | `string` | **Required.** Bearer Token for authentication, role = admin |
 
-| Path Variables | Type   | Description             |
-| :------------- | :----- | :---------------------- |
-| `time_statistics`       | `enum TIME_STATISTICS`  | **Optional**            |
-| `page_index`       | `int`  | **Optional**            |
-| `page_size`       | `int`  | **Optional**            |
+| Path Variables    | Type                   | Description  |
+| :---------------- | :--------------------- | :----------- |
+| `time_statistics` | `enum TIME_STATISTICS` | **Optional** |
+| `page_index`      | `int`                  | **Optional** |
+| `page_size`       | `int`                  | **Optional** |
 
 </details>
 
 </details>
-
-## Architecture Design
 
 ### Database Design
 
 ![Database Design](./database/db_v1.png)
-
-### Infrastructure Design (Single-Server Architecture: Web + API)
-
-![Infrastructure Design](./architecture/system.png)
-
-### CI/CD Design
-
-![CI/CD Design](./architecture/cicd.png)
