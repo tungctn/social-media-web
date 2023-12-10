@@ -15,7 +15,7 @@
 
 ### CI/CD Design
 
-![CI/CD Design](./architecture/cicd.png)
+![CI/CD Design](./architecture/cicd1.png)
 
 ## API Reference
 
